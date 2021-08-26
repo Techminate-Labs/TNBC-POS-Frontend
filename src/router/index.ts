@@ -1,11 +1,20 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import GuestLogin from '../views/GuestLogin.vue'
+import GuestLogin from '../views/guest/GuestLogin.vue'
+import GuestForgotPassword from '../views/guest/GuestForgotPassword.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'GuestLogin',
     component: GuestLogin,
+    meta: {
+      layout: 'GuestLayout'
+    }
+  },
+  {
+    path: '/password-reset',
+    name: 'GuestForgotPassword',
+    component: GuestForgotPassword,
     meta: {
       layout: 'GuestLayout'
     }
