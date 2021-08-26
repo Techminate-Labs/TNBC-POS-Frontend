@@ -13,10 +13,10 @@
       <label class="mb-2" for="email">Email:</label>
       <input class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" type="text" name="email" :value="email" placeholder="mail@example.com">
     </div>
-    <button class="bg-blue-900 hover:bg-blue-800 shadow-md px-12 py-2 my-3 text-white rounded-md" @click="logInUser">
+    <button class="bg-blue-900 hover:bg-blue-800 shadow-md px-12 py-2 my-3 text-white rounded-md" @click="sendRecoverLink">
       Submit
     </button>
-        <div>
+    <div>
       <router-link to="/" class="hover:underline">Nevermind, I just remembered it!</router-link>
     </div>
   </div>
@@ -29,13 +29,12 @@ export default defineComponent({
   name: 'GuestForgotPassword',
   data() {
     return {
-      email: '',
-      password: ''
+      email: ''
     }
   },
   methods: {
-    logInUser(): void {
-      console.log('log in!');
+    sendRecoverLink(): void {
+      console.log('sent revocer link!');
     }
   }
 });

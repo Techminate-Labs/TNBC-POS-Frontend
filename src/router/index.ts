@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import GuestLogin from '../views/guest/GuestLogin.vue'
 import GuestForgotPassword from '../views/guest/GuestForgotPassword.vue'
+import GuestForgotPasswordEmailSent from '../views/guest/GuestForgotPasswordEmailSent.vue'
+import GuestRecoverPassword from '../views/guest/GuestRecoverPassword.vue'
+import GuestRecoverPasswordSuccess from '../views/guest/GuestRecoverPasswordSuccess.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -15,6 +18,30 @@ const routes: Array<RouteRecordRaw> = [
     path: '/password-reset',
     name: 'GuestForgotPassword',
     component: GuestForgotPassword,
+    meta: {
+      layout: 'GuestLayout'
+    }
+  },
+  {
+    path: '/password-reset-sent',
+    name: 'GuestForgotPasswordEmailSent',
+    component: GuestForgotPasswordEmailSent,
+    meta: {
+      layout: 'GuestLayout'
+    }
+  },
+  {
+    path: '/recover-password',
+    name: 'GuestRecoverPassword',
+    component: GuestRecoverPassword,
+    meta: {
+      layout: 'GuestLayout'
+    }
+  },
+  {
+    path: '/recover-password-success',
+    name: 'GuestResetPasswordSuccess',
+    component: GuestRecoverPasswordSuccess,
     meta: {
       layout: 'GuestLayout'
     }
