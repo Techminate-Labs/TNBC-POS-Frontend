@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import Home from '../views/Home.vue'
+import GuestLogin from '../views/GuestLogin.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'Home',
-    component: Home,
+    name: 'GuestLogin',
+    component: GuestLogin,
     meta: {
       layout: 'GuestLayout'
     }
