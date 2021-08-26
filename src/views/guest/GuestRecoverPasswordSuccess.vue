@@ -8,9 +8,9 @@
     <div class="my-4 text-gray-600">
       <p>Your password has been reset successfully.</p>
     </div>
-    <button class="bg-blue-900 hover:bg-blue-800 shadow-md px-12 py-2 my-3 text-white rounded-md" @click="logIn">
+    <router-link to="/" class="bg-blue-900 hover:bg-blue-800 shadow-md px-12 py-2 my-3 text-white rounded-md">
       Login
-    </button>
+    </router-link>
   </div>
 </template>
 
