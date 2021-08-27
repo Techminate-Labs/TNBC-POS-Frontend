@@ -5,6 +5,8 @@ import GuestForgotPasswordEmailSent from '../views/guest/GuestForgotPasswordEmai
 import GuestRecoverPassword from '../views/guest/GuestRecoverPassword.vue'
 import GuestRecoverPasswordSuccess from '../views/guest/GuestRecoverPasswordSuccess.vue'
 import Dashboard from '../views/admin/Dashboard.vue'
+import Roles from '../views/admin/users/Roles.vue'
+import AddRole from '../views/admin/users/AddRole.vue'
 import UserRoles from '../views/admin/users/UserRoles.vue'
 
 const routes: Array<RouteRecordRaw> = [
@@ -57,12 +59,23 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
-    path: '/user-roles',
+    path: '/roles',
     name: 'UserRoles',
-    component: UserRoles,
+    component: Roles,
     meta: {
       layout: 'AdminLayout'
-    }
+    },
+    children: [
+      { path: '', component: UserRoles },
+
+      // UserProfile will be rendered inside User's <router-view>
+      // when /users/:username/profile is matched
+      { path: 'add-role', component: AddRole },
+
+      // UserPosts will be rendered inside User's <router-view>
+      // when /users/:username/posts is matched
+      // { path: 'edit-role', component: EditRole }
+    ]
   },
   // {
   //   path: '/about',

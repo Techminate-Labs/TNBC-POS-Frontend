@@ -13,9 +13,6 @@
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 {{ column.name }}
               </th>
-              <th scope="col" class="relative px-6 py-3">
-                <span class="sr-only">Actions</span>
-              </th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200">
@@ -26,23 +23,14 @@
                 :data-label="textColumn.attribute"
                 class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">
                 <div class="flex-shrink-0">
-                  {{ item[textColumn.attribute] }}
+                  <div v-if="typeof item[textColumn.attribute] === 'string'">
+                    {{ item[textColumn.attribute] }}
+                  </div>
+                  <div v-else>
+                    <input type="checkbox" v-model="item[textColumn.attribute]" />
+                    {{ item[textColumn.attribute] }}
+                  </div>
                 </div>
-              </td>
-              <td 
-                v-for="(image, k) in imageColumn" 
-                :key="k" class="w-full lg:w-auto px-6 py-4 whitespace-nowrap"
-                :data-label="imageColumn.attribute">
-                <div class="flex-shrink-0 h-10 w-10">
-                  <img class="h-10 w-10 rounded-full" :src="item[image.attribute]" alt="" />
-                </div>
-              </td>
-              <td 
-                data-label="Action"
-                class="w-full lg:w-auto px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <a href="#" class="text-indigo-600 hover:text-indigo-900 mr-2">Edit</a>
-                <a href="#" class="text-indigo-600 hover:text-indigo-900 mr-2">View</a>
-                <a href="#" class="text-indigo-600 hover:text-indigo-900 mr-2">Delete</a>
               </td>
             </tr>
           </tbody>
@@ -52,13 +40,20 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
+import { CheckboxTableColumns, CheckboxTableItems } from '@/types/CheckboxTable'
 
 export default defineComponent({
   name: 'CheckboxTable',
   props: {
-    items: [] as any,
-    columns: [] as any
+    items: {
+      type: Array as PropType<Array<CheckboxTableItems>>,
+      required: true
+    },
+    columns: {
+      type:  Array as PropType<Array<CheckboxTableColumns>>,
+      required: true 
+    }
   },
   data() {
     return {
@@ -79,7 +74,6 @@ export default defineComponent({
   methods: {
     onChange(): void {
       this.sortedItems
-      this.itemsInPage
       this.displayPages
     },
     changeItemsInPage(num: number): void {
@@ -128,13 +122,8 @@ export default defineComponent({
         return [...Array(5).keys()].map(i => Math.max(0, i - Math.trunc(5 / 2) + currentPage))
       }
     },
-    itemsInPage(): any[] {
-      if (this.currentPage)
-        var index: any = this.currentPage * this.maxItemsPerPage - this.maxItemsPerPage
-        return this.items.slice(index, index + this.maxItemsPerPage)
-    },
     sortedItems(): any[] {
-      return this.itemsInPage.sort((a: any, b: any) => {
+      return this.items.sort((a: any, b: any) => {
         let modifier = 1;
         if(this.currentSortDir === 'desc') modifier = -1;
         if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;

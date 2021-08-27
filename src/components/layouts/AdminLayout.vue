@@ -21,7 +21,7 @@ export default defineComponent({
   },
   data() {
     return {
-      active: true
+      active: true as boolean
     }
   }
 });

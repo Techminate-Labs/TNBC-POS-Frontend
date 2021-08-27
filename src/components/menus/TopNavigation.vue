@@ -12,8 +12,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
-import NavigationLink from '@/types/NavigationLink.ts'
+import { defineComponent } from 'vue'
 import SideBar from '@/components/menus/SideBar.vue'
 import TopNavigation from '@/components/menus/TopNavigation.vue'
 
@@ -21,7 +20,7 @@ export default defineComponent({
   name: 'AdminLayout',
   props: {
     links: {
-      type: Object as PropType<NavigationLink>,
+      type: Boolean,
       required: false
     }
   }

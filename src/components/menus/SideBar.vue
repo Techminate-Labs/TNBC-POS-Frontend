@@ -14,7 +14,7 @@
           </router-link>
         </li>
         <li class="py-8">
-          <router-link class="flex flex-col" to="/dashboard/products">
+          <router-link class="flex flex-col" to="/dashboard">
             <!-- cube -->
             <div class="flex flex-col" aria-label="products icon">
               <svg xmlns="http://www.w3.org/2000/svg" class="dashboard-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -25,7 +25,7 @@
           </router-link>
         </li>
         <li class="py-8">
-          <router-link class="flex flex-col" to="/dashboard/categories">
+          <router-link class="flex flex-col" to="/dashboard">
             <div class="flex flex-col" aria-label="categories icon">
               <!-- view-grid -->
               <svg xmlns="http://www.w3.org/2000/svg" class="dashboard-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -36,7 +36,7 @@
           </router-link>
         </li>
         <li class="py-8">
-          <router-link class="flex flex-col" to="/dashboard/configuration">
+          <router-link class="flex flex-col" to="/dashboard">
             <div class="flex flex-col" aria-label="parameters icon">
               <!-- adjustments -->
               <svg xmlns="http://www.w3.org/2000/svg" class="dashboard-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
