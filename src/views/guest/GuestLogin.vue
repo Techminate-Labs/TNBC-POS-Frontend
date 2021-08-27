@@ -12,7 +12,7 @@
       <label class="mb-2" for="password">Password:</label>
       <input class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" type="password" name="password" :value="password" placeholder="*******************">
     </div>
-    <button class="bg-blue-900 hover:bg-blue-800 shadow-md px-12 py-2 my-3 text-white rounded-md" @click="logInUser">
+    <button class="base-btn" @click="logInUser">
       Log In
     </button>
     <div>

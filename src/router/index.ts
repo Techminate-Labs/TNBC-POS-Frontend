@@ -5,6 +5,7 @@ import GuestForgotPasswordEmailSent from '../views/guest/GuestForgotPasswordEmai
 import GuestRecoverPassword from '../views/guest/GuestRecoverPassword.vue'
 import GuestRecoverPasswordSuccess from '../views/guest/GuestRecoverPasswordSuccess.vue'
 import Dashboard from '../views/admin/Dashboard.vue'
+import UserRoles from '../views/admin/users/UserRoles.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -51,6 +52,14 @@ const routes: Array<RouteRecordRaw> = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
+    meta: {
+      layout: 'AdminLayout'
+    }
+  },
+  {
+    path: '/user-roles',
+    name: 'UserRoles',
+    component: UserRoles,
     meta: {
       layout: 'AdminLayout'
     }

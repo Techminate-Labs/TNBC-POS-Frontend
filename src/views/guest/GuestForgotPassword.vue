@@ -13,7 +13,7 @@
       <label class="mb-2" for="email">Email:</label>
       <input class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" type="text" name="email" :value="email" placeholder="mail@example.com">
     </div>
-    <button class="bg-blue-900 hover:bg-blue-800 shadow-md px-12 py-2 my-3 text-white rounded-md" @click="sendRecoverLink">
+    <button class="base-btn" @click="sendRecoverLink">
       Submit
     </button>
     <div>

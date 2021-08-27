@@ -8,7 +8,7 @@
     <div class="my-4 text-gray-600">
       <p>Your password has been reset successfully.</p>
     </div>
-    <router-link to="/" class="bg-blue-900 hover:bg-blue-800 shadow-md px-12 py-2 my-3 text-white rounded-md">
+    <router-link to="/" class="base-btn">
       Login
     </router-link>
   </div>

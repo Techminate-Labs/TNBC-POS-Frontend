@@ -13,7 +13,7 @@
       <label class="mb-2" for="new-password">New password:</label>
       <input class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" type="password" name="new-password" :value="newPassword" placeholder="*******************">
     </div>
-    <button class="bg-blue-900 hover:bg-blue-800 shadow-md px-12 py-2 my-3 text-white rounded-md" @click="logInUser">
+    <button class="base-btn" @click="logInUser">
       Resert your password
     </button>
     <div>
