@@ -23,8 +23,6 @@ export default defineComponent({
       items: [
         {
           id: 1,
-          image:
-            'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=902&q=80',
           name: 'Naga Burger',
           category: 'lorem ipsum',
           price: 125,
@@ -33,8 +31,6 @@ export default defineComponent({
         },
         {
           id: 2,
-          image:
-            'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=902&q=80',
           name: 'Naga Burger',
           category: 'lorem ipsum',
           price: 71,
@@ -43,8 +39,6 @@ export default defineComponent({
         },
         {
           id: 3,
-          image:
-            'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=902&q=80',
           name: 'Naga Burger',
           category: 'lorem ipsum',
           price: 30035,
@@ -53,8 +47,6 @@ export default defineComponent({
         },
         {
           id: 4,
-          image:
-            'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=902&q=80',
           name: 'Naga Burger',
           category: 'lorem ipsum',
           price: 42,
@@ -63,8 +55,6 @@ export default defineComponent({
         },
         {
           id: 5,
-          image:
-            'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=902&q=80',
           name: 'Naga Burger',
           category: 'lorem ipsum',
           price: 2,
@@ -73,8 +63,6 @@ export default defineComponent({
         },
         {
           id: 6,
-          image:
-            'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=902&q=80',
           name: 'Naga Burger',
           category: 'lorem ipsum',
           price: 12378,
@@ -83,8 +71,6 @@ export default defineComponent({
         },
         {
           id: 7,
-          image:
-            'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=902&q=80',
           name: 'Naga Burger',
           category: 'lorem ipsum',
           price: 57,
@@ -93,8 +79,6 @@ export default defineComponent({
         },
         {
           id: 8,
-          image:
-            'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=902&q=80',
           name: 'Naga Burger',
           category: 'lorem ipsum',
           price: 124,
@@ -103,8 +87,6 @@ export default defineComponent({
         },
         {
           id: 9,
-          image:
-            'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=902&q=80',
           name: 'Naga Burger',
           category: 'lorem ipsum',
           price: 2,
@@ -113,8 +95,6 @@ export default defineComponent({
         },
         {
           id: 10,
-          image:
-            'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=902&q=80',
           name: 'Naga Burger',
           category: 'lorem ipsum',
           price: 0.85,
@@ -123,8 +103,6 @@ export default defineComponent({
         },
         {
           id: 11,
-          image:
-            'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=902&q=80',
           name: 'Naga Burger',
           category: 'lorem ipsum',
           price: 125,
@@ -133,8 +111,6 @@ export default defineComponent({
         },
         {
           id: 12,
-          image:
-            'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=902&q=80',
           name: 'Naga Burger',
           category: 'lorem ipsum',
           price: 71,
@@ -143,8 +119,6 @@ export default defineComponent({
         },
         {
           id: 13,
-          image:
-            'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=902&q=80',
           name: 'Naga Burger',
           category: 'lorem ipsum',
           price: 30035,
@@ -153,8 +127,6 @@ export default defineComponent({
         },
         {
           id: 14,
-          image:
-            'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=902&q=80',
           name: 'Naga Burger',
           category: 'lorem ipsum',
           price: 42,
@@ -163,8 +135,6 @@ export default defineComponent({
         },
         {
           id: 15,
-          image:
-            'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=902&q=80',
           name: 'Naga Burger',
           category: 'lorem ipsum',
           price: 2,
@@ -173,8 +143,6 @@ export default defineComponent({
         },
         {
           id: 16,
-          image:
-            'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=902&q=80',
           name: 'Naga Burger',
           category: 'lorem ipsum',
           price: 12378,
@@ -183,8 +151,6 @@ export default defineComponent({
         },
         {
           id: 17,
-          image:
-            'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=902&q=80',
           name: 'Naga Burger',
           category: 'lorem ipsum',
           price: 57,
@@ -193,8 +159,6 @@ export default defineComponent({
         },
         {
           id: 18,
-          image:
-            'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=902&q=80',
           name: 'Naga Burger',
           category: 'lorem ipsum',
           price: 124,
@@ -203,8 +167,6 @@ export default defineComponent({
         },
         {
           id: 19,
-          image:
-            'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=902&q=80',
           name: 'Naga Burger',
           category: 'lorem ipsum',
           price: 2,
@@ -213,8 +175,6 @@ export default defineComponent({
         },
         {
           id: 20,
-          image:
-            'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=902&q=80',
           name: 'Naga Burger',
           category: 'lorem ipsum',
           price: 0.85,
@@ -246,11 +206,7 @@ export default defineComponent({
         {
           name: 'availability',
           attribute: 'availability'
-        },
-        {
-          name: 'image',
-          attribute: 'image'
-        },
+        }
       ]
     }
   }
