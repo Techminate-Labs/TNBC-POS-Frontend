@@ -4,11 +4,13 @@
 
 <script>
 import GuestLayout from '@/components/layouts/GuestLayout.vue'
+import AdminLayout from '@/components/layouts/AdminLayout.vue'
 
 export default {
   name: 'App',
   components: {
-    GuestLayout
+    GuestLayout,
+    AdminLayout
   },
   data() {
     return {

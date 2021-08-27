@@ -1,6 +1,6 @@
 <template>
   <div id="guest" class="h-screen overflow-hidden">
-    <TopNavigation />
+    <TopNavigation :links="false" />
     <div class="flex flex-col md:flex-row flex-nowrap w-full">
       <div class="md:w-1/3 lg:w-1/5">
         <GuestSideBar />

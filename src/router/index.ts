@@ -4,6 +4,7 @@ import GuestForgotPassword from '../views/guest/GuestForgotPassword.vue'
 import GuestForgotPasswordEmailSent from '../views/guest/GuestForgotPasswordEmailSent.vue'
 import GuestRecoverPassword from '../views/guest/GuestRecoverPassword.vue'
 import GuestRecoverPasswordSuccess from '../views/guest/GuestRecoverPasswordSuccess.vue'
+import Dashboard from '../views/admin/Dashboard.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -40,10 +41,18 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/recover-password-success',
-    name: 'GuestResetPasswordSuccess',
+    name: 'GuestRecoverPasswordSuccess',
     component: GuestRecoverPasswordSuccess,
     meta: {
       layout: 'GuestLayout'
+    }
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: Dashboard,
+    meta: {
+      layout: 'AdminLayout'
     }
   },
   // {
