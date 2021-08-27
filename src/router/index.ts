@@ -5,9 +5,10 @@ import GuestForgotPasswordEmailSent from '../views/guest/GuestForgotPasswordEmai
 import GuestRecoverPassword from '../views/guest/GuestRecoverPassword.vue'
 import GuestRecoverPasswordSuccess from '../views/guest/GuestRecoverPasswordSuccess.vue'
 import Dashboard from '../views/admin/Dashboard.vue'
-import Roles from '../views/admin/users/Roles.vue'
+import UserManagement from '../views/admin/users/UserManagement.vue'
 import AddRole from '../views/admin/users/AddRole.vue'
 import UserRoles from '../views/admin/users/UserRoles.vue'
+import PointOfSale from '../views/admin/pos/PointOfSale.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -59,22 +60,29 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
-    path: '/roles',
-    name: 'UserRoles',
-    component: Roles,
+    path: '/point-of-sale',
+    name: 'PointOfSale',
+    component: PointOfSale,
+    meta: {
+      layout: 'AdminLayout'
+    }
+  },
+  {
+    path: '/user-management',
+    name: 'UserManagement',
+    component: UserManagement,
     meta: {
       layout: 'AdminLayout'
     },
     children: [
-      { path: '', component: UserRoles },
-
-      // UserProfile will be rendered inside User's <router-view>
-      // when /users/:username/profile is matched
-      { path: 'add-role', component: AddRole },
-
-      // UserPosts will be rendered inside User's <router-view>
-      // when /users/:username/posts is matched
-      // { path: 'edit-role', component: EditRole }
+      {
+        path: '/user-roles',
+        component: UserRoles
+      },
+      {
+        path: '/add-user-role',
+        component: AddRole
+      },
     ]
   },
   // {
