@@ -1,10 +1,10 @@
 <template>
-  <div class="flex-grow mx-4 md:mx-8 my-10">
+  <div class="flex-grow px-4 md:px-8 my-10">
     <p>Breadcrumb</p>
     <div class="flex flex-nowrap justify-between">
       <p class="text-2xl mb-4">Add User</p>
     </div>
-    <div>
+    <div class="bg-white p-4 rounded-lg shadow-md">
       <div class="flex flex-col py-2">
         <label class="mb-2" for="name">Name:</label>
         <input
@@ -54,8 +54,8 @@
           placeholder="**************"
         >
       </div>
-      <button class="base-btn float-right">Save</button>
     </div>
+    <button class="base-btn float-right">Save</button>
   </div>
 </template>
 

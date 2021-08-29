@@ -27,15 +27,3 @@ export default defineComponent({
   }
 });
 </script>
-
-<style scoped>
-.dashboard-icon {
-  @apply text-gray-400 self-center h-12 w-12;
-}
-.dashboard-submenu-icon {
-  @apply text-gray-400 self-center h-6 w-6;
-}
-.nuxt-link-exact-active, .nuxt-link-exact-active svg {
-  @apply text-blue-600;
-}
-</style>

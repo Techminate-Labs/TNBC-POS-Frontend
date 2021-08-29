@@ -11,7 +11,12 @@ import UserRoles from '../views/admin/users/UserRoles.vue'
 import UserList from '../views/admin/users/UserList.vue'
 import AddUser from '../views/admin/users/AddUser.vue'
 import EditUser from '../views/admin/users/EditUser.vue'
+import UserProfile from '../views/admin/users/UserProfile.vue'
+import AddProfile from '../views/admin/users/AddProfile.vue'
 import PointOfSale from '../views/admin/pos/PointOfSale.vue'
+import Error403 from '../views/errors/Error403.vue'
+import Error404 from '../views/errors/Error404.vue'
+import Error500 from '../views/errors/Error500.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -95,10 +100,30 @@ const routes: Array<RouteRecordRaw> = [
         component: UserRoles,
       },
       {
-        path: 'add-user-role',
+        path: 'user-add-role',
         component: AddUserRole
       },
+      {
+        path: 'user-profile',
+        component: UserProfile
+      },
+      {
+        path: 'user-add-profile',
+        component: AddProfile
+      },
     ]
+  },
+  {
+    path: '/403',
+    component: Error403
+  },
+  {
+    path: '/404',
+    component: Error404
+  },
+  {
+    path: '/500',
+    component: Error500
   },
   // {
   //   path: '/about',

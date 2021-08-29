@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-grow mx-4 md:mx-8 my-10">
+  <div class="flex-grow px-4 md:px-8 my-10">
     <p>Breadcrumb</p>
     <div class="flex flex-nowrap justify-between">
       <p class="text-2xl mb-4">Role Permission</p>

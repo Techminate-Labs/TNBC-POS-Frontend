@@ -1,6 +1,5 @@
 <template>
-  <div class="flex-grow mx-4 md:mx-8 my-10">
-    <h3>User Management</h3>
+  <div class="flex-grow px-4 md:px-8">
     <router-view></router-view>
   </div>
 </template>

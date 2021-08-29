@@ -1,9 +1,9 @@
 <template>
-  <div class="flex-grow mx-4 md:mx-8 my-10">
+  <div class="flex-grow px-4 md:px-8 my-10">
     <p>Breadcrumb</p>
-    <div class="flex flex-nowrap justify-between">
+    <div class="flex flex-nowrap justify-between ">
       <p class="text-2xl mb-4">User Roles</p>
-      <button class="base-btn">Create Role</button>
+      <button class="base-btn"><router-link to="/user-management/user-add-role">Create Role</router-link></button>
     </div>
     <Table :items="items" :columns="columns" />
   </div>
