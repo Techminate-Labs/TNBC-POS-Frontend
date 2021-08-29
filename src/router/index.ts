@@ -6,8 +6,11 @@ import GuestRecoverPassword from '../views/guest/GuestRecoverPassword.vue'
 import GuestRecoverPasswordSuccess from '../views/guest/GuestRecoverPasswordSuccess.vue'
 import Dashboard from '../views/admin/Dashboard.vue'
 import UserManagement from '../views/admin/users/UserManagement.vue'
-import AddRole from '../views/admin/users/AddRole.vue'
+import AddUserRole from '../views/admin/users/AddUserRole.vue'
 import UserRoles from '../views/admin/users/UserRoles.vue'
+import UserList from '../views/admin/users/UserList.vue'
+import AddUser from '../views/admin/users/AddUser.vue'
+import EditUser from '../views/admin/users/EditUser.vue'
 import PointOfSale from '../views/admin/pos/PointOfSale.vue'
 
 const routes: Array<RouteRecordRaw> = [
@@ -76,12 +79,24 @@ const routes: Array<RouteRecordRaw> = [
     },
     children: [
       {
-        path: '/user-roles',
-        component: UserRoles
+        path: 'user-list',
+        component: UserList,
       },
       {
-        path: '/add-user-role',
-        component: AddRole
+        path: 'user-add',
+        component: AddUser,
+      },
+      {
+        path: 'user-edit',
+        component: EditUser,
+      },
+      {
+        path: 'user-roles',
+        component: UserRoles,
+      },
+      {
+        path: 'add-user-role',
+        component: AddUserRole
       },
     ]
   },

@@ -2,8 +2,8 @@
   <div class="flex-grow mx-4 md:mx-8 my-10">
     <p>Breadcrumb</p>
     <div class="flex flex-nowrap justify-between">
-      <p class="text-2xl mb-4">User Roles</p>
-      <button class="base-btn">Create Role</button>
+      <p class="text-2xl mb-4">User List</p>
+      <button class="base-btn">Create User</button>
     </div>
     <Table :items="items" :columns="columns" />
   </div>
@@ -14,7 +14,7 @@ import { defineComponent } from 'vue';
 import Table from '@/components/tables/Table.vue'
 
 export default defineComponent({
-  name: 'UserRoles',
+  name: 'UserList',
   components: {
     Table
   },

@@ -3,7 +3,7 @@
     <nav class="block relative mx-auto justify-between text-gray-700 z-20" aria-label="Side Bar Navigation">
       <ul class="flex flex-wrap md:flex-col md:flex-nowrap justify-evenly lg:grid lg:grid-cols-1 md:divide-x-0 md:divide-y-2 divide-gray-200 text-center text-lg">
         <li v-for="(item, index) in menu" :key="index" class="py-8">
-          <div v-if="item.submenus" @click="$emit('toogleAdditionalSidebar', item)">
+          <div v-if="item.submenus" @click="$emit('openAdditionalSidebar', item)">
             <router-link :to="item.url">
               <div class="flex flex-col" aria-label="home icon">
                 <img class="dashboard-icon" :src="item.icon" />

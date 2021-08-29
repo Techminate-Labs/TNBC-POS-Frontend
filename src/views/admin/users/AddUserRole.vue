@@ -14,7 +14,7 @@ import { defineComponent } from 'vue';
 import CheckboxTable from '@/components/tables/CheckboxTable.vue'
 
 export default defineComponent({
-  name: 'AddRole',
+  name: 'AddUserRole',
   components: {
     CheckboxTable
   },

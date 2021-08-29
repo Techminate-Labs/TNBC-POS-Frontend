@@ -6,12 +6,13 @@
         class="hidden" 
         :menu="menu"
         :class="toogleSideBar ? 'active' : ''" 
-        @toogle-additional-sidebar="handleSubMenus"
+        @open-additional-sidebar="handleSubMenus"
       />
       <AdditionalSideBar
         class="hidden"
         :singleMenu="singleMenu"
-        :class="toogleAdditionalSideBar ? 'active' : ''" 
+        @close-additional-sidebar="openAdditionalSideBar = false"
+        :class="openAdditionalSideBar ? 'active' : ''" 
       />
       <router-view />
     </div>
@@ -35,13 +36,25 @@ export default defineComponent({
   data() {
     return {
       toogleSideBar: true as boolean,
-      toogleAdditionalSideBar: false as boolean,
+      openAdditionalSideBar: false as boolean,
       singleMenu: [] as PropType<Array<MenuItem>>,
       menu: [
         {
           name: 'Dashboard',
           url: '/dashboard',
           icon: 'https://epqrpjmozlcsvbgkxjkp.supabase.in/storage/v1/object/sign/tnbc-pos/svgs/template.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0bmJjLXBvcy9zdmdzL3RlbXBsYXRlLnN2ZyIsImlhdCI6MTYzMDA4ODE0OCwiZXhwIjoxOTQ1NDQ4MTQ4fQ.ckxC-UTfEFea7cgTGwgWuLKqBdegqrfvMMrZonZFAD4'
+        },
+        {
+          name: 'User Management',
+          url: '/user-management',
+          icon: 'https://epqrpjmozlcsvbgkxjkp.supabase.in/storage/v1/object/sign/tnbc-pos/svgs/user-group.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0bmJjLXBvcy9zdmdzL3VzZXItZ3JvdXAuc3ZnIiwiaWF0IjoxNjMwMDg4MTQ4LCJleHAiOjE5NDU0NDgxNDh9.fWSpfP7uIO-dDyP8ILCfNtgCLRmBLfPSEbUxHAysVfA',
+          submenus: [
+            { name: 'User List', url: '/user-list' },
+            { name: 'Add User', url: '/user-add' },
+            { name: 'Edit User', url: '/user-edit' },
+            { name: 'User Roles', url: '/user-roles' },
+            { name: 'Add User Role', url: '/add-user-role' }
+          ]
         },
         {
           name: 'Point Of Sale',
@@ -83,15 +96,6 @@ export default defineComponent({
           ]
         },
         {
-          name: 'User Management',
-          url: '/user-management',
-          icon: 'https://epqrpjmozlcsvbgkxjkp.supabase.in/storage/v1/object/sign/tnbc-pos/svgs/user-group.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0bmJjLXBvcy9zdmdzL3VzZXItZ3JvdXAuc3ZnIiwiaWF0IjoxNjMwMDg4MTQ4LCJleHAiOjE5NDU0NDgxNDh9.fWSpfP7uIO-dDyP8ILCfNtgCLRmBLfPSEbUxHAysVfA',
-          submenus: [
-            { name: 'User Roles', url: '/user-roles' },
-            { name: 'Add User Role', url: '/add-user-role' }
-          ]
-        },
-        {
           name: 'Settings',
           url: '/settings',
           icon: 'https://epqrpjmozlcsvbgkxjkp.supabase.in/storage/v1/object/sign/tnbc-pos/svgs/adjustments.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0bmJjLXBvcy9zdmdzL2FkanVzdG1lbnRzLnN2ZyIsImlhdCI6MTYzMDA4ODM0NiwiZXhwIjoxOTQ1NDQ4MzQ2fQ.z4IZrOKkDsVWQAicUSg3ytrqSaOaJFuwPSn7cIRQtsg',
@@ -105,7 +109,7 @@ export default defineComponent({
   },
   methods: {
     handleSubMenus(item: MenuItem){
-      this.toogleAdditionalSideBar = !this.toogleAdditionalSideBar
+      this.openAdditionalSideBar = true
       let _singleMenu: any = item
       this.singleMenu = _singleMenu
     }
