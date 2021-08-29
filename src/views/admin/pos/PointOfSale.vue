@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    <p class="text-2xl">test</p>
+  <div>
+    <h3 class="text-xl">Hello, this is the Point of Sale component</h3>
   </div>
 </template>
 
@@ -8,6 +8,6 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'Home'
+  name: 'PointOfSale'
 });
 </script>

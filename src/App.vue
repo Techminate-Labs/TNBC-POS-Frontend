@@ -1,30 +1,31 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view/>
+  <component :is="layout" />
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import GuestLayout from '@/components/layouts/GuestLayout.vue'
+import AdminLayout from '@/components/layouts/AdminLayout.vue'
 
-#nav {
-  padding: 30px;
+export default {
+  name: 'App',
+  components: {
+    GuestLayout,
+    AdminLayout
+  },
+  data() {
+    return {
+      layout: null,
+    };
+  },
+  watch: {
+    $route(to) {
+      // set layout by route meta
+      if (to.meta.layout !== undefined) {
+        this.layout = to.meta.layout
+      } else {
+        this.layout = "GuestLayout" // this is default layout if route meta is not set
+      }
+    },
+  },
 }
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+</script>

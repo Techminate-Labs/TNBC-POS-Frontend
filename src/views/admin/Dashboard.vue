@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    <p class="text-2xl">test</p>
+  <div>
+    <p class="text-4xl">Hello, this is the dashboard</p>
   </div>
 </template>
 
@@ -8,6 +8,6 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'Home'
+  name: 'Dashboard'
 });
 </script>

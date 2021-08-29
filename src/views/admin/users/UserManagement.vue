@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    <p class="text-2xl">test</p>
+  <div class="flex-grow px-4 md:px-8">
+    <router-view></router-view>
   </div>
 </template>
 
@@ -8,6 +8,6 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'Home'
+  name: 'UserManagement'
 });
 </script>
