@@ -12,6 +12,9 @@ export default {
     GuestLayout,
     AdminLayout
   },
+    beforeCreate () {
+    this.$store.commit('initializeStore')
+  },
   data() {
     return {
       layout: null,

@@ -6,11 +6,25 @@
     </div>
     <div class="flex flex-col py-2">
       <label class="mb-2" for="email">Email:</label>
-      <input class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" type="text" name="email" :value="email" placeholder="mail@example.com">
+      <input 
+        class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
+        type="text" 
+        name="email" 
+        v-model="email" 
+        placeholder="mail@example.com"
+      />
+      {{ email }}
     </div>
     <div class="flex flex-col py-2">
       <label class="mb-2" for="password">Password:</label>
-      <input class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" type="password" name="password" :value="password" placeholder="*******************">
+      <input 
+        class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
+        type="password" 
+        name="password" 
+        v-model="password" 
+        placeholder="*******************"
+      />
+      {{ password }}
     </div>
     <button class="base-btn" @click="logInUser">
       Log In
@@ -23,18 +37,47 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import DataService from "@/services/DataService";
+import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
   name: 'GuestLogin',
   data() {
     return {
       email: '',
-      password: ''
+      password: '',
+      loggedIn: false,
     }
   },
   methods: {
     logInUser(): void {
       console.log('log in!');
+      let data = {
+        email: this.email,
+        password: this.password,
+      }
+      DataService.loginUser(data)
+        .then((response: ResponseData) => {
+            console.log(response.data);
+            this.$store.commit('setBearerToken', response.data.token)
+            localStorage.setItem('bearerToken', response.data.token)
+            this.$store.isAuthenticated = true
+            this.loggedIn = true;
+          })
+        .catch((e: Error) => {
+          console.log(e);
+        });
+
+      // axios.post('https://tnbpos.tk/api/login', {
+      //   email: this.email,
+      //   password: this.password
+      // })
+      // .then(function (response) {
+      //   console.log(response);
+      // })
+      // .catch(function (error) {
+      //   console.log(error);
+      // });
     }
   }
 });
