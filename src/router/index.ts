@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import store from '@/store'
 import GuestLogin from '../views/guest/GuestLogin.vue'
 import GuestForgotPassword from '../views/guest/GuestForgotPassword.vue'
 import GuestForgotPasswordEmailSent from '../views/guest/GuestForgotPasswordEmailSent.vue'
@@ -64,7 +65,8 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Dashboard',
     component: Dashboard,
     meta: {
-      layout: 'AdminLayout'
+      layout: 'AdminLayout',
+      auth: true
     }
   },
   {
@@ -124,20 +126,22 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/500',
     component: Error500
-  },
-  // {
-  //   path: '/about',
-  //   name: 'About',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  // }
+  }
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  let isAuthenticated = store.state.isAuthenticated
+  if (to.meta.auth && !isAuthenticated) {
+    next('/')
+  }
+  else {
+    next()
+  }
 })
 
 export default router

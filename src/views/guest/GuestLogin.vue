@@ -63,6 +63,7 @@ export default defineComponent({
             localStorage.setItem('bearerToken', response.data.token)
             this.$store.isAuthenticated = true
             this.loggedIn = true;
+            this.$router.push('/dashboard')
           })
         .catch((e: Error) => {
           console.log(e);
