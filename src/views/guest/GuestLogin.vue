@@ -46,39 +46,25 @@ export default defineComponent({
     return {
       email: '',
       password: '',
-      loggedIn: false,
     }
   },
   methods: {
     logInUser(): void {
-      console.log('log in!');
       let data = {
         email: this.email,
         password: this.password,
       }
       DataService.loginUser(data)
         .then((response: ResponseData) => {
-            console.log(response.data);
             this.$store.commit('setBearerToken', response.data.token)
+            this.$store.commit('setAuthentication', true)
+
             localStorage.setItem('bearerToken', response.data.token)
-            this.$store.isAuthenticated = true
-            this.loggedIn = true;
             this.$router.push('/dashboard')
           })
         .catch((e: Error) => {
           console.log(e);
         });
-
-      // axios.post('https://tnbpos.tk/api/login', {
-      //   email: this.email,
-      //   password: this.password
-      // })
-      // .then(function (response) {
-      //   console.log(response);
-      // })
-      // .catch(function (error) {
-      //   console.log(error);
-      // });
     }
   }
 });

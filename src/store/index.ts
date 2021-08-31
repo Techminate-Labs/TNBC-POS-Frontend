@@ -8,7 +8,7 @@ export default createStore({
   },
   mutations: {
     initializeStore(state) {
-      if (localStorage.getItem('bearerToken')) {
+      if (localStorage.getItem('bearerToken') !== '') {
         const token = localStorage.getItem('bearerToken') as string
         state.bearerToken = token
         state.isAuthenticated = true
@@ -19,8 +19,10 @@ export default createStore({
     },
     setBearerToken(state, bearerToken) {
       state.bearerToken = bearerToken
-      state.isAuthenticated = true
-    }
+    },
+    setAuthentication(state, authentication) {
+      state.isAuthenticated = authentication
+    },
   },
   actions: {
   },

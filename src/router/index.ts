@@ -25,7 +25,8 @@ const routes: Array<RouteRecordRaw> = [
     name: 'GuestLogin',
     component: GuestLogin,
     meta: {
-      layout: 'GuestLayout'
+      layout: 'GuestLayout',
+      isHome: true
     }
   },
   {
@@ -74,7 +75,8 @@ const routes: Array<RouteRecordRaw> = [
     name: 'PointOfSale',
     component: PointOfSale,
     meta: {
-      layout: 'AdminLayout'
+      layout: 'AdminLayout',
+      auth: true
     }
   },
   {
@@ -82,7 +84,8 @@ const routes: Array<RouteRecordRaw> = [
     name: 'UserManagement',
     component: UserManagement,
     meta: {
-      layout: 'AdminLayout'
+      layout: 'AdminLayout',
+      auth: true
     },
     children: [
       {
@@ -138,10 +141,12 @@ router.beforeEach((to, from, next) => {
   let isAuthenticated = store.state.isAuthenticated
   if (to.meta.auth && !isAuthenticated) {
     next('/')
-  }
-  else {
+  } else if (to.name === "GuestLogin" && isAuthenticated) {
+    next('/dashboard')
+  } else {
     next()
   }
+
 })
 
 export default router
