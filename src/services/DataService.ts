@@ -8,8 +8,19 @@ class DataService {
 
   logoutUser(token: string): Promise<any> {
     const body = { };
-    console.log('from DataService.ts', token)
     return http.post("/logout", body, { headers: { "Authorization": `Bearer ${token}` } });
+  }
+
+  forgotPassword(data: any): Promise<any> {
+    return http.post("/forgot-password", data);
+  }
+
+  listUsers(token: any): Promise<any> {
+    return http.get("/users", token);
+  }
+
+  addUser(data: any): Promise<any> {
+    return http.post("/register", data);
   }
 
 }

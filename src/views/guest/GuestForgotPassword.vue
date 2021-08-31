@@ -11,7 +11,11 @@
     </div>
     <div class="flex flex-col py-2">
       <label class="mb-2" for="email">Email:</label>
-      <input class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" type="text" name="email" :value="email" placeholder="mail@example.com">
+      <input 
+        class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
+        type="text" 
+        name="email"
+        v-model="email" placeholder="mail@example.com">
     </div>
     <button class="base-btn" @click="sendRecoverLink">
       Submit
@@ -24,6 +28,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import DataService from "@/services/DataService";
+import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
   name: 'GuestForgotPassword',
@@ -35,6 +41,17 @@ export default defineComponent({
   methods: {
     sendRecoverLink(): void {
       console.log('sent revocer link!');
+      let data = {
+        email: this.email
+      }
+      DataService.forgotPassword(data)
+        .then((response: ResponseData) => {
+            console.log(response)
+            this.$router.push('/password-reset-sent')
+          })
+        .catch((e: Error) => {
+          console.log(e);
+        });
     }
   }
 });
