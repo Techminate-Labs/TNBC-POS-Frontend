@@ -52,6 +52,7 @@ export default defineComponent({
       ]
     }
   },
+  mixins: [formatDateMixin],
   methods: {
     fetchUsers(): void {
       let token = this.$store.state.bearerToken
@@ -60,16 +61,16 @@ export default defineComponent({
             console.log(response.data)
             let _users: any = []
             const _ = response.data.users.map((user: any) => {
-              var _created_date = new Date(user.created_at)
-              console.log(this.formatDate(_created_date))
+              var _formated_created_date = this.formatDate(new Date(user.created_at))
+              var _formated_updated_date = this.formatDate(new Date(user.updated_at))
               _users.push(
                 {
                   id: user.id,
                   name: user.name,
                   email: user.email,
                   role: user.role.name,
-                  created_at: user.created_at,
-                  updated_at: user.updated_at
+                  created_at: _formated_created_date,
+                  updated_at: _formated_updated_date
                 }
               )
               this.items = _users
