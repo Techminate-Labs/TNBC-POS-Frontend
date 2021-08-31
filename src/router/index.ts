@@ -139,9 +139,10 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   let isAuthenticated = store.state.isAuthenticated
+  let hasToken = store.state.bearerToken
   if (to.meta.auth && !isAuthenticated) {
     next('/')
-  } else if (to.name === "GuestLogin" && isAuthenticated) {
+  } else if (to.name === "GuestLogin" && isAuthenticated && hasToken) {
     next('/dashboard')
   } else {
     next()
