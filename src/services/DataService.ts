@@ -16,7 +16,7 @@ class DataService {
   }
 
   listUsers(token: any): Promise<any> {
-    return http.get("/users", token);
+    return http.get("/users", { headers: { "Authorization": `Bearer ${token}` } });
   }
 
   addUser(data: any): Promise<any> {
