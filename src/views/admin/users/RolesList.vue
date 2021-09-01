@@ -3,7 +3,7 @@
     <p>Breadcrumb</p>
     <div class="flex flex-nowrap justify-between ">
       <p class="text-2xl mb-4">User Roles</p>
-      <router-link to="/user-management/user-add-role"><button class="base-btn">Create Role</button></router-link>
+      <router-link :to="{ name: 'RoleCreate' }"><button class="base-btn">Create Role</button></router-link>
     </div>
     <RoleTable :items="items" :columns="columns" />
   </div>
@@ -17,7 +17,7 @@ import ResponseData from "@/types/ResponseData";
 import formatDateMixin from '@/mixins/formatDateMixin.ts';
 
 export default defineComponent({
-  name: 'UserRoles',
+  name: 'RolesList',
   components: {
     RoleTable
   },

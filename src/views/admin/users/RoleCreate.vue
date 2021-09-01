@@ -12,9 +12,11 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import CheckboxTable from '@/components/tables/CheckboxTable.vue'
+import DataService from "@/services/DataService";
+import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
-  name: 'AddUserRole',
+  name: 'RoleCreate',
   components: {
     CheckboxTable
   },
@@ -50,6 +52,18 @@ export default defineComponent({
           attribute: 'list'
         }
       ]
+    }
+  },
+  methods: {
+    addUserProfile(): void {
+      console.log('add user profile!');
+      // DataService.addUserProfile(data)
+      //   .then((response: ResponseData) => {
+           
+      //     })
+      //   .catch((e: Error) => {
+      //     console.log(e);
+      //   });
     }
   }
 });

@@ -4,12 +4,10 @@
       <ul class="flex flex-wrap md:flex-col md:flex-nowrap justify-evenly lg:grid lg:grid-cols-1 md:divide-x-0 md:divide-y-2 divide-gray-200 text-center text-lg">
         <li v-for="(item, index) in menu" :key="index" class="px-2 py-4 md:px-4">
           <div v-if="item.submenus" @click="$emit('openAdditionalSidebar', item)">
-            <router-link :to="item.url">
-              <div class="flex flex-col" aria-label="home icon">
-                <img class="dashboard-icon" :src="item.icon" />
-                <h2 class="text-base">{{item.name}}</h2>
-              </div>
-            </router-link>
+            <div class="flex flex-col" aria-label="home icon">
+              <img class="dashboard-icon" :src="item.icon" />
+              <h2 class="text-base">{{item.name}}</h2>
+            </div>
           </div>
           <div v-else>
             <router-link :to="item.url">

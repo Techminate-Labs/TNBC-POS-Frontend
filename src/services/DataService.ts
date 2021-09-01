@@ -40,12 +40,16 @@ class DataService {
     return http.get('/roles', { headers: { "Authorization": `Bearer ${_token}` } });
   }
 
-  deleteRole(id: number): Promise<any> {
-    return http.delete(`/roles/${id}`, { headers: { "Authorization": `Bearer ${_token}` } });
+  updateRole(id: number): Promise<any> {
+    return http.put(`/roles/${id}`, { headers: { "Authorization": `Bearer ${_token}` } });
   }
 
   addRole(data: any): Promise<any> {
     return http.post(`/roles`, data, { headers: { "Authorization": `Bearer ${_token}` } });
+  }
+
+  deleteRole(id: number): Promise<any> {
+    return http.delete(`/roles/${id}`, { headers: { "Authorization": `Bearer ${_token}` } });
   }
 }
 

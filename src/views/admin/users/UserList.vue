@@ -3,7 +3,7 @@
     <p>Breadcrumb</p>
     <div class="flex flex-nowrap justify-between">
       <p class="text-2xl mb-4">User List</p>
-      <router-link to="/user-management/user-add"><button class="base-btn">Create User</button></router-link>
+      <router-link :to="{ name: 'UserCreate' }"><button class="base-btn">Create User</button></router-link>
     </div>
     <UserTable :items="items" :columns="columns" />
   </div>

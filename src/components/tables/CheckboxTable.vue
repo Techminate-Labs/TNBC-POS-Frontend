@@ -16,19 +16,17 @@
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200">
-            <tr v-for="(item, i) in sortedItems" :key="i" class="bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+            <tr v-for="(item, key, i) in sortedItems" :key="i" class="bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+              <td>{{item.name}}</td>
               <td 
                 v-for="(textColumn, j) in textColumns" 
                 :key="j" 
                 :data-label="textColumn.attribute"
                 class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">
                 <div class="flex-shrink-0">
-                  <div v-if="typeof item[textColumn.attribute] === 'string'">
-                    {{ item[textColumn.attribute] }}
-                  </div>
-                  <div v-else>
-                    <input type="checkbox" v-model="item[textColumn.attribute]" />
-                    {{ item[textColumn.attribute] }}
+                  <div>
+                    <input type="checkbox" v-model="item.permissions[textColumn.attribute]" />
+                    {{ item.permissions[textColumn.attribute] }}
                   </div>
                 </div>
               </td>

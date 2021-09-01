@@ -50,8 +50,7 @@ export default defineComponent({
           icon: 'https://epqrpjmozlcsvbgkxjkp.supabase.in/storage/v1/object/sign/tnbc-pos/svgs/user-group.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0bmJjLXBvcy9zdmdzL3VzZXItZ3JvdXAuc3ZnIiwiaWF0IjoxNjMwMDg4MTQ4LCJleHAiOjE5NDU0NDgxNDh9.fWSpfP7uIO-dDyP8ILCfNtgCLRmBLfPSEbUxHAysVfA',
           submenus: [
             { name: 'User List', url: '/user-list' },
-            { name: 'User Roles', url: '/user-roles' },
-            { name: 'User Profile', url: '/user-profile' }
+            { name: 'User Roles', url: '/roles-list' }
           ]
         },
         {

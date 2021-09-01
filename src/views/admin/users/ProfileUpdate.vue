@@ -106,7 +106,7 @@ import DataService from "@/services/DataService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
-  name: 'AddProfile',
+  name: 'ProfileUpdate',
   data() {
     return {
        user: {
@@ -123,7 +123,7 @@ export default defineComponent({
       }
     }
   },
-    methods: {
+  methods: {
     addUserProfile(): void {
       console.log('add user profile!');
       let user_id = this.$route.params.id
