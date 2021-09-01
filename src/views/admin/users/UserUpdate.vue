@@ -25,12 +25,12 @@
           placeholder="mail@example.com"
         >
       </div>
+      {{ role }}
       <div class="flex flex-col py-2">
         <label class="mb-2">Role:</label>
         <select v-model="role" class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900">
           <option :value="null">-- Please select an option --</option>
-          <option value="1">Admin</option>
-          <option value="2">Cashier</option>
+          <option v-for="(role, index) in roles" :key="index" :value="role.value">{{role.name}}</option>
         </select>
       </div>
     </div>
@@ -50,7 +50,8 @@ export default defineComponent({
       name: '',
       email: '',
       role: '',
-      id: ''
+      id: '',
+      roles: []
     }
   },
   methods: {
@@ -59,13 +60,32 @@ export default defineComponent({
       let params = this.$route.params
       DataService.listUsers(token)
         .then((response: ResponseData) => {
-            console.log(response.data)
             let user_id: number = parseInt(params.id as string)
             const filteredUsers = response.data.users.filter((user: any) => user.id === user_id)
             this.name  = filteredUsers[0].name
             this.email = filteredUsers[0].email
             this.role  = filteredUsers[0].role_id
             this.id    = filteredUsers[0].id
+          })
+        .catch((e: Error) => {
+          console.log(e);
+        });
+    },
+    fetchRoles(): void {
+      let params = this.$route.params
+      DataService.listRoles()
+        .then((response: ResponseData) => {
+            let role_id: number = parseInt(params.id as string)
+            let _data: any = []
+            response.data.roles.map((role: any) => {
+              console.log(role)
+              _data.push({
+                value: role.id,
+                name: role.name
+              })
+            })
+            this.roles = _data
+            console.log(_data)
           })
         .catch((e: Error) => {
           console.log(e);
@@ -91,6 +111,7 @@ export default defineComponent({
   },
   async created () {
     this.fetchUser()
+    this.fetchRoles()
   },
 });
 </script>

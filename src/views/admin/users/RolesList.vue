@@ -5,7 +5,7 @@
       <p class="text-2xl mb-4">User Roles</p>
       <router-link :to="{ name: 'RoleCreate' }"><button class="base-btn">Create Role</button></router-link>
     </div>
-    <RoleTable :items="items" :columns="columns" />
+    <RoleTable :items="items" :columns="columns" @reload-this="reloadComponent" :key="items"/>
   </div>
 </template>
 
@@ -71,6 +71,10 @@ export default defineComponent({
         .catch((e: Error) => {
           console.log(e);
         });
+    },
+    reloadComponent(): void {
+      this.$forceUpdate();
+      console.log('forced update')
     }
   },
   async created () {

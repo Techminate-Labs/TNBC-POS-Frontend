@@ -65,7 +65,6 @@ export default defineComponent({
                 permissions: permission[name]
               })
             })
-            console.log(_items)
             this.items = _items
           })
         .catch((e: Error) => {

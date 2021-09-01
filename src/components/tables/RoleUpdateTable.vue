@@ -40,7 +40,6 @@
           </tbody>
         </table>
       </div>
-      <button class="base-btn float-right" @click="updateRole">Save</button>
     </div>
   </div>
 </template>

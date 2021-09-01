@@ -190,6 +190,7 @@ export default defineComponent({
         .then((response: ResponseData) => {
             console.log(`role with id ${_id} deleted`)
             console.log(response)
+            this.$emit('reloadThis')
           })
         .catch((e: Error) => {
           console.log(e);

@@ -45,7 +45,7 @@ class DataService {
   }
 
   addRole(data: any): Promise<any> {
-    return http.post(`/roles`, data, { headers: { "Authorization": `Bearer ${_token}` } });
+    return http.post('/roles', data, { headers: { "Authorization": `Bearer ${_token}` } });
   }
 
   deleteRole(id: number): Promise<any> {
