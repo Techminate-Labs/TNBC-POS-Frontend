@@ -16,6 +16,10 @@ class DataService {
     return http.post("/forgot-password", data);
   }
 
+  resetPassword(data: any): Promise<any> {
+    return http.post("/reset-password", data);
+  }
+
   listUsers(token: any): Promise<any> {
     return http.get("/users", { headers: { "Authorization": `Bearer ${token}` } });
   }

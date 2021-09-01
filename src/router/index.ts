@@ -3,8 +3,8 @@ import store from '@/store'
 import GuestLogin from '../views/guest/GuestLogin.vue'
 import GuestForgotPassword from '../views/guest/GuestForgotPassword.vue'
 import GuestForgotPasswordEmailSent from '../views/guest/GuestForgotPasswordEmailSent.vue'
-import GuestRecoverPassword from '../views/guest/GuestRecoverPassword.vue'
-import GuestRecoverPasswordSuccess from '../views/guest/GuestRecoverPasswordSuccess.vue'
+import GuestResetPassword from '../views/guest/GuestResetPassword.vue'
+import GuestResetPasswordSuccess from '../views/guest/GuestResetPasswordSuccess.vue'
 import Dashboard from '../views/admin/Dashboard.vue'
 import UserManagement from '../views/admin/users/UserManagement.vue'
 import RolesList from '../views/admin/users/RolesList.vue'
@@ -32,7 +32,7 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
-    path: '/password-reset',
+    path: '/recover-password',
     name: 'GuestForgotPassword',
     component: GuestForgotPassword,
     meta: {
@@ -48,17 +48,17 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
-    path: '/recover-password',
-    name: 'GuestRecoverPassword',
-    component: GuestRecoverPassword,
+    path: '/reset-password',
+    name: 'GuestResetPassword',
+    component: GuestResetPassword,
     meta: {
       layout: 'GuestLayout'
     }
   },
   {
-    path: '/recover-password-success',
-    name: 'GuestRecoverPasswordSuccess',
-    component: GuestRecoverPasswordSuccess,
+    path: '/reset-password-success',
+    name: 'GuestResetPasswordSuccess',
+    component: GuestResetPasswordSuccess,
     meta: {
       layout: 'GuestLayout'
     }

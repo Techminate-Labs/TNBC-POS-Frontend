@@ -47,6 +47,7 @@ export default defineComponent({
       DataService.forgotPassword(data)
         .then((response: ResponseData) => {
             console.log(response)
+            this.$store.commit('setUserEmail', this.email)
             this.$router.push('/password-reset-sent')
           })
         .catch((e: Error) => {

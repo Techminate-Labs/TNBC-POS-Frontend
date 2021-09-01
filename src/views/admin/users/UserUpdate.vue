@@ -78,21 +78,19 @@ export default defineComponent({
             let role_id: number = parseInt(params.id as string)
             let _data: any = []
             response.data.roles.map((role: any) => {
-              console.log(role)
               _data.push({
                 value: role.id,
                 name: role.name
               })
             })
             this.roles = _data
-            console.log(_data)
           })
         .catch((e: Error) => {
           console.log(e);
         });
     },
     updateUser(): void {
-      console.log('add user!');
+      console.log('update user!');
       let data = {
         name: this.name,
         email: this.email,
@@ -101,8 +99,7 @@ export default defineComponent({
       let id = parseInt(this.id)
       DataService.updateUser(data, id)
         .then((response: ResponseData) => {
-            console.log(response)
-            console.log('added user to db!')
+            console.log('user updated!')
           })
         .catch((e: Error) => {
           console.log(e);

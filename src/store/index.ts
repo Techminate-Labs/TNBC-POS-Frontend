@@ -4,18 +4,12 @@ import createPersistedState from 'vuex-persistedstate'
 export default createStore({
   state: {
     isAuthenticated: false,
-    bearerToken: ''
+    bearerToken: '',
+    userEmail: '',
+    isEmailVerified: false
   },
   mutations: {
     initializeStore(state) {
-      if (localStorage.getItem('bearerToken') !== '') {
-        const token = localStorage.getItem('bearerToken') as string
-        state.bearerToken = token
-        state.isAuthenticated = true
-      } else {
-        state.bearerToken = ''
-        state.isAuthenticated = false
-      }
     },
     setBearerToken(state, bearerToken) {
       state.bearerToken = bearerToken
@@ -23,12 +17,18 @@ export default createStore({
     setAuthentication(state, authentication) {
       state.isAuthenticated = authentication
     },
+    setUserEmail(state, email) {
+      state.userEmail = email
+    },
+    setEmailVerification(state, verification) {
+      state.isAuthenticated = verification
+    },
   },
   actions: {
   },
   modules: {
   },
   plugins: [createPersistedState({
-    paths: ['isAuthenticated', 'bearerToken']
+    paths: ['isAuthenticated', 'bearerToken', 'userEmail', 'isEmailVerified'],
   })]
 })

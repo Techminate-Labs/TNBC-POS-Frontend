@@ -11,10 +11,15 @@
       <AdditionalSideBar
         class="hidden"
         :singleMenu="singleMenu"
-        @close-additional-sidebar="openAdditionalSideBar = false"
+        @close-additional-sidebar="openAdditionalSideBar === false"
         :class="openAdditionalSideBar ? 'active' : ''" 
       />
-      <router-view />
+      <div class="flex-grow">
+        <div class="bg-red-300 text-wite w-full py-2 px-8 text-lg" v-if="!isEmailVerified">
+          <p>Your account has not been verified ! Please <button class="underline">send a verification email to your inbox.</button></p>
+        </div>
+        <router-view />
+      </div>
     </div>
   </div>
 </template>
@@ -109,6 +114,11 @@ export default defineComponent({
       this.openAdditionalSideBar = true
       let _singleMenu: any = item
       this.singleMenu = _singleMenu
+    }
+  },
+  computed: {
+    isEmailVerified() {
+      return this.$store.state.isEmailVerified
     }
   }
 });

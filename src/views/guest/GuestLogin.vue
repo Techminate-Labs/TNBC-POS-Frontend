@@ -13,7 +13,6 @@
         v-model="email" 
         placeholder="mail@example.com"
       />
-      {{ email }}
     </div>
     <div class="flex flex-col py-2">
       <label class="mb-2" for="password">Password:</label>
@@ -24,13 +23,12 @@
         v-model="password" 
         placeholder="*******************"
       />
-      {{ password }}
     </div>
     <button class="base-btn" @click="logInUser">
       Log In
     </button>
     <div>
-      <router-link to="/password-reset" class="hover:underline">Reset your password here</router-link>
+      <router-link :to="{ name: 'GuestForgotPassword' }" class="hover:underline">Reset your password here</router-link>
     </div>
   </div>
 </template>
@@ -58,10 +56,9 @@ export default defineComponent({
         .then((response: ResponseData) => {
             this.$store.commit('setBearerToken', response.data.token)
             this.$store.commit('setAuthentication', true)
-
-            localStorage.setItem('bearerToken', response.data.token)
+            this.$store.commit('setUserEmail', this.email)
             this.$router.push('/dashboard')
-          })
+        })
         .catch((e: Error) => {
           console.log(e);
         });
