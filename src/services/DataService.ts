@@ -40,8 +40,8 @@ class DataService {
     return http.get('/roles', { headers: { "Authorization": `Bearer ${_token}` } });
   }
 
-  updateRole(id: number): Promise<any> {
-    return http.put(`/roles/${id}`, { headers: { "Authorization": `Bearer ${_token}` } });
+  updateRole(data: any, id: number): Promise<any> {
+    return http.put(`/roles/${id}`, data, { headers: { "Authorization": `Bearer ${_token}` } });
   }
 
   addRole(data: any): Promise<any> {

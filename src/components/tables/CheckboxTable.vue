@@ -5,6 +5,9 @@
         <table class="divide-y divide-gray-200 border-collapse w-full">
           <thead class="bg-gray-50">
             <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Section
+              </th>
               <th 
                 @click="sort(column.attribute)" 
                 v-for="(column, index) in columns" 
@@ -16,17 +19,20 @@
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200">
-            <tr v-for="(item, key, i) in sortedItems" :key="i" class="bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-              <td>{{item.name}}</td>
+            <tr v-for="(item, key, i) in items" :key="i" class="bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+              <td
+              class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">
+                {{item.name}}
+              </td>
               <td 
-                v-for="(textColumn, j) in textColumns" 
+                v-for="(column, j) in allColumns" 
                 :key="j" 
-                :data-label="textColumn.attribute"
+                :data-label="column.attribute"
                 class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">
                 <div class="flex-shrink-0">
                   <div>
-                    <input type="checkbox" v-model="item.permissions[textColumn.attribute]" />
-                    {{ item.permissions[textColumn.attribute] }}
+                    <input type="checkbox" v-model="item.permissions[column.attribute]" />
+                    {{ item.permissions[column.attribute] }}
                   </div>
                 </div>
               </td>
@@ -34,111 +40,62 @@
           </tbody>
         </table>
       </div>
+      <button class="base-btn float-right" @click="updateRole">Save</button>
     </div>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { CheckboxTableColumns, CheckboxTableItems } from '@/types/CheckboxTable'
+import DataService from "@/services/DataService";
+import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
   name: 'CheckboxTable',
   props: {
     items: {
-      type: Array as PropType<Array<CheckboxTableItems>>,
+      type: Array as any,
       required: true
     },
     columns: {
-      type:  Array as PropType<Array<CheckboxTableColumns>>,
+      type: Array as PropType<Array<CheckboxTableColumns>>,
+      required: true 
+    },
+    name: {
+      type: String,
       required: true 
     }
   },
-  data() {
-    return {
-      prevPage: null as null | number,
-      nextPage: null as null | number,
-      currentPage: null as null | number,
-      pageNumbers: [] as number[],
-      pageNumberCount: 1 as number,
-      totalItems: this.items.length as number,
-      maxItemsPerPage: 5 as number,
-      lastPage: Math.ceil((this.totalItems as unknown as number) / (this.maxItemsPerPage as unknown as number)) as number,
-      notEnoughPages: true as boolean,
-      currentSort: 'id' as string,
-      currentSortDir: 'asc' as string,
-      activeItem: null as null | number
-    }
-  },
   methods: {
-    onChange(): void {
-      this.sortedItems
-      this.displayPages
-    },
-    changeItemsInPage(num: number): void {
-    this.currentPage = num
-    this.activeItem = num
-    },
-    changeToPreviousPage(): void {
-      if (this.currentPage && this.activeItem)
-        if (this.currentPage > 1) {
-          this.currentPage -= 1
-          this.activeItem -= 1
-        } else {
-          this.currentPage = 1
-          this.activeItem = 1
-        }
-    },
-    changeToNextPage(): void {
-      if (this.currentPage && this.activeItem)
-        if (this.currentPage < this.lastPage) {
-          this.currentPage += 1
-          this.activeItem += 1
-        } else {
-          this.currentPage = this.lastPage
-          this.activeItem = this.lastPage
-        }
-    },
-    sort(s: string): void {
-      //if s == current sort, reverse
-      if(s === this.currentSort) {
-        this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
+    updateRole(): void {
+      console.log('update role clicked!')
+      let _permissions: any = []
+      this.items.map((item: any) => {
+        let name = item.name
+
+        _permissions.push({
+          [item.name]: item.permissions
+        })
+      })
+      let role_id: number = parseInt(this.$route.params.id as string)
+      console.log(_permissions)
+      let data = {
+        name: this.name,
+        permissions: _permissions
       }
-      this.currentSort = s;
+      DataService.updateRole(data as any, role_id as number)
+        .then((response: ResponseData) => {
+            console.log(response)
+          })
+        .catch((e: Error) => {
+          console.log(e);
+        });
     }
   },
   computed: {
-    displayPages() {
-      this.lastPage = Math.ceil(this.totalItems / this.maxItemsPerPage)
-      const totalPages = this.lastPage;
-      let currentPage: any = this.currentPage;
-
-      if ([1, 2, 3, 4].includes(currentPage)) currentPage = 3;
-      else if ([totalPages - 1, totalPages].includes(currentPage)) currentPage = Math.max(0, totalPages - Math.trunc(5 / 2));
-      if (totalPages < 5){
-        return [...Array(totalPages).keys()].map(i => Math.max(0, i - Math.trunc(5 / 2) + currentPage))
-      } else {
-        return [...Array(5).keys()].map(i => Math.max(0, i - Math.trunc(5 / 2) + currentPage))
-      }
-    },
-    sortedItems(): any[] {
-      return this.items.sort((a: any, b: any) => {
-        let modifier = 1;
-        if(this.currentSortDir === 'desc') modifier = -1;
-        if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
-        if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
-        return 0;
-      });
-    },
-    textColumns(): any[] {
-      return this.columns.filter((c: any) => c.attribute !== 'image' )
-    },
-    imageColumn(): any[] {
-      return this.columns.filter((c: any) => c.attribute === 'image' )
+    allColumns(): any[] {
+      return this.columns
     }
-  },
-  mounted () {
-    this.currentPage = 1
-    this.activeItem = 1
   }
 });
 </script>
