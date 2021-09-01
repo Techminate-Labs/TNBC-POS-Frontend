@@ -23,6 +23,7 @@
         <router-view />
       </div>
     </div>
+    <Footer />
   </div>
 </template>
 
@@ -31,6 +32,7 @@ import { defineComponent, PropType } from 'vue';
 import { MenuItem, SubMenuItem } from '@/types/SideBar'
 import SideBar from '@/components/menus/SideBar.vue'
 import TopNavigation from '@/components/menus/TopNavigation.vue'
+import Footer from '@/components/footer/Footer.vue'
 import AdditionalSideBar from '@/components/menus/AdditionalSideBar.vue'
 
 export default defineComponent({
@@ -38,7 +40,8 @@ export default defineComponent({
   components: {
     SideBar,
     TopNavigation,
-    AdditionalSideBar
+    AdditionalSideBar,
+    Footer
   },
   data() {
     return {
