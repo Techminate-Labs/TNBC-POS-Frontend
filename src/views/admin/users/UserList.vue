@@ -5,13 +5,13 @@
       <p class="text-2xl mb-4">User List</p>
       <button class="base-btn"><router-link to="/user-management/user-add">Create User</router-link></button>
     </div>
-    <Table :items="items" :columns="columns" />
+    <UserTable :items="items" :columns="columns" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import Table from '@/components/tables/Table.vue'
+import UserTable from '@/components/tables/UserTable.vue'
 import DataService from "@/services/DataService";
 import ResponseData from "@/types/ResponseData";
 import formatDateMixin from '@/mixins/formatDateMixin.ts';
@@ -19,7 +19,7 @@ import formatDateMixin from '@/mixins/formatDateMixin.ts';
 export default defineComponent({
   name: 'UserList',
   components: {
-    Table
+    UserTable
   },
   data() {
     return {
@@ -58,7 +58,6 @@ export default defineComponent({
       let token = this.$store.state.bearerToken
       DataService.listUsers(token)
         .then((response: ResponseData) => {
-            console.log(response.data)
             let _users: any = []
             const _ = response.data.users.map((user: any) => {
               var _formated_created_date = this.formatDate(new Date(user.created_at))

@@ -31,9 +31,9 @@
           class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900"
           v-model="role">
           <option :value="null">-- Please select an option --</option>
-          <option value="admin">Admin</option>
-          <option value="editor">Editor</option>
-          <option value="customer">Customer</option>
+          <option value="1">Admin</option>
+          <option value="2">Editor</option>
+          <option value="3">Customer</option>
         </select>
       </div>
       <div class="flex flex-col py-2">
@@ -42,7 +42,7 @@
           class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
           type="password" 
           name="password" 
-          v-model="paswword" 
+          v-model="password" 
           placeholder="*************"
         >
       </div>
@@ -70,11 +70,11 @@ export default defineComponent({
   name: 'AddUser',
   data() {
     return {
-      name: null,
-      email: null,
-      role: null,
-      password: null,
-      passwordConfirmation: null,
+      name: '',
+      email: '',
+      role: '',
+      password: '',
+      passwordConfirmation: '',
     }
   },
   methods: {
@@ -83,9 +83,9 @@ export default defineComponent({
       let data = {
         name: this.name,
         email: this.email,
-        role: this.role,
         password: this.password,
-        passwordConfirmation: this.passwordConfirmation,
+        password_confirmation: this.passwordConfirmation,
+        role_id: Number(this.role),
       }
       DataService.addUser(data)
         .then((response: ResponseData) => {

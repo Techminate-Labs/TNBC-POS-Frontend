@@ -11,7 +11,7 @@
           class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
           type="text" 
           name="name" 
-          :value="name" 
+          v-model="name" 
           placeholder="John Doe"
         >
       </div>
@@ -21,35 +21,77 @@
           class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
           type="email" 
           name="email" 
-          :value="email" 
+          v-model="email" 
           placeholder="mail@example.com"
         >
       </div>
       <div class="flex flex-col py-2">
         <label class="mb-2">Role:</label>
-        <select :value="role" class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900">
+        <select v-model="role" class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900">
           <option :value="null">-- Please select an option --</option>
-          <option value="admin">Admin</option>
-          <option value="editor">Editor</option>
-          <option value="customer">Customer</option>
+          <option value="1">Admin</option>
+          <option value="2">Editor</option>
+          <option value="3">Customer</option>
         </select>
       </div>
     </div>
-    <button class="base-btn float-right">Save</button>
+    <button class="base-btn float-right" @click="updateUser">Save</button>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import DataService from "@/services/DataService";
+import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
   name: 'EditUser',
   data() {
     return {
-      name: 'John Doe',
-      email: 'johndoe@mailinator.com',
-      role: 'admin'
+      name: '',
+      email: '',
+      role: '',
+      id: ''
     }
-  }
+  },
+  methods: {
+    fetchUser(): void {
+      let token = this.$store.state.bearerToken
+      let params = this.$route.params
+      DataService.listUsers(token)
+        .then((response: ResponseData) => {
+            console.log(response.data)
+            let user_id = Number(params.id)
+            const filteredUsers = response.data.users.filter((user: any) => user.id === user_id)
+            this.name  = filteredUsers[0].name
+            this.email = filteredUsers[0].email
+            this.role  = filteredUsers[0].role_id
+            this.id    = filteredUsers[0].id
+          })
+        .catch((e: Error) => {
+          console.log(e);
+        });
+    },
+    updateUser(): void {
+      console.log('add user!');
+      let data = {
+        name: this.name,
+        email: this.email,
+        role_id: this.role,
+      }
+      let id = Number(this.id)
+      DataService.updateUser(data, id)
+        .then((response: ResponseData) => {
+            console.log(response)
+            console.log('added user to db!')
+          })
+        .catch((e: Error) => {
+          console.log(e);
+        });
+    }
+  },
+  async created () {
+    this.fetchUser()
+  },
 });
 </script>

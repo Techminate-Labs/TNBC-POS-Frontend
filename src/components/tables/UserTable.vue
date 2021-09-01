@@ -37,13 +37,13 @@
                   <img class="h-10 w-10 rounded-full" :src="item[image.attribute]" alt="" />
                 </div>
               </td>
-                            <td 
+              <td 
                 data-label="Action"
                 class="w-full lg:w-auto px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <a href="#" class="text-indigo-600 hover:text-indigo-900 mr-2">Add profile</a>
-                <a href="#" class="text-indigo-600 hover:text-indigo-900 mr-2">Edit</a>
-                <a href="#" class="text-indigo-600 hover:text-indigo-900 mr-2">View</a>
-                <a href="#" class="text-indigo-600 hover:text-indigo-900 mr-2">Delete</a>
+                <router-link to="" class="text-indigo-600 hover:text-indigo-900 mr-2">Add profile</router-link>
+                <router-link :to="'/user-management/user-edit/' + item.id" class="text-indigo-600 hover:text-indigo-900 mr-2">Edit</router-link>
+                <router-link to="" class="text-indigo-600 hover:text-indigo-900 mr-2">View</router-link>
+                <button class="text-indigo-600 hover:text-indigo-900 mr-2">Delete</button>
               </td>
             </tr>
           </tbody>
@@ -126,7 +126,7 @@
 import { defineComponent, PropType } from 'vue';
 
 export default defineComponent({
-  name: 'Table',
+  name: 'UserTable',
   props: {
     items: [] as any,
     columns: [] as PropType<Array<Object>> as any,

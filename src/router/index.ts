@@ -97,7 +97,7 @@ const routes: Array<RouteRecordRaw> = [
         component: AddUser,
       },
       {
-        path: 'user-edit',
+        path: 'user-edit/:id',
         component: EditUser,
       },
       {
