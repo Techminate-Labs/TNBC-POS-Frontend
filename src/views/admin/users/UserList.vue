@@ -48,7 +48,11 @@ export default defineComponent({
         {
           attribute: 'updated_at',
           name: 'updated on'
-        }
+        },
+        {
+          attribute: 'email_verified_at',
+          name: 'email verified on'
+        },
       ]
     }
   },
@@ -59,9 +63,11 @@ export default defineComponent({
       DataService.listUsers(token)
         .then((response: ResponseData) => {
             let _users: any = []
+            console.log(response.data)
             const _ = response.data.users.map((user: any) => {
               var _formated_created_date = this.formatDate(new Date(user.created_at))
               var _formated_updated_date = this.formatDate(new Date(user.updated_at))
+              var _formated_verified_date = this.formatDate(new Date(user.email_verified_at))
               _users.push(
                 {
                   id: user.id,
@@ -69,7 +75,8 @@ export default defineComponent({
                   email: user.email,
                   role: user.role.name,
                   created_at: _formated_created_date,
-                  updated_at: _formated_updated_date
+                  email_verified_at: _formated_created_date,
+                  updated_at: _formated_verified_date
                 }
               )
               this.items = _users

@@ -1,6 +1,6 @@
 <template>
   <nav class="h-16 flex px-8 shadow-md relative z-30 bg-white">
-    <div v-if="links" class="self-center">
+    <div v-if="links" class="self-center flex flex-nowrap justify-between w-full">
       <!-- Menu Icon -->
       <div @click="$emit('toogleSidebar')" class="cursor-pointer">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">

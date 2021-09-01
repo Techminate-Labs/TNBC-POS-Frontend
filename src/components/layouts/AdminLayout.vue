@@ -1,20 +1,22 @@
 <template>
   <div id="admin" class="bg-gray-100">
-    <TopNavigation :links="true" @toogle-sidebar="toogleSideBar = !toogleSideBar" />
+    <TopNavigation :links="true" @toogle-sidebar="handleSidebar" />
     <div class="flex flex-col md:flex-row flex-nowrap">
-      <SideBar 
-        class="hidden" 
-        :menu="menu"
-        :class="toogleSideBar ? 'active' : ''" 
-        @open-additional-sidebar="handleSubMenus"
-      />
-      <AdditionalSideBar
-        class="hidden"
-        :singleMenu="singleMenu"
-        @close-additional-sidebar="openAdditionalSideBar === false"
-        :class="openAdditionalSideBar ? 'active' : ''" 
-      />
-      <div class="flex-grow">
+      <div class="flex flex-row flew-nowrap">
+        <SideBar 
+          class="hidden" 
+          :menu="menu"
+          :class="toogleSideBar ? 'active' : ''" 
+          @open-additional-sidebar="handleSubMenus"
+        />
+        <AdditionalSideBar
+          class="hidden"
+          :singleMenu="singleMenu"
+          @close-additional-sidebar="closeAdditionalSidebar"
+          :class="openAdditionalSideBar ? 'active' : ''" 
+        />
+      </div>
+      <div class="flex-grow overflow-x-hidden">
         <div class="bg-red-300 text-wite w-full py-2 px-8 text-lg" v-if="!isEmailVerified">
           <p>Your account has not been verified ! Please <button class="underline">send a verification email to your inbox.</button></p>
         </div>
@@ -114,6 +116,14 @@ export default defineComponent({
       this.openAdditionalSideBar = true
       let _singleMenu: any = item
       this.singleMenu = _singleMenu
+    },
+    handleSidebar(){
+      this.toogleSideBar = !this.toogleSideBar
+      this.openAdditionalSideBar = false
+    },
+    closeAdditionalSidebar(){
+      console.log('emitted closeAddsidebar')
+      this.openAdditionalSideBar = false
     }
   },
   computed: {
