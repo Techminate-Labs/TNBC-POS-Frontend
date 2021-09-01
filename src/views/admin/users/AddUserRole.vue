@@ -21,14 +21,8 @@ export default defineComponent({
   data() {
     return {
       items: [
-        { section: 'POS', create: false, edit: false, delete: false, view: false, list: false},
-        { section: 'Users', create: true, edit: true, delete: true, view: true, list: false},
-        { section: 'Role', create: false, edit: false, delete: false, view: false, list: false},
-        { section: 'Customer', create: false, edit: false, delete: false, view: false, list: false},
-        { section: 'Category', create: false, edit: false, delete: false, view: false, list: false},
-        { section: 'Product', create: false, edit: false, delete: false, view: false, list: false},
-        { section: 'Report', create: false, edit: false, delete: false, view: false, list: false},
-        { section: 'TNBC_Transaction', create: false, edit: false, delete: false, view: false, list: false},
+        { section: 'role', create: false, edit: false, delete: false, view: false, list: false},
+        { section: 'product', create: false, edit: false, delete: false, view: false, list: false}
       ],
       columns: [
         {

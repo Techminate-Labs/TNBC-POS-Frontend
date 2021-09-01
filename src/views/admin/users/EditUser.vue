@@ -30,8 +30,7 @@
         <select v-model="role" class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900">
           <option :value="null">-- Please select an option --</option>
           <option value="1">Admin</option>
-          <option value="2">Editor</option>
-          <option value="3">Customer</option>
+          <option value="2">Cashier</option>
         </select>
       </div>
     </div>
@@ -61,7 +60,7 @@ export default defineComponent({
       DataService.listUsers(token)
         .then((response: ResponseData) => {
             console.log(response.data)
-            let user_id = Number(params.id)
+            let user_id: number = parseInt(params.id as string)
             const filteredUsers = response.data.users.filter((user: any) => user.id === user_id)
             this.name  = filteredUsers[0].name
             this.email = filteredUsers[0].email

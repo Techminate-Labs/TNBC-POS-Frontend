@@ -3,185 +3,27 @@
     <p>Breadcrumb</p>
     <div class="flex flex-nowrap justify-between ">
       <p class="text-2xl mb-4">User Roles</p>
-      <button class="base-btn"><router-link to="/user-management/user-add-role">Create Role</router-link></button>
+      <router-link to="/user-management/user-add-role"><button class="base-btn">Create Role</button></router-link>
     </div>
-    <Table :items="items" :columns="columns" />
+    <RoleTable :items="items" :columns="columns" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import Table from '@/components/tables/Table.vue'
+import RoleTable from '@/components/tables/RoleTable.vue'
+import DataService from "@/services/DataService";
+import ResponseData from "@/types/ResponseData";
+import formatDateMixin from '@/mixins/formatDateMixin.ts';
 
 export default defineComponent({
   name: 'UserRoles',
   components: {
-    Table
+    RoleTable
   },
   data() {
     return {
-      items: [
-        {
-          id: 1,
-          name: 'Naga Burger',
-          category: 'lorem ipsum',
-          price: 125,
-          stock: 17,
-          availability: 'yes',
-        },
-        {
-          id: 2,
-          name: 'Naga Burger',
-          category: 'lorem ipsum',
-          price: 71,
-          stock: 4,
-          availability: 'yes',
-        },
-        {
-          id: 3,
-          name: 'Naga Burger',
-          category: 'lorem ipsum',
-          price: 30035,
-          stock: 0,
-          availability: 'no',
-        },
-        {
-          id: 4,
-          name: 'Naga Burger',
-          category: 'lorem ipsum',
-          price: 42,
-          stock: 800,
-          availability: 'yes',
-        },
-        {
-          id: 5,
-          name: 'Naga Burger',
-          category: 'lorem ipsum',
-          price: 2,
-          stock: 456,
-          availability: 'yes',
-        },
-        {
-          id: 6,
-          name: 'Naga Burger',
-          category: 'lorem ipsum',
-          price: 12378,
-          stock: 0,
-          availability: 'no',
-        },
-        {
-          id: 7,
-          name: 'Naga Burger',
-          category: 'lorem ipsum',
-          price: 57,
-          stock: 3,
-          availability: 'yes',
-        },
-        {
-          id: 8,
-          name: 'Naga Burger',
-          category: 'lorem ipsum',
-          price: 124,
-          stock: 3,
-          availability: 'yes',
-        },
-        {
-          id: 9,
-          name: 'Naga Burger',
-          category: 'lorem ipsum',
-          price: 2,
-          stock: 1,
-          availability: 'yes',
-        },
-        {
-          id: 10,
-          name: 'Naga Burger',
-          category: 'lorem ipsum',
-          price: 0.85,
-          stock: 0,
-          availability: 'no',
-        },
-        {
-          id: 11,
-          name: 'Naga Burger',
-          category: 'lorem ipsum',
-          price: 125,
-          stock: 17,
-          availability: 'yes',
-        },
-        {
-          id: 12,
-          name: 'Naga Burger',
-          category: 'lorem ipsum',
-          price: 71,
-          stock: 4,
-          availability: 'yes',
-        },
-        {
-          id: 13,
-          name: 'Naga Burger',
-          category: 'lorem ipsum',
-          price: 30035,
-          stock: 0,
-          availability: 'no',
-        },
-        {
-          id: 14,
-          name: 'Naga Burger',
-          category: 'lorem ipsum',
-          price: 42,
-          stock: 800,
-          availability: 'yes',
-        },
-        {
-          id: 15,
-          name: 'Naga Burger',
-          category: 'lorem ipsum',
-          price: 2,
-          stock: 456,
-          availability: 'yes',
-        },
-        {
-          id: 16,
-          name: 'Naga Burger',
-          category: 'lorem ipsum',
-          price: 12378,
-          stock: 0,
-          availability: 'no',
-        },
-        {
-          id: 17,
-          name: 'Naga Burger',
-          category: 'lorem ipsum',
-          price: 57,
-          stock: 3,
-          availability: 'yes',
-        },
-        {
-          id: 18,
-          name: 'Naga Burger',
-          category: 'lorem ipsum',
-          price: 124,
-          stock: 3,
-          availability: 'yes',
-        },
-        {
-          id: 19,
-          name: 'Naga Burger',
-          category: 'lorem ipsum',
-          price: 2,
-          stock: 1,
-          availability: 'yes',
-        },
-        {
-          id: 20,
-          name: 'Naga Burger',
-          category: 'lorem ipsum',
-          price: 0.85,
-          stock: 0,
-          availability: 'no',
-        },
-      ],
+      items: [],
       columns: [
         {
           name: '#',
@@ -192,23 +34,47 @@ export default defineComponent({
           attribute: 'name'
         },
         {
-          name: 'category',
-          attribute: 'category'
+          name: 'Created At',
+          attribute: 'created_at'
         },
         {
-          name: 'price',
-          attribute: 'price'
-        },
-        {
-          name: 'stock',
-          attribute: 'stock'
-        },
-        {
-          name: 'availability',
-          attribute: 'availability'
+          name: 'Updated At',
+          attribute: 'updated_at'
         }
       ]
     }
-  }
+  },
+  mixins: [formatDateMixin],
+  methods: {
+    fetchRoles(): void {
+      console.log('roles fetched!')
+      let token = this.$store.state.bearerToken
+      DataService.listRoles()
+        .then((response: ResponseData) => {
+            console.log('roles listed!')
+            console.log(response.data)
+            let _roles: any = []
+            const _ = response.data.roles.map((role: any) => {
+              var _formated_created_date = this.formatDate(new Date(role.created_at))
+              var _formated_updated_date = this.formatDate(new Date(role.updated_at))
+              _roles.push(
+                {
+                  id: role.id,
+                  name: role.name,
+                  created_at: _formated_created_date,
+                  updated_at: _formated_updated_date
+                }
+              )
+              this.items = _roles
+            })
+          })
+        .catch((e: Error) => {
+          console.log(e);
+        });
+    }
+  },
+  async created () {
+    this.fetchRoles()
+  },
 });
 </script>

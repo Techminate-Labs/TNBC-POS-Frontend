@@ -113,7 +113,7 @@ const routes: Array<RouteRecordRaw> = [
         component: UserProfile
       },
       {
-        path: 'user-add-profile',
+        path: 'user-add-profile/:id',
         component: AddProfile
       },
     ]

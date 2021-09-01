@@ -40,10 +40,9 @@
               <td 
                 data-label="Action"
                 class="w-full lg:w-auto px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <router-link :to="'/user-management/user-add-profile/' + item.id" class="text-indigo-600 hover:text-indigo-900 mr-2">Add profile</router-link>
                 <router-link :to="'/user-management/user-edit/' + item.id" class="text-indigo-600 hover:text-indigo-900 mr-2">Edit</router-link>
                 <router-link to="" class="text-indigo-600 hover:text-indigo-900 mr-2">View</router-link>
-                <button @click="deleteUser(item.id)" class="text-indigo-600 hover:text-indigo-900 mr-2">Delete</button>
+                <button @click="deleteRole(item.id)" class="text-indigo-600 hover:text-indigo-900 mr-2">Delete</button>
               </td>
             </tr>
           </tbody>
@@ -128,7 +127,7 @@ import DataService from "@/services/DataService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
-  name: 'UserTable',
+  name: 'RoleTable',
   props: {
     items: [] as any,
     columns: [] as PropType<Array<Object>> as any,
@@ -186,11 +185,11 @@ export default defineComponent({
       }
       this.currentSort = s;
     },
-    deleteUser(id: string){
+    deleteRole(id: string){
       let _id = parseInt(id as string)
-      DataService.deleteUser(_id)
+      DataService.deleteRole(_id)
         .then((response: ResponseData) => {
-            console.log(`user with id ${_id} deleted`)
+            console.log(`role with id ${_id} deleted`)
             console.log(response)
           })
         .catch((e: Error) => {
