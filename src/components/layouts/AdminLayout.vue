@@ -1,28 +1,26 @@
 <template>
   <div id="admin" class="bg-gray-100">
     <TopNavigation :links="true" @toogle-sidebar="handleSidebar" />
-    <div class="flex flex-col md:flex-row flex-nowrap">
-      <div class="flex flex-row flew-nowrap">
+      <div class="flex flex-row flew-nowrap w-full">
         <SideBar 
-          class="hidden" 
+          class="hidden w-1/12" 
           :menu="menu"
           :class="toogleSideBar ? 'active' : ''" 
           @open-additional-sidebar="handleSubMenus"
         />
         <AdditionalSideBar
-          class="hidden"
+          class="hidden w-2/12"
           :singleMenu="singleMenu"
           @close-additional-sidebar="closeAdditionalSidebar"
           :class="openAdditionalSideBar ? 'active' : ''" 
         />
-      </div>
-      <div class="flex-grow overflow-x-hidden">
-        <div class="bg-red-300 text-wite w-full py-2 px-8 text-lg" v-if="!isEmailVerified">
-          <p>Your account has not been verified ! Please <button class="underline">send a verification email to your inbox.</button></p>
+        <div class="w-9/12 flex-grow overflow-x-hidden">
+          <div class="bg-red-300 text-wite w-full py-2 px-8 text-lg" v-if="!isEmailVerified">
+            <p>Your account has not been verified ! Please <button class="underline">send a verification email to your inbox.</button></p>
+          </div>
+          <router-view />
         </div>
-        <router-view />
       </div>
-    </div>
     <Footer />
   </div>
 </template>

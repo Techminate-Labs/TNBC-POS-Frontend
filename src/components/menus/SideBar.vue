@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-full bg-white z-20 relative shadow-lg">
+  <div class="h-full bg-white z-20 relative shadow-lg">
     <nav class="block relative mx-auto justify-between text-gray-700 z-20" aria-label="Side Bar Navigation">
       <ul class="flex flex-wrap md:flex-col md:flex-nowrap justify-evenly lg:grid lg:grid-cols-1 md:divide-x-0 md:divide-y-2 divide-gray-200 text-center text-lg">
         <li 
