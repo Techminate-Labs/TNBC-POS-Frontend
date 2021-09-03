@@ -55,6 +55,14 @@ class DataService {
   deleteRole(id: number): Promise<any> {
     return http.delete(`/roles/${id}`, { headers: { "Authorization": `Bearer ${_token}` } });
   }
+
+  requestEmailVerification(data: any): Promise<any> {
+    return http.post('/email/verification-notification', data, { headers: { "Authorization": `Bearer ${_token}` } });
+  }
+
+  verifyEmail(data: any): Promise<any> {
+    return http.post('/email/verification-notification', data, { headers: { "Authorization": `Bearer ${_token}` } });
+  }
 }
 
 export default new DataService();

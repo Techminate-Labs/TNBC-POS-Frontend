@@ -27,13 +27,9 @@
       </div>
       <div class="flex flex-col py-2">
         <label class="mb-2">Role:</label>
-        <select 
-          class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900"
-          v-model="role">
+        <select v-model="role" class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900">
           <option :value="null">-- Please select an option --</option>
-          <option value="1">Admin</option>
-          <option value="2">Editor</option>
-          <option value="3">Customer</option>
+          <option v-for="(role, index) in roles" :key="index" :value="role.value">{{role.name}}</option>
         </select>
       </div>
       <div class="flex flex-col py-2">
@@ -75,6 +71,7 @@ export default defineComponent({
       role: '',
       password: '',
       passwordConfirmation: '',
+      roles: []
     }
   },
   methods: {
@@ -95,7 +92,28 @@ export default defineComponent({
         .catch((e: Error) => {
           console.log(e);
         });
+    },
+    fetchRoles(): void {
+      let params = this.$route.params
+      DataService.listRoles()
+        .then((response: ResponseData) => {
+            let role_id: number = parseInt(params.id as string)
+            let _data: any = []
+            response.data.roles.map((role: any) => {
+              _data.push({
+                value: role.id,
+                name: role.name
+              })
+            })
+            this.roles = _data
+          })
+        .catch((e: Error) => {
+          console.log(e);
+        });
     }
-  }
+  },
+  async mounted() {
+    this.fetchRoles()
+  },
 });
 </script>

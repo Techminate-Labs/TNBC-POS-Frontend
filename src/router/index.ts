@@ -139,16 +139,20 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/403',
+    name: 'Error403',
     component: Error403
   },
   {
     path: '/404',
+    name: 'Error404',
     component: Error404
   },
   {
     path: '/500',
+    name: 'Error500',
     component: Error500
-  }
+  },
+  { path: '/:pathMatch(.*)*', component: Error404 }
 ]
 
 const router = createRouter({
@@ -161,8 +165,8 @@ router.beforeEach((to, from, next) => {
   let hasToken = store.state.bearerToken
   if (to.meta.auth && !isAuthenticated && !hasToken) {
     next('/')
-  } else if (to.name === "GuestLogin" && isAuthenticated && hasToken) {
-    next('/dashboard')
+    // } else if (to.name === "GuestLogin" && isAuthenticated && hasToken) {
+    //   next('/dashboard')
   } else {
     next()
   }

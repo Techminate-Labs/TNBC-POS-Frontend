@@ -106,7 +106,7 @@ export default defineComponent({
         });
     }
   },
-  async created () {
+  async mounted () {
     this.fetchUser()
     this.fetchRoles()
   },

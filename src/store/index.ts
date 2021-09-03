@@ -21,7 +21,7 @@ export default createStore({
       state.userEmail = email
     },
     setEmailVerification(state, verification) {
-      state.isAuthenticated = verification
+      state.isEmailVerified = verification
     },
   },
   actions: {

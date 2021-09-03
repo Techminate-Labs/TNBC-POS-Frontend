@@ -77,7 +77,7 @@ export default defineComponent({
       console.log('forced update')
     }
   },
-  async created () {
+  async mounted() {
     this.fetchRoles()
   },
 });

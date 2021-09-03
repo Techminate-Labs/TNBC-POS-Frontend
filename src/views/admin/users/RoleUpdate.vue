@@ -72,7 +72,7 @@ export default defineComponent({
         });
     }
   },
-  async created () {
+  async mounted() {
     this.fetchRoles()
   },
 });

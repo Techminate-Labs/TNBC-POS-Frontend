@@ -62,6 +62,37 @@ export default defineComponent({
         .catch((e: Error) => {
           console.log(e);
         });
+    },
+    verifyUserEmailConfirmation(data: any):void {
+      DataService.resetPassword(data)
+        .then((res: ResponseData) => {
+            console.log('password reset!')
+            DataService.verifyEmail(data as any)
+              .then((response: ResponseData) => {
+                  console.log('logged in!')
+                  this.$store.commit('setBearerToken', response.data.token)
+                  this.$store.commit('setAuthentication', true)
+                  this.$router.push('/dashboard')
+              })
+              .catch((e: Error) => {
+                console.log(e);
+              });
+        })
+        .catch((e: Error) => {
+          console.log(e);
+        });
+    }
+  },
+  created() {
+    if (this.$route.query.email_verify_url){
+      console.log(this.$route.query)
+      let query = this.$route.query
+      let data: any = {
+        verify_url: query.email_verify_url,
+        expires: query.expires,
+        signature: query.signature
+      }
+      this.verifyUserEmailConfirmation(data as any)
     }
   }
 });

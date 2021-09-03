@@ -1,7 +1,7 @@
 <template>
   <div id="admin" class="bg-gray-100">
     <TopNavigation :links="true" @toogle-sidebar="handleSidebar" />
-      <div class="flex flex-row flew-nowrap w-full">
+      <div class="flex flex-row flex-nowrap w-full">
         <SideBar 
           class="hidden w-1/12" 
           :menu="menu"
@@ -16,7 +16,7 @@
         />
         <div class="w-9/12 flex-grow overflow-x-hidden">
           <div class="bg-red-300 text-wite w-full py-2 px-8 text-lg" v-if="!isEmailVerified">
-            <p>Your account has not been verified ! Please <button class="underline">send a verification email to your inbox.</button></p>
+            <p>Your account has not been verified ! Please <button @click="requestEmailVerification" class="underline">send a verification email to your inbox.</button></p>
           </div>
           <router-view />
         </div>
@@ -32,6 +32,8 @@ import SideBar from '@/components/menus/SideBar.vue'
 import TopNavigation from '@/components/menus/TopNavigation.vue'
 import Footer from '@/components/footer/Footer.vue'
 import AdditionalSideBar from '@/components/menus/AdditionalSideBar.vue'
+import DataService from "@/services/DataService";
+import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
   name: 'AdminLayout',
@@ -125,6 +127,19 @@ export default defineComponent({
     closeAdditionalSidebar(){
       console.log('emitted closeAddsidebar')
       this.openAdditionalSideBar = false
+    },
+    requestEmailVerification():void {
+      let data: any = []
+      DataService.requestEmailVerification(data)
+        .then((response: ResponseData) => {
+            console.log(response)
+            if (response.data.message === "Already Verified"){
+              this.$store.commit('setEmailVerification', true)
+            }
+          })
+        .catch((e: Error) => {
+          console.log(e);
+        });
     }
   },
   computed: {
