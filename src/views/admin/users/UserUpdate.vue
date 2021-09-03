@@ -99,10 +99,17 @@ export default defineComponent({
       let id = parseInt(this.id)
       DataService.updateUser(data, id)
         .then((response: ResponseData) => {
-            console.log('user updated!')
+            this.$toast.open({
+              message: `${this.name} successfully updated!`,
+              type: "success"
+            })
           })
         .catch((e: Error) => {
           console.log(e);
+          this.$toast.open({
+            message: `There was an error updating that user.`,
+            type: "error"
+          })
         });
     }
   },
