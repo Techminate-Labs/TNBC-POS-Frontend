@@ -1,18 +1,21 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import store from '@/store'
 import GuestLogin from '../views/guest/GuestLogin.vue'
 import GuestForgotPassword from '../views/guest/GuestForgotPassword.vue'
 import GuestForgotPasswordEmailSent from '../views/guest/GuestForgotPasswordEmailSent.vue'
-import GuestRecoverPassword from '../views/guest/GuestRecoverPassword.vue'
-import GuestRecoverPasswordSuccess from '../views/guest/GuestRecoverPasswordSuccess.vue'
+import GuestResetPassword from '../views/guest/GuestResetPassword.vue'
+import GuestResetPasswordSuccess from '../views/guest/GuestResetPasswordSuccess.vue'
 import Dashboard from '../views/admin/Dashboard.vue'
 import UserManagement from '../views/admin/users/UserManagement.vue'
-import AddUserRole from '../views/admin/users/AddUserRole.vue'
-import UserRoles from '../views/admin/users/UserRoles.vue'
+import RolesList from '../views/admin/users/RolesList.vue'
+import RoleCreate from '../views/admin/users/RoleCreate.vue'
+import RoleUpdate from '../views/admin/users/RoleUpdate.vue'
 import UserList from '../views/admin/users/UserList.vue'
-import AddUser from '../views/admin/users/AddUser.vue'
-import EditUser from '../views/admin/users/EditUser.vue'
-import UserProfile from '../views/admin/users/UserProfile.vue'
-import AddProfile from '../views/admin/users/AddProfile.vue'
+import UserCreate from '../views/admin/users/UserCreate.vue'
+import UserUpdate from '../views/admin/users/UserUpdate.vue'
+import ProfileSingle from '../views/admin/users/ProfileSingle.vue'
+import ProfileCreate from '../views/admin/users/ProfileCreate.vue'
+import ProfileUpdate from '../views/admin/users/ProfileUpdate.vue'
 import PointOfSale from '../views/admin/pos/PointOfSale.vue'
 import Error403 from '../views/errors/Error403.vue'
 import Error404 from '../views/errors/Error404.vue'
@@ -24,11 +27,12 @@ const routes: Array<RouteRecordRaw> = [
     name: 'GuestLogin',
     component: GuestLogin,
     meta: {
-      layout: 'GuestLayout'
+      layout: 'GuestLayout',
+      isHome: true
     }
   },
   {
-    path: '/password-reset',
+    path: '/recover-password',
     name: 'GuestForgotPassword',
     component: GuestForgotPassword,
     meta: {
@@ -44,17 +48,17 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
-    path: '/recover-password',
-    name: 'GuestRecoverPassword',
-    component: GuestRecoverPassword,
+    path: '/reset-password',
+    name: 'GuestResetPassword',
+    component: GuestResetPassword,
     meta: {
       layout: 'GuestLayout'
     }
   },
   {
-    path: '/recover-password-success',
-    name: 'GuestRecoverPasswordSuccess',
-    component: GuestRecoverPasswordSuccess,
+    path: '/reset-password-success',
+    name: 'GuestResetPasswordSuccess',
+    component: GuestResetPasswordSuccess,
     meta: {
       layout: 'GuestLayout'
     }
@@ -64,7 +68,8 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Dashboard',
     component: Dashboard,
     meta: {
-      layout: 'AdminLayout'
+      layout: 'AdminLayout',
+      auth: true
     }
   },
   {
@@ -72,7 +77,8 @@ const routes: Array<RouteRecordRaw> = [
     name: 'PointOfSale',
     component: PointOfSale,
     meta: {
-      layout: 'AdminLayout'
+      layout: 'AdminLayout',
+      auth: true
     }
   },
   {
@@ -80,64 +86,91 @@ const routes: Array<RouteRecordRaw> = [
     name: 'UserManagement',
     component: UserManagement,
     meta: {
-      layout: 'AdminLayout'
+      layout: 'AdminLayout',
+      auth: true
     },
     children: [
       {
         path: 'user-list',
+        name: 'UserList',
         component: UserList,
       },
       {
-        path: 'user-add',
-        component: AddUser,
+        path: 'user-create',
+        name: 'UserCreate',
+        component: UserCreate,
       },
       {
-        path: 'user-edit',
-        component: EditUser,
+        path: 'user-update/:id',
+        name: 'UserUpdate',
+        component: UserUpdate,
       },
       {
-        path: 'user-roles',
-        component: UserRoles,
+        path: 'roles-list',
+        name: 'RolesList',
+        component: RolesList,
       },
       {
-        path: 'user-add-role',
-        component: AddUserRole
+        path: 'role-create',
+        name: 'RoleCreate',
+        component: RoleCreate
       },
       {
-        path: 'user-profile',
-        component: UserProfile
+        path: 'role-update/:id',
+        name: 'RoleUpdate',
+        component: RoleUpdate
       },
       {
-        path: 'user-add-profile',
-        component: AddProfile
+        path: 'profile',
+        name: 'ProfileSingle',
+        component: ProfileSingle
+      },
+      {
+        path: 'profile-create/:id',
+        name: 'ProfileCreate',
+        component: ProfileCreate
+      },
+      {
+        path: 'profile-update/:id',
+        name: 'ProfileUpdate',
+        component: ProfileUpdate
       },
     ]
   },
   {
     path: '/403',
+    name: 'Error403',
     component: Error403
   },
   {
     path: '/404',
+    name: 'Error404',
     component: Error404
   },
   {
     path: '/500',
+    name: 'Error500',
     component: Error500
   },
-  // {
-  //   path: '/about',
-  //   name: 'About',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  // }
+  { path: '/:pathMatch(.*)*', component: Error404 }
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  let isAuthenticated = store.state.isAuthenticated
+  let hasToken = store.state.bearerToken
+  if (to.meta.auth && !isAuthenticated && !hasToken) {
+    next('/')
+    // } else if (to.name === "GuestLogin" && isAuthenticated && hasToken) {
+    //   next('/dashboard')
+  } else {
+    next()
+  }
+
 })
 
 export default router

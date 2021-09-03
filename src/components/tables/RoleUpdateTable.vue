@@ -40,7 +40,6 @@
           </tbody>
         </table>
       </div>
-      <button class="base-btn float-right" @click="updateRole">Save</button>
     </div>
   </div>
 </template>
@@ -91,7 +90,7 @@ export default defineComponent({
           })
         .catch((e: Error) => {
           this.$toast.open({
-            message: `There was an error updating that role.`,
+            message: `Could not update that role.`,
             type: "error"
           })
           console.log(e)

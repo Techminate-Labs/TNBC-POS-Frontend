@@ -1,7 +1,7 @@
 <template>
-  <div class="w-full h-screen md:w-2/6 lg:w-1/5 bg-white overflow-hidden z-20 relative shadow-lg">
-    <div class="m-8">
-      <div class="text-2xl pb-6">{{ singleMenu.name }}</div>
+  <div class="h-screen bg-white overflow-hidden z-20 relative shadow-lg">
+    <div class="m-4">
+      <div class="text-lg text-gray-500 pb-6">{{ singleMenu.name }}</div>
       <div v-for="(item, index) in singleMenu.submenus" :key="index" class="pb-3">
         <router-link :to="singleMenu.url + item.url" class="cursor-pointer text-blue-800" @click="$emit('closeAdditionalSidebar')">
           <div class="flex flex-nowrap">

@@ -1,16 +1,12 @@
 interface CheckboxTableItems {
-  section: string,
-  create: boolean,
-  edit: boolean,
-  delete: boolean,
-  view: boolean,
-  list: boolean
+  name: string,
+  permissions: object
 }
 
 
 interface CheckboxTableColumns {
   name: string,
-  attribute: string
+  permissions: string
 }
 
 export { CheckboxTableItems, CheckboxTableColumns }

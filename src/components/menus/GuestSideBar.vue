@@ -1,7 +1,7 @@
 <template>
-  <div class="relative">
+  <div class="relative h-full">
     <img 
-      class="absolute object-cover h-32 md:h-screen w-full"
+      class="absolute object-cover h-full w-full"
       src="@/assets/guest_sidebar_bg.svg" />
   </div>
 </template>

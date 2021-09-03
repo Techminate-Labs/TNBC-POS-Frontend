@@ -1,21 +1,27 @@
 <template>
   <div id="admin" class="bg-gray-100">
-    <TopNavigation :links="true" @toogle-sidebar="toogleSideBar = !toogleSideBar" />
-    <div class="flex flex-col md:flex-row flex-nowrap">
-      <SideBar 
-        class="hidden" 
-        :menu="menu"
-        :class="toogleSideBar ? 'active' : ''" 
-        @open-additional-sidebar="handleSubMenus"
-      />
-      <AdditionalSideBar
-        class="hidden"
-        :singleMenu="singleMenu"
-        @close-additional-sidebar="openAdditionalSideBar = false"
-        :class="openAdditionalSideBar ? 'active' : ''" 
-      />
-      <router-view />
-    </div>
+    <TopNavigation :links="true" @toogle-sidebar="handleSidebar" />
+      <div class="flex flex-row flex-nowrap w-full">
+        <SideBar 
+          class="hidden w-1/12" 
+          :menu="menu"
+          :class="toogleSideBar ? 'active' : ''" 
+          @open-additional-sidebar="handleSubMenus"
+        />
+        <AdditionalSideBar
+          class="hidden w-2/12"
+          :singleMenu="singleMenu"
+          @close-additional-sidebar="closeAdditionalSidebar"
+          :class="openAdditionalSideBar ? 'active' : ''" 
+        />
+        <div class="w-9/12 flex-grow overflow-x-hidden">
+          <div class="bg-red-300 text-wite w-full py-2 px-8 text-lg" v-if="!isEmailVerified">
+            <p>Your account has not been verified ! Please <button @click="requestEmailVerification" class="underline">send a verification email to your inbox.</button></p>
+          </div>
+          <router-view />
+        </div>
+      </div>
+    <Footer />
   </div>
 </template>
 
@@ -24,14 +30,18 @@ import { defineComponent, PropType } from 'vue';
 import { MenuItem, SubMenuItem } from '@/types/SideBar'
 import SideBar from '@/components/menus/SideBar.vue'
 import TopNavigation from '@/components/menus/TopNavigation.vue'
+import Footer from '@/components/footer/Footer.vue'
 import AdditionalSideBar from '@/components/menus/AdditionalSideBar.vue'
+import DataService from "@/services/DataService";
+import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
   name: 'AdminLayout',
   components: {
     SideBar,
     TopNavigation,
-    AdditionalSideBar
+    AdditionalSideBar,
+    Footer
   },
   data() {
     return {
@@ -50,8 +60,7 @@ export default defineComponent({
           icon: 'https://epqrpjmozlcsvbgkxjkp.supabase.in/storage/v1/object/sign/tnbc-pos/svgs/user-group.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0bmJjLXBvcy9zdmdzL3VzZXItZ3JvdXAuc3ZnIiwiaWF0IjoxNjMwMDg4MTQ4LCJleHAiOjE5NDU0NDgxNDh9.fWSpfP7uIO-dDyP8ILCfNtgCLRmBLfPSEbUxHAysVfA',
           submenus: [
             { name: 'User List', url: '/user-list' },
-            { name: 'User Roles', url: '/user-roles' },
-            { name: 'User Profile', url: '/user-profile' }
+            { name: 'User Roles', url: '/roles-list' }
           ]
         },
         {
@@ -110,6 +119,32 @@ export default defineComponent({
       this.openAdditionalSideBar = true
       let _singleMenu: any = item
       this.singleMenu = _singleMenu
+    },
+    handleSidebar(){
+      this.toogleSideBar = !this.toogleSideBar
+      this.openAdditionalSideBar = false
+    },
+    closeAdditionalSidebar(){
+      console.log('emitted closeAddsidebar')
+      this.openAdditionalSideBar = false
+    },
+    requestEmailVerification():void {
+      let data: any = []
+      DataService.requestEmailVerification(data)
+        .then((response: ResponseData) => {
+            console.log(response)
+            if (response.data.message === "Already Verified"){
+              this.$store.commit('setEmailVerification', true)
+            }
+          })
+        .catch((e: Error) => {
+          console.log(e);
+        });
+    }
+  },
+  computed: {
+    isEmailVerified() {
+      return this.$store.state.isEmailVerified
     }
   }
 });

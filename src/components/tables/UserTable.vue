@@ -37,13 +37,13 @@
                   <img class="h-10 w-10 rounded-full" :src="item[image.attribute]" alt="" />
                 </div>
               </td>
-                            <td 
+              <td 
                 data-label="Action"
                 class="w-full lg:w-auto px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <a href="#" class="text-indigo-600 hover:text-indigo-900 mr-2">Add profile</a>
-                <a href="#" class="text-indigo-600 hover:text-indigo-900 mr-2">Edit</a>
-                <a href="#" class="text-indigo-600 hover:text-indigo-900 mr-2">View</a>
-                <a href="#" class="text-indigo-600 hover:text-indigo-900 mr-2">Delete</a>
+                <router-link :to="{ name: 'ProfileCreate', params: { id: item.id } }" class="text-indigo-600 hover:text-indigo-900 mr-2">Add profile</router-link>
+                <router-link :to="{ name: 'UserUpdate', params: { id: item.id } }" class="text-indigo-600 hover:text-indigo-900 mr-2">Edit</router-link>
+                <router-link to="" class="text-indigo-600 hover:text-indigo-900 mr-2">View</router-link>
+                <button @click="deleteUser(item.id)" class="text-indigo-600 hover:text-indigo-900 mr-2">Delete</button>
               </td>
             </tr>
           </tbody>
@@ -124,9 +124,11 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
+import DataService from "@/services/DataService";
+import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
-  name: 'Table',
+  name: 'UserTable',
   props: {
     items: [] as any,
     columns: [] as PropType<Array<Object>> as any,
@@ -178,11 +180,28 @@ export default defineComponent({
         }
     },
     sort(s: string): void {
-      //if s == current sort, reverse
       if(s === this.currentSort) {
         this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
       }
       this.currentSort = s;
+    },
+    deleteUser(id: string){
+      let _id = parseInt(id as string)
+      DataService.deleteUser(_id)
+        .then((response: ResponseData) => {
+          this.$emit('reloadThis')
+          this.$toast.open({
+            message: `User successfully deleted.`,
+            type: "success"
+          })
+        })
+        .catch((e: Error) => {
+          this.$toast.open({
+            message: `Could not delete that user.`,
+            type: "error"
+          })
+          console.log(e)
+        });
     }
   },
   computed: {

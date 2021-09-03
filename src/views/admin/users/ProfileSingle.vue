@@ -18,7 +18,7 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'UserProfile',
+  name: 'ProfileSingle',
   data() {
     return {
       user: {

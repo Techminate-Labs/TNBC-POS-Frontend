@@ -1,28 +1,29 @@
 <template>
-  <div class="w-full h-full md:w-max bg-white z-20 relative shadow-lg">
+  <div class="bg-white z-20 relative shadow-lg">
     <nav class="block relative mx-auto justify-between text-gray-700 z-20" aria-label="Side Bar Navigation">
       <ul class="flex flex-wrap md:flex-col md:flex-nowrap justify-evenly lg:grid lg:grid-cols-1 md:divide-x-0 md:divide-y-2 divide-gray-200 text-center text-lg">
-        <li v-for="(item, index) in menu" :key="index" class="px-2 py-4 md:px-4">
+        <li 
+          v-for="(item, index) in menu" 
+          :key="index" 
+          class="px-1 py-6 md:px-2 cursor-pointer hover:bg-gray-100">
           <div v-if="item.submenus" @click="$emit('openAdditionalSidebar', item)">
-            <router-link :to="item.url">
-              <div class="flex flex-col" aria-label="home icon">
-                <img class="dashboard-icon" :src="item.icon" />
-                <h2 class="text-base">{{item.name}}</h2>
-              </div>
-            </router-link>
+            <div class="flex flex-col flex-nowrap" aria-label="home icon">
+              <img class="dashboard-icon" :src="item.icon" />
+              <h2 class="text-sm">{{item.name}}</h2>
+            </div>
           </div>
           <div v-else>
             <router-link :to="item.url">
-              <div class="flex flex-col" aria-label="home icon" >
+              <div class="flex flex-col flex-nowrap" aria-label="home icon" >
                 <img class="dashboard-icon" :src="item.icon" />
-                <h2 class="text-base">{{item.name}}</h2>
+                <h2 class="text-sm">{{item.name}}</h2>
               </div>
             </router-link>
           </div>
         </li>
       </ul>
     </nav>
-    <div class="hidden md:block md:absolute z-10 w-full h-full top-0 z-0 h-screen bg-white shadow-lg"></div>
+    <div class="hidden md:block md:absolute z-10 w-full h-full top-0 z-0 bg-white shadow-lg"></div>
   </div>
 </template>
 <script lang="ts">
