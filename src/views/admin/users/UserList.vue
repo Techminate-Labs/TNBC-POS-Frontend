@@ -5,7 +5,7 @@
       <p class="text-2xl mb-4">User List</p>
       <router-link :to="{ name: 'UserCreate' }"><button class="base-btn">Create User</button></router-link>
     </div>
-    <UserTable :items="items" :columns="columns" />
+    <UserTable :items="items" :columns="columns" @reload-this="reloadComponent" />
   </div>
 </template>
 
@@ -91,6 +91,9 @@ export default defineComponent({
         .catch((e: Error) => {
           console.log(e);
         });
+    },
+    reloadComponent():void {
+      this.fetchUsers()
     }
   },
   async mounted() {

@@ -47,34 +47,30 @@ export default defineComponent({
   mixins: [formatDateMixin],
   methods: {
     fetchRoles(): void {
-      console.log('roles fetched!')
       let token = this.$store.state.bearerToken
       DataService.listRoles()
         .then((response: ResponseData) => {
-            console.log('roles listed!')
-            console.log(response.data)
-            let _roles: any = []
-            const _ = response.data.roles.map((role: any) => {
-              var _formated_created_date = this.formatDate(new Date(role.created_at))
-              var _formated_updated_date = this.formatDate(new Date(role.updated_at))
-              _roles.push(
-                {
-                  id: role.id,
-                  name: role.name,
-                  created_at: _formated_created_date,
-                  updated_at: _formated_updated_date
-                }
-              )
-              this.items = _roles
-            })
+          let _roles: any = []
+          const _ = response.data.roles.map((role: any) => {
+            var _formated_created_date = this.formatDate(new Date(role.created_at))
+            var _formated_updated_date = this.formatDate(new Date(role.updated_at))
+            _roles.push(
+              {
+                id: role.id,
+                name: role.name,
+                created_at: _formated_created_date,
+                updated_at: _formated_updated_date
+              }
+            )
+            this.items = _roles
           })
+        })
         .catch((e: Error) => {
           console.log(e);
         });
     },
     reloadComponent(): void {
-      this.$forceUpdate();
-      console.log('forced update')
+      this.fetchRoles()
     }
   },
   async mounted() {

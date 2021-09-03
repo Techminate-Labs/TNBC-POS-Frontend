@@ -90,7 +90,6 @@ export default defineComponent({
         });
     },
     updateUser(): void {
-      console.log('update user!');
       let data = {
         name: this.name,
         email: this.email,
@@ -99,17 +98,17 @@ export default defineComponent({
       let id = parseInt(this.id)
       DataService.updateUser(data, id)
         .then((response: ResponseData) => {
-            this.$toast.open({
-              message: `${this.name} successfully updated!`,
-              type: "success"
-            })
+          this.$toast.open({
+            message: `${this.name} successfully updated!`,
+            type: "success"
           })
+        })
         .catch((e: Error) => {
-          console.log(e);
           this.$toast.open({
             message: `There was an error updating that user.`,
             type: "error"
           })
+          console.log(e)
         });
     }
   },

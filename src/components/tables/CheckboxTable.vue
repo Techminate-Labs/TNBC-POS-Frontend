@@ -84,10 +84,17 @@ export default defineComponent({
       }
       DataService.updateRole(data as any, role_id as number)
         .then((response: ResponseData) => {
-            console.log(response)
+            this.$toast.open({
+              message: `${this.name} has been successfully updated!`,
+              type: "success"
+            })
           })
         .catch((e: Error) => {
-          console.log(e);
+          this.$toast.open({
+            message: `There was an error updating that role.`,
+            type: "error"
+          })
+          console.log(e)
         });
     }
   },

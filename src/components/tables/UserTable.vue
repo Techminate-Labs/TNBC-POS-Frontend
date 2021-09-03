@@ -180,7 +180,6 @@ export default defineComponent({
         }
     },
     sort(s: string): void {
-      //if s == current sort, reverse
       if(s === this.currentSort) {
         this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
       }
@@ -190,11 +189,18 @@ export default defineComponent({
       let _id = parseInt(id as string)
       DataService.deleteUser(_id)
         .then((response: ResponseData) => {
-            console.log(`user with id ${_id} deleted`)
-            console.log(response)
+          this.$emit('reloadThis')
+          this.$toast.open({
+            message: `User successfully deleted.`,
+            type: "success"
           })
+        })
         .catch((e: Error) => {
-          console.log(e);
+          this.$toast.open({
+            message: `Could not delete that user.`,
+            type: "error"
+          })
+          console.log(e)
         });
     }
   },

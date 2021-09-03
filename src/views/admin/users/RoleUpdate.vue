@@ -53,22 +53,22 @@ export default defineComponent({
       let params = this.$route.params
       DataService.listRoles()
         .then((response: ResponseData) => {
-            let role_id: number = parseInt(params.id as string)
-            const filteredRoles = response.data.roles.filter((role: any) => role.id === role_id)
-            this.roleName = filteredRoles[0].name
-            let permissions = filteredRoles[0].permissions
-            let _items: any = []
-            permissions.map((permission: any) => {
-              let name = Object.getOwnPropertyNames(permission)[0]
-              _items.push({
-                name: name,
-                permissions: permission[name]
-              })
+          let role_id: number = parseInt(params.id as string)
+          const filteredRoles = response.data.roles.filter((role: any) => role.id === role_id)
+          this.roleName = filteredRoles[0].name
+          let permissions = filteredRoles[0].permissions
+          let _items: any = []
+          permissions.map((permission: any) => {
+            let name = Object.getOwnPropertyNames(permission)[0]
+            _items.push({
+              name: name,
+              permissions: permission[name]
             })
-            this.items = _items
           })
+          this.items = _items
+        })
         .catch((e: Error) => {
-          console.log(e);
+          console.log(e)
         });
     }
   },

@@ -76,7 +76,6 @@ export default defineComponent({
   },
   methods: {
     addUser(): void {
-      console.log('add user!');
       let data = {
         name: this.name,
         email: this.email,
@@ -86,29 +85,35 @@ export default defineComponent({
       }
       DataService.addUser(data)
         .then((response: ResponseData) => {
-            console.log(response)
-            console.log('added user to db!')
+          this.$toast.open({
+            message: `${this.name} successfully added to database!`,
+            type: "success"
           })
+        })
         .catch((e: Error) => {
-          console.log(e);
+          this.$toast.open({
+            message: `There was an error adding that user to the database.`,
+            type: "error"
+          })
+          console.log(e)
         });
     },
     fetchRoles(): void {
       let params = this.$route.params
       DataService.listRoles()
         .then((response: ResponseData) => {
-            let role_id: number = parseInt(params.id as string)
-            let _data: any = []
-            response.data.roles.map((role: any) => {
-              _data.push({
-                value: role.id,
-                name: role.name
-              })
+          let role_id: number = parseInt(params.id as string)
+          let _data: any = []
+          response.data.roles.map((role: any) => {
+            _data.push({
+              value: role.id,
+              name: role.name
             })
-            this.roles = _data
           })
+          this.roles = _data
+        })
         .catch((e: Error) => {
-          console.log(e);
+          console.log(e)
         });
     }
   },

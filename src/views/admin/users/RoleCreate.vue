@@ -96,13 +96,19 @@ export default defineComponent({
         name: this.roleName,
         permissions: _permissions
       }
-      console.log('create role!')
       DataService.addRole(data)
         .then((response: ResponseData) => {
-            console.log(response)
+          this.$toast.open({
+              message: `${this.roleName} has been successfully created!`,
+              type: "success"
+            })
         })
         .catch((e: Error) => {
-          console.log(e);
+          this.$toast.open({
+            message: `There was an error creating that role.`,
+            type: "error"
+          })
+          console.log(e)
         });
     },
   },
