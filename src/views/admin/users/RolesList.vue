@@ -48,7 +48,7 @@ export default defineComponent({
   methods: {
     fetchRoles(): void {
       let token = this.$store.state.bearerToken
-      DataService.listRoles()
+      DataService.listRoles(token)
         .then((response: ResponseData) => {
           let _roles: any = []
           const _ = response.data.roles.map((role: any) => {

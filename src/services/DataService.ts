@@ -8,7 +8,7 @@ class DataService {
   }
 
   logoutUser(token: string): Promise<any> {
-    const body = { };
+    const body = {};
     return http.post("/logout", body, { headers: { "Authorization": `Bearer ${token}` } });
   }
 
@@ -40,8 +40,8 @@ class DataService {
     return http.post('/userProfile', data, { headers: { "Authorization": `Bearer ${_token}` } });
   }
 
-  listRoles(): Promise<any> {
-    return http.get('/roles', { headers: { "Authorization": `Bearer ${_token}` } });
+  listRoles(token: any): Promise<any> {
+    return http.get('/roles', { headers: { "Authorization": `Bearer ${token}` } });
   }
 
   updateRole(data: any, id: number): Promise<any> {

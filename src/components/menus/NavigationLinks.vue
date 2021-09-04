@@ -16,13 +16,21 @@ export default defineComponent({
       let token = this.$store.state.bearerToken
       DataService.logoutUser(token)
         .then((response: ResponseData) => {
-            localStorage.setItem('bearerToken', '')
-            this.$store.commit('setBearerToken', '')
-            this.$store.commit('setAuthentication', false)
-            this.$router.push('/')
+          localStorage.setItem('bearerToken', '')
+          this.$store.commit('setBearerToken', '')
+          this.$store.commit('setAuthentication', false)
+          this.$router.push('/')
+          this.$toast.open({
+            message: `You've been successfully logged out. Bye!`,
+            type: "success"
           })
+        })
         .catch((e: Error) => {
-          console.log(e);
+          this.$toast.open({
+            message: `There was an error logging you out.`,
+            type: "error"
+          })
+          console.log(e)
         });
     }
   }

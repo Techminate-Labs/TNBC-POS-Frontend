@@ -82,27 +82,7 @@ export default defineComponent({
           })
           console.log(e)
         });
-    },
-    fetchRoles(): void {
-      let params = this.$route.params
-      DataService.listRoles()
-        .then((response: ResponseData) => {
-          let role_id: number = parseInt(params.id as string)
-          let _data: any = []
-          response.data.roles.map((role: any) => {
-            _data.push({
-              value: role.id,
-              name: role.name
-            })
-          })
-        })
-        .catch((e: Error) => {
-          console.log(e)
-        });
     }
-  },
-  async mounted() {
-    this.fetchRoles()
-  },
+  }
 });
 </script>

@@ -24,6 +24,7 @@ import Error403 from '../views/errors/Error403.vue'
 import Error404 from '../views/errors/Error404.vue'
 import Error500 from '../views/errors/Error500.vue'
 import VerifyEmailUrl from '../views/VerifyEmailUrl.vue'
+import Empty from '../views/Empty.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -167,11 +168,6 @@ const routes: Array<RouteRecordRaw> = [
       // },
 
     ]
-  },
-  {
-    path: '/email_verify_url=http://127.0.0.1:8000/api/verify-email/5/984ebe7cb40c54f76fe4cfca8ee6b55384b3bdca',
-    name: 'VerifyEmailUrl',
-    component: VerifyEmailUrl
   },
   {
     path: '/403',

@@ -54,22 +54,28 @@ export default defineComponent({
       }
       DataService.loginUser(data)
         .then((response: ResponseData) => {
-            this.$store.commit('setBearerToken', response.data.token)
-            this.$store.commit('setAuthentication', true)
-            this.$store.commit('setUserEmail', this.email)
-            this.$router.push('/dashboard')
+          this.$store.commit('setBearerToken', response.data.token)
+          this.$store.commit('setAuthentication', true)
+          this.$store.commit('setUserEmail', this.email)
+          this.$router.push('/dashboard')
+          this.$toast.open({
+            message: `Hello! You've been successfully logged in!`,
+            type: "success"
+          })
         })
         .catch((e: Error) => {
-          console.log(e);
+          this.$toast.open({
+            message: `There was an error logging you in.`,
+            type: "error"
+          })
+          console.log(e)
         });
     },
     verifyUserEmailConfirmation(data: any):void {
       DataService.resetPassword(data)
         .then((res: ResponseData) => {
-            console.log('password reset!')
             DataService.verifyEmail(data as any)
               .then((response: ResponseData) => {
-                  console.log('logged in!')
                   this.$store.commit('setBearerToken', response.data.token)
                   this.$store.commit('setAuthentication', true)
                   this.$router.push('/dashboard')
