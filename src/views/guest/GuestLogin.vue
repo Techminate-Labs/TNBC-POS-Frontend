@@ -83,17 +83,6 @@ export default defineComponent({
         });
     }
   },
-  created() {
-    if (this.$route.query.email_verify_url){
-      console.log(this.$route.query)
-      let query = this.$route.query
-      let data: any = {
-        verify_url: query.email_verify_url,
-        expires: query.expires,
-        signature: query.signature
-      }
-      this.verifyUserEmailConfirmation(data as any)
-    }
-  }
+
 });
 </script>

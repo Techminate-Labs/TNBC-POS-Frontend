@@ -5,7 +5,7 @@
       <p class="text-2xl mb-4">User Roles</p>
       <router-link :to="{ name: 'RoleCreate' }"><button class="base-btn">Create Role</button></router-link>
     </div>
-    <RoleTable :items="items" :columns="columns" @reload-this="reloadComponent" :key="items"/>
+    <RoleTable :items="items" :columns="columns" @reload-this="reloadComponent"/>
   </div>
 </template>
 
