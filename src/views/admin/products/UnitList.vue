@@ -7,7 +7,7 @@
     </div>
     <SupplierTable :items="items" :columns="columns" @reload-this="reloadComponent" />
     <div class="hidden" :class="isModalOn ? 'active' : ''">
-      <UnitModal @close-modal="isModalOn = false" />
+      <UnitModalCreate @close-modal="isModalOn = false" />
     </div>
   </div>
 </template>
@@ -15,7 +15,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import SupplierTable from '@/components/tables/SupplierTable.vue'
-import UnitModal from '@/components/modals/UnitModal.vue'
+import UnitModalCreate from '@/components/modals/UnitModalCreate.vue'
 import DataService from "@/services/DataService";
 import ResponseData from "@/types/ResponseData";
 import formatDateMixin from '@/mixins/formatDateMixin.ts';
@@ -24,7 +24,7 @@ export default defineComponent({
   name: 'UnitList',
   components: {
     SupplierTable,
-    UnitModal
+    UnitModalCreate
   },
   data() {
     return {
