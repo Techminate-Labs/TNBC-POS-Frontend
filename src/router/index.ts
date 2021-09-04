@@ -19,12 +19,11 @@ import ProfileUpdate from '../views/admin/users/ProfileUpdate.vue'
 import ProductsIndex from '../views/admin/products/ProductsIndex.vue'
 import SupplierList from '../views/admin/products/SupplierList.vue'
 import SupplierCreate from '../views/admin/products/SupplierCreate.vue'
+import UnitList from '../views/admin/products/UnitList.vue'
 import PointOfSale from '../views/admin/pos/PointOfSale.vue'
 import Error403 from '../views/errors/Error403.vue'
 import Error404 from '../views/errors/Error404.vue'
 import Error500 from '../views/errors/Error500.vue'
-import VerifyEmailUrl from '../views/VerifyEmailUrl.vue'
-import Empty from '../views/Empty.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -160,6 +159,11 @@ const routes: Array<RouteRecordRaw> = [
         path: 'supplier-create',
         name: 'SupplierCreate',
         component: SupplierCreate,
+      },
+      {
+        path: 'unit-list',
+        name: 'UnitList',
+        component: UnitList,
       },
       // {
       //   path: 'supplier-update/:id',
