@@ -124,7 +124,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { UserTableItems, UserTableColumns } from '@/types/Tables'
+import { UserTableItems, UserTableColumns } from '@/types/UserTables'
 import DataService from "@/services/DataService";
 import ResponseData from "@/types/ResponseData";
 

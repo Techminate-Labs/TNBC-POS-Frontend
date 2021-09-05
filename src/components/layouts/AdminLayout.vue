@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineComponent } from 'vue';
 import { MenuItem, SubMenuItem } from '@/types/SideBar'
 import SideBar from '@/components/menus/SideBar.vue'
 import TopNavigation from '@/components/menus/TopNavigation.vue'
@@ -47,7 +47,7 @@ export default defineComponent({
     return {
       toogleSideBar: true as boolean,
       openAdditionalSideBar: false as boolean,
-      singleMenu: [] as PropType<Array<MenuItem>>,
+      singleMenu: null || {},
       menu: [
         {
           name: 'Dashboard',
@@ -118,7 +118,7 @@ export default defineComponent({
   methods: {
     handleSubMenus(item: MenuItem){
       this.openAdditionalSideBar = true
-      let _singleMenu: any = item
+      let _singleMenu: MenuItem = item
       this.singleMenu = _singleMenu
     },
     handleSidebar(){
@@ -126,7 +126,6 @@ export default defineComponent({
       this.openAdditionalSideBar = false
     },
     closeAdditionalSidebar(){
-      console.log('emitted closeAddsidebar')
       this.openAdditionalSideBar = false
     },
     requestEmailVerification():void {
@@ -140,7 +139,6 @@ export default defineComponent({
             message: `We just sent an email to you address`,
             type: "success"
           })
-            console.log(response)
           })
         .catch((e: Error) => {
           this.$toast.open({

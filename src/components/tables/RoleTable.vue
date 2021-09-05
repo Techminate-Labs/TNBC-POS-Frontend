@@ -122,14 +122,21 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
+import { RoleTableItems, RoleTableColumns } from '@/types/RoleTables'
 import DataService from "@/services/DataService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
   name: 'RoleTable',
   props: {
-    items: [] as any,
-    columns: [] as PropType<Array<Object>> as any,
+    items: {
+      type: Array as PropType<Array<RoleTableItems>>,
+      required: true
+    },
+    columns: {
+      type: Array as PropType<Array<RoleTableColumns>>,
+      required: true
+    },
   },
   data() {
     return {
