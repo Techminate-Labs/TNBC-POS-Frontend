@@ -11,9 +11,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import ResponseData from "@/types/ResponseData";
 import UserTable from '@/components/tables/UserTable.vue'
 import DataService from "@/services/DataService";
-import ResponseData from "@/types/ResponseData";
 import formatDateMixin from '@/mixins/formatDateMixin.ts';
 
 export default defineComponent({

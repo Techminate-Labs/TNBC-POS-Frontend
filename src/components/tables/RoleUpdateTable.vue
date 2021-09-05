@@ -45,7 +45,6 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { CheckboxTableColumns, CheckboxTableItems } from '@/types/CheckboxTable'
 import DataService from "@/services/DataService";
 import ResponseData from "@/types/ResponseData";
 
@@ -57,7 +56,8 @@ export default defineComponent({
       required: true
     },
     columns: {
-      type: Array as PropType<Array<CheckboxTableColumns>>,
+      // type: Array as PropType<Array<CheckboxTableColumns>>,
+      type: Array as any,
       required: true 
     },
     name: {

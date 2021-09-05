@@ -70,23 +70,6 @@ export default defineComponent({
           })
           console.log(e)
         });
-    },
-    verifyUserEmailConfirmation(data: any):void {
-      DataService.resetPassword(data)
-        .then((res: ResponseData) => {
-            DataService.verifyEmail(data as any)
-              .then((response: ResponseData) => {
-                  this.$store.commit('setBearerToken', response.data.token)
-                  this.$store.commit('setAuthentication', true)
-                  this.$router.push('/dashboard')
-              })
-              .catch((e: Error) => {
-                console.log(e);
-              });
-        })
-        .catch((e: Error) => {
-          console.log(e);
-        });
     }
   },
 

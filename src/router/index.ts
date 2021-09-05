@@ -24,6 +24,7 @@ import PointOfSale from '../views/admin/pos/PointOfSale.vue'
 import Error403 from '../views/errors/Error403.vue'
 import Error404 from '../views/errors/Error404.vue'
 import Error500 from '../views/errors/Error500.vue'
+import VerifyEmailUrl from '../views/VerifyEmailUrl.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -172,6 +173,11 @@ const routes: Array<RouteRecordRaw> = [
       // },
 
     ]
+  },
+  {
+    path: '/email_verify_url',
+    name: 'VerifyEmailUrl',
+    component: VerifyEmailUrl
   },
   {
     path: '/403',

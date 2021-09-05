@@ -124,14 +124,21 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
+import { UserTableItems, UserTableColumns } from '@/types/Tables'
 import DataService from "@/services/DataService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
   name: 'UserTable',
   props: {
-    items: [] as any,
-    columns: [] as PropType<Array<Object>> as any,
+    items: {
+      type: Array as PropType<Array<UserTableItems>>,
+      required: true
+    },
+    columns: {
+      type: Array as PropType<Array<UserTableColumns>>,
+      required: true
+    },
   },
   data() {
     return {

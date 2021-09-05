@@ -60,8 +60,8 @@ class DataService {
     return http.post('/email/verification-notification', data, { headers: { "Authorization": `Bearer ${_token}` } });
   }
 
-  verifyEmail(data: any): Promise<any> {
-    return http.post('/email/verification-notification', data, { headers: { "Authorization": `Bearer ${_token}` } });
+  verifyEmail(path: any): Promise<any> {
+    return http.get(`${path}`, { headers: { "Authorization": `Bearer ${_token}` } });
   }
 }
 
