@@ -142,7 +142,6 @@ export default defineComponent({
       DataService.addUserProfile(data)
         .then((response: ResponseData) => {
             console.log(response)
-            console.log('added user to db!')
           })
         .catch((e: Error) => {
           console.log(e);

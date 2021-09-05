@@ -16,10 +16,15 @@ import UserUpdate from '../views/admin/users/UserUpdate.vue'
 import ProfileSingle from '../views/admin/users/ProfileSingle.vue'
 import ProfileCreate from '../views/admin/users/ProfileCreate.vue'
 import ProfileUpdate from '../views/admin/users/ProfileUpdate.vue'
+import ProductsIndex from '../views/admin/products/ProductsIndex.vue'
+import SupplierList from '../views/admin/products/SupplierList.vue'
+import SupplierCreate from '../views/admin/products/SupplierCreate.vue'
+import UnitList from '../views/admin/products/UnitList.vue'
 import PointOfSale from '../views/admin/pos/PointOfSale.vue'
 import Error403 from '../views/errors/Error403.vue'
 import Error404 from '../views/errors/Error404.vue'
 import Error500 from '../views/errors/Error500.vue'
+import VerifyEmailUrl from '../views/VerifyEmailUrl.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -136,6 +141,43 @@ const routes: Array<RouteRecordRaw> = [
         component: ProfileUpdate
       },
     ]
+  },
+  {
+    path: '/products',
+    name: 'Products',
+    component: ProductsIndex,
+    meta: {
+      layout: 'AdminLayout',
+      auth: true
+    },
+    children: [
+      {
+        path: 'supplier-list',
+        name: 'SupplierList',
+        component: SupplierList,
+      },
+      {
+        path: 'supplier-create',
+        name: 'SupplierCreate',
+        component: SupplierCreate,
+      },
+      {
+        path: 'unit-list',
+        name: 'UnitList',
+        component: UnitList,
+      },
+      // {
+      //   path: 'supplier-update/:id',
+      //   name: 'SupplierUpdate',
+      //   component: SupplierUpdate,
+      // },
+
+    ]
+  },
+  {
+    path: '/email_verify_url',
+    name: 'VerifyEmailUrl',
+    component: VerifyEmailUrl
   },
   {
     path: '/403',

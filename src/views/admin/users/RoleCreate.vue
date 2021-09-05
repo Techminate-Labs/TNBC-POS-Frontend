@@ -57,7 +57,8 @@ export default defineComponent({
   methods: {
     fetchRoles(): void {
       let params = this.$route.params
-      DataService.listRoles()
+      let token = this.$store.state.bearerToken
+      DataService.listRoles(token)
         .then((response: ResponseData) => {
             let role_id: number = parseInt(params.id as string)
             const filteredRoles = response.data.roles[0]
@@ -99,9 +100,9 @@ export default defineComponent({
       DataService.addRole(data)
         .then((response: ResponseData) => {
           this.$toast.open({
-              message: `${this.roleName} has been successfully created!`,
-              type: "success"
-            })
+            message: `${this.roleName} has been successfully created!`,
+            type: "success"
+          })
         })
         .catch((e: Error) => {
           this.$toast.open({

@@ -40,10 +40,8 @@
               <td 
                 data-label="Action"
                 class="w-full lg:w-auto px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <router-link :to="{ name: 'ProfileCreate', params: { id: item.id } }" class="text-indigo-600 hover:text-indigo-900 mr-2">Add profile</router-link>
-                <router-link :to="{ name: 'UserUpdate', params: { id: item.id } }" class="text-indigo-600 hover:text-indigo-900 mr-2">Edit</router-link>
-                <router-link to="" class="text-indigo-600 hover:text-indigo-900 mr-2">View</router-link>
-                <button @click="deleteUser(item.id)" class="text-indigo-600 hover:text-indigo-900 mr-2">Delete</button>
+                <router-link :to="{ name: 'RoleUpdate', params: { id: item.id } }" class="text-indigo-600 hover:text-indigo-900 mr-2">Edit</router-link>
+                <button @click="deleteSupplier(item.id)" class="text-indigo-600 hover:text-indigo-900 mr-2">Delete</button>
               </td>
             </tr>
           </tbody>
@@ -124,21 +122,14 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { UserTableItems, UserTableColumns } from '@/types/UserTables'
 import DataService from "@/services/DataService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
-  name: 'UserTable',
+  name: 'RoleTable',
   props: {
-    items: {
-      type: Array as PropType<Array<UserTableItems>>,
-      required: true
-    },
-    columns: {
-      type: Array as PropType<Array<UserTableColumns>>,
-      required: true
-    },
+    items: [] as any,
+    columns: [] as PropType<Array<Object>> as any,
   },
   data() {
     return {
@@ -192,24 +183,8 @@ export default defineComponent({
       }
       this.currentSort = s;
     },
-    deleteUser(id: string){
-      let _id = parseInt(id as string)
-      let token = this.$store.state.bearerToken
-      DataService.deleteUser(_id, token)
-        .then((response: ResponseData) => {
-          this.$emit('reloadThis')
-          this.$toast.open({
-            message: `User successfully deleted.`,
-            type: "success"
-          })
-        })
-        .catch((e: Error) => {
-          this.$toast.open({
-            message: `Could not delete that user.`,
-            type: "error"
-          })
-          console.log(e)
-        });
+    deleteSupplier(id: string){
+      // deleting supplier
     }
   },
   computed: {

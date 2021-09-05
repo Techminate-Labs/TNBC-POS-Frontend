@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineComponent } from 'vue';
 import { MenuItem, SubMenuItem } from '@/types/SideBar'
 import SideBar from '@/components/menus/SideBar.vue'
 import TopNavigation from '@/components/menus/TopNavigation.vue'
@@ -47,7 +47,7 @@ export default defineComponent({
     return {
       toogleSideBar: true as boolean,
       openAdditionalSideBar: false as boolean,
-      singleMenu: [] as PropType<Array<MenuItem>>,
+      singleMenu: null || {},
       menu: [
         {
           name: 'Dashboard',
@@ -70,7 +70,7 @@ export default defineComponent({
           submenus: [
             { name: 'Launch POS', url: '/launch-pos' },
             { name: 'Customer List', url: '/customer-list' },
-            { name: 'Coupon', url: '/coupon' }
+            { name: 'Coupon', url: '/coupon-list' }
           ]
         },
         {
@@ -78,10 +78,11 @@ export default defineComponent({
           url: '/products',
           icon: 'https://epqrpjmozlcsvbgkxjkp.supabase.in/storage/v1/object/sign/tnbc-pos/svgs/cube.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0bmJjLXBvcy9zdmdzL2N1YmUuc3ZnIiwiaWF0IjoxNjMwMDg4MTgwLCJleHAiOjE5NDU0NDgxODB9.JRZOQzJubHaMcKDm5Gg2lZQkwdamuI729l11pGJEUP8',
           submenus: [
-            { name: 'Brand', url: '/brand' },
-            { name: 'Category', url: '/category' },
-            { name: 'Product', url: '/product' },
-            { name: 'Supplier', url: '/supplier' },
+            { name: 'Brand', url: '/brand-list' },
+            { name: 'Category', url: '/category-list' },
+            { name: 'Product', url: '/product-list' },
+            { name: 'Suppliers', url: '/supplier-list' },
+            { name: 'Units', url: '/unit-list' },
           ]
         },
         {
@@ -117,7 +118,7 @@ export default defineComponent({
   methods: {
     handleSubMenus(item: MenuItem){
       this.openAdditionalSideBar = true
-      let _singleMenu: any = item
+      let _singleMenu: MenuItem = item
       this.singleMenu = _singleMenu
     },
     handleSidebar(){
@@ -125,20 +126,33 @@ export default defineComponent({
       this.openAdditionalSideBar = false
     },
     closeAdditionalSidebar(){
-      console.log('emitted closeAddsidebar')
       this.openAdditionalSideBar = false
     },
     requestEmailVerification():void {
       let data: any = []
-      DataService.requestEmailVerification(data)
+      let token = this.$store.state.bearerToken
+      DataService.requestEmailVerification(data, token)
         .then((response: ResponseData) => {
-            console.log(response)
-            if (response.data.message === "Already Verified"){
-              this.$store.commit('setEmailVerification', true)
-            }
+          console.log(response.data)
+          if (response.data.message === "Already Verified"){
+            this.$store.commit('setEmailVerification', true)
+            this.$toast.open({
+              message: `Your email has already been verified!`,
+              type: "info"
+            })
+          } else {
+            this.$toast.open({
+              message: `We just sent an email to your email address`,
+              type: "success"
+            })
+          }
           })
         .catch((e: Error) => {
-          console.log(e);
+          this.$toast.open({
+            message: `There was an iossue sending that email.`,
+            type: "success"
+          })
+          console.log(e)
         });
     }
   },

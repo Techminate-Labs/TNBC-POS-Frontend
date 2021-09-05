@@ -8,7 +8,7 @@ class DataService {
   }
 
   logoutUser(token: string): Promise<any> {
-    const body = { };
+    const body = {};
     return http.post("/logout", body, { headers: { "Authorization": `Bearer ${token}` } });
   }
 
@@ -24,24 +24,24 @@ class DataService {
     return http.get("/users", { headers: { "Authorization": `Bearer ${token}` } });
   }
 
-  addUser(data: any): Promise<any> {
-    return http.post("/register", data, { headers: { "Authorization": `Bearer ${_token}` } });
+  addUser(data: any, token: any): Promise<any> {
+    return http.post("/register", data, { headers: { "Authorization": `Bearer ${token}` } });
   }
 
   updateUser(data: any, id: number): Promise<any> {
     return http.put(`/users/${id}`, data, { headers: { "Authorization": `Bearer ${_token}` } });
   }
 
-  deleteUser(id: number): Promise<any> {
-    return http.delete(`/users/${id}`, { headers: { "Authorization": `Bearer ${_token}` } });
+  deleteUser(id: number, token: any): Promise<any> {
+    return http.delete(`/users/${id}`, { headers: { "Authorization": `Bearer ${token}` } });
   }
 
   addUserProfile(data: any): Promise<any> {
     return http.post('/userProfile', data, { headers: { "Authorization": `Bearer ${_token}` } });
   }
 
-  listRoles(): Promise<any> {
-    return http.get('/roles', { headers: { "Authorization": `Bearer ${_token}` } });
+  listRoles(token: any): Promise<any> {
+    return http.get('/roles', { headers: { "Authorization": `Bearer ${token}` } });
   }
 
   updateRole(data: any, id: number): Promise<any> {
@@ -56,12 +56,12 @@ class DataService {
     return http.delete(`/roles/${id}`, { headers: { "Authorization": `Bearer ${_token}` } });
   }
 
-  requestEmailVerification(data: any): Promise<any> {
-    return http.post('/email/verification-notification', data, { headers: { "Authorization": `Bearer ${_token}` } });
+  requestEmailVerification(data: any, token: any): Promise<any> {
+    return http.post('/email/verification-notification', data, { headers: { "Authorization": `Bearer ${token}` } });
   }
 
-  verifyEmail(data: any): Promise<any> {
-    return http.post('/email/verification-notification', data, { headers: { "Authorization": `Bearer ${_token}` } });
+  verifyEmail(path: any): Promise<any> {
+    return http.get(`${path}`, { headers: { "Authorization": `Bearer ${_token}` } });
   }
 }
 

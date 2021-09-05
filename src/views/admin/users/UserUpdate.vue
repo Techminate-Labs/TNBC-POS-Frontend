@@ -73,7 +73,8 @@ export default defineComponent({
     },
     fetchRoles(): void {
       let params = this.$route.params
-      DataService.listRoles()
+      let token = this.$store.state.bearerToken
+      DataService.listRoles(token)
         .then((response: ResponseData) => {
             let role_id: number = parseInt(params.id as string)
             let _data: any = []

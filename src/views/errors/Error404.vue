@@ -24,6 +24,7 @@ export default defineComponent({
   mounted() {
     window.addEventListener("keyup", e => {
     });
+    console.log(this.$route)
   },
   created() {
 	  window.addEventListener('keyup', this.doCommand);

@@ -2,24 +2,24 @@
   <div class="flex-grow px-4 md:px-8 my-10">
     <p>Breadcrumb</p>
     <div class="flex flex-nowrap justify-between">
-      <p class="text-2xl mb-4">User List</p>
-      <router-link :to="{ name: 'UserCreate' }"><button class="base-btn">Create User</button></router-link>
+      <p class="text-2xl mb-4">Supplier List</p>
+      <router-link :to="{ name: 'SupplierCreate' }"><button class="base-btn">Create Supplier</button></router-link>
     </div>
-    <UserTable :items="items" :columns="columns" @reload-this="reloadComponent" />
+    <SupplierTable :items="items" :columns="columns" @reload-this="reloadComponent" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import ResponseData from "@/types/ResponseData";
-import UserTable from '@/components/tables/UserTable.vue'
+import SupplierTable from '@/components/tables/SupplierTable.vue'
 import DataService from "@/services/DataService";
+import ResponseData from "@/types/ResponseData";
 import formatDateMixin from '@/mixins/formatDateMixin.ts';
 
 export default defineComponent({
-  name: 'UserList',
+  name: 'SupplierList',
   components: {
-    UserTable
+    SupplierTable
   },
   data() {
     return {
@@ -30,16 +30,12 @@ export default defineComponent({
           name: 'id'
         },
         {
+          attribute: 'User ID',
+          name: 'user_id'
+        },
+        {
           attribute: 'name',
           name: 'name'
-        },
-        {
-          attribute: 'email',
-          name: 'email'
-        },
-        {
-          attribute: 'role',
-          name: 'role'
         },
         {
           attribute: 'created_at',
@@ -48,11 +44,7 @@ export default defineComponent({
         {
           attribute: 'updated_at',
           name: 'updated on'
-        },
-        {
-          attribute: 'email_verified_at',
-          name: 'email verified on'
-        },
+        }
       ]
     }
   },
@@ -73,6 +65,7 @@ export default defineComponent({
               let _formated_verified_date = null
               if (user.email_verified_at !== null)
                 _formated_verified_date = this.formatDate(new Date(user.email_verified_at))
+              
               _users.push(
                 {
                   id: user.id,

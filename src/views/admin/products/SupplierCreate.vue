@@ -2,7 +2,7 @@
   <div class="flex-grow px-4 md:px-8 my-10">
     <p>Breadcrumb</p>
     <div class="flex flex-nowrap justify-between">
-      <p class="text-2xl mb-4">Add User</p>
+      <p class="text-2xl mb-4">Add Supplier</p>
     </div>
     <div class="bg-white p-4 rounded-lg shadow-md">
       <div class="flex flex-col py-2">
@@ -26,30 +26,23 @@
         >
       </div>
       <div class="flex flex-col py-2">
-        <label class="mb-2">Role:</label>
-        <select v-model="role" class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900">
-          <option :value="null">-- Please select an option --</option>
-          <option v-for="(role, index) in roles" :key="index" :value="role.value">{{role.name}}</option>
-        </select>
-      </div>
-      <div class="flex flex-col py-2">
-        <label class="mb-2" for="password">Password:</label>
+        <label class="mb-2" for="phone">Phone:</label>
         <input
           class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
-          type="password" 
-          name="password" 
-          v-model="password" 
-          placeholder="*************"
+          type="phone" 
+          name="phone" 
+          v-model="phone" 
+          placeholder="+33 6 7856 218"
         >
       </div>
       <div class="flex flex-col py-2">
-        <label class="mb-2" for="password-confirmation">Password Confirmation:</label>
+        <label class="mb-2" for="company-name">Company name:</label>
         <input
           class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
-          type="password" 
-          name="password-confirmation" 
-          v-model="passwordConfirmation" 
-          placeholder="**************"
+          type="text" 
+          name="company-name" 
+          v-model="companyName" 
+          placeholder="ACME Inc."
         >
       </div>
     </div>
@@ -63,26 +56,18 @@ import DataService from "@/services/DataService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
-  name: 'UserCreate',
+  name: 'SupplierCreate',
   data() {
     return {
       name: '',
       email: '',
-      role: '',
-      password: '',
-      passwordConfirmation: '',
-      roles: []
+      phone: '',
+      companyName: ''
     }
   },
   methods: {
     addUser(): void {
-      let data = {
-        name: this.name,
-        email: this.email,
-        password: this.password,
-        password_confirmation: this.passwordConfirmation,
-        role_id: Number(this.role),
-      }
+      let data = {}
       let token = this.$store.state.bearerToken
       DataService.addUser(data, token)
         .then((response: ResponseData) => {
@@ -98,29 +83,7 @@ export default defineComponent({
           })
           console.log(e)
         });
-    },
-    fetchRoles(): void {
-      let params = this.$route.params
-      let token = this.$store.state.bearerToken
-      DataService.listRoles(token)
-        .then((response: ResponseData) => {
-          let role_id: number = parseInt(params.id as string)
-          let _data: any = []
-          response.data.roles.map((role: any) => {
-            _data.push({
-              value: role.id,
-              name: role.name
-            })
-          })
-          this.roles = _data
-        })
-        .catch((e: Error) => {
-          console.log(e)
-        });
     }
-  },
-  async mounted() {
-    this.fetchRoles()
-  },
+  }
 });
 </script>

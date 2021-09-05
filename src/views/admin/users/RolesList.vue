@@ -5,7 +5,7 @@
       <p class="text-2xl mb-4">User Roles</p>
       <router-link :to="{ name: 'RoleCreate' }"><button class="base-btn">Create Role</button></router-link>
     </div>
-    <RoleTable :items="items" :columns="columns" @reload-this="reloadComponent" :key="items"/>
+    <RoleTable :items="items" :columns="columns" @reload-this="reloadComponent"/>
   </div>
 </template>
 
@@ -48,7 +48,7 @@ export default defineComponent({
   methods: {
     fetchRoles(): void {
       let token = this.$store.state.bearerToken
-      DataService.listRoles()
+      DataService.listRoles(token)
         .then((response: ResponseData) => {
           let _roles: any = []
           const _ = response.data.roles.map((role: any) => {
