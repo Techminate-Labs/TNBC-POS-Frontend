@@ -73,7 +73,6 @@ export default defineComponent({
               let _formated_verified_date = null
               if (user.email_verified_at !== null)
                 _formated_verified_date = this.formatDate(new Date(user.email_verified_at))
-              
               _users.push(
                 {
                   id: user.id,

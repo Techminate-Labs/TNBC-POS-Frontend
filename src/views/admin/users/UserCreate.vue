@@ -83,7 +83,8 @@ export default defineComponent({
         password_confirmation: this.passwordConfirmation,
         role_id: Number(this.role),
       }
-      DataService.addUser(data)
+      let token = this.$store.state.bearerToken
+      DataService.addUser(data, token)
         .then((response: ResponseData) => {
           this.$toast.open({
             message: `${this.name} successfully added to database!`,

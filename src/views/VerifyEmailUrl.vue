@@ -1,7 +1,7 @@
 <template>
 <div>
   <h1>Verify Email</h1>
-  <button @click="verifyUserEmailConfirmation">Click me and look the the console.</button>
+  <button @click="verifyUserEmailConfirmation" class="hover:underline">Please click on this button to verify your email.</button>
 </div>
 </template>
 
@@ -20,6 +20,12 @@ export default defineComponent({
         DataService.verifyEmail(url)
           .then((res: ResponseData) => {
             console.log(res)
+            this.$toast.open({
+              message: `Your email has been successfully verified!`,
+              type: "info"
+            })
+            this.$store.commit('setEmailVerification', true)
+            this.$router.push('/dashboard')
           })
           .catch((e: Error) => {
             console.log(e);

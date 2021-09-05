@@ -68,7 +68,8 @@ export default defineComponent({
   methods: {
     addUser(): void {
       let data = {}
-      DataService.addUser(data)
+      let token = this.$store.state.bearerToken
+      DataService.addUser(data, token)
         .then((response: ResponseData) => {
           this.$toast.open({
             message: `${this.name} successfully added to database!`,

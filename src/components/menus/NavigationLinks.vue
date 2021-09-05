@@ -22,7 +22,7 @@ export default defineComponent({
           this.$router.push('/')
           this.$toast.open({
             message: `You've been successfully logged out. Bye!`,
-            type: "success"
+            type: "info"
           })
         })
         .catch((e: Error) => {

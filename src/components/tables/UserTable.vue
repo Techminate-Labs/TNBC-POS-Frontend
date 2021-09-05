@@ -194,7 +194,8 @@ export default defineComponent({
     },
     deleteUser(id: string){
       let _id = parseInt(id as string)
-      DataService.deleteUser(_id)
+      let token = this.$store.state.bearerToken
+      DataService.deleteUser(_id, token)
         .then((response: ResponseData) => {
           this.$emit('reloadThis')
           this.$toast.open({

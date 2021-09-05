@@ -60,8 +60,9 @@ export default defineComponent({
           this.$router.push('/dashboard')
           this.$toast.open({
             message: `Hello! You've been successfully logged in!`,
-            type: "success"
+            type: "info"
           })
+          this.checkIfUserhasVerifiedEmail()
         })
         .catch((e: Error) => {
           this.$toast.open({
@@ -70,6 +71,30 @@ export default defineComponent({
           })
           console.log(e)
         });
+    },
+    checkIfUserhasVerifiedEmail():void {
+      console.log('Checking if email is verified')
+      let token = this.$store.state.bearerToken
+      let userEmail = this.$store.state.userEmail
+      DataService.listUsers(token as any)
+        .then((response: ResponseData) => {
+          const user = response.data.users.filter((user: any) => user.email === userEmail)
+          console.log(user)
+          console.log(user.email_verified_at)
+          if (user.email_verified_at !== undefined){
+            console.log('user email has been verified')
+          } else {
+            console.log('user email has not been verified')
+          }
+        })
+        .catch((e: Error) => {
+          this.$toast.open({
+            message: `There was an error fetching the users`,
+            type: "error"
+          })
+          console.log(e)
+        });
+
     }
   },
 

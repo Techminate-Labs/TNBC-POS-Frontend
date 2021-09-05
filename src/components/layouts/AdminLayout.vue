@@ -130,15 +130,22 @@ export default defineComponent({
     },
     requestEmailVerification():void {
       let data: any = []
-      DataService.requestEmailVerification(data)
+      let token = this.$store.state.bearerToken
+      DataService.requestEmailVerification(data, token)
         .then((response: ResponseData) => {
-            if (response.data.message === "Already Verified"){
-              this.$store.commit('setEmailVerification', true)
-            }
-          this.$toast.open({
-            message: `We just sent an email to you address`,
-            type: "success"
-          })
+          console.log(response.data)
+          if (response.data.message === "Already Verified"){
+            this.$store.commit('setEmailVerification', true)
+            this.$toast.open({
+              message: `Your email has already been verified!`,
+              type: "info"
+            })
+          } else {
+            this.$toast.open({
+              message: `We just sent an email to your email address`,
+              type: "success"
+            })
+          }
           })
         .catch((e: Error) => {
           this.$toast.open({
