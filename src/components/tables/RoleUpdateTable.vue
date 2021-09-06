@@ -45,14 +45,15 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
+import { RoleTableColumns, RoleTableItems } from '@/types/RoleTables'
 import DataService from "@/services/DataService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
-  name: 'CheckboxTable',
+  name: 'RoleUpdateTable',
   props: {
     items: {
-      type: Array as any,
+      type: Array as PropType<Array<RoleTableColumns>>,
       required: true
     },
     columns: {

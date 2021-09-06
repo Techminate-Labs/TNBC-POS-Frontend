@@ -6,7 +6,15 @@ export default createStore({
     isAuthenticated: false,
     bearerToken: '',
     userEmail: '',
-    isEmailVerified: false
+    isEmailVerified: false,
+    // setup permissions for components
+    permission: {
+      view: false,
+      create: false,
+      edit: false,
+      delete: false,
+      list: false
+    }
   },
   mutations: {
     initializeStore(state) {

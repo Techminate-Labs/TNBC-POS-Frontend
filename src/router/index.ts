@@ -74,7 +74,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Dashboard,
     meta: {
       layout: 'AdminLayout',
-      auth: true
+      isAdmin: true
     }
   },
   {

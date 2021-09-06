@@ -42,7 +42,7 @@
                 class="w-full lg:w-auto px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                 <router-link :to="{ name: 'ProfileCreate', params: { id: item.id } }" class="text-indigo-600 hover:text-indigo-900 mr-2">Add profile</router-link>
                 <router-link :to="{ name: 'UserUpdate', params: { id: item.id } }" class="text-indigo-600 hover:text-indigo-900 mr-2">Edit</router-link>
-                <router-link to="" class="text-indigo-600 hover:text-indigo-900 mr-2">View</router-link>
+                <router-link :to="{ name: 'ProfileSingle', params: { id: item.id } }" class="text-indigo-600 hover:text-indigo-900 mr-2">View</router-link>
                 <button @click="deleteUser(item.id)" class="text-indigo-600 hover:text-indigo-900 mr-2">Delete</button>
               </td>
             </tr>

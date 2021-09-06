@@ -36,6 +36,10 @@ class DataService {
     return http.delete(`/users/${id}`, { headers: { "Authorization": `Bearer ${token}` } });
   }
 
+  listUserProfile(id: number, token: any): Promise<any> {
+    return http.get(`/userProfile/${id}`, { headers: { "Authorization": `Bearer ${token}` } });
+  }
+
   addUserProfile(data: any): Promise<any> {
     return http.post('/userProfile', data, { headers: { "Authorization": `Bearer ${_token}` } });
   }

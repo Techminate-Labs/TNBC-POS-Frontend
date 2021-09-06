@@ -89,12 +89,14 @@
         <label class="capitalize mb-2" for="image">Image</label>
         <input 
           type="file"
+          accept="image/*"
           @change="handleFileChange($event)"
           name="image"
           class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900"
           placeholder="456 21"
         >
       </div>
+      {{ user.image }}
     </div>
     <button class="base-btn float-right" @click="addUserProfile">Save</button>
   </div>
@@ -110,47 +112,48 @@ export default defineComponent({
   data() {
     return {
        user: {
-        first_name:        '',
-        last_name:         '',
-        email:             '',
-        mobile:            '',
-        present_address:   '',
-        permanent_address: '',
-        city:              '',
-        zip:               '',
-        identity_number:   '',
-        image: ''
+        first_name:        '' as string,
+        last_name:         '' as string,
+        email:             '' as string,
+        mobile:            '' as string,
+        present_address:   '' as string,
+        permanent_address: '' as string,
+        city:              '' as string,
+        zip:               '' as string,
+        identity_number:   '' as string,
+        image: null as any
       }
     }
   },
     methods: {
     addUserProfile(): void {
-      console.log('add user profile!');
-      let user_id = this.$route.params.id
-      let data = {
-        user_id: user_id,
-        first_name: this.user.first_name,
-        last_name: this.user.last_name,
-        mobile: this.user.mobile,
-        present_address: this.user.present_address,
-        permanent_address: this.user.permanent_address,
-        identity_number: this.user.identity_number,
-        city: this.user.city,
-        zip: this.user.zip,
-        image: this.user.image
-      }
-      DataService.addUserProfile(data)
+      let user_id: any = this.$route.params.id
+      const fd = new FormData()
+      fd.append('user_id', user_id)
+      fd.append('first_name', this.user.first_name)
+      fd.append('last_name', this.user.last_name)
+      fd.append('mobile', this.user.mobile)
+      fd.append('present_address', this.user.present_address)
+      fd.append('permanent_address', this.user.permanent_address)
+      fd.append('identity_number', this.user.identity_number)
+      fd.append('zip', this.user.zip)
+      fd.append('city', this.user.city)
+      fd.append('image', this.user.image, this.user.image.name)
+
+      DataService.addUserProfile(fd)
         .then((response: ResponseData) => {
             console.log(response)
-            console.log('added user to db!')
+            this.$toast.open({
+            message: `Profile has been successfully added to the database!`,
+            type: "success"
+          })
           })
         .catch((e: Error) => {
           console.log(e);
         });
     },
     handleFileChange(e: any): void {
-      console.log(e)
-      this.user.image = e.target.files[0].name
+      this.user.image = e.target.files[0]
     }
   }
 });
