@@ -2,7 +2,6 @@
   <div class="h-screen bg-white overflow-hidden z-20 relative shadow-lg">
     <div class="m-4">
       <div class="text-lg text-gray-500 pb-6">{{ singleMenu.name }}</div>
-      <button @click="handleDebug">Click me and check the console</button>
       <div v-for="(item, index) in singleMenu.submenus" :key="index" class="pb-3">
         <router-link :to="singleMenu.url + item.url" class="cursor-pointer text-blue-800" @click="$emit('closeAdditionalSidebar')">
           <div class="flex flex-nowrap">

@@ -44,6 +44,7 @@ export default defineComponent({
     return {
       email: '',
       password: '',
+      user: {} as any
     }
   },
   methods: {
@@ -54,15 +55,22 @@ export default defineComponent({
       }
       DataService.loginUser(data)
         .then((response: ResponseData) => {
+          console.log('response from login', response.data)
+          this.user = response.data.user
+          let permissions = this.user.role.permissions
+
+          this.$store.commit('setPermissions', permissions)
           this.$store.commit('setBearerToken', response.data.token)
           this.$store.commit('setAuthentication', true)
           this.$store.commit('setUserEmail', this.email)
+
+          this.checkIfUserhasVerifiedEmail()
+
           this.$router.push('/dashboard')
           this.$toast.open({
             message: `Hello! You've been successfully logged in!`,
             type: "info"
           })
-          this.checkIfUserhasVerifiedEmail()
         })
         .catch((e: Error) => {
           this.$toast.open({
@@ -74,26 +82,15 @@ export default defineComponent({
     },
     checkIfUserhasVerifiedEmail():void {
       console.log('Checking if email is verified')
-      let token = this.$store.state.bearerToken
-      let userEmail = this.$store.state.userEmail
-      DataService.listUsers(token as any)
-        .then((response: ResponseData) => {
-          const user = response.data.users.filter((user: any) => user.email === userEmail)
-          console.log(user)
-          console.log(user.email_verified_at)
-          if (user.email_verified_at !== undefined){
-            console.log('user email has been verified')
-          } else {
-            console.log('user email has not been verified')
-          }
-        })
-        .catch((e: Error) => {
-          this.$toast.open({
-            message: `There was an error fetching the users`,
-            type: "error"
-          })
-          console.log(e)
-        });
+      let user = this.user
+      
+      let isVerified = user.email_verified_at
+      if (isVerified !== undefined){
+        console.log('user email has been verified')
+        this.$store.commit('setEmailVerification', true)
+      } else {
+        console.log('user email has not been verified')
+      }
 
     }
   },

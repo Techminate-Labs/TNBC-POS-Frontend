@@ -67,38 +67,10 @@ export default defineComponent({
   },
   methods: {
     addUser(): void {
-      let data = {}
-      DataService.addUser(data)
-        .then((response: ResponseData) => {
-          this.$toast.open({
-            message: `${this.name} successfully added to database!`,
-            type: "success"
-          })
-        })
-        .catch((e: Error) => {
-          this.$toast.open({
-            message: `There was an error adding that user to the database.`,
-            type: "error"
-          })
-          console.log(e)
-        });
+      
     },
     fetchRoles(): void {
       let params = this.$route.params
-      DataService.listRoles()
-        .then((response: ResponseData) => {
-          let role_id: number = parseInt(params.id as string)
-          let _data: any = []
-          response.data.roles.map((role: any) => {
-            _data.push({
-              value: role.id,
-              name: role.name
-            })
-          })
-        })
-        .catch((e: Error) => {
-          console.log(e)
-        });
     }
   },
   async mounted() {

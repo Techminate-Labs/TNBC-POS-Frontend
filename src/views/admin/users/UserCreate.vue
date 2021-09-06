@@ -53,7 +53,9 @@
         >
       </div>
     </div>
-    <button class="base-btn float-right" @click="addUser">Save</button>
+    <button
+      class="base-btn float-right" 
+      @click="addUser">Save</button>
   </div>
 </template>
 

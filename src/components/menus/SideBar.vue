@@ -5,16 +5,16 @@
         <li 
           v-for="(item, index) in menu" 
           :key="index" 
-          class="px-1 py-6 md:px-2 cursor-pointer hover:bg-gray-100">
+          class="cursor-pointer hover:bg-gray-100">
           <div v-if="item.submenus" @click="$emit('openAdditionalSidebar', item)">
-            <div class="flex flex-col flex-nowrap" aria-label="home icon">
+            <div class="px-1 py-6 md:px-2 flex flex-col flex-nowrap" aria-label="home icon">
               <img class="dashboard-icon" :src="item.icon" />
               <h2 class="text-sm">{{item.name}}</h2>
             </div>
           </div>
           <div v-else>
             <router-link :to="item.url">
-              <div class="flex flex-col flex-nowrap" aria-label="home icon" >
+              <div class="px-1 py-6 md:px-2 flex flex-col flex-nowrap" aria-label="home icon" >
                 <img class="dashboard-icon" :src="item.icon" />
                 <h2 class="text-sm">{{item.name}}</h2>
               </div>

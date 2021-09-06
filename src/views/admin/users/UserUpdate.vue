@@ -116,6 +116,6 @@ export default defineComponent({
   async mounted () {
     this.fetchUser()
     this.fetchRoles()
-  },
+  }
 });
 </script>

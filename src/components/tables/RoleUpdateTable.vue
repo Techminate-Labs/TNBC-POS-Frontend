@@ -45,14 +45,15 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
+import { RoleTableColumns, RoleTableItems } from '@/types/RoleTables'
 import DataService from "@/services/DataService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
-  name: 'CheckboxTable',
+  name: 'RoleUpdateTable',
   props: {
     items: {
-      type: Array as any,
+      type: Array as PropType<Array<RoleTableColumns>>,
       required: true
     },
     columns: {
@@ -68,6 +69,7 @@ export default defineComponent({
   methods: {
     updateRole(): void {
       console.log('update role clicked!')
+      let token = this.$store.state.bearerToken
       let _permissions: any = []
       this.items.map((item: any) => {
         let name = item.name
@@ -81,7 +83,7 @@ export default defineComponent({
         name: this.name,
         permissions: _permissions
       }
-      DataService.updateRole(data as any, role_id as number)
+      DataService.updateRole(data as any, role_id as number, token as any)
         .then((response: ResponseData) => {
             this.$toast.open({
               message: `${this.name} has been successfully updated!`,

@@ -19,12 +19,20 @@ import ProfileUpdate from '../views/admin/users/ProfileUpdate.vue'
 import ProductsIndex from '../views/admin/products/ProductsIndex.vue'
 import SupplierList from '../views/admin/products/SupplierList.vue'
 import SupplierCreate from '../views/admin/products/SupplierCreate.vue'
+import SupplierUpdate from '../views/admin/products/SupplierUpdate.vue'
 import UnitList from '../views/admin/products/UnitList.vue'
+import CategoryList from '../views/admin/products/CategoryList.vue'
+import BrandList from '../views/admin/products/BrandList.vue'
+import ProductList from '../views/admin/products/ProductList.vue'
+import ProductCreate from '../views/admin/products/ProductCreate.vue'
 import PointOfSale from '../views/admin/pos/PointOfSale.vue'
 import Error403 from '../views/errors/Error403.vue'
 import Error404 from '../views/errors/Error404.vue'
 import Error500 from '../views/errors/Error500.vue'
 import VerifyEmailUrl from '../views/VerifyEmailUrl.vue'
+
+let isAuthenticated = store.state.isAuthenticated
+let hasToken = store.state.bearerToken
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -74,7 +82,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Dashboard,
     meta: {
       layout: 'AdminLayout',
-      auth: true
+      isAdmin: true
     }
   },
   {
@@ -99,31 +107,61 @@ const routes: Array<RouteRecordRaw> = [
         path: 'user-list',
         name: 'UserList',
         component: UserList,
+        beforeEnter: (to, from, next) => {
+          let canListUsers: boolean = store.state.permissions[0]['Users'].list
+          if (!canListUsers) return false
+          else next()
+        }
       },
       {
         path: 'user-create',
         name: 'UserCreate',
         component: UserCreate,
+        beforeEnter: (to, from, next) => {
+          let canCreateUser: boolean = store.state.permissions[0]['Users'].create
+          if (!canCreateUser) next('/403')
+          else next()
+        }
       },
       {
         path: 'user-update/:id',
         name: 'UserUpdate',
         component: UserUpdate,
+        beforeEnter: (to, from, next) => {
+          let canEditUser: boolean = store.state.permissions[0]['Users'].edit
+          if (!canEditUser) next('/403')
+          else next()
+        }
       },
       {
         path: 'roles-list',
         name: 'RolesList',
         component: RolesList,
+        beforeEnter: (to, from, next) => {
+          let canListRoles: boolean = store.state.permissions[1]['Roles'].list
+          if (!canListRoles) next('/403')
+          else next()
+        }
       },
       {
         path: 'role-create',
         name: 'RoleCreate',
-        component: RoleCreate
+        component: RoleCreate,
+        beforeEnter: (to, from, next) => {
+          let canCreateRoles: boolean = store.state.permissions[1]['Roles'].create
+          if (!canCreateRoles) next('/403')
+          else next()
+        }
       },
       {
         path: 'role-update/:id',
         name: 'RoleUpdate',
-        component: RoleUpdate
+        component: RoleUpdate,
+        beforeEnter: (to, from, next) => {
+          let canEditRoles: boolean = store.state.permissions[1]['Roles'].edit
+          if (!canEditRoles) next('/403')
+          else next()
+        }
       },
       {
         path: 'profile',
@@ -152,22 +190,42 @@ const routes: Array<RouteRecordRaw> = [
     },
     children: [
       {
-        path: 'supplier-list',
+        path: 'suppliers-list',
         name: 'SupplierList',
         component: SupplierList,
       },
       {
-        path: 'supplier-create',
+        path: 'suppliers-create',
         name: 'SupplierCreate',
         component: SupplierCreate,
       },
       {
-        path: 'unit-list',
+        path: 'units-list',
         name: 'UnitList',
         component: UnitList,
       },
+      {
+        path: 'categories-list',
+        name: 'CategoryList',
+        component: CategoryList,
+      },
+      {
+        path: 'brands-list',
+        name: 'BrandList',
+        component: BrandList,
+      },
+      {
+        path: 'products-list',
+        name: 'ProductList',
+        component: ProductList,
+      },
+      {
+        path: 'products-create',
+        name: 'ProductCreate',
+        component: ProductCreate,
+      },
       // {
-      //   path: 'supplier-update/:id',
+      //   path: 'suppliers-update/:id',
       //   name: 'SupplierUpdate',
       //   component: SupplierUpdate,
       // },
@@ -203,8 +261,6 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  let isAuthenticated = store.state.isAuthenticated
-  let hasToken = store.state.bearerToken
   if (to.meta.auth && !isAuthenticated && !hasToken) {
     next('/')
     // } else if (to.name === "GuestLogin" && isAuthenticated && hasToken) {

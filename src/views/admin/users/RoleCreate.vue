@@ -10,7 +10,7 @@
         type="text"
         v-model="roleName" />
     </div>
-    <RoleUpdateTable :columns="columns" :items="items" />
+    <RoleUpdateTable :columns="columns" :items="items" :name="roleName" />
     <button class="base-btn float-right" @click="createRole">Save</button>
   </div>
 </template>
