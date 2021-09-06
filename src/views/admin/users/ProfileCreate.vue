@@ -93,7 +93,6 @@
           @change="handleFileChange($event)"
           name="image"
           class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900"
-          placeholder="456 21"
         >
       </div>
       {{ user.image }}

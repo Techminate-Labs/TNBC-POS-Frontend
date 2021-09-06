@@ -23,6 +23,8 @@ import SupplierUpdate from '../views/admin/products/SupplierUpdate.vue'
 import UnitList from '../views/admin/products/UnitList.vue'
 import CategoryList from '../views/admin/products/CategoryList.vue'
 import BrandList from '../views/admin/products/BrandList.vue'
+import ProductList from '../views/admin/products/ProductList.vue'
+import ProductCreate from '../views/admin/products/ProductCreate.vue'
 import PointOfSale from '../views/admin/pos/PointOfSale.vue'
 import Error403 from '../views/errors/Error403.vue'
 import Error404 from '../views/errors/Error404.vue'
@@ -188,35 +190,45 @@ const routes: Array<RouteRecordRaw> = [
     },
     children: [
       {
-        path: 'supplier-list',
+        path: 'suppliers-list',
         name: 'SupplierList',
         component: SupplierList,
       },
       {
-        path: 'supplier-create',
+        path: 'suppliers-create',
         name: 'SupplierCreate',
         component: SupplierCreate,
       },
       {
-        path: 'unit-list',
+        path: 'units-list',
         name: 'UnitList',
         component: UnitList,
       },
       {
-        path: 'category-list',
+        path: 'categories-list',
         name: 'CategoryList',
         component: CategoryList,
       },
       {
-        path: 'brand-list',
+        path: 'brands-list',
         name: 'BrandList',
         component: BrandList,
       },
       {
-        path: 'supplier-update/:id',
-        name: 'SupplierUpdate',
-        component: SupplierUpdate,
+        path: 'products-list',
+        name: 'ProductList',
+        component: ProductList,
       },
+      {
+        path: 'products-create',
+        name: 'ProductCreate',
+        component: ProductCreate,
+      },
+      // {
+      //   path: 'suppliers-update/:id',
+      //   name: 'SupplierUpdate',
+      //   component: SupplierUpdate,
+      // },
 
     ]
   },

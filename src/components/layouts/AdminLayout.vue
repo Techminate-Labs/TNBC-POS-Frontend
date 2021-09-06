@@ -78,11 +78,11 @@ export default defineComponent({
           url: '/products',
           icon: 'https://epqrpjmozlcsvbgkxjkp.supabase.in/storage/v1/object/sign/tnbc-pos/svgs/cube.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0bmJjLXBvcy9zdmdzL2N1YmUuc3ZnIiwiaWF0IjoxNjMwMDg4MTgwLCJleHAiOjE5NDU0NDgxODB9.JRZOQzJubHaMcKDm5Gg2lZQkwdamuI729l11pGJEUP8',
           submenus: [
-            { name: 'Brand', url: '/brand-list' },
-            { name: 'Category', url: '/category-list' },
-            { name: 'Product', url: '/product-list' },
-            { name: 'Suppliers', url: '/supplier-list' },
-            { name: 'Units', url: '/unit-list' },
+            { name: 'Brands', url: '/brands-list' },
+            { name: 'Categories', url: '/categories-list' },
+            { name: 'Products', url: '/products-list' },
+            { name: 'Suppliers', url: '/suppliers-list' },
+            { name: 'Units', url: '/units-list' },
           ]
         },
         {
