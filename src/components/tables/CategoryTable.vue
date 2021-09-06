@@ -126,7 +126,7 @@ import DataService from "@/services/DataService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
-  name: 'SupplierTable',
+  name: 'CategoryTable',
   props: {
     items: [] as any,
     columns: [] as PropType<Array<Object>> as any,

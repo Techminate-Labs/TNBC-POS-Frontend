@@ -19,7 +19,10 @@ import ProfileUpdate from '../views/admin/users/ProfileUpdate.vue'
 import ProductsIndex from '../views/admin/products/ProductsIndex.vue'
 import SupplierList from '../views/admin/products/SupplierList.vue'
 import SupplierCreate from '../views/admin/products/SupplierCreate.vue'
+import SupplierUpdate from '../views/admin/products/SupplierUpdate.vue'
 import UnitList from '../views/admin/products/UnitList.vue'
+import CategoryList from '../views/admin/products/CategoryList.vue'
+import BrandList from '../views/admin/products/BrandList.vue'
 import PointOfSale from '../views/admin/pos/PointOfSale.vue'
 import Error403 from '../views/errors/Error403.vue'
 import Error404 from '../views/errors/Error404.vue'
@@ -199,11 +202,21 @@ const routes: Array<RouteRecordRaw> = [
         name: 'UnitList',
         component: UnitList,
       },
-      // {
-      //   path: 'supplier-update/:id',
-      //   name: 'SupplierUpdate',
-      //   component: SupplierUpdate,
-      // },
+      {
+        path: 'category-list',
+        name: 'CategoryList',
+        component: CategoryList,
+      },
+      {
+        path: 'brand-list',
+        name: 'BrandList',
+        component: BrandList,
+      },
+      {
+        path: 'supplier-update/:id',
+        name: 'SupplierUpdate',
+        component: SupplierUpdate,
+      },
 
     ]
   },
