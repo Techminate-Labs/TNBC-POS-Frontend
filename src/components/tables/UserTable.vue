@@ -40,10 +40,29 @@
               <td 
                 data-label="Action"
                 class="w-full lg:w-auto px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <router-link :to="{ name: 'ProfileCreate', params: { id: item.id } }" class="text-indigo-600 hover:text-indigo-900 mr-2">Add profile</router-link>
-                <router-link :to="{ name: 'UserUpdate', params: { id: item.id } }" class="text-indigo-600 hover:text-indigo-900 mr-2">Edit</router-link>
-                <router-link :to="{ name: 'ProfileSingle', params: { id: item.id } }" class="text-indigo-600 hover:text-indigo-900 mr-2">View</router-link>
-                <button @click="deleteUser(item.id)" class="text-indigo-600 hover:text-indigo-900 mr-2">Delete</button>
+                <router-link
+                  :to="{ name: 'ProfileCreate', params: { id: item.id } }"
+                  class="text-indigo-600 hover:text-indigo-900 mr-2">
+                    Add profile
+                </router-link>
+                <router-link 
+                  v-show="canUserEdit"
+                  :to="{ name: 'UserUpdate', params: { id: item.id } }" 
+                  class="text-indigo-600 hover:text-indigo-900 mr-2">
+                    Edit
+                </router-link>
+                <router-link 
+                  v-show="canUserView"
+                  :to="{ name: 'ProfileSingle', params: { id: item.id } }" 
+                  class="text-indigo-600 hover:text-indigo-900 mr-2">
+                    View
+                </router-link>
+                <button 
+                  v-show="canUserDelete"
+                  @click="deleteUser(item.id)" 
+                  class="text-indigo-600 hover:text-indigo-900 mr-2">
+                  Delete
+                </button>
               </td>
             </tr>
           </tbody>
@@ -245,7 +264,16 @@ export default defineComponent({
     },
     imageColumn(): any[] {
       return this.columns.filter((c: any) => c.attribute === 'image' )
-    }
+    },
+    canUserEdit():boolean {
+      return this.$store.state.permissions[0]["Users"].edit
+    },
+    canUserView():boolean {
+      return this.$store.state.permissions[0]["Users"].view
+    },
+    canUserDelete():boolean {
+      return this.$store.state.permissions[0]["Users"].delete
+    },
   },
   mounted () {
     this.currentPage = 1

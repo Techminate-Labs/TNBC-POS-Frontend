@@ -3,7 +3,13 @@
     <p>Breadcrumb</p>
     <div class="flex flex-nowrap justify-between ">
       <p class="text-2xl mb-4">User Roles</p>
-      <router-link :to="{ name: 'RoleCreate' }"><button class="base-btn">Create Role</button></router-link>
+      <router-link
+        v-show="canUserCreate"
+        :to="{ name: 'RoleCreate' }">
+        <button class="base-btn">
+          Create Role
+        </button>
+      </router-link>
     </div>
     <RoleTable :items="items" :columns="columns" @reload-this="reloadComponent"/>
   </div>
@@ -71,6 +77,11 @@ export default defineComponent({
     },
     reloadComponent(): void {
       this.fetchRoles()
+    }
+  },
+  computed: {
+    canUserCreate():boolean {
+      return this.$store.state.permissions[1]["Roles"].create
     }
   },
   async mounted() {

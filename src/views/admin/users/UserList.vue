@@ -3,7 +3,11 @@
     <p>Breadcrumb</p>
     <div class="flex flex-nowrap justify-between">
       <p class="text-2xl mb-4">User List</p>
-      <router-link :to="{ name: 'UserCreate' }"><button class="base-btn">Create User</button></router-link>
+      <router-link 
+        v-show="canUserCreate"
+        :to="{ name: 'UserCreate' }">
+        <button class="base-btn">Create User</button>
+      </router-link>
     </div>
     <UserTable :items="items" :columns="columns" @reload-this="reloadComponent" />
   </div>
@@ -93,6 +97,11 @@ export default defineComponent({
     },
     reloadComponent():void {
       this.fetchUsers()
+    }
+  },
+  computed: {
+    canUserCreate():boolean {
+      return this.$store.state.permissions[0]["Users"].create
     }
   },
   async mounted() {

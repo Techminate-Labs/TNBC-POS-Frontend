@@ -8,13 +8,7 @@ export default createStore({
     userEmail: '',
     isEmailVerified: false,
     // setup permissions for components
-    permission: {
-      view: false,
-      create: false,
-      edit: false,
-      delete: false,
-      list: false
-    }
+    permissions: [] as any
   },
   mutations: {
     initializeStore(state) {
@@ -31,12 +25,15 @@ export default createStore({
     setEmailVerification(state, verification) {
       state.isEmailVerified = verification
     },
+    setPermissions(state, permissions) {
+      state.permissions = permissions
+    },
   },
   actions: {
   },
   modules: {
   },
   plugins: [createPersistedState({
-    paths: ['isAuthenticated', 'bearerToken', 'userEmail', 'isEmailVerified'],
+    paths: ['isAuthenticated', 'bearerToken', 'userEmail', 'isEmailVerified', 'permissions'],
   })]
 })

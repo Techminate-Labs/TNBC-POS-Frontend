@@ -19,6 +19,7 @@ export default defineComponent({
           localStorage.setItem('bearerToken', '')
           this.$store.commit('setBearerToken', '')
           this.$store.commit('setAuthentication', false)
+          this.$store.commit('setPermissions', [])
           this.$router.push('/')
           this.$toast.open({
             message: `You've been successfully logged out. Bye!`,
