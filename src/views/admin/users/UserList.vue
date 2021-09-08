@@ -9,7 +9,17 @@
         <button class="base-btn">Create User</button>
       </router-link>
     </div>
-    <UserTable :items="items" :columns="columns" @reload-this="reloadComponent" />
+    <UserTable
+      :columns="columns"
+      :next="next"
+      :prev="prev"
+      :meta="meta"
+      :data="data"
+      @reload-this="reloadComponent"
+      @pageChange="pageChange" 
+      @previousPage="previousPage" 
+      @nextPage="nextPage" 
+      />
   </div>
 </template>
 
@@ -17,6 +27,7 @@
 import { defineComponent } from 'vue';
 import ResponseData from "@/types/ResponseData";
 import UserTable from '@/components/tables/UserTable.vue'
+import { User } from '@/types/UserTables'
 import DataService from "@/services/DataService";
 import formatDateMixin from '@/mixins/formatDateMixin.ts';
 
@@ -27,7 +38,11 @@ export default defineComponent({
   },
   data() {
     return {
-      items: [],
+      next: '',
+      prev: '',
+      meta: {},
+      data: [],
+      url: '/users',
       columns: [
         {
           attribute: 'id',
@@ -42,7 +57,7 @@ export default defineComponent({
           name: 'email'
         },
         {
-          attribute: 'role',
+          attribute: 'roleName',
           name: 'role'
         },
         {
@@ -64,39 +79,49 @@ export default defineComponent({
   methods: {
     fetchUsers(): void {
       let token = this.$store.state.bearerToken
-      DataService.listUsers(token)
+      let url = this.url
+      DataService.listUsers(url, token)
         .then((response: ResponseData) => {
-            let _users: any = []
-            const _ = response.data.users.map((user: any) => {
-              let _formated_created_date = null
-              if (user.created_at !== null)
-                _formated_created_date = this.formatDate(new Date(user.created_at))
-              let _formated_updated_date = null
-              if (user.updated_at !== null)
-                _formated_updated_date = this.formatDate(new Date(user.updated_at))
-              let _formated_verified_date = null
-              if (user.email_verified_at !== null)
-                _formated_verified_date = this.formatDate(new Date(user.email_verified_at))
-              _users.push(
-                {
-                  id: user.id,
-                  name: user.name,
-                  email: user.email,
-                  role: user.role.name,
-                  created_at: _formated_created_date,
-                  email_verified_at: _formated_verified_date,
-                  updated_at: _formated_updated_date
-                }
-              )
-              this.items = _users
-            })
-          })
+          let res = response.data
+          this.data = res.data.map((user: User) => ({
+            ...user, 
+            roleName: user.role.name, 
+            created_at: this.formatDate(new Date(user.created_at)),
+            email_verified_at: this.formatDate(new Date(user.email_verified_at)),
+            updated_at: this.formatDate(new Date(user.updated_at))
+          }))
+          this.meta = res.meta
+          this.prev = res.links.prev
+          this.next = res.links.next
+        })
         .catch((e: Error) => {
           console.log(e);
         });
     },
     reloadComponent():void {
       this.fetchUsers()
+    },
+    pageChange(url: string):void {
+
+      this.url = url
+      this.fetchUsers()
+
+    },
+    previousPage():void {
+      if (this.prev !== null){
+
+        this.url = this.prev
+        this.fetchUsers()
+      
+      }
+    },
+    nextPage():void {
+      if (this.next !== null){
+
+        this.url = this.next
+        this.fetchUsers()
+      
+      }
     }
   },
   computed: {

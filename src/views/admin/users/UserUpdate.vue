@@ -58,7 +58,8 @@ export default defineComponent({
     fetchUser(): void {
       let token = this.$store.state.bearerToken
       let params = this.$route.params
-      DataService.listUsers(token)
+      let url = '/users'
+      DataService.listUsers(url, token)
         .then((response: ResponseData) => {
             let user_id: number = parseInt(params.id as string)
             const filteredUsers = response.data.users.filter((user: any) => user.id === user_id)

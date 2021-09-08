@@ -104,7 +104,8 @@
               <nav class="relative z-0 inline-flex" aria-label="Pagination">
                 <a
                   @click="changeToPreviousPage"
-                  href="#" 
+                  href="#"
+                  :class="this.prev === null ? 'disabled' : ''"
                   class="relative inline-flex items-center mr-2 px-2 py-2 rounded-full bg-white text-sm font-medium text-gray-500 shadow-md hover:bg-gray-50">
                   <span>
                   <!-- chevron-left -->
@@ -115,16 +116,17 @@
                 </a>
                 <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
                 <a 
-                  @click="changeItemsInPage(number)" 
-                  v-for="(number, index) in displayPages" 
+                  @click="handlePageChange(item.url)"
+                  v-for="(item, index) in displayPages" 
                   :key="index" href="#" 
-                  :class="number === activeItem ? 'current' : ''" 
+                  :class="item.active === true ? 'current' : ''"
                   class="bg-white mx-2 shadow-md text-gray-500 hover:bg-gray-50 relative inline-flex items-center justify-center h-4 w-4 px-4 py-4 text-sm font-medium rounded-full">
-                  {{ number }}
+                  {{ item.label }}
                 </a>
                 <a
                   @click="changeToNextPage"
                   href="#"
+                  :class="this.next === null ? 'disabled' : ''"
                   class="relative inline-flex items-center ml-2 px-2 py-2 rounded-full bg-white text-sm font-medium text-gray-500 shadow-md hover:bg-gray-50">
                   <span>
                   <!-- chevron-right -->
@@ -144,6 +146,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { UserTableItems, UserTableColumns } from '@/types/UserTables'
+import { MetaPagination, MetaPaginationLinks } from '@/types/TablePagination'
 import DataService from "@/services/DataService";
 import ResponseData from "@/types/ResponseData";
 
@@ -158,6 +161,22 @@ export default defineComponent({
       type: Array as PropType<Array<UserTableColumns>>,
       required: true
     },
+    next: {
+      type: null,
+      required: true
+    },
+    prev: {
+      type: null,
+      required: true
+    },
+    data: {
+      type: Array as any,
+      required: true
+    },
+    meta: {
+      type: Object as PropType<MetaPagination>,
+      required: true
+    },
   },
   data() {
     return {
@@ -166,7 +185,6 @@ export default defineComponent({
       currentPage: null as null | number,
       pageNumbers: [] as number[],
       pageNumberCount: 1 as number,
-      totalItems: this.items.length as number,
       maxItemsPerPage: 5 as number,
       lastPage: Math.ceil((this.totalItems as unknown as number) / (this.maxItemsPerPage as unknown as number)) as number,
       notEnoughPages: true as boolean,
@@ -181,29 +199,14 @@ export default defineComponent({
       this.itemsInPage
       this.displayPages
     },
-    changeItemsInPage(num: number): void {
-    this.currentPage = num
-    this.activeItem = num
+    handlePageChange(url: string): void {
+      this.$emit('pageChange', url as string)
     },
     changeToPreviousPage(): void {
-      if (this.currentPage && this.activeItem)
-        if (this.currentPage > 1) {
-          this.currentPage -= 1
-          this.activeItem -= 1
-        } else {
-          this.currentPage = 1
-          this.activeItem = 1
-        }
+      this.$emit('previousPage')
     },
     changeToNextPage(): void {
-      if (this.currentPage && this.activeItem)
-        if (this.currentPage < this.lastPage) {
-          this.currentPage += 1
-          this.activeItem += 1
-        } else {
-          this.currentPage = this.lastPage
-          this.activeItem = this.lastPage
-        }
+      this.$emit('nextPage')
     },
     sort(s: string): void {
       if(s === this.currentSort) {
@@ -233,22 +236,22 @@ export default defineComponent({
   },
   computed: {
     displayPages() {
-      this.lastPage = Math.ceil(this.totalItems / this.maxItemsPerPage)
-      const totalPages = this.lastPage;
-      let currentPage: any = this.currentPage;
+      console.log('this.meta', this.meta)
+      return this.meta.links
+      // this.lastPage = Math.ceil(this.totalItems / this.maxItemsPerPage)
+      // const totalPages = this.lastPage;
+      // let _currentPage: any = this.currentPage;
 
-      if ([1, 2, 3, 4].includes(currentPage)) currentPage = 3;
-      else if ([totalPages - 1, totalPages].includes(currentPage)) currentPage = Math.max(0, totalPages - Math.trunc(5 / 2));
-      if (totalPages < 5){
-        return [...Array(totalPages).keys()].map(i => Math.max(0, i - Math.trunc(5 / 2) + currentPage))
-      } else {
-        return [...Array(5).keys()].map(i => Math.max(0, i - Math.trunc(5 / 2) + currentPage))
-      }
+      // if ([1, 2, 3, 4].includes(_currentPage)) _currentPage = 3;
+      // else if ([totalPages - 1, totalPages].includes(_currentPage)) _currentPage = Math.max(0, totalPages - Math.trunc(5 / 2));
+      // if (totalPages < 5){
+      //   return [...Array(totalPages).keys()].map(i => Math.max(0, i - Math.trunc(5 / 2) + _currentPage))
+      // } else {
+      //   return [...Array(5).keys()].map(i => Math.max(0, i - Math.trunc(5 / 2) + _currentPage))
+      // }
     },
     itemsInPage(): any[] {
-      if (this.currentPage)
-        var index: any = this.currentPage * this.maxItemsPerPage - this.maxItemsPerPage
-        return this.items.slice(index, index + this.maxItemsPerPage)
+      return this.data
     },
     sortedItems(): any[] {
       return this.itemsInPage.sort((a: any, b: any) => {
@@ -276,7 +279,7 @@ export default defineComponent({
     },
   },
   mounted () {
-    this.currentPage = 1
+    // this.currentPage = 1
     this.activeItem = 1
   }
 });
@@ -284,6 +287,9 @@ export default defineComponent({
 <style scoped>
 .current {
   @apply z-10 bg-blue-500 text-white;
+}
+.disabled {
+  @apply hover:bg-white cursor-not-allowed text-gray-200 shadow-none
 }
 @media (max-width: 1024px) {
   table {

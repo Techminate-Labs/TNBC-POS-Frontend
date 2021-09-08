@@ -20,8 +20,8 @@ class DataService {
     return http.post("/reset-password", data);
   }
 
-  listUsers(token: any): Promise<any> {
-    return http.get("/users", { headers: { "Authorization": `Bearer ${token}` } });
+  listUsers(url: any, token: any): Promise<any> {
+    return http.get(`${url}`, { headers: { "Authorization": `Bearer ${token}` } });
   }
 
   addUser(data: any, token: any): Promise<any> {
