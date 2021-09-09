@@ -31,9 +31,6 @@ import Error404 from '../views/errors/Error404.vue'
 import Error500 from '../views/errors/Error500.vue'
 import VerifyEmailUrl from '../views/VerifyEmailUrl.vue'
 
-let isAuthenticated = store.state.isAuthenticated
-let hasToken = store.state.bearerToken
-
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -262,6 +259,8 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  let isAuthenticated = store.state.isAuthenticated
+  console.log('isAuthenticated?', isAuthenticated)
   if (to.meta.auth && !isAuthenticated) {
     console.log('isAuthenticated?', isAuthenticated)
     next('/')
