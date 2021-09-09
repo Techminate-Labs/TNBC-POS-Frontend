@@ -15,10 +15,13 @@
       :prev="prev"
       :meta="meta"
       :data="data"
+      :routerComponent="routerComponent"
+      :type="type"
       @reload-this="reloadComponent"
       @pageChange="pageChange" 
       @previousPage="previousPage" 
-      @nextPage="nextPage" 
+      @nextPage="nextPage"
+      @deleteItem="deleteUser"
       />
   </div>
 </template>
@@ -42,7 +45,13 @@ export default defineComponent({
       prev: '',
       meta: {},
       data: [],
+      type: "Users",
       url: '/users',
+      routerComponent: { 
+        create: 'ProfileCreate',
+        edit: 'UserUpdate',
+        view: 'ProfileSingle',
+      },
       columns: [
         {
           attribute: 'id',
@@ -91,6 +100,7 @@ export default defineComponent({
             updated_at: this.formatDate(new Date(user.updated_at))
           }))
           this.meta = res.meta
+          console.log(this.meta)
           this.prev = res.links.prev
           this.next = res.links.next
         })
@@ -122,6 +132,24 @@ export default defineComponent({
         this.fetchUsers()
       
       }
+    },
+    deleteUser(id: number):void {
+      let token = this.$store.state.bearerToken
+      DataService.deleteUser(id, token)
+        .then((response: ResponseData) => {
+          this.fetchUsers()
+          this.$toast.open({
+            message: `User successfully deleted.`,
+            type: "success"
+          })
+        })
+        .catch((e: Error) => {
+          this.$toast.open({
+            message: `Could not delete that user.`,
+            type: "error"
+          })
+          console.log(e)
+        });
     }
   },
   computed: {

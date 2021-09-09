@@ -30,36 +30,28 @@
                 </div>
               </td>
               <td 
-                v-for="(image, k) in imageColumn" 
-                :key="k" class="w-full lg:w-auto px-6 py-4 whitespace-nowrap"
-                :data-label="imageColumn.attribute">
-                <div class="flex-shrink-0 h-10 w-10">
-                  <img class="h-10 w-10 rounded-full" :src="item[image.attribute]" alt="" />
-                </div>
-              </td>
-              <td 
                 data-label="Action"
                 class="w-full lg:w-auto px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                 <router-link
-                  :to="{ name: 'ProfileCreate', params: { id: item.id } }"
+                  :to="{ name: routerComponent.create, params: { id: item.id } }"
                   class="text-indigo-600 hover:text-indigo-900 mr-2">
                     Add profile
                 </router-link>
                 <router-link 
                   v-show="canUserEdit"
-                  :to="{ name: 'UserUpdate', params: { id: item.id } }" 
+                  :to="{ name: routerComponent.edit, params: { id: item.id } }" 
                   class="text-indigo-600 hover:text-indigo-900 mr-2">
                     Edit
                 </router-link>
                 <router-link 
                   v-show="canUserView"
-                  :to="{ name: 'ProfileSingle', params: { id: item.id } }" 
+                  :to="{ name: routerComponent.view, params: { id: item.id } }" 
                   class="text-indigo-600 hover:text-indigo-900 mr-2">
                     View
                 </router-link>
                 <button 
                   v-show="canUserDelete"
-                  @click="deleteUser(item.id)" 
+                  @click="handleDelete(item.id)" 
                   class="text-indigo-600 hover:text-indigo-900 mr-2">
                   Delete
                 </button>
@@ -72,27 +64,20 @@
             <div class="md:mr-6">
               <p class="text-sm text-gray-700">
                 Showing
-                <!-- first page -->
-                <span v-if="currentPage == 1" class="font-medium">{{ currentPage }}</span>
-                <!-- last page -->
-                <span v-else-if="currentPage == lastPage" class="font-medium">{{ (totalItems + 1) - itemsInPage.length }}</span>
-                <!-- middle page -->
-                <span v-else class="font-medium">{{ (itemsInPage.length * currentPage) - (itemsInPage.length - 1) }}</span>
-                to
-                <span class="font-medium">{{ currentPage != lastPage ? maxItemsPerPage * currentPage : totalItems }}</span>
-                of
-                <span class="font-medium">{{ totalItems }}</span>
+                <span v-show="meta.current_page === 1" class="font-medium">{{ meta.current_page }}</span>
+                <span v-show="meta.current_page === meta.last_page" class="font-medium">{{ meta.total }}</span>
+                out of
+                <span class="font-medium">{{ meta.total }}</span>
                 results
               </p>
             </div>
             <div class="md:mr-6 text-sm text-gray-700">
             Show 
             <select 
-              v-model.number="maxItemsPerPage" 
               @change="onChange"
               class="border-2 p-2 rounded-lg">
-              <option >3</option>
-              <option selected>5</option>
+              <option selected>{{ meta.per_page }}</option>
+              <option>5</option>
               <option>10</option>
               <option>20</option>
               <option>50</option>
@@ -100,43 +85,41 @@
             </select>
               Items
             </div>
-            <div v-if="notEnoughPages">
-              <nav class="relative z-0 inline-flex" aria-label="Pagination">
-                <a
-                  @click="changeToPreviousPage"
-                  href="#"
-                  :class="this.prev === null ? 'disabled' : ''"
-                  class="relative inline-flex items-center mr-2 px-2 py-2 rounded-full bg-white text-sm font-medium text-gray-500 shadow-md hover:bg-gray-50">
-                  <span>
-                  <!-- chevron-left -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                    </svg>
-                  </span>
-                </a>
-                <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
-                <a 
-                  @click="handlePageChange(item.url)"
-                  v-for="(item, index) in displayPages" 
-                  :key="index" href="#" 
-                  :class="item.active === true ? 'current' : ''"
-                  class="bg-white mx-2 shadow-md text-gray-500 hover:bg-gray-50 relative inline-flex items-center justify-center h-4 w-4 px-4 py-4 text-sm font-medium rounded-full">
-                  {{ item.label }}
-                </a>
-                <a
-                  @click="changeToNextPage"
-                  href="#"
-                  :class="this.next === null ? 'disabled' : ''"
-                  class="relative inline-flex items-center ml-2 px-2 py-2 rounded-full bg-white text-sm font-medium text-gray-500 shadow-md hover:bg-gray-50">
-                  <span>
-                  <!-- chevron-right -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                  </span>
-                </a>
-              </nav>
-            </div>
+            <nav class="relative z-0 inline-flex" aria-label="Pagination">
+              <a
+                @click="changeToPreviousPage"
+                href="#"
+                :class="prev === null ? 'disabled' : ''"
+                class="relative inline-flex items-center mr-2 px-2 py-2 rounded-full bg-white text-sm font-medium text-gray-500 shadow-md hover:bg-gray-50">
+                <span>
+                <!-- chevron-left -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                  </svg>
+                </span>
+              </a>
+              <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
+              <a 
+                @click="handlePageChange(item.url)"
+                v-for="(item, index) in displayPagination" 
+                :key="index" href="#" 
+                :class="item.active === true ? 'current' : ''"
+                class="bg-white mx-2 shadow-md text-gray-500 hover:bg-gray-50 relative inline-flex items-center justify-center h-4 w-4 px-4 py-4 text-sm font-medium rounded-full">
+                {{ item.label }}
+              </a>
+              <a
+                @click="changeToNextPage"
+                href="#"
+                :class="next === null ? 'disabled' : ''"
+                class="relative inline-flex items-center ml-2 px-2 py-2 rounded-full bg-white text-sm font-medium text-gray-500 shadow-md hover:bg-gray-50">
+                <span>
+                <!-- chevron-right -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </span>
+              </a>
+            </nav>
           </div>
         </div>
       </div>
@@ -145,7 +128,6 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { UserTableItems, UserTableColumns } from '@/types/UserTables'
 import { MetaPagination, MetaPaginationLinks } from '@/types/TablePagination'
 import DataService from "@/services/DataService";
 import ResponseData from "@/types/ResponseData";
@@ -153,12 +135,8 @@ import ResponseData from "@/types/ResponseData";
 export default defineComponent({
   name: 'UserTable',
   props: {
-    items: {
-      type: Array as PropType<Array<UserTableItems>>,
-      required: true
-    },
     columns: {
-      type: Array as PropType<Array<UserTableColumns>>,
+      type: Array as any,
       required: true
     },
     next: {
@@ -173,31 +151,29 @@ export default defineComponent({
       type: Array as any,
       required: true
     },
+    type: {
+      type: String,
+      required: true
+    },
     meta: {
       type: Object as PropType<MetaPagination>,
+      required: true
+    },
+    routerComponent: {
+      type: Object as any,
       required: true
     },
   },
   data() {
     return {
-      prevPage: null as null | number,
-      nextPage: null as null | number,
-      currentPage: null as null | number,
-      pageNumbers: [] as number[],
-      pageNumberCount: 1 as number,
-      maxItemsPerPage: 5 as number,
-      lastPage: Math.ceil((this.totalItems as unknown as number) / (this.maxItemsPerPage as unknown as number)) as number,
-      notEnoughPages: true as boolean,
       currentSort: 'id' as string,
       currentSortDir: 'asc' as string,
-      activeItem: null as null | number
     }
   },
   methods: {
     onChange(): void {
-      this.sortedItems
-      this.itemsInPage
-      this.displayPages
+      // this.sortedItems
+      // this.itemsInPage
     },
     handlePageChange(url: string): void {
       this.$emit('pageChange', url as string)
@@ -214,41 +190,13 @@ export default defineComponent({
       }
       this.currentSort = s;
     },
-    deleteUser(id: string){
-      let _id = parseInt(id as string)
-      let token = this.$store.state.bearerToken
-      DataService.deleteUser(_id, token)
-        .then((response: ResponseData) => {
-          this.$emit('reloadThis')
-          this.$toast.open({
-            message: `User successfully deleted.`,
-            type: "success"
-          })
-        })
-        .catch((e: Error) => {
-          this.$toast.open({
-            message: `Could not delete that user.`,
-            type: "error"
-          })
-          console.log(e)
-        });
+    handleDelete(id: string){  
+      this.$emit('deleteItem', parseInt(id as string))
     }
   },
   computed: {
-    displayPages() {
-      console.log('this.meta', this.meta)
+    displayPagination() {
       return this.meta.links
-      // this.lastPage = Math.ceil(this.totalItems / this.maxItemsPerPage)
-      // const totalPages = this.lastPage;
-      // let _currentPage: any = this.currentPage;
-
-      // if ([1, 2, 3, 4].includes(_currentPage)) _currentPage = 3;
-      // else if ([totalPages - 1, totalPages].includes(_currentPage)) _currentPage = Math.max(0, totalPages - Math.trunc(5 / 2));
-      // if (totalPages < 5){
-      //   return [...Array(totalPages).keys()].map(i => Math.max(0, i - Math.trunc(5 / 2) + _currentPage))
-      // } else {
-      //   return [...Array(5).keys()].map(i => Math.max(0, i - Math.trunc(5 / 2) + _currentPage))
-      // }
     },
     itemsInPage(): any[] {
       return this.data
@@ -265,28 +213,21 @@ export default defineComponent({
     textColumns(): any[] {
       return this.columns.filter((c: any) => c.attribute !== 'image' )
     },
-    imageColumn(): any[] {
-      return this.columns.filter((c: any) => c.attribute === 'image' )
-    },
     canUserEdit():boolean {
-      return this.$store.state.permissions[0]["Users"].edit
+      return this.$store.state.permissions[0][this.type].edit
     },
     canUserView():boolean {
-      return this.$store.state.permissions[0]["Users"].view
+      return this.$store.state.permissions[0][this.type].view
     },
     canUserDelete():boolean {
-      return this.$store.state.permissions[0]["Users"].delete
+      return this.$store.state.permissions[0][this.type].delete
     },
-  },
-  mounted () {
-    // this.currentPage = 1
-    this.activeItem = 1
   }
 });
 </script>
 <style scoped>
 .current {
-  @apply z-10 bg-blue-500 text-white;
+  @apply z-10 bg-blue-500 text-white hover:bg-blue-500;
 }
 .disabled {
   @apply hover:bg-white cursor-not-allowed text-gray-200 shadow-none
