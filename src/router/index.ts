@@ -138,11 +138,11 @@ const routes: Array<RouteRecordRaw> = [
         path: 'roles-list',
         name: 'RolesList',
         component: RolesList,
-        beforeEnter: (to, from, next) => {
-          let canListRoles: boolean = store.state.permissions[1]['Roles'].list
-          if (!canListRoles) next('/403')
-          else next()
-        }
+        // beforeEnter: (to, from, next) => {
+        //   let canListRoles: boolean = store.state.permissions[1]['Roles'].list
+        //   if (!canListRoles) next('/403')
+        //   else next()
+        // }
       },
       {
         path: 'role-create',
