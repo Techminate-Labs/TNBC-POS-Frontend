@@ -109,7 +109,8 @@ const routes: Array<RouteRecordRaw> = [
         component: UserList,
         beforeEnter: (to, from, next) => {
           let canListUsers: boolean = store.state.permissions[0]['Users'].list
-          if (!canListUsers) return false
+          console.log(canListUsers)
+          if (!canListUsers) next('/403')
           else next()
         }
       },
@@ -157,11 +158,11 @@ const routes: Array<RouteRecordRaw> = [
         path: 'role-update/:id',
         name: 'RoleUpdate',
         component: RoleUpdate,
-        beforeEnter: (to, from, next) => {
-          let canEditRoles: boolean = store.state.permissions[1]['Roles'].edit
-          if (!canEditRoles) next('/403')
-          else next()
-        }
+        // beforeEnter: (to, from, next) => {
+        //   let canEditRoles: boolean = store.state.permissions[1]['Roles'].edit
+        //   if (!canEditRoles) next('/403')
+        //   else next()
+        // }
       },
       {
         path: 'profile',
