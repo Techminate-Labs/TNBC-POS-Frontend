@@ -263,6 +263,8 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.meta.auth && !isAuthenticated && !hasToken) {
+    console.log('isAuthenticated?', isAuthenticated)
+    console.log('hasToken?', hasToken)
     next('/')
     // } else if (to.name === "GuestLogin" && isAuthenticated && hasToken) {
     //   next('/dashboard')
