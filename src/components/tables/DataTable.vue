@@ -133,7 +133,7 @@ import DataService from "@/services/DataService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
-  name: 'UserTable',
+  name: 'DataTable',
   props: {
     columns: {
       type: Array as any,

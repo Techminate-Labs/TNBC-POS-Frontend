@@ -9,7 +9,7 @@
         <button class="base-btn">Create User</button>
       </router-link>
     </div>
-    <UserTable
+    <DataTable
       :columns="columns"
       :next="next"
       :prev="prev"
@@ -29,7 +29,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import ResponseData from "@/types/ResponseData";
-import UserTable from '@/components/tables/UserTable.vue'
+import DataTable from '@/components/tables/DataTable.vue'
 import { User } from '@/types/UserTables'
 import DataService from "@/services/DataService";
 import formatDateMixin from '@/mixins/formatDateMixin.ts';
@@ -37,7 +37,7 @@ import formatDateMixin from '@/mixins/formatDateMixin.ts';
 export default defineComponent({
   name: 'UserList',
   components: {
-    UserTable
+    DataTable
   },
   data() {
     return {
