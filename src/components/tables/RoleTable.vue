@@ -255,7 +255,8 @@ export default defineComponent({
     },
 
     canUserEdit():boolean {
-      return this.$store.state.permissions[1]["Roles"].edit
+      return true
+      // return this.$store.state.permissions[1]["Roles"].edit
     },
     canUserDelete():boolean {
       return this.$store.state.permissions[1]["Roles"].delete
