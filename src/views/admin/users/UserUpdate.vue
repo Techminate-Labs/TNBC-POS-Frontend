@@ -58,7 +58,7 @@ export default defineComponent({
     fetchUser(): void {
       let token = this.$store.state.bearerToken
       let params = this.$route.params
-      let url = '/users'
+      let url = '/userList'
       DataService.listUsers(url, token)
         .then((response: ResponseData) => {
             let user_id: number = parseInt(params.id as string)

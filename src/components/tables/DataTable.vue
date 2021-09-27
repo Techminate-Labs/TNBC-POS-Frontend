@@ -31,30 +31,11 @@
               </td>
               <td 
                 data-label="Action"
-                class="w-full lg:w-auto px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <router-link
-                  :to="{ name: routerComponent.create, params: { id: item.id } }"
-                  class="text-indigo-600 hover:text-indigo-900 mr-2">
-                    Add profile
-                </router-link>
-                <router-link 
-                  v-show="canUserEdit"
-                  :to="{ name: routerComponent.edit, params: { id: item.id } }" 
-                  class="text-indigo-600 hover:text-indigo-900 mr-2">
-                    Edit
-                </router-link>
-                <router-link 
-                  v-show="canUserView"
-                  :to="{ name: routerComponent.view, params: { id: item.id } }" 
-                  class="text-indigo-600 hover:text-indigo-900 mr-2">
-                    View
-                </router-link>
-                <button 
-                  v-show="canUserDelete"
-                  @click="handleDelete(item.id)" 
-                  class="text-indigo-600 hover:text-indigo-900 mr-2">
-                  Delete
-                </button>
+                class="flex flew-row justify-end w-full lg:w-auto px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <UserAddIcon v-show="item.user_id"  @click="$emit('handleAddProfile', item)" class="h-6 w-6 mr-1 cursor-pointer hover:opacity-50" />
+                <ViewIcon v-show="canUserView" @click="$emit('handleView', item)" class="h-6 w-6 mr-1 cursor-pointer hover:opacity-50" />
+                <EditIcon v-show="canUserEdit" @click="$emit('handleEdit', item)" class="h-6 w-6 mr-1 cursor-pointer hover:opacity-50" />
+                <DeleteIcon v-show="canUserDelete" @click="$emit('handleDelete', item)" class="h-6 w-6 mr-1 cursor-pointer hover:opacity-50" />
               </td>
             </tr>
           </tbody>
@@ -64,8 +45,7 @@
             <div class="md:mr-6">
               <p class="text-sm text-gray-700">
                 Showing
-                <span v-show="meta.current_page === 1" class="font-medium">{{ meta.current_page }}</span>
-                <span v-show="meta.current_page === meta.last_page" class="font-medium">{{ meta.total }}</span>
+                <span class="font-medium">{{ meta.total }}</span>
                 out of
                 <span class="font-medium">{{ meta.total }}</span>
                 results
@@ -91,33 +71,23 @@
                 href="#"
                 :class="prev === null ? 'disabled' : ''"
                 class="relative inline-flex items-center mr-2 px-2 py-2 rounded-full bg-white text-sm font-medium text-gray-500 shadow-md hover:bg-gray-50">
-                <span>
-                <!-- chevron-left -->
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                  </svg>
-                </span>
+                <ChevronLeftIcon class="h-4 w-4" />
               </a>
-              <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
-              <a 
+              <!-- Temporarily disabling this part of pagination until links is fixed-->
+              <!--<a 
                 @click="handlePageChange(item.url)"
                 v-for="(item, index) in displayPagination" 
                 :key="index" href="#" 
                 :class="item.active === true ? 'current' : ''"
                 class="bg-white mx-2 shadow-md text-gray-500 hover:bg-gray-50 relative inline-flex items-center justify-center h-4 w-4 px-4 py-4 text-sm font-medium rounded-full">
                 {{ item.label }}
-              </a>
+              </a>-->
               <a
                 @click="changeToNextPage"
                 href="#"
                 :class="next === null ? 'disabled' : ''"
                 class="relative inline-flex items-center ml-2 px-2 py-2 rounded-full bg-white text-sm font-medium text-gray-500 shadow-md hover:bg-gray-50">
-                <span>
-                <!-- chevron-right -->
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                  </svg>
-                </span>
+                 <ChevronRightIcon class="h-4 w-4" />
               </a>
             </nav>
           </div>
@@ -129,11 +99,24 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { MetaPagination, MetaPaginationLinks } from '@/types/TablePagination'
-import DataService from "@/services/DataService";
 import ResponseData from "@/types/ResponseData";
+import UserAddIcon from '@/components/icons/UserAddIcon.vue'
+import ViewIcon from '@/components/icons/ViewIcon.vue'
+import EditIcon from '@/components/icons/EditIcon.vue'
+import DeleteIcon from '@/components/icons/DeleteIcon.vue'
+import ChevronLeftIcon from '@/components/icons/ChevronLeftIcon.vue'
+import ChevronRightIcon from '@/components/icons/ChevronRightIcon.vue'
 
 export default defineComponent({
   name: 'DataTable',
+  components: {
+    UserAddIcon,
+    ViewIcon,
+    EditIcon,
+    DeleteIcon,
+    ChevronLeftIcon,
+    ChevronRightIcon,
+  },
   props: {
     columns: {
       type: Array as any,
@@ -159,8 +142,8 @@ export default defineComponent({
       type: Object as PropType<MetaPagination>,
       required: true
     },
-    routerComponent: {
-      type: Object as any,
+    permissionsArrayNum: {
+      type: Number,
       required: true
     },
   },
@@ -189,9 +172,6 @@ export default defineComponent({
         this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
       }
       this.currentSort = s;
-    },
-    handleDelete(id: string){  
-      this.$emit('deleteItem', parseInt(id as string))
     }
   },
   computed: {
@@ -214,13 +194,13 @@ export default defineComponent({
       return this.columns.filter((c: any) => c.attribute !== 'image' )
     },
     canUserEdit():boolean {
-      return this.$store.state.permissions[0][this.type].edit
+      return this.$store.state.permissions[this.permissionsArrayNum][this.type].edit
     },
     canUserView():boolean {
-      return this.$store.state.permissions[0][this.type].view
+      return this.$store.state.permissions[this.permissionsArrayNum][this.type].view
     },
     canUserDelete():boolean {
-      return this.$store.state.permissions[0][this.type].delete
+      return this.$store.state.permissions[this.permissionsArrayNum][this.type].delete
     },
   }
 });

@@ -15,9 +15,13 @@
       :prev="prev"
       :meta="meta"
       :data="data"
-      :routerComponent="routerComponent"
       :type="type"
+      :permissionsArrayNum="permissionsArrayNum"
       @reload-this="reloadComponent"
+      @handleAddProfile="addUserProfile"
+      @handleView="viewUser"
+      @handleEdit="editUser"
+      @handleDelete="deleteUser"
       @pageChange="pageChange" 
       @previousPage="previousPage" 
       @nextPage="nextPage"
@@ -32,7 +36,7 @@ import ResponseData from "@/types/ResponseData";
 import DataTable from '@/components/tables/DataTable.vue'
 import { User } from '@/types/UserTables'
 import DataService from "@/services/DataService";
-import formatDateMixin from '@/mixins/formatDateMixin.ts';
+import formatDateMixin from '@/mixins/formatDateMixin';
 
 export default defineComponent({
   name: 'UserList',
@@ -46,15 +50,11 @@ export default defineComponent({
       meta: {},
       data: [],
       type: "Users",
-      url: '/users',
-      routerComponent: { 
-        create: 'ProfileCreate',
-        edit: 'UserUpdate',
-        view: 'ProfileSingle',
-      },
+      url: '/userList',
+      permissionsArrayNum: 0,
       columns: [
         {
-          attribute: 'id',
+          attribute: 'user_id',
           name: 'id'
         },
         {
@@ -71,15 +71,15 @@ export default defineComponent({
         },
         {
           attribute: 'created_at',
-          name: 'registered on'
+          name: 'registered'
         },
         {
           attribute: 'updated_at',
-          name: 'updated on'
+          name: 'updated'
         },
         {
           attribute: 'email_verified_at',
-          name: 'email verified on'
+          name: 'email verified'
         },
       ]
     }
@@ -94,15 +94,23 @@ export default defineComponent({
           let res = response.data
           this.data = res.data.map((user: User) => ({
             ...user, 
-            roleName: user.role.name, 
-            created_at: this.formatDate(new Date(user.created_at)),
-            email_verified_at: this.formatDate(new Date(user.email_verified_at)),
-            updated_at: this.formatDate(new Date(user.updated_at))
+            roleName: user.role, 
+            created_at: user.created_at,
+            email_verified_at: user.email_verified_at,
+            updated_at: user.updated_at
           }))
-          this.meta = res.meta
-          console.log(this.meta)
-          this.prev = res.links.prev
-          this.next = res.links.next
+          this.meta = {
+            current_page: res.current_page,
+            from: res.from,
+            last_page: res.last_page,
+            links: res.links,
+            path: res.path,
+            per_page: res.per_page,
+            to: res.to,
+            total: res.total
+          }
+          this.prev = res.prev_page_url
+          this.next = res.next_page_url
         })
         .catch((e: Error) => {
           console.log(e);
@@ -129,6 +137,7 @@ export default defineComponent({
       if (this.next !== null){
 
         this.url = this.next
+        console.log(this.next)
         this.fetchUsers()
       
       }

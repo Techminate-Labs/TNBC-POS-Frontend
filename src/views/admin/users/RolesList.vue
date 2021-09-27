@@ -11,25 +11,45 @@
         </button>
       </router-link>
     </div>
-    <RoleTable :items="items" :columns="columns" @reload-this="reloadComponent"/>
+    <DataTable
+      :columns="columns"
+      :next="next"
+      :prev="prev"
+      :meta="meta"
+      :data="data"
+      :type="type"
+      :permissionsArrayNum="permissionsArrayNum"
+      @reload-this="reloadComponent"
+      @handleView="viewRole"
+      @handleEdit="editRole"
+      @handleDelete="deleteRole"
+      @pageChange="pageChange" 
+      @previousPage="previousPage" 
+      @nextPage="nextPage" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import RoleTable from '@/components/tables/RoleTable.vue'
+import DataTable from '@/components/tables/DataTable.vue';
 import DataService from "@/services/DataService";
 import ResponseData from "@/types/ResponseData";
-import formatDateMixin from '@/mixins/formatDateMixin.ts';
+import formatDateMixin from '@/mixins/formatDateMixin';
 
 export default defineComponent({
   name: 'RolesList',
   components: {
-    RoleTable
+    DataTable
   },
   data() {
     return {
-      items: [],
+      next: '',
+      prev: '',
+      meta: {},
+      data: [],
+      type: "Roles",
+      url: '/roleList',
+      permissionsArrayNum: 1,
       columns: [
         {
           name: '#',
@@ -56,20 +76,21 @@ export default defineComponent({
       let token = this.$store.state.bearerToken
       DataService.listRoles(token)
         .then((response: ResponseData) => {
-          let _roles: any = []
-          const _ = response.data.roles.map((role: any) => {
-            var _formated_created_date = this.formatDate(new Date(role.created_at))
-            var _formated_updated_date = this.formatDate(new Date(role.updated_at))
-            _roles.push(
-              {
-                id: role.id,
-                name: role.name,
-                created_at: _formated_created_date,
-                updated_at: _formated_updated_date
-              }
-            )
-            this.items = _roles
-          })
+          let res = response.data
+          this.data = res.data
+          console.log(this.data)
+          this.meta = {
+            current_page: res.current_page,
+            from: res.from,
+            last_page: res.last_page,
+            links: res.links,
+            path: res.path,
+            per_page: res.per_page,
+            to: res.to,
+            total: res.total
+          }
+          this.prev = res.prev_page_url
+          this.next = res.next_page_url
         })
         .catch((e: Error) => {
           console.log(e);
@@ -77,11 +98,51 @@ export default defineComponent({
     },
     reloadComponent(): void {
       this.fetchRoles()
-    }
+    },
+    viewRole(item: any): void {
+      console.log('waiting for roleView component')
+    },
+    editRole(item: any): void {
+      this.$router.push({name: 'RoleUpdate', params: {id: item.id}})
+    },
+    deleteRole(item: any):void {
+      let token = this.$store.state.bearerToken
+      DataService.deleteRole(item.id, token)
+        .then((response: ResponseData) => {
+            this.$emit('reloadThis')
+            this.$toast.open({
+              message: `This role has been successfully deleted.`,
+              type: "success"
+            })
+          })
+        .catch((e: Error) => {
+          this.$toast.open({
+            message: `Could not delete that role.`,
+            type: "error"
+          })
+          console.log(e)
+        });
+    },
+    pageChange(url: string):void {
+      this.url = url
+      this.fetchRoles()
+    },
+    previousPage():void {
+      if (this.prev !== null){
+        this.url = this.prev
+        this.fetchRoles()
+      }
+    },
+    nextPage():void {
+      if (this.next !== null){
+        this.url = this.next
+        this.fetchRoles()
+      }
+    },
   },
   computed: {
     canUserCreate():boolean {
-      return this.$store.state.permissions[1]["Roles"].create
+      return this.$store.state.permissions[this.permissionsArrayNum]["Roles"].create
     }
   },
   async mounted() {

@@ -122,7 +122,7 @@ const routes: Array<RouteRecordRaw> = [
         }
       },
       {
-        path: 'user-update/:id',
+        path: 'user-update/:user_id',
         name: 'UserUpdate',
         component: UserUpdate,
         beforeEnter: (to, from, next) => {
@@ -167,12 +167,12 @@ const routes: Array<RouteRecordRaw> = [
         component: ProfileSingle
       },
       {
-        path: 'profile-create/:id',
+        path: 'profile-create/:user_id',
         name: 'ProfileCreate',
         component: ProfileCreate
       },
       {
-        path: 'profile-update/:id',
+        path: 'profile-update/:user_id',
         name: 'ProfileUpdate',
         component: ProfileUpdate
       },
