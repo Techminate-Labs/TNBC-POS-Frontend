@@ -106,9 +106,9 @@ export default defineComponent({
       let token = this.$store.state.bearerToken
       DataService.listRoles(token)
         .then((response: ResponseData) => {
-          let role_id: number = parseInt(params.id as string)
+          let role_id: number = parseInt(params.user_id as string)
           let _data: any = []
-          response.data.roles.map((role: any) => {
+          response.data.data.map((role: any) => {
             _data.push({
               value: role.id,
               name: role.name

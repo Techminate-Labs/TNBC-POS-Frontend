@@ -17,16 +17,13 @@
       :data="data"
       :type="type"
       :permissionsArrayNum="permissionsArrayNum"
-      @reload-this="reloadComponent"
       @handleAddProfile="addUserProfile"
       @handleView="viewUser"
       @handleEdit="editUser"
       @handleDelete="deleteUser"
       @pageChange="pageChange" 
       @previousPage="previousPage" 
-      @nextPage="nextPage"
-      @deleteItem="deleteUser"
-      />
+      @nextPage="nextPage" />
   </div>
 </template>
 
@@ -116,9 +113,6 @@ export default defineComponent({
           console.log(e);
         });
     },
-    reloadComponent():void {
-      this.fetchUsers()
-    },
     pageChange(url: string):void {
 
       this.url = url
@@ -133,7 +127,7 @@ export default defineComponent({
       
       }
     },
-    nextPage():void {
+    nextPage(): void {
       if (this.next !== null){
 
         this.url = this.next
@@ -142,7 +136,16 @@ export default defineComponent({
       
       }
     },
-    deleteUser(id: number):void {
+    addUserProfile(item: any): void {
+      this.$router.push({name:'ProfileCreate', params: {user_id: item.user_id}})
+    },
+    viewUser(item: any): void {
+      console.log('Waiting for USerSingle component')
+    },
+    editUser(item: any): void {
+      this.$router.push({name:'UserUpdate', params: {user_id: item.user_id}})
+    },
+    deleteUser(id: number): void {
       let token = this.$store.state.bearerToken
       DataService.deleteUser(id, token)
         .then((response: ResponseData) => {

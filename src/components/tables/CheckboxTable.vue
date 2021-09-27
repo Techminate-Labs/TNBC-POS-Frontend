@@ -67,7 +67,6 @@ export default defineComponent({
   },
   methods: {
     updateRole(): void {
-      console.log('update role clicked!')
       let token = this.$store.state.bearerToken
       let _permissions: any = []
       this.items.map((item: any) => {

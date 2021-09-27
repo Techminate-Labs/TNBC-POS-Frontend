@@ -61,7 +61,8 @@ export default defineComponent({
       DataService.listRoles(token)
         .then((response: ResponseData) => {
             let role_id: number = parseInt(params.id as string)
-            const filteredRoles = response.data.roles[0]
+            console.log(response)
+            const filteredRoles = response.data.data[0]
             let permissions = filteredRoles.permissions
             let _items: any = []
             permissions.map((permission: any) => {

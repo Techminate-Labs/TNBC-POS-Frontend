@@ -25,7 +25,6 @@
           placeholder="mail@example.com"
         >
       </div>
-      {{ role }}
       <div class="flex flex-col py-2">
         <label class="mb-2">Role:</label>
         <select v-model="role" class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900">
@@ -61,12 +60,13 @@ export default defineComponent({
       let url = '/userList'
       DataService.listUsers(url, token)
         .then((response: ResponseData) => {
-            let user_id: number = parseInt(params.id as string)
-            const filteredUsers = response.data.users.filter((user: any) => user.id === user_id)
-            this.name  = filteredUsers[0].name
-            this.email = filteredUsers[0].email
-            this.role  = filteredUsers[0].role_id
-            this.id    = filteredUsers[0].id
+            let user_id: number = parseInt(params.user_id as string)
+            const filteredUser = response.data.data.filter((user: any) => user.user_id === user_id)
+            console.log(filteredUser)
+            this.name  = filteredUser[0].name
+            this.email = filteredUser[0].email
+            this.role  = filteredUser[0].role
+            this.id    = filteredUser[0].id
           })
         .catch((e: Error) => {
           console.log(e);
@@ -77,9 +77,9 @@ export default defineComponent({
       let token = this.$store.state.bearerToken
       DataService.listRoles(token)
         .then((response: ResponseData) => {
-            let role_id: number = parseInt(params.id as string)
+            // let role_id: number = parseInt(params.user_id as string)
             let _data: any = []
-            response.data.roles.map((role: any) => {
+            response.data.data.map((role: any) => {
               _data.push({
                 value: role.id,
                 name: role.name

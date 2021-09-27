@@ -19,7 +19,6 @@
       :data="data"
       :type="type"
       :permissionsArrayNum="permissionsArrayNum"
-      @reload-this="reloadComponent"
       @handleView="viewRole"
       @handleEdit="editRole"
       @handleDelete="deleteRole"
@@ -78,7 +77,6 @@ export default defineComponent({
         .then((response: ResponseData) => {
           let res = response.data
           this.data = res.data
-          console.log(this.data)
           this.meta = {
             current_page: res.current_page,
             from: res.from,
@@ -96,9 +94,6 @@ export default defineComponent({
           console.log(e);
         });
     },
-    reloadComponent(): void {
-      this.fetchRoles()
-    },
     viewRole(item: any): void {
       console.log('waiting for roleView component')
     },
@@ -109,7 +104,7 @@ export default defineComponent({
       let token = this.$store.state.bearerToken
       DataService.deleteRole(item.id, token)
         .then((response: ResponseData) => {
-            this.$emit('reloadThis')
+            this.fetchRoles()
             this.$toast.open({
               message: `This role has been successfully deleted.`,
               type: "success"
