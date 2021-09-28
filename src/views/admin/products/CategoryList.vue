@@ -34,11 +34,12 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import CategoryService from "@/services/CategoryService";
 import DataTable from '@/components/tables/DataTable.vue';
 import CategoryModalCreate from '@/components/modals/CategoryModalCreate.vue';
 import CategoryModalUpdate from '@/components/modals/CategoryModalUpdate.vue';
-import DataService from "@/services/DataService";
 import ResponseData from "@/types/ResponseData";
+import { CategoryItem } from "@/types/CategoryTables";
 
 export default defineComponent({
   name: 'CategoryList',
@@ -58,7 +59,7 @@ export default defineComponent({
       permissionsArrayNum: 0,
       isCreating: false,
       isEditing: false,
-      selectedCategory: {},
+      selectedCategory: {} as CategoryItem,
       columns: [
         {
           attribute: 'id',
@@ -83,16 +84,11 @@ export default defineComponent({
     async fetchCategories(): Promise<void> {
       let token = this.$store.state.bearerToken
       let url = this.url
-      await DataService.listCategories(url, token)
+      await CategoryService.list(url, token)
         .then((response: ResponseData) => {
           let res = response.data
-          this.data = res.data.map((user: any) => ({
-            ...user, 
-            roleName: user.role, 
-            created_at: user.created_at,
-            email_verified_at: user.email_verified_at,
-            updated_at: user.updated_at
-          }))
+          this.data = res.data
+          console.log(res)
           this.meta = {
             current_page: res.current_page,
             from: res.from,
@@ -110,19 +106,19 @@ export default defineComponent({
           console.log(e);
         });
     },
-    showCategoryCreateModal():void {
+    showCategoryCreateModal(): void {
       this.isCreating = true
     },
-    showCategoryEditModal(item: any):void {
+    showCategoryEditModal(item: any): void {
       this.selectedCategory = item
       this.isEditing = true
     },
     viewCategory(): void {},
-    editCategory(categoryName: string): void {
+    async editCategory(categoryName: string): Promise<void> {
       let token = this.$store.state.bearerToken
       let data = { name: categoryName }
-      let categoryId = 1
-      DataService.editCategory(data, categoryId, token)
+      let categoryId = this.selectedCategory.id
+      await CategoryService.edit(data, categoryId, token)
         .then((response: ResponseData) => {
           this.$toast.open({
             message: `Category ${categoryName} has been successfully created!`,
@@ -139,7 +135,26 @@ export default defineComponent({
           console.log(e)
         });
     },
-    deleteCategory(): void {},
+    async deleteCategory(item: any): Promise<void> {
+      let token = this.$store.state.bearerToken
+      let categoryId = item.id
+      await CategoryService.delete(categoryId, token)
+        .then((response: ResponseData) => {
+          this.$toast.open({
+            message: `Category has been successfully deleted.`,
+            type: "success"
+          })
+          this.isEditing = false
+          this.fetchCategories()
+        })
+        .catch((e: Error) => {
+          this.$toast.open({
+            message: `There was an error creating that category.`,
+            type: "error"
+          })
+          console.log(e)
+        });
+    },
     pageChange(url: string):void {
       this.url = url
       this.fetchCategories()
@@ -156,12 +171,13 @@ export default defineComponent({
         this.fetchCategories()
       }
     },
-    createCategory(name: any): void {
+    async createCategory(name: any): Promise<void> {
       let token = this.$store.state.bearerToken
       let data = { name: name }
-      DataService.createCategory(data, token)
+      await CategoryService.create(data, token)
         .then((response: ResponseData) => {
-          console.log(response)
+          this.isCreating = false
+          this.fetchCategories()
           this.$toast.open({
             message: `Category ${name} has been successfully created!`,
             type: "success"

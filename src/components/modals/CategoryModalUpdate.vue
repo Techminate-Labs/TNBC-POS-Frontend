@@ -10,7 +10,7 @@
           type="text" 
           name="name" 
           v-model="categoryName" 
-          placeholder="Winter Clothes"
+          placeholder="KFC"
         >
       </div>
       <div class="float-right">
@@ -32,7 +32,7 @@ export default defineComponent({
   name: 'CategoryModalUpdate',
   props: {
     name: {
-      type: String as any,
+      type: String || null as any,
       required: true
     }
   },
