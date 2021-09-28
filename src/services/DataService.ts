@@ -37,7 +37,7 @@ class DataService {
   }
 
   listUserProfile(id: number, token: any): Promise<any> {
-    return http.get(`/userProfile/${id}`, { headers: { "Authorization": `Bearer ${token}` } });
+    return http.get(`/userProfileView/${id}`, { headers: { "Authorization": `Bearer ${token}` } });
   }
 
   addUserProfile(data: any): Promise<any> {
@@ -46,6 +46,10 @@ class DataService {
   
   updateUserProfile(data: any, user_id: number): Promise<any> {
     return http.post(`/userProfileUpdate/${user_id}`, data, { headers: { "Authorization": `Bearer ${_token}` } });
+  }
+
+  updateUserPasswordProfile(data: any, token: any): Promise<any> {
+    return http.post(`/profileSettingPasswordUpdate`, data, { headers: { "Authorization": `Bearer ${token}` } });
   }
   
   listRoles(token: any): Promise<any> {

@@ -140,7 +140,7 @@ export default defineComponent({
       this.$router.push({name:'ProfileCreate', params: {user_id: item.user_id}})
     },
     viewUser(item: any): void {
-      console.log('Waiting for USerSingle component')
+      this.$router.push({name:'ProfileSingle', params: {user_id: item.user_id}})
     },
     editUser(item: any): void {
       this.$router.push({name:'UserUpdate', params: {user_id: item.user_id}})

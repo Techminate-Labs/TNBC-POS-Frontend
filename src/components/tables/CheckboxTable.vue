@@ -4,6 +4,15 @@
       <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
         <table class="divide-y divide-gray-200 border-collapse w-full">
           <thead class="bg-gray-50">
+            <tr class="flex flex-col flex-nowrap py-2 grid-span-1 mb-2">
+              <label for="role-name">Name of the Role</label>
+              <input
+                @change="$emit('handleNameChange', $event)"
+                class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900"
+                name="role-name"
+                type="text"
+                v-model="name" />
+            </tr>
             <tr>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Section

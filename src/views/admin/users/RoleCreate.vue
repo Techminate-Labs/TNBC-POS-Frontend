@@ -5,12 +5,11 @@
       <p class="text-2xl">Role Permission</p>
       <p>Creating <span class="capitalize font-bold">{{ roleName }}</span></p> 
     </div>
-    <div>
-      <input
-        type="text"
-        v-model="roleName" />
-    </div>
-    <RoleUpdateTable :columns="columns" :items="items" :name="roleName" />
+    <CheckboxTable 
+      @handleNameChange="changeName"
+      :columns="columns"
+      :items="items" 
+      :name="roleName" />
     <button class="base-btn float-right" @click="createRole">Save</button>
   </div>
 </template>
@@ -18,13 +17,15 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import RoleUpdateTable from '@/components/tables/RoleUpdateTable.vue'
+import CheckboxTable from '@/components/tables/CheckboxTable.vue'
 import DataService from "@/services/DataService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
   name: 'RoleCreate',
   components: {
-    RoleUpdateTable
+    RoleUpdateTable,
+    CheckboxTable
   },
   data() {
     return {
@@ -113,6 +114,9 @@ export default defineComponent({
           console.log(e)
         });
     },
+    changeName(event: any): void {
+      console.log(event)
+    }
   },
   async mounted() {
     this.fetchRoles()

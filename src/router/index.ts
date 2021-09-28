@@ -162,7 +162,7 @@ const routes: Array<RouteRecordRaw> = [
         // }
       },
       {
-        path: 'profile',
+        path: 'profile/:user_id',
         name: 'ProfileSingle',
         component: ProfileSingle
       },
@@ -260,9 +260,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   let isAuthenticated = store.state.isAuthenticated
-  console.log('isAuthenticated?', isAuthenticated)
   if (to.meta.auth && !isAuthenticated) {
-    console.log('isAuthenticated?', isAuthenticated)
     next('/')
     // } else if (to.name === "GuestLogin" && isAuthenticated && hasToken) {
     //   next('/dashboard')
