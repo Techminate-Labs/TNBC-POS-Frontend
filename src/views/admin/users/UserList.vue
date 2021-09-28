@@ -33,7 +33,6 @@ import UserService from "@/services/UserService";
 import ResponseData from "@/types/ResponseData";
 import DataTable from '@/components/tables/DataTable.vue'
 import { User } from '@/types/UserTables'
-import formatDateMixin from '@/mixins/formatDateMixin';
 
 export default defineComponent({
   name: 'UserList',
@@ -81,7 +80,6 @@ export default defineComponent({
       ]
     }
   },
-  mixins: [formatDateMixin],
   methods: {
     async fetchUsers(): Promise<void> {
       let token = this.$store.state.bearerToken

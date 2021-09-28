@@ -198,6 +198,11 @@ const routes: Array<RouteRecordRaw> = [
         component: SupplierCreate,
       },
       {
+        path: 'suppliers-update/:id',
+        name: 'SupplierUpdate',
+        component: SupplierUpdate,
+      },
+      {
         path: 'units-list',
         name: 'UnitList',
         component: UnitList,
@@ -222,11 +227,6 @@ const routes: Array<RouteRecordRaw> = [
         name: 'ProductCreate',
         component: ProductCreate,
       },
-      // {
-      //   path: 'suppliers-update/:id',
-      //   name: 'SupplierUpdate',
-      //   component: SupplierUpdate,
-      // },
 
     ]
   },
