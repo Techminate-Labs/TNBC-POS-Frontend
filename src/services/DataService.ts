@@ -20,8 +20,8 @@ class DataService {
     return http.post("/reset-password", data);
   }
 
-  listUsers(token: any): Promise<any> {
-    return http.get("/users", { headers: { "Authorization": `Bearer ${token}` } });
+  listUsers(url: any, token: any): Promise<any> {
+    return http.get(`${url}`, { headers: { "Authorization": `Bearer ${token}` } });
   }
 
   addUser(data: any, token: any): Promise<any> {
@@ -29,35 +29,43 @@ class DataService {
   }
 
   updateUser(data: any, id: number): Promise<any> {
-    return http.put(`/users/${id}`, data, { headers: { "Authorization": `Bearer ${_token}` } });
+    return http.put(`/userUpdate/${id}`, data, { headers: { "Authorization": `Bearer ${_token}` } });
   }
-
-  deleteUser(id: number, token: any): Promise<any> {
-    return http.delete(`/users/${id}`, { headers: { "Authorization": `Bearer ${token}` } });
+  
+  deleteUser(user_id: number, token: any): Promise<any> {
+    return http.delete(`/userDelete/${user_id}`, { headers: { "Authorization": `Bearer ${token}` } });
   }
 
   listUserProfile(id: number, token: any): Promise<any> {
-    return http.get(`/userProfile/${id}`, { headers: { "Authorization": `Bearer ${token}` } });
+    return http.get(`/userProfileView/${id}`, { headers: { "Authorization": `Bearer ${token}` } });
   }
 
   addUserProfile(data: any): Promise<any> {
-    return http.post('/userProfile', data, { headers: { "Authorization": `Bearer ${_token}` } });
+    return http.post('/userProfileCreate', data, { headers: { "Authorization": `Bearer ${_token}` } });
+  }
+  
+  updateUserProfile(data: any, user_id: number): Promise<any> {
+    return http.post(`/userProfileUpdate/${user_id}`, data, { headers: { "Authorization": `Bearer ${_token}` } });
   }
 
+  updateUserPasswordProfile(data: any, token: any): Promise<any> {
+    return http.post(`/profileSettingPasswordUpdate`, data, { headers: { "Authorization": `Bearer ${token}` } });
+  }
+  
   listRoles(token: any): Promise<any> {
-    return http.get('/roles', { headers: { "Authorization": `Bearer ${token}` } });
+    return http.get('/roleList', { headers: { "Authorization": `Bearer ${token}` } });
   }
 
-  updateRole(data: any, id: number, token: any): Promise<any> {
-    return http.put(`/roles/${id}`, data, { headers: { "Authorization": `Bearer ${token}` } });
+  updateRole(data: any, user_id: number, token: any): Promise<any> {
+    return http.put(`/roleUpdate/${user_id}`, data, { headers: { "Authorization": `Bearer ${token}` } });
   }
 
-  addRole(data: any): Promise<any> {
-    return http.post('/roles', data, { headers: { "Authorization": `Bearer ${_token}` } });
+  addRole(data: any, token: any): Promise<any> {
+    return http.post('/roleCreate', data, { headers: { "Authorization": `Bearer ${token}` } });
   }
 
-  deleteRole(id: number): Promise<any> {
-    return http.delete(`/roles/${id}`, { headers: { "Authorization": `Bearer ${_token}` } });
+  deleteRole(id: number, token: any): Promise<any> {
+    return http.delete(`/roleDelete/${id}`, { headers: { "Authorization": `Bearer ${token}` } });
   }
 
   requestEmailVerification(data: any, token: any): Promise<any> {
@@ -67,6 +75,15 @@ class DataService {
   verifyEmail(path: any): Promise<any> {
     return http.get(`${path}`, { headers: { "Authorization": `Bearer ${_token}` } });
   }
+
+  listCategories(url: any, token: any): Promise<any> {
+    return http.get(`${url}`, { headers: { "Authorization": `Bearer ${token}` } });
+  }
+
+  createCategory(data: any, token: any): Promise<any> {
+    return http.post(`/categoryCreate`, data, { headers: { "Authorization": `Bearer ${token}` } });
+  }
+
 }
 
 export default new DataService();

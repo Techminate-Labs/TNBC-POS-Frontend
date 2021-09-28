@@ -9,28 +9,49 @@
         <button class="base-btn">Create User</button>
       </router-link>
     </div>
-    <UserTable :items="items" :columns="columns" @reload-this="reloadComponent" />
+    <DataTable
+      :columns="columns"
+      :next="next"
+      :prev="prev"
+      :meta="meta"
+      :data="data"
+      :type="type"
+      :permissionsArrayNum="permissionsArrayNum"
+      @handleAddProfile="addUserProfile"
+      @handleView="viewUser"
+      @handleEdit="editUser"
+      @handleDelete="deleteUser"
+      @pageChange="pageChange" 
+      @previousPage="previousPage" 
+      @nextPage="nextPage" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import ResponseData from "@/types/ResponseData";
-import UserTable from '@/components/tables/UserTable.vue'
+import DataTable from '@/components/tables/DataTable.vue'
+import { User } from '@/types/UserTables'
 import DataService from "@/services/DataService";
-import formatDateMixin from '@/mixins/formatDateMixin.ts';
+import formatDateMixin from '@/mixins/formatDateMixin';
 
 export default defineComponent({
   name: 'UserList',
   components: {
-    UserTable
+    DataTable
   },
   data() {
     return {
-      items: [],
+      next: '',
+      prev: '',
+      meta: {},
+      data: [],
+      type: "Users",
+      url: '/userList',
+      permissionsArrayNum: 0,
       columns: [
         {
-          attribute: 'id',
+          attribute: 'user_id',
           name: 'id'
         },
         {
@@ -42,20 +63,20 @@ export default defineComponent({
           name: 'email'
         },
         {
-          attribute: 'role',
+          attribute: 'roleName',
           name: 'role'
         },
         {
           attribute: 'created_at',
-          name: 'registered on'
+          name: 'registered'
         },
         {
           attribute: 'updated_at',
-          name: 'updated on'
+          name: 'updated'
         },
         {
           attribute: 'email_verified_at',
-          name: 'email verified on'
+          name: 'email verified'
         },
       ]
     }
@@ -64,39 +85,77 @@ export default defineComponent({
   methods: {
     fetchUsers(): void {
       let token = this.$store.state.bearerToken
-      DataService.listUsers(token)
+      let url = this.url
+      DataService.listUsers(url, token)
         .then((response: ResponseData) => {
-            let _users: any = []
-            const _ = response.data.users.map((user: any) => {
-              let _formated_created_date = null
-              if (user.created_at !== null)
-                _formated_created_date = this.formatDate(new Date(user.created_at))
-              let _formated_updated_date = null
-              if (user.updated_at !== null)
-                _formated_updated_date = this.formatDate(new Date(user.updated_at))
-              let _formated_verified_date = null
-              if (user.email_verified_at !== null)
-                _formated_verified_date = this.formatDate(new Date(user.email_verified_at))
-              _users.push(
-                {
-                  id: user.id,
-                  name: user.name,
-                  email: user.email,
-                  role: user.role.name,
-                  created_at: _formated_created_date,
-                  email_verified_at: _formated_verified_date,
-                  updated_at: _formated_updated_date
-                }
-              )
-              this.items = _users
-            })
-          })
+          let res = response.data
+          this.data = res.data.map((user: User) => ({
+            ...user, 
+            roleName: user.role, 
+            created_at: user.created_at,
+            email_verified_at: user.email_verified_at,
+            updated_at: user.updated_at
+          }))
+          this.meta = {
+            current_page: res.current_page,
+            from: res.from,
+            last_page: res.last_page,
+            links: res.links,
+            path: res.path,
+            per_page: res.per_page,
+            to: res.to,
+            total: res.total
+          }
+          this.prev = res.prev_page_url
+          this.next = res.next_page_url
+        })
         .catch((e: Error) => {
           console.log(e);
         });
     },
-    reloadComponent():void {
+    pageChange(url: string):void {
+      this.url = url
       this.fetchUsers()
+    },
+    previousPage():void {
+      if (this.prev !== null){
+        this.url = this.prev
+        this.fetchUsers()
+      }
+    },
+    nextPage(): void {
+      if (this.next !== null){
+        this.url = this.next
+        console.log(this.next)
+        this.fetchUsers()
+      }
+    },
+    addUserProfile(item: any): void {
+      this.$router.push({name:'ProfileCreate', params: {user_id: item.user_id}})
+    },
+    viewUser(item: any): void {
+      this.$router.push({name:'ProfileSingle', params: {user_id: item.user_id}})
+    },
+    editUser(item: any): void {
+      this.$router.push({name:'UserUpdate', params: {user_id: item.user_id}})
+    },
+    deleteUser(id: number): void {
+      let token = this.$store.state.bearerToken
+      DataService.deleteUser(id, token)
+        .then((response: ResponseData) => {
+          this.fetchUsers()
+          this.$toast.open({
+            message: `User successfully deleted.`,
+            type: "success"
+          })
+        })
+        .catch((e: Error) => {
+          this.$toast.open({
+            message: `Could not delete that user.`,
+            type: "error"
+          })
+          console.log(e)
+        });
     }
   },
   computed: {

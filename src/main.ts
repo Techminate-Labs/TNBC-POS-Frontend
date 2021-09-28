@@ -12,7 +12,7 @@ import '@/index.css'
 axios.defaults.baseURL = 'http://192.168.1.225:8088';
 
 let toastOptions = {
-  position: 'top-right',
+  position: 'bottom-right',
   duration: 8000,
   dismissible: true
 }

@@ -31,9 +31,6 @@ import Error404 from '../views/errors/Error404.vue'
 import Error500 from '../views/errors/Error500.vue'
 import VerifyEmailUrl from '../views/VerifyEmailUrl.vue'
 
-let isAuthenticated = store.state.isAuthenticated
-let hasToken = store.state.bearerToken
-
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -109,7 +106,8 @@ const routes: Array<RouteRecordRaw> = [
         component: UserList,
         beforeEnter: (to, from, next) => {
           let canListUsers: boolean = store.state.permissions[0]['Users'].list
-          if (!canListUsers) return false
+          console.log(canListUsers)
+          if (!canListUsers) next('/403')
           else next()
         }
       },
@@ -124,7 +122,7 @@ const routes: Array<RouteRecordRaw> = [
         }
       },
       {
-        path: 'user-update/:id',
+        path: 'user-update/:user_id',
         name: 'UserUpdate',
         component: UserUpdate,
         beforeEnter: (to, from, next) => {
@@ -137,11 +135,11 @@ const routes: Array<RouteRecordRaw> = [
         path: 'roles-list',
         name: 'RolesList',
         component: RolesList,
-        beforeEnter: (to, from, next) => {
-          let canListRoles: boolean = store.state.permissions[1]['Roles'].list
-          if (!canListRoles) next('/403')
-          else next()
-        }
+        // beforeEnter: (to, from, next) => {
+        //   let canListRoles: boolean = store.state.permissions[1]['Roles'].list
+        //   if (!canListRoles) next('/403')
+        //   else next()
+        // }
       },
       {
         path: 'role-create',
@@ -157,24 +155,24 @@ const routes: Array<RouteRecordRaw> = [
         path: 'role-update/:id',
         name: 'RoleUpdate',
         component: RoleUpdate,
-        beforeEnter: (to, from, next) => {
-          let canEditRoles: boolean = store.state.permissions[1]['Roles'].edit
-          if (!canEditRoles) next('/403')
-          else next()
-        }
+        // beforeEnter: (to, from, next) => {
+        //   let canEditRoles: boolean = store.state.permissions[1]['Roles'].edit
+        //   if (!canEditRoles) next('/403')
+        //   else next()
+        // }
       },
       {
-        path: 'profile',
+        path: 'profile/:user_id',
         name: 'ProfileSingle',
         component: ProfileSingle
       },
       {
-        path: 'profile-create/:id',
+        path: 'profile-create/:user_id',
         name: 'ProfileCreate',
         component: ProfileCreate
       },
       {
-        path: 'profile-update/:id',
+        path: 'profile-update/:user_id',
         name: 'ProfileUpdate',
         component: ProfileUpdate
       },
@@ -261,7 +259,8 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.auth && !isAuthenticated && !hasToken) {
+  let isAuthenticated = store.state.isAuthenticated
+  if (to.meta.auth && !isAuthenticated) {
     next('/')
     // } else if (to.name === "GuestLogin" && isAuthenticated && hasToken) {
     //   next('/dashboard')

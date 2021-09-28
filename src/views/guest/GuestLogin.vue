@@ -55,7 +55,6 @@ export default defineComponent({
       }
       DataService.loginUser(data)
         .then((response: ResponseData) => {
-          console.log('response from login', response.data)
           this.user = response.data.user
           let permissions = this.user.role.permissions
 
@@ -81,15 +80,11 @@ export default defineComponent({
         });
     },
     checkIfUserhasVerifiedEmail():void {
-      console.log('Checking if email is verified')
       let user = this.user
       
       let isVerified = user.email_verified_at
       if (isVerified !== undefined){
-        console.log('user email has been verified')
         this.$store.commit('setEmailVerification', true)
-      } else {
-        console.log('user email has not been verified')
       }
 
     }

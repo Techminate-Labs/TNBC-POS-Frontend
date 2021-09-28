@@ -5,26 +5,24 @@
       <p class="text-2xl">Role Permission</p>
       <p>Creating <span class="capitalize font-bold">{{ roleName }}</span></p> 
     </div>
-    <div>
-      <input
-        type="text"
-        v-model="roleName" />
-    </div>
-    <RoleUpdateTable :columns="columns" :items="items" :name="roleName" />
-    <button class="base-btn float-right" @click="createRole">Save</button>
+    <CheckboxTable 
+      @handleNameChange="changeName"
+      @handleSave="createRole"
+      :columns="columns"
+      :items="items" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import RoleUpdateTable from '@/components/tables/RoleUpdateTable.vue'
+import CheckboxTable from '@/components/tables/CheckboxTable.vue'
 import DataService from "@/services/DataService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
   name: 'RoleCreate',
   components: {
-    RoleUpdateTable
+    CheckboxTable
   },
   data() {
     return {
@@ -61,7 +59,8 @@ export default defineComponent({
       DataService.listRoles(token)
         .then((response: ResponseData) => {
             let role_id: number = parseInt(params.id as string)
-            const filteredRoles = response.data.roles[0]
+            console.log(response)
+            const filteredRoles = response.data.data[0]
             let permissions = filteredRoles.permissions
             let _items: any = []
             permissions.map((permission: any) => {
@@ -83,12 +82,9 @@ export default defineComponent({
           console.log(e);
         });
     },
-    createRole(): void {
-      let params = this.$route.params
+    createRole(items: any): void {
       let _permissions: any = []
-      this.items.map((item: any) => {
-        let name = item.name
-
+      items.map((item: any) => {
         _permissions.push({
           [item.name]: item.permissions
         })
@@ -97,7 +93,8 @@ export default defineComponent({
         name: this.roleName,
         permissions: _permissions
       }
-      DataService.addRole(data)
+      let token = this.$store.state.bearerToken
+      DataService.addRole(data, token)
         .then((response: ResponseData) => {
           this.$toast.open({
             message: `${this.roleName} has been successfully created!`,
@@ -112,6 +109,10 @@ export default defineComponent({
           console.log(e)
         });
     },
+    changeName(event: any): void {
+      let value = event.target.value
+      this.roleName = value
+    }
   },
   async mounted() {
     this.fetchRoles()

@@ -2,6 +2,15 @@
   <div class="flex flex-col">
     <div class="py-2 align-middle inline-block w-full">
       <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+        <div class="flex flex-col flex-nowrap py-2 px-6 w-full mb-2">
+          <label for="role-name" class="font-semibold uppercase text-gray-500 text-sm mb-1">Name of the Role</label>
+          <input
+            @change="$emit('handleNameChange', $event)"
+            class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900"
+            name="role-name"
+            type="text"
+            v-model="roleName" />
+        </div>
         <table class="divide-y divide-gray-200 border-collapse w-full">
           <thead class="bg-gray-50">
             <tr>
@@ -40,7 +49,7 @@
           </tbody>
         </table>
       </div>
-      <button class="base-btn float-right" @click="updateRole">Save</button>
+      <button class="base-btn float-right" @click="$emit('handleSave', items)">Save</button>
     </div>
   </div>
 </template>
@@ -61,41 +70,18 @@ export default defineComponent({
       required: true 
     },
     name: {
-      type: String,
-      required: true 
+      type: String as any,
+      required: false
     }
   },
-  methods: {
-    updateRole(): void {
-      console.log('update role clicked!')
-      let token = this.$store.state.bearerToken
-      let _permissions: any = []
-      this.items.map((item: any) => {
-        let name = item.name
-
-        _permissions.push({
-          [item.name]: item.permissions
-        })
-      })
-      let role_id: number = parseInt(this.$route.params.id as string)
-      let data = {
-        name: this.name,
-        permissions: _permissions
-      }
-      DataService.updateRole(data as any, role_id as number, token as any)
-        .then((response: ResponseData) => {
-            this.$toast.open({
-              message: `${this.name} has been successfully updated!`,
-              type: "success"
-            })
-          })
-        .catch((e: Error) => {
-          this.$toast.open({
-            message: `There was an error updating that role.`,
-            type: "error"
-          })
-          console.log(e)
-        });
+  data() {
+    return {
+      roleName: this.name
+    }
+  },
+  watch: {
+    name: function () {
+      this.roleName= this.name
     }
   },
   computed: {
