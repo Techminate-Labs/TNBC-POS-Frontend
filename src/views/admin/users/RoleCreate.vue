@@ -7,16 +7,14 @@
     </div>
     <CheckboxTable 
       @handleNameChange="changeName"
+      @handleSave="createRole"
       :columns="columns"
-      :items="items" 
-      :name="roleName" />
-    <button class="base-btn float-right" @click="createRole">Save</button>
+      :items="items" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import RoleUpdateTable from '@/components/tables/RoleUpdateTable.vue'
 import CheckboxTable from '@/components/tables/CheckboxTable.vue'
 import DataService from "@/services/DataService";
 import ResponseData from "@/types/ResponseData";
@@ -24,7 +22,6 @@ import ResponseData from "@/types/ResponseData";
 export default defineComponent({
   name: 'RoleCreate',
   components: {
-    RoleUpdateTable,
     CheckboxTable
   },
   data() {
@@ -85,12 +82,9 @@ export default defineComponent({
           console.log(e);
         });
     },
-    createRole(): void {
-      let params = this.$route.params
+    createRole(items: any): void {
       let _permissions: any = []
-      this.items.map((item: any) => {
-        let name = item.name
-
+      items.map((item: any) => {
         _permissions.push({
           [item.name]: item.permissions
         })
@@ -99,7 +93,8 @@ export default defineComponent({
         name: this.roleName,
         permissions: _permissions
       }
-      DataService.addRole(data)
+      let token = this.$store.state.bearerToken
+      DataService.addRole(data, token)
         .then((response: ResponseData) => {
           this.$toast.open({
             message: `${this.roleName} has been successfully created!`,
@@ -115,7 +110,8 @@ export default defineComponent({
         });
     },
     changeName(event: any): void {
-      console.log(event)
+      let value = event.target.value
+      this.roleName = value
     }
   },
   async mounted() {
