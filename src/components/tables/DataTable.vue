@@ -122,6 +122,14 @@ export default defineComponent({
       type: Array as any,
       required: true
     },
+    data: {
+      type: Array as any,
+      required: true
+    },
+    meta: {
+      type: Object as PropType<MetaPagination>,
+      required: true
+    },
     next: {
       type: null,
       required: true
@@ -130,21 +138,13 @@ export default defineComponent({
       type: null,
       required: true
     },
-    data: {
-      type: Array as any,
-      required: true
-    },
     type: {
       type: String,
-      required: true
-    },
-    meta: {
-      type: Object as PropType<MetaPagination>,
-      required: true
+      required: false
     },
     permissionsArrayNum: {
       type: Number,
-      required: true
+      required: false
     },
   },
   data() {

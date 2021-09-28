@@ -75,6 +75,15 @@ class DataService {
   verifyEmail(path: any): Promise<any> {
     return http.get(`${path}`, { headers: { "Authorization": `Bearer ${_token}` } });
   }
+
+  listCategories(url: any, token: any): Promise<any> {
+    return http.get(`${url}`, { headers: { "Authorization": `Bearer ${token}` } });
+  }
+
+  createCategory(data: any, token: any): Promise<any> {
+    return http.post(`/categoryCreate`, data, { headers: { "Authorization": `Bearer ${token}` } });
+  }
+
 }
 
 export default new DataService();

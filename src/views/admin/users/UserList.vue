@@ -114,26 +114,20 @@ export default defineComponent({
         });
     },
     pageChange(url: string):void {
-
       this.url = url
       this.fetchUsers()
-
     },
     previousPage():void {
       if (this.prev !== null){
-
         this.url = this.prev
         this.fetchUsers()
-      
       }
     },
     nextPage(): void {
       if (this.next !== null){
-
         this.url = this.next
         console.log(this.next)
         this.fetchUsers()
-      
       }
     },
     addUserProfile(item: any): void {
