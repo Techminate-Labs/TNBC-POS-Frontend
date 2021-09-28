@@ -14,7 +14,11 @@
         >
       </div>
       <div class="float-right">
-        <button class="base-btn-cancel border-2 border-red-800 hover:border-red-700 mr-4">Cancel</button>
+        <button 
+          @click="$emit('close-modal')" 
+          class="base-btn-cancel border-2 border-red-800 hover:border-red-700 mr-4">
+          Cancel
+        </button>
         <button class="base-btn-outline" @click="$emit('handleSave', name)">Save</button>
       </div>
     </div>

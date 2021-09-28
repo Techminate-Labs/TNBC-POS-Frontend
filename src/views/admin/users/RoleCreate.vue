@@ -16,7 +16,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import CheckboxTable from '@/components/tables/CheckboxTable.vue'
-import DataService from "@/services/DataService";
+import RoleService from "@/services/RoleService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
@@ -53,10 +53,10 @@ export default defineComponent({
     }
   },
   methods: {
-    fetchRoles(): void {
+    async fetchRoles(): Promise<void> {
       let params = this.$route.params
       let token = this.$store.state.bearerToken
-      DataService.listRoles(token)
+      await RoleService.list(token)
         .then((response: ResponseData) => {
             let role_id: number = parseInt(params.id as string)
             console.log(response)
@@ -94,7 +94,7 @@ export default defineComponent({
         permissions: _permissions
       }
       let token = this.$store.state.bearerToken
-      DataService.addRole(data, token)
+      RoleService.create(data, token)
         .then((response: ResponseData) => {
           this.$toast.open({
             message: `${this.roleName} has been successfully created!`,

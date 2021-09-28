@@ -34,7 +34,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import DataService from "@/services/DataService";
+import UserService from "@/services/UserService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
@@ -48,7 +48,7 @@ export default defineComponent({
     }
   },
   methods: {
-    confirmResetPassword(): void {
+    async confirmResetPassword(): Promise<void> {
       if (this.$route.query.token){
         let _token: string = this.$route.query.token.toString()
         this.token = _token
@@ -58,10 +58,10 @@ export default defineComponent({
           password: this.password,
           password_confirmation: this.repeatPassword,
         }
-        DataService.resetPassword(data)
+        await UserService.resetPassword(data)
           .then((res: ResponseData) => {
               console.log('password reset!')
-              DataService.loginUser(data)
+              UserService.login(data)
                 .then((response: ResponseData) => {
                     console.log('logged in!')
                     this.$store.commit('setBearerToken', response.data.token)

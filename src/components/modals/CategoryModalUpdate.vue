@@ -9,23 +9,17 @@
           class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
           type="text" 
           name="name" 
-          v-model="name" 
+          v-model="categoryName" 
           placeholder="Winter Clothes"
         >
       </div>
-      <div class="flex flex-col py-2">
-        <label class="mb-2" for="slug">Slug:</label>
-        <input
-          class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
-          type="text" 
-          name="slug" 
-          v-model="slug" 
-          placeholder="winter-clothes"
-        >
-      </div>
       <div class="float-right">
-        <button class="base-btn-cancel border-2 border-red-800 hover:border-red-700 mr-4">Cancel</button>
-        <button class="base-btn-outline">Save</button>
+        <button 
+          @click="$emit('close-modal')" 
+          class="base-btn-cancel border-2 border-red-800 hover:border-red-700 mr-4">
+          Cancel
+        </button>
+        <button class="base-btn-outline" @click="$emit('handleSave', categoryName)">Save</button>
       </div>
     </div>
     <div class="bg-gray-800 h-screen w-full opacity-90 z-30 fixed top-0 left-0"></div>
@@ -36,10 +30,20 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'CategoryModalUpdate',
+  props: {
+    name: {
+      type: String as any,
+      required: true
+    }
+  },
   data() {
     return {
-      name: '',
-      slug: ''
+      categoryName: ''
+    }
+  },
+  watch: {
+    name: function () {
+      this.categoryName = this.name
     }
   }
 })

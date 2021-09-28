@@ -29,10 +29,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import UserService from "@/services/UserService";
 import ResponseData from "@/types/ResponseData";
 import DataTable from '@/components/tables/DataTable.vue'
 import { User } from '@/types/UserTables'
-import DataService from "@/services/DataService";
 import formatDateMixin from '@/mixins/formatDateMixin';
 
 export default defineComponent({
@@ -83,10 +83,10 @@ export default defineComponent({
   },
   mixins: [formatDateMixin],
   methods: {
-    fetchUsers(): void {
+    async fetchUsers(): Promise<void> {
       let token = this.$store.state.bearerToken
       let url = this.url
-      DataService.listUsers(url, token)
+      await UserService.list(url, token)
         .then((response: ResponseData) => {
           let res = response.data
           this.data = res.data.map((user: User) => ({
@@ -139,9 +139,9 @@ export default defineComponent({
     editUser(item: any): void {
       this.$router.push({name:'UserUpdate', params: {user_id: item.user_id}})
     },
-    deleteUser(id: number): void {
+    async deleteUser(id: number): Promise<void> {
       let token = this.$store.state.bearerToken
-      DataService.deleteUser(id, token)
+      await UserService.delete(id, token)
         .then((response: ResponseData) => {
           this.fetchUsers()
           this.$toast.open({

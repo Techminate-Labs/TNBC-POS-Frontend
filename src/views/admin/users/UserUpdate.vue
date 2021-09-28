@@ -73,7 +73,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import DataService from "@/services/DataService";
+import UserService from "@/services/UserService";
+import RoleService from "@/services/RoleService";
+import ProfileService from "@/services/ProfileService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
@@ -91,11 +93,11 @@ export default defineComponent({
     }
   },
   methods: {
-    fetchUser(): void {
+    async fetchUser(): Promise<void> {
       let token = this.$store.state.bearerToken
       let params = this.$route.params
       let url = '/userList'
-      DataService.listUsers(url, token)
+      await UserService.list(url, token)
         .then((response: ResponseData) => {
             let user_id: number = parseInt(params.user_id as string)
             const filteredUser = response.data.data.filter((user: any) => user.user_id === user_id)
@@ -108,10 +110,10 @@ export default defineComponent({
           console.log(e);
         });
     },
-    fetchRoles(): void {
+    async fetchRoles(): Promise<void> {
       let params = this.$route.params
       let token = this.$store.state.bearerToken
-      DataService.listRoles(token)
+      RoleService.list(token)
         .then((response: ResponseData) => {
             let _data: any = []
             response.data.data.map((role: any) => {
@@ -126,14 +128,15 @@ export default defineComponent({
           console.log(e);
         });
     },
-    updateUser(): void {
+    async updateUser(): Promise<void> {
       let data = {
         name: this.name,
         email: this.email,
         role_id: this.role,
       }
       let id = parseInt(this.id)
-      DataService.updateUser(data, id)
+      let token = this.$store.state.bearerToken
+      await UserService.update(data, id, token)
         .then((response: ResponseData) => {
           this.$toast.open({
             message: `${this.name} successfully updated!`,
@@ -148,14 +151,14 @@ export default defineComponent({
           console.log(e)
         });
     },
-    updateUserPassword(): void {
+    async updateUserPassword(): Promise<void> {
       let data = {
         current_password: this.currentPassword,
         new_password: this.newPassword,
         new_confirm_password: this.newConfirmPassword,
       }
       let token = this.$store.state.bearerToken
-      DataService.updateUserPasswordProfile(data, token)
+      await ProfileService.updatePassword(data, token)
         .then((response: ResponseData) => {
           console.log(response)
           this.$toast.open({

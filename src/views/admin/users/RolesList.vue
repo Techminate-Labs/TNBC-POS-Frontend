@@ -31,7 +31,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import DataTable from '@/components/tables/DataTable.vue';
-import DataService from "@/services/DataService";
+import RoleService from "@/services/RoleService";
 import ResponseData from "@/types/ResponseData";
 import formatDateMixin from '@/mixins/formatDateMixin';
 
@@ -71,9 +71,9 @@ export default defineComponent({
   },
   mixins: [formatDateMixin],
   methods: {
-    fetchRoles(): void {
+    async fetchRoles(): Promise<void> {
       let token = this.$store.state.bearerToken
-      DataService.listRoles(token)
+      await RoleService.list(token)
         .then((response: ResponseData) => {
           let res = response.data
           this.data = res.data
@@ -100,9 +100,9 @@ export default defineComponent({
     editRole(item: any): void {
       this.$router.push({name: 'RoleUpdate', params: {id: item.id}})
     },
-    deleteRole(item: any):void {
+    async deleteRole(item: any): Promise<void> {
       let token = this.$store.state.bearerToken
-      DataService.deleteRole(item.id, token)
+      await RoleService.delete(item.id, token)
         .then((response: ResponseData) => {
             this.fetchRoles()
             this.$toast.open({

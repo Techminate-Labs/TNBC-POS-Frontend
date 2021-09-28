@@ -193,14 +193,26 @@ export default defineComponent({
     textColumns(): any[] {
       return this.columns.filter((c: any) => c.attribute !== 'image' )
     },
-    canUserEdit():boolean {
-      return this.$store.state.permissions[this.permissionsArrayNum][this.type].edit
+    canUserEdit(): boolean | null {
+      if (this.permissionsArrayNum !== undefined) {
+        return this.$store.state.permissions[this.permissionsArrayNum][this.type].edit
+      } else {
+        return null
+      }
     },
-    canUserView():boolean {
-      return this.$store.state.permissions[this.permissionsArrayNum][this.type].view
+    canUserView(): boolean | null {
+      if (this.permissionsArrayNum !== undefined) {
+        return this.$store.state.permissions[this.permissionsArrayNum][this.type].view
+      } else {
+        return null
+      }
     },
-    canUserDelete():boolean {
-      return this.$store.state.permissions[this.permissionsArrayNum][this.type].delete
+    canUserDelete(): boolean | null {
+      if (this.permissionsArrayNum !== undefined) {
+        return this.$store.state.permissions[this.permissionsArrayNum][this.type].delete
+      } else {
+        return null
+      } 
     },
   }
 });

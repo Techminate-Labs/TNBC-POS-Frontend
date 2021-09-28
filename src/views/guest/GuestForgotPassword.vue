@@ -28,7 +28,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import DataService from "@/services/DataService";
+import UserService from "@/services/UserService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
@@ -39,12 +39,12 @@ export default defineComponent({
     }
   },
   methods: {
-    sendRecoverLink(): void {
+    async sendRecoverLink(): Promise<void> {
       console.log('sent revocer link!');
       let data = {
         email: this.email
       }
-      DataService.forgotPassword(data)
+      await UserService.forgotPassword(data)
         .then((response: ResponseData) => {
             console.log(response)
             this.$store.commit('setUserEmail', this.email)

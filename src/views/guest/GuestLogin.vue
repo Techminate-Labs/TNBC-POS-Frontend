@@ -35,7 +35,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import DataService from "@/services/DataService";
+import UserService from "@/services/UserService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
@@ -48,12 +48,12 @@ export default defineComponent({
     }
   },
   methods: {
-    logInUser(): void {
+    async logInUser(): Promise<void> {
       let data = {
         email: this.email,
         password: this.password,
       }
-      DataService.loginUser(data)
+      await UserService.login(data)
         .then((response: ResponseData) => {
           this.user = response.data.user
           let permissions = this.user.role.permissions

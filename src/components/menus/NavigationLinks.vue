@@ -6,15 +6,15 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import DataService from "@/services/DataService";
+import UserService from "@/services/UserService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
   name: 'NavigationLinks',
   methods: {
-    logOutUser(): void {
+    async logOutUser(): Promise<void> {
       let token = this.$store.state.bearerToken
-      DataService.logoutUser(token)
+      await UserService.logout(token)
         .then((response: ResponseData) => {
           localStorage.setItem('bearerToken', '')
           this.$store.commit('setBearerToken', '')

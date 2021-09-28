@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import DataService from "@/services/DataService";
+import ProfileService from "@/services/ProfileService";
 import ResponseData from "@/types/ResponseData";
 import formatDateMixin from '@/mixins/formatDateMixin';
 
@@ -42,11 +42,11 @@ export default defineComponent({
   },
   mixins: [formatDateMixin],
   methods: {
-    fetchProfile(): void {
+    async fetchProfile(): Promise<void> {
       let params = this.$route.params
       let user_id = parseInt(params.user_id as string)
       let token = this.$store.state.bearerToken
-      DataService.listUserProfile(user_id, token)
+      await ProfileService.list(user_id, token)
         .then((response: ResponseData) => {
             this.profile  = response.data
           })

@@ -61,7 +61,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import DataService from "@/services/DataService";
+import UserService from "@/services/UserService";
+import RoleService from "@/services/RoleService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
@@ -77,7 +78,7 @@ export default defineComponent({
     }
   },
   methods: {
-    addUser(): void {
+    async addUser(): Promise<void> {
       let data = {
         name: this.name,
         email: this.email,
@@ -86,7 +87,7 @@ export default defineComponent({
         role_id: Number(this.role),
       }
       let token = this.$store.state.bearerToken
-      DataService.addUser(data, token)
+      await UserService.create(data, token)
         .then((response: ResponseData) => {
           this.$toast.open({
             message: `${this.name} successfully added to database!`,
@@ -101,10 +102,10 @@ export default defineComponent({
           console.log(e)
         });
     },
-    fetchRoles(): void {
+    async fetchRoles(): Promise<void> {
       let params = this.$route.params
       let token = this.$store.state.bearerToken
-      DataService.listRoles(token)
+      await RoleService.list(token)
         .then((response: ResponseData) => {
           let role_id: number = parseInt(params.user_id as string)
           let _data: any = []

@@ -103,7 +103,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import DataService from "@/services/DataService";
+import ProfileService from "@/services/ProfileService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
@@ -124,8 +124,9 @@ export default defineComponent({
       }
     }
   },
-    methods: {
-    addUserProfile(): void {
+  methods: {
+    async addUserProfile(): Promise<void> {
+      let token = this.$store.state.bearerToken
       let user_id: any = this.$route.params.id
       const fd = new FormData()
       fd.append('user_id', user_id)
@@ -139,7 +140,7 @@ export default defineComponent({
       fd.append('city', this.user.city)
       fd.append('image', this.user.image, this.user.image.name)
 
-      DataService.addUserProfile(fd)
+      await ProfileService.add(fd, token)
         .then((response: ResponseData) => {
             console.log(response)
             this.$toast.open({

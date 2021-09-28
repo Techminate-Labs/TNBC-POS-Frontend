@@ -15,14 +15,19 @@
       :meta="meta"
       :next="next"
       :prev="prev"
+      :type="type"
+      :permissionsArrayNum="permissionsArrayNum"
       @handleView="viewCategory"
-      @handleEdit="editCategory"
+      @handleEdit="showCategoryEditModal"
       @handleDelete="deleteCategory"
       @pageChange="pageChange" 
       @previousPage="previousPage" 
       @nextPage="nextPage" />
-    <div class="hidden" :class="isModalOn ? 'active' : ''">
-      <CategoryModalCreate @handleSave="createCategory" @close-modal="isModalOn = false" />
+    <div class="hidden" :class="isCreating ? 'active' : ''">
+      <CategoryModalCreate @handleSave="createCategory" @close-modal="isCreating = false" />
+    </div>
+    <div class="hidden" :class="isEditing ? 'active' : ''">
+      <CategoryModalUpdate :name="selectedCategory.name" @handleSave="editCategory" @close-modal="isEditing = false" />
     </div>
   </div>
 </template>
@@ -31,6 +36,7 @@
 import { defineComponent } from 'vue';
 import DataTable from '@/components/tables/DataTable.vue';
 import CategoryModalCreate from '@/components/modals/CategoryModalCreate.vue';
+import CategoryModalUpdate from '@/components/modals/CategoryModalUpdate.vue';
 import DataService from "@/services/DataService";
 import ResponseData from "@/types/ResponseData";
 
@@ -38,7 +44,8 @@ export default defineComponent({
   name: 'CategoryList',
   components: {
     DataTable,
-    CategoryModalCreate
+    CategoryModalCreate,
+    CategoryModalUpdate
   },
   data() {
     return {
@@ -47,8 +54,11 @@ export default defineComponent({
       meta: {},
       data: [],
       url: '/categoryList',
+      type: 'Users',
       permissionsArrayNum: 0,
-      isModalOn: false,
+      isCreating: false,
+      isEditing: false,
+      selectedCategory: {},
       columns: [
         {
           attribute: 'id',
@@ -70,10 +80,10 @@ export default defineComponent({
     }
   },
   methods: {
-    fetchCategories(): void {
+    async fetchCategories(): Promise<void> {
       let token = this.$store.state.bearerToken
       let url = this.url
-      DataService.listCategories(url, token)
+      await DataService.listCategories(url, token)
         .then((response: ResponseData) => {
           let res = response.data
           this.data = res.data.map((user: any) => ({
@@ -100,12 +110,36 @@ export default defineComponent({
           console.log(e);
         });
     },
-    reloadComponent():void {
-      // this.fetchCategories()
-    },
     showCategoryCreateModal():void {
-      this.isModalOn = true
+      this.isCreating = true
     },
+    showCategoryEditModal(item: any):void {
+      this.selectedCategory = item
+      this.isEditing = true
+    },
+    viewCategory(): void {},
+    editCategory(categoryName: string): void {
+      let token = this.$store.state.bearerToken
+      let data = { name: categoryName }
+      let categoryId = 1
+      DataService.editCategory(data, categoryId, token)
+        .then((response: ResponseData) => {
+          this.$toast.open({
+            message: `Category ${categoryName} has been successfully created!`,
+            type: "success"
+          })
+          this.isEditing = false
+          this.fetchCategories()
+        })
+        .catch((e: Error) => {
+          this.$toast.open({
+            message: `There was an error creating that category.`,
+            type: "error"
+          })
+          console.log(e)
+        });
+    },
+    deleteCategory(): void {},
     pageChange(url: string):void {
       this.url = url
       this.fetchCategories()
@@ -119,7 +153,6 @@ export default defineComponent({
     nextPage(): void {
       if (this.next !== null){
         this.url = this.next
-        console.log(this.next)
         this.fetchCategories()
       }
     },
