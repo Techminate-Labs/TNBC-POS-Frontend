@@ -34,7 +34,7 @@ import ResponseData from "@/types/ResponseData";
 import formatDateMixin from '@/mixins/formatDateMixin';
 
 export default defineComponent({
-  name: 'ProfileSingle',
+  name: 'ProfileDetails',
   data() {
     return {
       profile: null

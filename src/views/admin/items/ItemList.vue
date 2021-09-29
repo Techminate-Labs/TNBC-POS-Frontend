@@ -112,11 +112,12 @@ export default defineComponent({
       this.$router.push({name:'ProfileCreate', params: {id: item.id}})
     },
     viewItem(item: any): void {
-      this.$router.push({name:'ProfileSingle', params: {id: item.id}})
+      console.log(item)
+      this.$router.push({name:'ItemDetails', params: {id: item.item_id}})
     },
     editItem(item: any): void {
       console.log(item.id)
-      this.$router.push({name:'ItemUpdate', params: {id: item.id}})
+      this.$router.push({name:'ItemUpdate', params: {id: item.item_id}})
     },
     async deleteItem(item: any): Promise<void> {
       let token = this.$store.state.bearerToken

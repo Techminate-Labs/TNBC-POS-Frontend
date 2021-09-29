@@ -13,7 +13,7 @@ import RoleUpdate from '../views/admin/users/RoleUpdate.vue'
 import UserList from '../views/admin/users/UserList.vue'
 import UserCreate from '../views/admin/users/UserCreate.vue'
 import UserUpdate from '../views/admin/users/UserUpdate.vue'
-import ProfileSingle from '../views/admin/users/ProfileSingle.vue'
+import ProfileDetails from '../views/admin/users/ProfileDetails.vue'
 import ProfileCreate from '../views/admin/users/ProfileCreate.vue'
 import ProfileUpdate from '../views/admin/users/ProfileUpdate.vue'
 import ItemsIndex from '../views/admin/items/ItemsIndex.vue'
@@ -25,6 +25,7 @@ import CategoryList from '../views/admin/items/CategoryList.vue'
 import BrandList from '../views/admin/items/BrandList.vue'
 import ItemList from '../views/admin/items/ItemList.vue'
 import ItemCreate from '../views/admin/items/ItemCreate.vue'
+import ItemDetails from '../views/admin/items/ItemDetails.vue'
 import PointOfSale from '../views/admin/pos/PointOfSale.vue'
 import Error403 from '../views/errors/Error403.vue'
 import Error404 from '../views/errors/Error404.vue'
@@ -163,8 +164,8 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'profile/:user_id',
-        name: 'ProfileSingle',
-        component: ProfileSingle
+        name: 'ProfileDetails',
+        component: ProfileDetails
       },
       {
         path: 'profile-create/:user_id',
@@ -226,6 +227,11 @@ const routes: Array<RouteRecordRaw> = [
         path: 'items-create',
         name: 'ItemCreate',
         component: ItemCreate,
+      },
+      {
+        path: 'items-details/:id',
+        name: 'ItemDetails',
+        component: ItemDetails,
       },
 
     ]

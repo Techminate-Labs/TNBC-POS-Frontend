@@ -113,7 +113,7 @@ export default defineComponent({
       this.$router.push({name:'ProfileCreate', params: {id: item.id}})
     },
     viewSupplier(item: any): void {
-      this.$router.push({name:'ProfileSingle', params: {id: item.id}})
+      this.$router.push({name:'ProfileDetails', params: {id: item.id}})
     },
     editSupplier(item: any): void {
       console.log(item.id)
