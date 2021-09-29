@@ -87,7 +87,6 @@ export default defineComponent({
       await UserService.list(url, token)
         .then((response: ResponseData) => {
           let res = response.data
-          console.log(res)
           this.data = res.data.map((user: User) => ({
             ...user, 
             roleName: user.role, 
@@ -95,7 +94,6 @@ export default defineComponent({
             email_verified_at: user.email_verified_at,
             updated_at: user.updated_at
           }))
-          console.log(this.data)
           this.meta = {
             current_page: res.current_page,
             from: res.from,

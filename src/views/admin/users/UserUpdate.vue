@@ -35,38 +35,6 @@
         </div>
         <button class="base-btn float-right" @click="updateUser">Save User</button>
       </div>
-      <div>
-        <h3 class="text-xl text-gray-600 font-light pb-2">Change your password</h3>
-        <hr />
-        <div class="flex flex-col py-2">
-          <label class="mb-2" for="current-password">Current Password:</label>
-          <input
-            class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
-            type="password" 
-            name="current-password" 
-            v-model="currentPassword" 
-            placeholder="***********">
-        </div>
-        <div class="flex flex-col py-2">
-          <label class="mb-2" for="new-password">New Password:</label>
-          <input
-            class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
-            type="password" 
-            name="new-password" 
-            v-model="newPassword" 
-            placeholder="***********">
-        </div>
-        <div class="flex flex-col py-2">
-          <label class="mb-2" for="new-confirm-password">Confirm New Password:</label>
-          <input
-            class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
-            type="password" 
-            name="new-confirm-password" 
-            v-model="newConfirmPassword" 
-            placeholder="***********">
-        </div>
-        <button class="base-btn float-right" @click="updateUserPassword">Save New Password</button>
-      </div>
     </div>
   </div>
 </template>
@@ -87,9 +55,6 @@ export default defineComponent({
       role: '',
       id: '',
       roles: [],
-      currentPassword: '',
-      newPassword: '',
-      newConfirmPassword: '',
     }
   },
   methods: {
@@ -141,29 +106,6 @@ export default defineComponent({
         .then((response: ResponseData) => {
           this.$toast.open({
             message: `${this.name} successfully updated!`,
-            type: "success"
-          })
-        })
-        .catch((e: Error) => {
-          this.$toast.open({
-            message: `There was an error updating that user.`,
-            type: "error"
-          })
-          console.log(e)
-        });
-    },
-    async updateUserPassword(): Promise<void> {
-      let data = {
-        current_password: this.currentPassword,
-        new_password: this.newPassword,
-        new_confirm_password: this.newConfirmPassword,
-      }
-      let token = this.$store.state.bearerToken
-      await ProfileService.updatePassword(data, token)
-        .then((response: ResponseData) => {
-          console.log(response)
-          this.$toast.open({
-            message: `Password has been successfully updated!`,
             type: "success"
           })
         })

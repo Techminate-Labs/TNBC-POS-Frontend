@@ -40,16 +40,22 @@ export default defineComponent({
   },
   methods: {
     async sendRecoverLink(): Promise<void> {
-      console.log('sent revocer link!');
+      this.$toast.open({
+        message: `Please wait, we are processing that information.`,
+        type: "info"
+      })
       let data = {
         email: this.email
       }
       await UserService.forgotPassword(data)
         .then((response: ResponseData) => {
-            console.log(response)
-            this.$store.commit('setUserEmail', this.email)
-            this.$router.push('/password-reset-sent')
+          this.$toast.open({
+            message: `Great! The email has been sent to your mailbox. Go open it!`,
+            type: "success"
           })
+          this.$store.commit('setUserEmail', this.email)
+          this.$router.push('/password-reset-sent')
+        })
         .catch((e: Error) => {
           console.log(e);
         });

@@ -9,6 +9,7 @@
             class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900"
             name="role-name"
             type="text"
+            placeholder="Cashier"
             v-model="roleName" />
         </div>
         <table class="divide-y divide-gray-200 border-collapse w-full">
