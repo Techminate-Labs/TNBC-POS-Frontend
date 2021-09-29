@@ -2,12 +2,11 @@
   <div class="flex-grow px-4 md:px-8 my-10">
     <p>Breadcrumb</p>
     <div class="flex flex-nowrap justify-between">
-      <p class="text-2xl mb-4">User List</p>
-      <router-link 
-        v-show="canUserCreate"
-        :to="{ name: 'UserCreate' }">
-        <button class="base-btn">Create User</button>
-      </router-link>
+      <p class="text-2xl mb-4">Items List</p>
+      <router-link :to="{ name: 'ItemCreate' }"><button
+        class="base-btn">
+          Create Item
+      </button></router-link>
     </div>
     <DataTable
       :columns="columns"
@@ -17,10 +16,10 @@
       :data="data"
       :type="type"
       :permissionsArrayNum="permissionsArrayNum"
-      @handleAddProfile="addUserProfile"
-      @handleView="viewUser"
-      @handleEdit="editUser"
-      @handleDelete="deleteUser"
+      @handleAddProfile="addItemProfile"
+      @handleView="viewItem"
+      @handleEdit="editItem"
+      @handleDelete="deleteItem"
       @pageChange="pageChange" 
       @previousPage="previousPage" 
       @nextPage="nextPage" />
@@ -29,13 +28,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import UserService from "@/services/UserService";
-import ResponseData from "@/types/ResponseData";
 import DataTable from '@/components/tables/DataTable.vue'
-import { User } from '@/types/UserTables'
+import ItemService from "@/services/ItemService";
+import { ItemsItem } from '@/types/Items'
+import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
-  name: 'UserList',
+  name: 'ItemList',
   components: {
     DataTable
   },
@@ -44,13 +43,13 @@ export default defineComponent({
       next: '',
       prev: '',
       meta: {},
-      data: [],
+      data: [] as Array<ItemsItem>,
       type: "Users",
-      url: '/userList',
+      url: '/itemList',
       permissionsArrayNum: 0,
       columns: [
         {
-          attribute: 'user_id',
+          attribute: 'id',
           name: 'id'
         },
         {
@@ -58,44 +57,24 @@ export default defineComponent({
           name: 'name'
         },
         {
-          attribute: 'email',
-          name: 'email'
+          attribute: 'slug',
+          name: 'slug'
         },
         {
-          attribute: 'roleName',
-          name: 'role'
-        },
-        {
-          attribute: 'created_at',
-          name: 'registered'
-        },
-        {
-          attribute: 'updated_at',
-          name: 'updated'
-        },
-        {
-          attribute: 'email_verified_at',
-          name: 'email verified'
-        },
+          attribute: 'number_of_products',
+          name: 'number of products'
+        }
       ]
     }
   },
   methods: {
-    async fetchUsers(): Promise<void> {
+    async fetchItems(): Promise<void> {
       let token = this.$store.state.bearerToken
       let url = this.url
-      await UserService.list(url, token)
+      await ItemService.list(url, token)
         .then((response: ResponseData) => {
           let res = response.data
-          console.log(res)
-          this.data = res.data.map((user: User) => ({
-            ...user, 
-            roleName: user.role, 
-            created_at: user.created_at,
-            email_verified_at: user.email_verified_at,
-            updated_at: user.updated_at
-          }))
-          console.log(this.data)
+          this.data = res.data
           this.meta = {
             current_page: res.current_page,
             from: res.from,
@@ -115,56 +94,52 @@ export default defineComponent({
     },
     pageChange(url: string):void {
       this.url = url
-      this.fetchUsers()
+      this.fetchItems()
     },
     previousPage():void {
       if (this.prev !== null){
         this.url = this.prev
-        this.fetchUsers()
+        this.fetchItems()
       }
     },
     nextPage(): void {
       if (this.next !== null){
         this.url = this.next
-        console.log(this.next)
-        this.fetchUsers()
+        this.fetchItems()
       }
     },
-    addUserProfile(item: any): void {
-      this.$router.push({name:'ProfileCreate', params: {user_id: item.user_id}})
+    addItemProfile(item: any): void {
+      this.$router.push({name:'ProfileCreate', params: {id: item.id}})
     },
-    viewUser(item: any): void {
-      this.$router.push({name:'ProfileSingle', params: {user_id: item.user_id}})
+    viewItem(item: any): void {
+      this.$router.push({name:'ProfileSingle', params: {id: item.id}})
     },
-    editUser(item: any): void {
-      this.$router.push({name:'UserUpdate', params: {user_id: item.user_id}})
+    editItem(item: any): void {
+      console.log(item.id)
+      this.$router.push({name:'ItemUpdate', params: {id: item.id}})
     },
-    async deleteUser(id: number): Promise<void> {
+    async deleteItem(item: any): Promise<void> {
       let token = this.$store.state.bearerToken
-      await UserService.delete(id, token)
+      let id = item.item_id
+      await ItemService.delete(id, token)
         .then((response: ResponseData) => {
-          this.fetchUsers()
+          this.fetchItems()
           this.$toast.open({
-            message: `User successfully deleted.`,
+            message: `${item.name} successfully deleted.`,
             type: "success"
           })
         })
         .catch((e: Error) => {
           this.$toast.open({
-            message: `Could not delete that user.`,
+            message: `Could not delete that item.`,
             type: "error"
           })
           console.log(e)
         });
     }
   },
-  computed: {
-    canUserCreate():boolean {
-      return this.$store.state.permissions[0]["Users"].create
-    }
-  },
   async mounted() {
-    this.fetchUsers()
+    this.fetchItems()
   },
 });
 </script>

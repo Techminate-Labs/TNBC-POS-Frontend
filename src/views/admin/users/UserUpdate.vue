@@ -111,7 +111,6 @@ export default defineComponent({
         });
     },
     async fetchRoles(): Promise<void> {
-      let params = this.$route.params
       let token = this.$store.state.bearerToken
       RoleService.list(token)
         .then((response: ResponseData) => {
@@ -129,14 +128,16 @@ export default defineComponent({
         });
     },
     async updateUser(): Promise<void> {
+      let params = this.$route.params
+      let user_id: number = parseInt(params.user_id as string)
       let data = {
         name: this.name,
         email: this.email,
-        role_id: this.role,
+        role_id: this.role
       }
-      let id = parseInt(this.id)
+      console.log(data)
       let token = this.$store.state.bearerToken
-      await UserService.update(data, id, token)
+      await UserService.update(data, user_id, token)
         .then((response: ResponseData) => {
           this.$toast.open({
             message: `${this.name} successfully updated!`,

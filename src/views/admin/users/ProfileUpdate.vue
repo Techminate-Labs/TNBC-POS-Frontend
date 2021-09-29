@@ -124,7 +124,7 @@ export default defineComponent({
     }
   },
   methods: {
-    addUserProfile(): void {
+    async addUserProfile(): Promise<void> {
       let token = this.$store.state.bearerToken
       let user_id = this.$route.params.id
       let data = {
@@ -139,7 +139,7 @@ export default defineComponent({
         zip: this.user.zip,
         image: this.user.image
       }
-      ProfileService.add(data, token)
+      await ProfileService.create(data, token)
         .then((response: ResponseData) => {
             console.log(response)
           })

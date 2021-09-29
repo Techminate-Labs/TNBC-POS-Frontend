@@ -140,7 +140,7 @@ export default defineComponent({
       fd.append('city', this.user.city)
       fd.append('image', this.user.image, this.user.image.name)
 
-      await ProfileService.add(fd, token)
+      await ProfileService.create(fd, token)
         .then((response: ResponseData) => {
             console.log(response)
             this.$toast.open({

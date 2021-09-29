@@ -2,8 +2,12 @@
   <div class="flex-grow px-4 md:px-8 my-10">
     <p>Breadcrumb</p>
     <div class="flex flex-nowrap justify-between">
-      <p class="text-2xl mb-4">Unit List</p>
-      <button @click="showUnitCreateModal" class="base-btn">Create Unit</button>
+      <p class="text-2xl mb-4">Category List</p>
+      <button
+        @click="showCategoryCreateModal"
+        class="base-btn">
+          Create Category
+      </button>
     </div>
     <DataTable 
       :columns="columns"
@@ -13,82 +17,80 @@
       :prev="prev"
       :type="type"
       :permissionsArrayNum="permissionsArrayNum"
-      @handleView="viewUnit"
-      @handleEdit="showUnitEditModal"
-      @handleDelete="deleteUnit"
+      @handleView="viewCategory"
+      @handleEdit="showCategoryEditModal"
+      @handleDelete="deleteCategory"
       @pageChange="pageChange" 
       @previousPage="previousPage" 
       @nextPage="nextPage" />
     <div class="hidden" :class="isCreating ? 'active' : ''">
-      <UnitModalCreate @handleSave="createUnit" @close-modal="isCreating = false" />
+      <CategoryModalCreate @handleSave="createCategory" @close-modal="isCreating = false" />
     </div>
     <div class="hidden" :class="isEditing ? 'active' : ''">
-      <UnitModalUpdate :name="selectedUnit.name" @handleSave="editUnit" @close-modal="isEditing = false" />
+      <CategoryModalUpdate :name="selectedCategory.name" @handleSave="editCategory" @close-modal="isEditing = false" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import DataTable from '@/components/tables/DataTable.vue'
-import UnitModalCreate from '@/components/modals/UnitModalCreate.vue'
-import UnitModalUpdate from '@/components/modals/UnitModalUpdate.vue'
-import UnitService from "@/services/UnitService";
+import CategoryService from "@/services/CategoryService";
+import DataTable from '@/components/tables/DataTable.vue';
+import CategoryModalCreate from '@/components/modals/CategoryModalCreate.vue';
+import CategoryModalUpdate from '@/components/modals/CategoryModalUpdate.vue';
 import ResponseData from "@/types/ResponseData";
-import { UnitItem } from "@/types/UnitTables";
+import { CategoryItem } from "@/types/CategoryTables";
 
 export default defineComponent({
-  name: 'UnitList',
+  name: 'CategoryList',
   components: {
     DataTable,
-    UnitModalCreate,
-    UnitModalUpdate
+    CategoryModalCreate,
+    CategoryModalUpdate
   },
   data() {
     return {
-      items: [],
       next: '',
       prev: '',
       meta: {},
       data: [],
-      url: '/unitList',
+      url: '/categoryList',
+      maxItemsPerPage: 10,
       type: 'Users',
       permissionsArrayNum: 0,
       isCreating: false,
       isEditing: false,
-      selectedUnit: {} as UnitItem,
+      selectedCategory: {} as CategoryItem,
       columns: [
         {
           attribute: 'id',
           name: 'id'
         },
         {
-          attribute: 'User ID',
-          name: 'user_id'
-        },
-        {
           attribute: 'name',
           name: 'name'
         },
         {
-          attribute: 'created_at',
-          name: 'registered on'
+          attribute: 'slug',
+          name: 'slug'
         },
         {
-          attribute: 'updated_at',
-          name: 'updated on'
+          attribute: 'number_of_products',
+          name: 'number of products'
         }
       ]
     }
   },
   methods: {
-async fetchUnits(): Promise<void> {
+    async fetchCategories(): Promise<void> {
       let token = this.$store.state.bearerToken
       let url = this.url
-      await UnitService.list(url, token)
+      let limit = this.maxItemsPerPage
+      await CategoryService.list(`${url}/?limit=${limit}`, token)
         .then((response: ResponseData) => {
           let res = response.data
           this.data = res.data
+          console.log(res)
           this.meta = {
             current_page: res.current_page,
             from: res.from,
@@ -106,26 +108,26 @@ async fetchUnits(): Promise<void> {
           console.log(e);
         });
     },
-    showUnitCreateModal(): void {
+    showCategoryCreateModal(): void {
       this.isCreating = true
     },
-    showUnitEditModal(item: any): void {
-      this.selectedUnit = item
+    showCategoryEditModal(item: any): void {
+      this.selectedCategory = item
       this.isEditing = true
     },
-    viewUnit(): void {},
-    async editUnit(UnitName: string): Promise<void> {
+    viewCategory(): void {},
+    async editCategory(categoryName: string): Promise<void> {
       let token = this.$store.state.bearerToken
-      let data = { name: UnitName }
-      let UnitId = this.selectedUnit.id
-      await UnitService.edit(data, UnitId, token)
+      let data = { name: categoryName }
+      let categoryId = this.selectedCategory.id
+      await CategoryService.edit(data, categoryId, token)
         .then((response: ResponseData) => {
           this.$toast.open({
-            message: `Unit ${UnitName} has been successfully created!`,
+            message: `Category ${categoryName} has been successfully created!`,
             type: "success"
           })
           this.isEditing = false
-          this.fetchUnits()
+          this.fetchCategories()
         })
         .catch((e: Error) => {
           this.$toast.open({
@@ -135,21 +137,21 @@ async fetchUnits(): Promise<void> {
           console.log(e)
         });
     },
-    async deleteUnit(item: any): Promise<void> {
+    async deleteCategory(item: any): Promise<void> {
       let token = this.$store.state.bearerToken
-      let UnitId = item.id
-      await UnitService.delete(UnitId, token)
+      let categoryId = item.id
+      await CategoryService.delete(categoryId, token)
         .then((response: ResponseData) => {
           this.$toast.open({
-            message: `Unit has been successfully deleted.`,
+            message: `Category has been successfully deleted.`,
             type: "success"
           })
           this.isEditing = false
-          this.fetchUnits()
+          this.fetchCategories()
         })
         .catch((e: Error) => {
           this.$toast.open({
-            message: `There was an error creating that Unit.`,
+            message: `There was an error creating that category.`,
             type: "error"
           })
           console.log(e)
@@ -157,35 +159,35 @@ async fetchUnits(): Promise<void> {
     },
     pageChange(url: string):void {
       this.url = url
-      this.fetchUnits()
+      this.fetchCategories()
     },
     previousPage():void {
       if (this.prev !== null){
         this.url = this.prev
-        this.fetchUnits()
+        this.fetchCategories()
       }
     },
     nextPage(): void {
       if (this.next !== null){
         this.url = this.next
-        this.fetchUnits()
+        this.fetchCategories()
       }
     },
-    async createUnit(name: any): Promise<void> {
+    async createCategory(name: any): Promise<void> {
       let token = this.$store.state.bearerToken
       let data = { name: name }
-      await UnitService.create(data, token)
+      await CategoryService.create(data, token)
         .then((response: ResponseData) => {
           this.isCreating = false
-          this.fetchUnits()
+          this.fetchCategories()
           this.$toast.open({
-            message: `Unit ${name} has been successfully created!`,
+            message: `Category ${name} has been successfully created!`,
             type: "success"
           })
         })
         .catch((e: Error) => {
           this.$toast.open({
-            message: `There was an error creating that Unit.`,
+            message: `There was an error creating that category.`,
             type: "error"
           })
           console.log(e)
@@ -193,7 +195,7 @@ async fetchUnits(): Promise<void> {
     }
   },
   async mounted() {
-    this.fetchUnits()
+    this.fetchCategories()
   },
 });
 </script>

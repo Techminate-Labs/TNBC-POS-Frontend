@@ -16,15 +16,15 @@ import UserUpdate from '../views/admin/users/UserUpdate.vue'
 import ProfileSingle from '../views/admin/users/ProfileSingle.vue'
 import ProfileCreate from '../views/admin/users/ProfileCreate.vue'
 import ProfileUpdate from '../views/admin/users/ProfileUpdate.vue'
-import ProductsIndex from '../views/admin/products/ProductsIndex.vue'
-import SupplierList from '../views/admin/products/SupplierList.vue'
-import SupplierCreate from '../views/admin/products/SupplierCreate.vue'
-import SupplierUpdate from '../views/admin/products/SupplierUpdate.vue'
-import UnitList from '../views/admin/products/UnitList.vue'
-import CategoryList from '../views/admin/products/CategoryList.vue'
-import BrandList from '../views/admin/products/BrandList.vue'
-import ProductList from '../views/admin/products/ProductList.vue'
-import ProductCreate from '../views/admin/products/ProductCreate.vue'
+import ItemsIndex from '../views/admin/items/ItemsIndex.vue'
+import SupplierList from '../views/admin/items/SupplierList.vue'
+import SupplierCreate from '../views/admin/items/SupplierCreate.vue'
+import SupplierUpdate from '../views/admin/items/SupplierUpdate.vue'
+import UnitList from '../views/admin/items/UnitList.vue'
+import CategoryList from '../views/admin/items/CategoryList.vue'
+import BrandList from '../views/admin/items/BrandList.vue'
+import ItemList from '../views/admin/items/ItemList.vue'
+import ItemCreate from '../views/admin/items/ItemCreate.vue'
 import PointOfSale from '../views/admin/pos/PointOfSale.vue'
 import Error403 from '../views/errors/Error403.vue'
 import Error404 from '../views/errors/Error404.vue'
@@ -179,9 +179,9 @@ const routes: Array<RouteRecordRaw> = [
     ]
   },
   {
-    path: '/products',
-    name: 'Products',
-    component: ProductsIndex,
+    path: '/items',
+    name: 'Items',
+    component: ItemsIndex,
     meta: {
       layout: 'AdminLayout',
       auth: true
@@ -218,14 +218,14 @@ const routes: Array<RouteRecordRaw> = [
         component: BrandList,
       },
       {
-        path: 'products-list',
-        name: 'ProductList',
-        component: ProductList,
+        path: 'items-list',
+        name: 'ItemList',
+        component: ItemList,
       },
       {
-        path: 'products-create',
-        name: 'ProductCreate',
-        component: ProductCreate,
+        path: 'items-create',
+        name: 'ItemCreate',
+        component: ItemCreate,
       },
 
     ]
