@@ -74,13 +74,13 @@ export default defineComponent({
           ]
         },
         {
-          name: 'Products',
-          url: '/products',
+          name: 'Items',
+          url: '/items',
           icon: 'https://epqrpjmozlcsvbgkxjkp.supabase.in/storage/v1/object/sign/tnbc-pos/svgs/cube.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0bmJjLXBvcy9zdmdzL2N1YmUuc3ZnIiwiaWF0IjoxNjMwMDg4MTgwLCJleHAiOjE5NDU0NDgxODB9.JRZOQzJubHaMcKDm5Gg2lZQkwdamuI729l11pGJEUP8',
           submenus: [
             { name: 'Brands', url: '/brands-list' },
             { name: 'Categories', url: '/categories-list' },
-            { name: 'Products', url: '/products-list' },
+            { name: 'Items', url: '/items-list' },
             { name: 'Suppliers', url: '/suppliers-list' },
             { name: 'Units', url: '/units-list' },
           ]

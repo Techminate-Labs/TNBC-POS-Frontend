@@ -28,7 +28,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import DataService from "@/services/DataService";
+import UserService from "@/services/UserService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
@@ -39,17 +39,23 @@ export default defineComponent({
     }
   },
   methods: {
-    sendRecoverLink(): void {
-      console.log('sent revocer link!');
+    async sendRecoverLink(): Promise<void> {
+      this.$toast.open({
+        message: `Please wait, we are processing that information.`,
+        type: "info"
+      })
       let data = {
         email: this.email
       }
-      DataService.forgotPassword(data)
+      await UserService.forgotPassword(data)
         .then((response: ResponseData) => {
-            console.log(response)
-            this.$store.commit('setUserEmail', this.email)
-            this.$router.push('/password-reset-sent')
+          this.$toast.open({
+            message: `Great! The email has been sent to your mailbox. Go open it!`,
+            type: "success"
           })
+          this.$store.commit('setUserEmail', this.email)
+          this.$router.push('/password-reset-sent')
+        })
         .catch((e: Error) => {
           console.log(e);
         });

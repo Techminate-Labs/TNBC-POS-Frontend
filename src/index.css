@@ -6,13 +6,16 @@
   @apply block;
 }
 .base-btn {
-  @apply bg-blue-900 hover:bg-blue-800 shadow-md px-12 py-2 mt-3 text-white rounded-md;
-}
-.base-btn-cancel {
-  @apply bg-red-800 hover:bg-red-700 shadow-md px-12 py-2 mt-3 text-white rounded-md;
+  @apply uppercase bg-blue-900 hover:bg-blue-800 hover:border-blue-800 border-2 border-blue-900 shadow-md px-12 py-2 mt-3 text-white rounded-md;
 }
 .base-btn-outline {
-  @apply border-2 border-blue-900 text-blue-900 hover:bg-blue-900 hover:text-white shadow-md px-12 py-2 my-3 text-white rounded-md;
+  @apply uppercase box-border border-2 bg-transparent border-blue-900 text-blue-900 hover:bg-blue-900 hover:text-white px-12 py-2 mt-3 rounded-md;
+}
+.base-btn-cancel {
+  @apply uppercase bg-red-800 hover:bg-red-700 hover:border-red-800 border-2 border-red-900 shadow-md px-12 py-2 mt-3 text-white rounded-md;
+}
+.base-btn-cancel-outline {
+  @apply uppercase box-border border-2 bg-transparent border-red-900 text-red-900 hover:bg-red-900 hover:text-white px-12 py-2 mt-3 rounded-md;
 }
 .dashboard-icon {
   @apply text-gray-400 self-center h-6 w-6;
@@ -32,3 +35,12 @@
   @apply: bg-green-400;
   background-color: #68D391;
 }
+
+/* Multiselect Classes */
+
+.multiselect-search {
+  height: 100%;
+}
+
+/* Custom File Input */
+

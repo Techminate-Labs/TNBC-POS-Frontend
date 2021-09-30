@@ -19,6 +19,7 @@
       :data="data"
       :type="type"
       :permissionsArrayNum="permissionsArrayNum"
+      @handleSearch="searchRole"
       @handleView="viewRole"
       @handleEdit="editRole"
       @handleDelete="deleteRole"
@@ -31,7 +32,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import DataTable from '@/components/tables/DataTable.vue';
-import DataService from "@/services/DataService";
+import RoleService from "@/services/RoleService";
 import ResponseData from "@/types/ResponseData";
 import formatDateMixin from '@/mixins/formatDateMixin';
 
@@ -71,9 +72,10 @@ export default defineComponent({
   },
   mixins: [formatDateMixin],
   methods: {
-    fetchRoles(): void {
+    async fetchRoles(): Promise<void> {
       let token = this.$store.state.bearerToken
-      DataService.listRoles(token)
+      let url = this.url
+      await RoleService.list(url, token)
         .then((response: ResponseData) => {
           let res = response.data
           this.data = res.data
@@ -100,9 +102,9 @@ export default defineComponent({
     editRole(item: any): void {
       this.$router.push({name: 'RoleUpdate', params: {id: item.id}})
     },
-    deleteRole(item: any):void {
+    async deleteRole(item: any): Promise<void> {
       let token = this.$store.state.bearerToken
-      DataService.deleteRole(item.id, token)
+      await RoleService.delete(item.id, token)
         .then((response: ResponseData) => {
             this.fetchRoles()
             this.$toast.open({
@@ -117,6 +119,34 @@ export default defineComponent({
           })
           console.log(e)
         });
+    },
+    async searchRole(event: any): Promise<void> {
+      let token = this.$store.state.bearerToken
+      let value = event.target.value
+      let url = `/roleList/?q=${value}`
+
+      if (value.length > 2 || value.length === 0){
+        await RoleService.list(url, token)
+          .then((response: ResponseData) => {
+            let res = response.data
+            this.data = res.data
+            this.meta = {
+              current_page: res.current_page,
+              from: res.from,
+              last_page: res.last_page,
+              links: res.links,
+              path: res.path,
+              per_page: res.per_page,
+              to: res.to,
+              total: res.total
+            }
+            this.prev = res.prev_page_url
+            this.next = res.next_page_url
+          })
+          .catch((e: Error) => {
+            console.log(e);
+          });
+      }
     },
     pageChange(url: string):void {
       this.url = url

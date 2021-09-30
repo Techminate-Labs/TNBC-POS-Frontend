@@ -13,18 +13,20 @@ import RoleUpdate from '../views/admin/users/RoleUpdate.vue'
 import UserList from '../views/admin/users/UserList.vue'
 import UserCreate from '../views/admin/users/UserCreate.vue'
 import UserUpdate from '../views/admin/users/UserUpdate.vue'
-import ProfileSingle from '../views/admin/users/ProfileSingle.vue'
+import ProfileDetails from '../views/admin/users/ProfileDetails.vue'
 import ProfileCreate from '../views/admin/users/ProfileCreate.vue'
 import ProfileUpdate from '../views/admin/users/ProfileUpdate.vue'
-import ProductsIndex from '../views/admin/products/ProductsIndex.vue'
-import SupplierList from '../views/admin/products/SupplierList.vue'
-import SupplierCreate from '../views/admin/products/SupplierCreate.vue'
-import SupplierUpdate from '../views/admin/products/SupplierUpdate.vue'
-import UnitList from '../views/admin/products/UnitList.vue'
-import CategoryList from '../views/admin/products/CategoryList.vue'
-import BrandList from '../views/admin/products/BrandList.vue'
-import ProductList from '../views/admin/products/ProductList.vue'
-import ProductCreate from '../views/admin/products/ProductCreate.vue'
+import ProfileSettings from '../views/admin/users/ProfileSettings.vue'
+import ItemsIndex from '../views/admin/items/ItemsIndex.vue'
+import SupplierList from '../views/admin/items/SupplierList.vue'
+import SupplierCreate from '../views/admin/items/SupplierCreate.vue'
+import SupplierUpdate from '../views/admin/items/SupplierUpdate.vue'
+import UnitList from '../views/admin/items/UnitList.vue'
+import CategoryList from '../views/admin/items/CategoryList.vue'
+import BrandList from '../views/admin/items/BrandList.vue'
+import ItemList from '../views/admin/items/ItemList.vue'
+import ItemCreate from '../views/admin/items/ItemCreate.vue'
+import ItemDetails from '../views/admin/items/ItemDetails.vue'
 import PointOfSale from '../views/admin/pos/PointOfSale.vue'
 import Error403 from '../views/errors/Error403.vue'
 import Error404 from '../views/errors/Error404.vue'
@@ -163,8 +165,8 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'profile/:user_id',
-        name: 'ProfileSingle',
-        component: ProfileSingle
+        name: 'ProfileDetails',
+        component: ProfileDetails
       },
       {
         path: 'profile-create/:user_id',
@@ -176,12 +178,17 @@ const routes: Array<RouteRecordRaw> = [
         name: 'ProfileUpdate',
         component: ProfileUpdate
       },
+      {
+        path: 'profile-settings/:user_id',
+        name: 'ProfileSettings',
+        component: ProfileSettings
+      },
     ]
   },
   {
-    path: '/products',
-    name: 'Products',
-    component: ProductsIndex,
+    path: '/items',
+    name: 'Items',
+    component: ItemsIndex,
     meta: {
       layout: 'AdminLayout',
       auth: true
@@ -196,6 +203,11 @@ const routes: Array<RouteRecordRaw> = [
         path: 'suppliers-create',
         name: 'SupplierCreate',
         component: SupplierCreate,
+      },
+      {
+        path: 'suppliers-update/:id',
+        name: 'SupplierUpdate',
+        component: SupplierUpdate,
       },
       {
         path: 'units-list',
@@ -213,20 +225,20 @@ const routes: Array<RouteRecordRaw> = [
         component: BrandList,
       },
       {
-        path: 'products-list',
-        name: 'ProductList',
-        component: ProductList,
+        path: 'items-list',
+        name: 'ItemList',
+        component: ItemList,
       },
       {
-        path: 'products-create',
-        name: 'ProductCreate',
-        component: ProductCreate,
+        path: 'items-create',
+        name: 'ItemCreate',
+        component: ItemCreate,
       },
-      // {
-      //   path: 'suppliers-update/:id',
-      //   name: 'SupplierUpdate',
-      //   component: SupplierUpdate,
-      // },
+      {
+        path: 'items-details/:id',
+        name: 'ItemDetails',
+        component: ItemDetails,
+      },
 
     ]
   },

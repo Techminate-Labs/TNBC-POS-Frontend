@@ -102,7 +102,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import DataService from "@/services/DataService";
+import ProfileService from "@/services/ProfileService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
@@ -124,8 +124,8 @@ export default defineComponent({
     }
   },
   methods: {
-    addUserProfile(): void {
-      console.log('add user profile!');
+    async addUserProfile(): Promise<void> {
+      let token = this.$store.state.bearerToken
       let user_id = this.$route.params.id
       let data = {
         user_id: user_id,
@@ -139,7 +139,7 @@ export default defineComponent({
         zip: this.user.zip,
         image: this.user.image
       }
-      DataService.addUserProfile(data)
+      await ProfileService.create(data, token)
         .then((response: ResponseData) => {
             console.log(response)
           })

@@ -46,13 +46,13 @@
         >
       </div>
     </div>
-    <button class="base-btn float-right" @click="addUser">Save</button>
+    <button class="base-btn float-right" @click="addSupplier">Save</button>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import DataService from "@/services/DataService";
+import SupplierService from "@/services/SupplierService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
@@ -66,10 +66,15 @@ export default defineComponent({
     }
   },
   methods: {
-    addUser(): void {
-      let data = {}
+    async addSupplier(): Promise<void> {
+      let data = {
+        name: this.name,
+        email: this.email,
+        phone: this.phone,
+        company: this.companyName
+      }
       let token = this.$store.state.bearerToken
-      DataService.addUser(data, token)
+      await SupplierService.create(data, token)
         .then((response: ResponseData) => {
           this.$toast.open({
             message: `${this.name} successfully added to database!`,
@@ -78,7 +83,7 @@ export default defineComponent({
         })
         .catch((e: Error) => {
           this.$toast.open({
-            message: `There was an error adding that user to the database.`,
+            message: `There was an error adding that Supplier to the database.`,
             type: "error"
           })
           console.log(e)

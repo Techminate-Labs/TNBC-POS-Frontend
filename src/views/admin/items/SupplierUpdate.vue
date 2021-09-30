@@ -46,13 +46,13 @@
         >
       </div>
     </div>
-    <button class="base-btn float-right" @click="addUser">Save</button>
+    <button class="base-btn float-right" @click="updateSupplier">Save</button>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import DataService from "@/services/DataService";
+import SupplierService from "@/services/SupplierService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
@@ -62,19 +62,56 @@ export default defineComponent({
       name: '',
       email: '',
       phone: '',
-      companyName: ''
+      companyName: '',
+      id: ''
     }
   },
   methods: {
-    addUser(): void {
-      
-    },
-    fetchRoles(): void {
+    async fetchSuppliers(): Promise<void> {
+      let token = this.$store.state.bearerToken
       let params = this.$route.params
-    }
+      let url = '/supplierList'
+      await SupplierService.list(url, token)
+        .then((response: ResponseData) => {
+            let id: number = parseInt(params.id as string)
+            const filteredUser = response.data.data.filter((supplier: any) => supplier.id === id)
+            this.name  = filteredUser[0].name
+            this.email = filteredUser[0].email
+            this.phone = filteredUser[0].phone
+            this.companyName = filteredUser[0].company
+            this.id = filteredUser[0].id
+          })
+        .catch((e: Error) => {
+          console.log(e);
+        });
+    },
+    async updateSupplier(): Promise<void> {
+      let data = {
+        name: this.name,
+        email: this.email,
+        phone: this.phone,
+        company: this.companyName,
+      }
+      let id = parseInt(this.id)
+      let token = this.$store.state.bearerToken
+      await SupplierService.update(data, id, token)
+        .then((response: ResponseData) => {
+          this.$toast.open({
+            message: `${this.name} successfully updated!`,
+            type: "success"
+          })
+        })
+        .catch((e: Error) => {
+          this.$toast.open({
+            message: `There was an error updating that supplier.`,
+            type: "error"
+          })
+          console.log(e)
+        });
+    },
   },
   async mounted() {
-    this.fetchRoles()
+    this.fetchSuppliers()
   },
 });
 </script>

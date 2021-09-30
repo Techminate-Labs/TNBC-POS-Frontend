@@ -1,8 +1,15 @@
 <template>
-  <div class="flex-grow px-4 md:px-8 my-10">
+  <div class="flex-grow px-4 md:px-8 py-10">
     <p>Breadcrumb</p>
-    <div class="flex flex-nowrap justify-between">
+    <div class="flex flex-nowrap justify-between mb-2">
       <p class="text-2xl mb-4">Add User</p>
+      <div class="text-right">
+        <button
+          class="base-btn-outline" 
+          @click="$router.go(-1)">
+          Back
+        </button>
+      </div>
     </div>
     <div class="bg-white p-4 rounded-lg shadow-md">
       <div class="flex flex-col py-2">
@@ -52,16 +59,26 @@
           placeholder="**************"
         >
       </div>
+      <div class="my-2 text-right">
+        <button
+          class="base-btn-outline ml-2" 
+          @click="addUser">
+          Save and Create a New User
+        </button>
+        <button
+          class="base-btn ml-2" 
+          @click="addUserAndRedirect">
+          save and exit
+        </button>
+      </div>
     </div>
-    <button
-      class="base-btn float-right" 
-      @click="addUser">Save</button>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import DataService from "@/services/DataService";
+import UserService from "@/services/UserService";
+import RoleService from "@/services/RoleService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
@@ -73,11 +90,12 @@ export default defineComponent({
       role: '',
       password: '',
       passwordConfirmation: '',
-      roles: []
+      roles: [],
+      url: '/roleList'
     }
   },
   methods: {
-    addUser(): void {
+    async addUser(): Promise<void> {
       let data = {
         name: this.name,
         email: this.email,
@@ -86,7 +104,7 @@ export default defineComponent({
         role_id: Number(this.role),
       }
       let token = this.$store.state.bearerToken
-      DataService.addUser(data, token)
+      await UserService.create(data, token)
         .then((response: ResponseData) => {
           this.$toast.open({
             message: `${this.name} successfully added to database!`,
@@ -101,10 +119,36 @@ export default defineComponent({
           console.log(e)
         });
     },
-    fetchRoles(): void {
+    async addUserAndRedirect(): Promise<void> {
+      let data = {
+        name: this.name,
+        email: this.email,
+        password: this.password,
+        password_confirmation: this.passwordConfirmation,
+        role_id: Number(this.role),
+      }
+      let token = this.$store.state.bearerToken
+      await UserService.create(data, token)
+        .then((response: ResponseData) => {
+          this.$toast.open({
+            message: `${this.name} successfully added to database!`,
+            type: "success"
+          })
+          this.$router.push({name:'UserList'})
+        })
+        .catch((e: Error) => {
+          this.$toast.open({
+            message: `There was an error adding that user to the database.`,
+            type: "error"
+          })
+          console.log(e)
+        });
+    },
+    async fetchRoles(): Promise<void> {
       let params = this.$route.params
       let token = this.$store.state.bearerToken
-      DataService.listRoles(token)
+      let url = this.url
+      await RoleService.list(url, token)
         .then((response: ResponseData) => {
           let role_id: number = parseInt(params.user_id as string)
           let _data: any = []

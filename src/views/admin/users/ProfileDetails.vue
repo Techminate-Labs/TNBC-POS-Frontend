@@ -1,8 +1,13 @@
 <template>
   <div class="flex-grow px-4 md:px-8 my-10">
     <p>Breadcrumb</p>
-    <div class="flex flex-nowrap justify-between mb-4">
-      <p class="text-2xl mb-4">User Profile</p>
+    <div class="flex flex-nowrap justify-between mb-2">
+      <p class="text-2xl">User Profile</p>
+      <button 
+        @click="$router.go(-1)" 
+        class="base-btn-outline float-right">
+        Back
+      </button>
     </div>
     <div 
       v-if="!profile" 
@@ -23,18 +28,18 @@
         </p>
       </div>
     </div>
-    <button class="base-btn float-right"><router-link to="/user-management/user-edit-profile">Edit</router-link></button>
+    <button v-show="profile" class="base-btn float-right"><router-link to="/user-management/user-edit-profile">Edit</router-link></button>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import DataService from "@/services/DataService";
+import ProfileService from "@/services/ProfileService";
 import ResponseData from "@/types/ResponseData";
 import formatDateMixin from '@/mixins/formatDateMixin';
 
 export default defineComponent({
-  name: 'ProfileSingle',
+  name: 'ProfileDetails',
   data() {
     return {
       profile: null
@@ -42,11 +47,11 @@ export default defineComponent({
   },
   mixins: [formatDateMixin],
   methods: {
-    fetchProfile(): void {
+    async fetchProfile(): Promise<void> {
       let params = this.$route.params
       let user_id = parseInt(params.user_id as string)
       let token = this.$store.state.bearerToken
-      DataService.listUserProfile(user_id, token)
+      await ProfileService.list(user_id, token)
         .then((response: ResponseData) => {
             this.profile  = response.data
           })

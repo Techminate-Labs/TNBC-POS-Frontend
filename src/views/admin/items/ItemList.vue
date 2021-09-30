@@ -2,12 +2,11 @@
   <div class="flex-grow px-4 md:px-8 my-10">
     <p>Breadcrumb</p>
     <div class="flex flex-nowrap justify-between">
-      <p class="text-2xl mb-4">User List</p>
-      <router-link 
-        v-show="canUserCreate"
-        :to="{ name: 'UserCreate' }">
-        <button class="base-btn">Create User</button>
-      </router-link>
+      <p class="text-2xl mb-4">Items List</p>
+      <router-link :to="{ name: 'ItemCreate' }"><button
+        class="base-btn">
+          Create Item
+      </button></router-link>
     </div>
     <DataTable
       :columns="columns"
@@ -17,11 +16,11 @@
       :data="data"
       :type="type"
       :permissionsArrayNum="permissionsArrayNum"
-      @handleAddProfile="addUserProfile"
-      @handleSearch="searchUser"
-      @handleView="viewUser"
-      @handleEdit="editUser"
-      @handleDelete="deleteUser"
+      @handleSearch="searchItem"
+      @handleAddProfile="addItemProfile"
+      @handleView="viewItem"
+      @handleEdit="editItem"
+      @handleDelete="deleteItem"
       @pageChange="pageChange" 
       @previousPage="previousPage" 
       @nextPage="nextPage" 
@@ -31,13 +30,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import UserService from "@/services/UserService";
-import ResponseData from "@/types/ResponseData";
 import DataTable from '@/components/tables/DataTable.vue'
-import { User } from '@/types/UserTables'
+import ItemService from "@/services/ItemService";
+import { ItemsItem } from '@/types/Items'
+import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
-  name: 'UserList',
+  name: 'ItemList',
   components: {
     DataTable
   },
@@ -46,14 +45,14 @@ export default defineComponent({
       next: '',
       prev: '',
       meta: {},
-      data: [],
+      data: [] as Array<ItemsItem>,
       type: "Users",
-      url: '/userList',
+      url: '/itemList',
       maxItemsPerPage: '' || undefined as unknown as string,
       permissionsArrayNum: 0,
       columns: [
         {
-          attribute: 'user_id',
+          attribute: 'item_id',
           name: 'id'
         },
         {
@@ -61,43 +60,24 @@ export default defineComponent({
           name: 'name'
         },
         {
-          attribute: 'email',
-          name: 'email'
+          attribute: 'slug',
+          name: 'slug'
         },
         {
-          attribute: 'roleName',
-          name: 'role'
-        },
-        {
-          attribute: 'created_at',
-          name: 'registered'
-        },
-        {
-          attribute: 'updated_at',
-          name: 'updated'
-        },
-        {
-          attribute: 'email_verified_at',
-          name: 'email verified'
-        },
+          attribute: 'number_of_products',
+          name: 'number of products'
+        }
       ]
     }
   },
   methods: {
-    async fetchUsers(): Promise<void> {
+    async fetchItems(): Promise<void> {
       let token = this.$store.state.bearerToken
       let url = this.url
-      await UserService.list(url, token)
+      await ItemService.list(url, token)
         .then((response: ResponseData) => {
           let res = response.data
-          console.log(response.data)
-          this.data = res.data.map((user: User) => ({
-            ...user, 
-            roleName: user.role, 
-            created_at: user.created_at,
-            email_verified_at: user.email_verified_at,
-            updated_at: user.updated_at
-          }))
+          this.data = res.data
           this.meta = {
             current_page: res.current_page,
             from: res.from,
@@ -117,20 +97,20 @@ export default defineComponent({
     },
     async pageChange(url: string): Promise<void> {
       this.url = url
-      await this.fetchUsers()
+      await this.fetchItems()
     },
     async pageLimitChange(limit: string): Promise<void> {
       let url = this.url
       this.maxItemsPerPage = limit
       this.url = `${url}?limit=${limit}`
-      await this.fetchUsers()
+      await this.fetchItems()
     },
     async previousPage(): Promise<void> {
       if (this.prev !== null){
         let url = this.prev
         let limit = this.maxItemsPerPage
         this.url = `${url}&limit=${limit}`
-        await this.fetchUsers()
+        await this.fetchItems()
       }
     },
     async nextPage(): Promise<void> {
@@ -138,26 +118,49 @@ export default defineComponent({
         let url = this.next
         let limit = this.maxItemsPerPage
         this.url = `${url}&limit=${limit}`
-        await this.fetchUsers()
+        await this.fetchItems()
       }
     },
-    async searchUser(event: any): Promise<void> {
+    addItemProfile(item: any): void {
+      this.$router.push({name:'ProfileCreate', params: {id: item.id}})
+    },
+    viewItem(item: any): void {
+      console.log(item)
+      this.$router.push({name:'ItemDetails', params: {id: item.item_id}})
+    },
+    editItem(item: any): void {
+      console.log(item.id)
+      this.$router.push({name:'ItemUpdate', params: {id: item.item_id}})
+    },
+    async deleteItem(item: any): Promise<void> {
+      let token = this.$store.state.bearerToken
+      let id = item.item_id
+      await ItemService.delete(id, token)
+        .then((response: ResponseData) => {
+          this.fetchItems()
+          this.$toast.open({
+            message: `${item.name} successfully deleted.`,
+            type: "success"
+          })
+        })
+        .catch((e: Error) => {
+          this.$toast.open({
+            message: `Could not delete that item.`,
+            type: "error"
+          })
+          console.log(e)
+        });
+    },
+    async searchItem(event: any): Promise<void> {
       let token = this.$store.state.bearerToken
       let value = event.target.value
-      let url = `/userList/?q=${value}`
+      let url = `/itemList/?q=${value}`
 
       if (value.length > 2 || value.length === 0){
-        await UserService.list(url, token)
+        await ItemService.list(url, token)
           .then((response: ResponseData) => {
             let res = response.data
-            console.log(response.data)
-            this.data = res.data.map((user: User) => ({
-              ...user, 
-              roleName: user.role, 
-              created_at: user.created_at,
-              email_verified_at: user.email_verified_at,
-              updated_at: user.updated_at
-            }))
+            this.data = res.data
             this.meta = {
               current_page: res.current_page,
               from: res.from,
@@ -175,43 +178,10 @@ export default defineComponent({
             console.log(e);
           });
       }
-
-    },
-    addUserProfile(item: any): void {
-      this.$router.push({name:'ProfileCreate', params: {user_id: item.user_id}})
-    },
-    viewUser(item: any): void {
-      this.$router.push({name:'ProfileDetails', params: {user_id: item.user_id}})
-    },
-    editUser(item: any): void {
-      this.$router.push({name:'UserUpdate', params: {user_id: item.user_id}})
-    },
-    async deleteUser(id: number): Promise<void> {
-      let token = this.$store.state.bearerToken
-      await UserService.delete(id, token)
-        .then((response: ResponseData) => {
-          this.fetchUsers()
-          this.$toast.open({
-            message: `User successfully deleted.`,
-            type: "success"
-          })
-        })
-        .catch((e: Error) => {
-          this.$toast.open({
-            message: `Could not delete that user.`,
-            type: "error"
-          })
-          console.log(e)
-        });
-    }
-  },
-  computed: {
-    canUserCreate():boolean {
-      return this.$store.state.permissions[0]["Users"].create
     }
   },
   async mounted(): Promise<void> {
-    await this.fetchUsers()
+    await this.fetchItems()
   },
 });
 </script>

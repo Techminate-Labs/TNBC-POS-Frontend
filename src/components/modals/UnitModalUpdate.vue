@@ -9,13 +9,17 @@
           class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
           type="text" 
           name="name" 
-          v-model="name" 
+          v-model="unitName" 
           placeholder="Jane Doe"
         >
       </div>
       <div class="float-right">
-        <button class="base-btn-cancel border-2 border-red-800 hover:border-red-700 mr-4">Cancel</button>
-        <button class="base-btn-outline">Save</button>
+        <button 
+          @click="$emit('close-modal')" 
+          class="base-btn-cancel-outline border-2 border-red-800 hover:border-red-700 mr-4">
+          Cancel
+        </button>
+        <button class="base-btn" @click="$emit('handleSave', unitName)">Save</button>
       </div>
     </div>
     <div class="bg-gray-800 h-screen w-full opacity-90 z-30 fixed top-0 left-0"></div>
@@ -26,9 +30,20 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'UnitModalUpdate',
+  props: {
+    name: {
+      type: String || null as any,
+      required: true
+    }
+  },
   data() {
     return {
-      name: ''
+      unitName: ''
+    }
+  },
+  watch: {
+    name: function () {
+      this.unitName = this.name
     }
   }
 

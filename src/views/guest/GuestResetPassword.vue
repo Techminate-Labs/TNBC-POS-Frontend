@@ -4,7 +4,7 @@
       <img class="pr-4" src="@/assets/TNB_POS_LOGO.png" />
       <h1 class="self-center text-4xl">TNB POS</h1>
     </div>
-    <p>Guest's email</p>
+    <p class="text-xl font-semibold">Please enter your new password.</p>
     <div class="flex flex-col py-2">
       <label class="mb-2" for="new-email">Your new password:</label>
       <input 
@@ -34,7 +34,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import DataService from "@/services/DataService";
+import UserService from "@/services/UserService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
@@ -48,7 +48,7 @@ export default defineComponent({
     }
   },
   methods: {
-    confirmResetPassword(): void {
+    async confirmResetPassword(): Promise<void> {
       if (this.$route.query.token){
         let _token: string = this.$route.query.token.toString()
         this.token = _token
@@ -58,19 +58,25 @@ export default defineComponent({
           password: this.password,
           password_confirmation: this.repeatPassword,
         }
-        DataService.resetPassword(data)
+        await UserService.resetPassword(data)
           .then((res: ResponseData) => {
-              console.log('password reset!')
-              DataService.loginUser(data)
-                .then((response: ResponseData) => {
-                    console.log('logged in!')
-                    this.$store.commit('setBearerToken', response.data.token)
-                    this.$store.commit('setAuthentication', true)
-                    this.$router.push('/dashboard')
+            this.$toast.open({
+              message: `Your password has been changed.`,
+              type: "success"
+            })
+            UserService.login(data)
+              .then((response: ResponseData) => {
+                  this.$store.commit('setBearerToken', response.data.token)
+                  this.$store.commit('setAuthentication', true)
+                  this.$router.push('/dashboard')
+                  this.$toast.open({
+                  message: `You are now successfully connected.`,
+                  type: "info"
                 })
-                .catch((e: Error) => {
-                  console.log(e);
-                });
+              })
+              .catch((e: Error) => {
+                console.log(e);
+              });
           })
           .catch((e: Error) => {
             console.log(e);

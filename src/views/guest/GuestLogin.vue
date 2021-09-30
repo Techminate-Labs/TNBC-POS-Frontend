@@ -35,7 +35,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import DataService from "@/services/DataService";
+import UserService from "@/services/UserService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
@@ -48,20 +48,20 @@ export default defineComponent({
     }
   },
   methods: {
-    logInUser(): void {
+    async logInUser(): Promise<void> {
       let data = {
         email: this.email,
         password: this.password,
       }
-      DataService.loginUser(data)
+      await UserService.login(data)
         .then((response: ResponseData) => {
           this.user = response.data.user
           let permissions = this.user.role.permissions
-
           this.$store.commit('setPermissions', permissions)
           this.$store.commit('setBearerToken', response.data.token)
           this.$store.commit('setAuthentication', true)
           this.$store.commit('setUserEmail', this.email)
+          this.$store.commit('setUserId', response.data.user.id)
 
           this.checkIfUserhasVerifiedEmail()
 

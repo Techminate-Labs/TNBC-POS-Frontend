@@ -8,6 +8,7 @@
         "start": "node server.js"
     },
     "dependencies": {
+        "@vueform/multiselect": "^2.2.0",
         "axios": "^0.21.1",
         "core-js": "^3.6.5",
         "express": "^4.17.1",

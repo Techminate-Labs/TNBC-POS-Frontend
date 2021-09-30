@@ -17,7 +17,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import CheckboxTable from '@/components/tables/CheckboxTable.vue'
-import DataService from "@/services/DataService";
+import RoleService from "@/services/RoleService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
@@ -29,6 +29,7 @@ export default defineComponent({
     return {
       items: [],
       roleName: '',
+      url: 'roleList',
       columns: [
         {
           name: 'create',
@@ -54,10 +55,11 @@ export default defineComponent({
     }
   },
   methods: {
-    fetchRoles(): void {
+    async fetchRoles(): Promise<void> {
       let params = this.$route.params
       let token = this.$store.state.bearerToken
-      DataService.listRoles(token)
+      let url = this.url
+      await RoleService.list(url, token)
         .then((response: ResponseData) => {
           let role_id: number = parseInt(params.id as string)
           const filteredRoles = response.data.data.filter((role: any) => role.id === role_id)
@@ -78,7 +80,7 @@ export default defineComponent({
           console.log(e)
         });
     },
-    updateRole(items: any): void {
+    async updateRole(items: any): Promise<void> {
       let token = this.$store.state.bearerToken
       let _permissions: any = []
       items.map((item: any) => {
@@ -93,7 +95,7 @@ export default defineComponent({
         name: this.roleName,
         permissions: _permissions
       }
-      DataService.updateRole(data as any, role_id as number, token as any)
+      await RoleService.update(data as any, role_id as number, token as any)
         .then((response: ResponseData) => {
             this.$toast.open({
               message: `${this.roleName} has been successfully updated!`,
