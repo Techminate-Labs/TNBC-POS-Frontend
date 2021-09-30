@@ -16,6 +16,7 @@ import UserUpdate from '../views/admin/users/UserUpdate.vue'
 import ProfileDetails from '../views/admin/users/ProfileDetails.vue'
 import ProfileCreate from '../views/admin/users/ProfileCreate.vue'
 import ProfileUpdate from '../views/admin/users/ProfileUpdate.vue'
+import ProfileSettings from '../views/admin/users/ProfileSettings.vue'
 import ItemsIndex from '../views/admin/items/ItemsIndex.vue'
 import SupplierList from '../views/admin/items/SupplierList.vue'
 import SupplierCreate from '../views/admin/items/SupplierCreate.vue'
@@ -176,6 +177,11 @@ const routes: Array<RouteRecordRaw> = [
         path: 'profile-update/:user_id',
         name: 'ProfileUpdate',
         component: ProfileUpdate
+      },
+      {
+        path: 'profile-settings/:user_id',
+        name: 'ProfileSettings',
+        component: ProfileSettings
       },
     ]
   },

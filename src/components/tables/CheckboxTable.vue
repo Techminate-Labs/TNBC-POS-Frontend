@@ -60,7 +60,7 @@
           <button 
             class="base-btn ml-2" 
             @click="$emit('handleSaveAndRedirect', items)">
-            Save and Quit
+            save and exit
           </button>
         </div>
       </div>

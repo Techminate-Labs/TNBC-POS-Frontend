@@ -1,8 +1,13 @@
 <template>
   <div class="flex-grow px-4 md:px-8 my-10">
     <p>Breadcrumb</p>
-    <div class="flex flex-nowrap justify-between mb-4">
-      <p class="text-2xl mb-4">Add User Profile</p>
+    <div class="flex flex-nowrap justify-between mb-2">
+      <p class="text-2xl">Add User Profile</p>
+      <button 
+        @click="$router.go(-1)" 
+        class="base-btn-outline float-right">
+        Back
+      </button>
     </div>
     <div class="grid grid-cols-2 gap-4 bg-white p-4 rounded-lg shadow-md">
       <div class="flex flex-col flex-nowrap py-2 grid-span-1 mb-2">
@@ -96,8 +101,10 @@
         >
       </div>
       {{ user.image }}
+      <div class="self-end">
+        <button class="base-btn float-right" @click="addUserProfile">Save and exit</button>
+      </div>
     </div>
-    <button class="base-btn float-right" @click="addUserProfile">Save</button>
   </div>
 </template>
 

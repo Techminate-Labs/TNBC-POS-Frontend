@@ -5,7 +5,7 @@
       <label for="dark-mode-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
     </div>
     <NotificationIcon class="w-7 h-7 text-gray-500 mr-5 self-center" />
-    <UserIcon class="w-7 h-7 text-gray-500 mr-5 self-center" />
+    <UserIcon @click="handleUserSettings" class="w-7 h-7 text-gray-500 mr-5 self-center cursor-pointer" />
     <router-link to="/" @click="logOutUser">Log out</router-link>
   </div>
 </template>
@@ -26,9 +26,11 @@ export default defineComponent({
       await UserService.logout(token)
         .then((response: ResponseData) => {
           localStorage.setItem('bearerToken', '')
+          this.$store.commit('setPermissions', [])
           this.$store.commit('setBearerToken', '')
           this.$store.commit('setAuthentication', false)
-          this.$store.commit('setPermissions', [])
+          this.$store.commit('setUserEmail', null)
+          this.$store.commit('setUserId', null)
           this.$router.push('/')
           this.$toast.open({
             message: `You've been successfully logged out. Bye!`,
@@ -42,6 +44,10 @@ export default defineComponent({
           })
           console.log(e)
         });
+    },
+    handleUserSettings(): void {
+      let user_id = this.$store.state.userId
+      this.$router.push({name: 'ProfileSettings', params: {user_id: user_id}})
     }
   }
 });

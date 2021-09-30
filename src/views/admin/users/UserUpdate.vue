@@ -40,7 +40,7 @@
             <option v-for="(role, index) in roles" :key="index" :value="role.value">{{role.name}}</option>
           </select>
         </div>
-        <button class="base-btn float-right" @click="updateUser">Save and quit</button>
+        <button class="base-btn float-right" @click="updateUser">save and exit</button>
       </div>
     </div>
   </div>

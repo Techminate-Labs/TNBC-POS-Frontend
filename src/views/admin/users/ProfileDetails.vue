@@ -1,8 +1,13 @@
 <template>
   <div class="flex-grow px-4 md:px-8 my-10">
     <p>Breadcrumb</p>
-    <div class="flex flex-nowrap justify-between mb-4">
-      <p class="text-2xl mb-4">User Profile</p>
+    <div class="flex flex-nowrap justify-between mb-2">
+      <p class="text-2xl">User Profile</p>
+      <button 
+        @click="$router.go(-1)" 
+        class="base-btn-outline float-right">
+        Back
+      </button>
     </div>
     <div 
       v-if="!profile" 
@@ -23,7 +28,7 @@
         </p>
       </div>
     </div>
-    <button class="base-btn float-right"><router-link to="/user-management/user-edit-profile">Edit</router-link></button>
+    <button v-show="profile" class="base-btn float-right"><router-link to="/user-management/user-edit-profile">Edit</router-link></button>
   </div>
 </template>
 

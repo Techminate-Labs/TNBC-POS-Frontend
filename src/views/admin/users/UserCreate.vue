@@ -68,7 +68,7 @@
         <button
           class="base-btn ml-2" 
           @click="addUserAndRedirect">
-          Save and Quit
+          save and exit
         </button>
       </div>
     </div>
