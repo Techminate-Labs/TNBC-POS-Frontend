@@ -22,6 +22,10 @@ export default {
     return http.get(`${url}`, { headers: { "Authorization": `Bearer ${token}` } });
   },
 
+  getById(user_id: number, token: any): Promise<any> {
+    return http.get(`userGetById/${user_id}`, { headers: { "Authorization": `Bearer ${token}` } });
+  },
+
   create(data: any, token: any): Promise<any> {
     return http.post("/register", data, { headers: { "Authorization": `Bearer ${token}` } });
   },

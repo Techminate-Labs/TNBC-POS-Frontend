@@ -1,8 +1,8 @@
 <template>
   <div class="relative flex flex-row">
     <div class="relative inline-block w-10 mr-5 align-middle select-none transition duration-200 ease-in self-center">
-      <input type="checkbox" name="toggle" id="toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-2 appearance-none cursor-pointer"/>
-      <label for="toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+      <input type="checkbox" name="dark-mode-toggle" id="toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-2 appearance-none cursor-pointer"/>
+      <label for="dark-mode-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
     </div>
     <NotificationIcon class="w-7 h-7 text-gray-500 mr-5 self-center" />
     <UserIcon class="w-7 h-7 text-gray-500 mr-5 self-center" />

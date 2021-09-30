@@ -17,12 +17,14 @@
       :prev="prev"
       :type="type"
       :permissionsArrayNum="permissionsArrayNum"
+      @handleSearch="searchCategory"
       @handleView="viewCategory"
       @handleEdit="showCategoryEditModal"
       @handleDelete="deleteCategory"
       @pageChange="pageChange" 
       @previousPage="previousPage" 
-      @nextPage="nextPage" />
+      @nextPage="nextPage" 
+      @maxItemsPerPageChange="pageLimitChange" />
     <div class="hidden" :class="isCreating ? 'active' : ''">
       <CategoryModalCreate @handleSave="createCategory" @close-modal="isCreating = false" />
     </div>
@@ -55,7 +57,7 @@ export default defineComponent({
       meta: {},
       data: [],
       url: '/categoryList',
-      maxItemsPerPage: 10,
+      maxItemsPerPage: '' || undefined as unknown as string,
       type: 'Users',
       permissionsArrayNum: 0,
       isCreating: false,
@@ -85,8 +87,7 @@ export default defineComponent({
     async fetchCategories(): Promise<void> {
       let token = this.$store.state.bearerToken
       let url = this.url
-      let limit = this.maxItemsPerPage
-      await CategoryService.list(`${url}/?limit=${limit}`, token)
+      await CategoryService.list(url, token)
         .then((response: ResponseData) => {
           let res = response.data
           this.data = res.data
@@ -123,7 +124,7 @@ export default defineComponent({
       await CategoryService.edit(data, categoryId, token)
         .then((response: ResponseData) => {
           this.$toast.open({
-            message: `Category ${categoryName} has been successfully created!`,
+            message: `Category ${categoryName} has been successfully updated!`,
             type: "success"
           })
           this.isEditing = false
@@ -157,20 +158,54 @@ export default defineComponent({
           console.log(e)
         });
     },
-    pageChange(url: string):void {
-      this.url = url
-      this.fetchCategories()
-    },
-    previousPage():void {
-      if (this.prev !== null){
-        this.url = this.prev
-        this.fetchCategories()
+    async searchCategory(event: any): Promise<void> {
+      let token = this.$store.state.bearerToken
+      let value = event.target.value
+      let url = `/categoryList/?q=${value}`
+
+      if (value.length > 2 || value.length === 0){
+        await CategoryService.list(url, token)
+          .then((response: ResponseData) => {
+            let res = response.data
+            this.data = res.data
+            this.meta = {
+              current_page: res.current_page,
+              from: res.from,
+              last_page: res.last_page,
+              links: res.links,
+              path: res.path,
+              per_page: res.per_page,
+              to: res.to,
+              total: res.total
+            }
+            this.prev = res.prev_page_url
+            this.next = res.next_page_url
+          })
+          .catch((e: Error) => {
+            console.log(e);
+          });
       }
     },
-    nextPage(): void {
+    async pageLimitChange(limit: string): Promise<void> {
+      let url = this.url
+      this.maxItemsPerPage = limit
+      this.url = `${url}?limit=${limit}`
+      await this.fetchCategories()
+    },
+    async previousPage(): Promise<void> {
+      if (this.prev !== null){
+        let url = this.prev
+        let limit = this.maxItemsPerPage
+        this.url = `${url}&limit=${limit}`
+        await this.fetchCategories()
+      }
+    },
+    async nextPage(): Promise<void> {
       if (this.next !== null){
-        this.url = this.next
-        this.fetchCategories()
+        let url = this.next
+        let limit = this.maxItemsPerPage
+        this.url = `${url}&limit=${limit}`
+        await this.fetchCategories()
       }
     },
     async createCategory(name: any): Promise<void> {

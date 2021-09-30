@@ -13,6 +13,7 @@
       :prev="prev"
       :type="type"
       :permissionsArrayNum="permissionsArrayNum"
+      @handleSearch="searchUnit"
       @handleView="viewUnit"
       @handleEdit="showUnitEditModal"
       @handleDelete="deleteUnit"
@@ -47,13 +48,12 @@ export default defineComponent({
   },
   data() {
     return {
-      items: [],
       next: '',
       prev: '',
       meta: {},
       data: [],
       url: '/unitList',
-      maxItemsPerPage: '',
+      maxItemsPerPage: '' || undefined as unknown as string,
       type: 'Users',
       permissionsArrayNum: 0,
       isCreating: false,
@@ -87,8 +87,7 @@ export default defineComponent({
     async fetchUnits(): Promise<void> {
       let token = this.$store.state.bearerToken
       let url = this.url
-      let limit = this.maxItemsPerPage
-      await UnitService.list(`${url}?limit=${limit}`, token)
+      await UnitService.list(url, token)
         .then((response: ResponseData) => {
           let res = response.data
           this.data = res.data
@@ -124,7 +123,7 @@ export default defineComponent({
       await UnitService.edit(data, UnitId, token)
         .then((response: ResponseData) => {
           this.$toast.open({
-            message: `Unit ${UnitName} has been successfully created!`,
+            message: `Unit ${UnitName} has been successfully updated!`,
             type: "success"
           })
           this.isEditing = false
@@ -158,45 +157,58 @@ export default defineComponent({
           console.log(e)
         });
     },
-    pageChange(url: string): void {
-      this.url = url
-      this.fetchUnits()
-    },
-    async pageLimitChange(limit: string): Promise<void> {
+    async searchUnit(event: any): Promise<void> {
       let token = this.$store.state.bearerToken
-      let url = this.url
-      this.maxItemsPerPage = limit
-      await UnitService.list(`${url}?limit=${limit}`, token)
-        .then((response: ResponseData) => {
-          let res = response.data
-          this.data = res.data
-          this.meta = {
-            current_page: res.current_page,
-            from: res.from,
-            last_page: res.last_page,
-            links: res.links,
-            path: res.path,
-            per_page: res.per_page,
-            to: res.to,
-            total: res.total
-          }
-          this.prev = res.prev_page_url
-          this.next = res.next_page_url
-        })
-        .catch((e: Error) => {
-          console.log(e);
-        });
-    },
-    previousPage(): void {
-      if (this.prev !== null){
-        this.url = this.prev
-        this.fetchUnits()
+      let value = event.target.value
+      let url = `/unitList/?q=${value}`
+
+      if (value.length > 2 || value.length === 0){
+        await UnitService.list(url, token)
+          .then((response: ResponseData) => {
+            let res = response.data
+            this.data = res.data
+            this.meta = {
+              current_page: res.current_page,
+              from: res.from,
+              last_page: res.last_page,
+              links: res.links,
+              path: res.path,
+              per_page: res.per_page,
+              to: res.to,
+              total: res.total
+            }
+            this.prev = res.prev_page_url
+            this.next = res.next_page_url
+          })
+          .catch((e: Error) => {
+            console.log(e);
+          });
       }
     },
-    nextPage(): void {
+    async pageChange(url: string): Promise<void> {
+      this.url = url
+      await this.fetchUnits()
+    },
+    async pageLimitChange(limit: string): Promise<void> {
+      let url = this.url
+      this.maxItemsPerPage = limit
+      this.url = `${url}?limit=${limit}`
+      await this.fetchUnits()
+    },
+    async previousPage(): Promise<void> {
+      if (this.prev !== null){
+        let url = this.prev
+        let limit = this.maxItemsPerPage
+        this.url = `${url}&limit=${limit}`
+        await this.fetchUnits()
+      }
+    },
+    async nextPage(): Promise<void> {
       if (this.next !== null){
-        this.url = this.next
-        this.fetchUnits()
+        let url = this.next
+        let limit = this.maxItemsPerPage
+        this.url = `${url}&limit=${limit}`
+        await this.fetchUnits()
       }
     },
     async createUnit(name: any): Promise<void> {
@@ -220,8 +232,8 @@ export default defineComponent({
         });
     }
   },
-  async mounted() {
-    this.fetchUnits()
+  async mounted(): Promise<void> {
+    await this.fetchUnits()
   },
 });
 </script>

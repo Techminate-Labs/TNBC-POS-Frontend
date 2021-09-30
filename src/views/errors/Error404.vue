@@ -12,26 +12,7 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'Error404',
-  methods: {
-    doCommand(e: any) {
-		  let cmd = String.fromCharCode(e.keyCode).toLowerCase();
-		  if (e.key === "Backspace"){
-        this.$router.go(-1)
-      }
-	  }
-  },
-  mounted() {
-    window.addEventListener("keyup", e => {
-    });
-    console.log(this.$route)
-  },
-  created() {
-	  window.addEventListener('keyup', this.doCommand);
-  },
-  destroyed() {
-    window.removeEventListener('keyup', this.doCommand);
-  },
+  name: 'Error404'
 
 });
 </script>

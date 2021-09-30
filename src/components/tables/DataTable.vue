@@ -2,14 +2,23 @@
   <div class="flex flex-col">
     <div class="py-2 align-middle inline-block w-full">
       <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+        <div class="flex flex-col flex-nowrap w-full p-4">
+          <input
+            @input="$emit('handleSearch', $event)"
+            class="p-3 rounded-md border-solid border-2 border-gray-200"
+            name="role-name"
+            type="text"
+            placeholder="Search anything..."
+            v-model="roleName" />
+        </div>
         <table class="divide-y divide-gray-200 border-collapse w-full">
           <thead class="bg-gray-50">
             <tr>
               <th 
-                @click="sort(column.attribute)" 
                 v-for="(column, index) in columns" 
                 :key="index" 
                 scope="col" 
+                @click="sort(column.attribute)" 
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 {{ column.name }}
               </th>
@@ -32,10 +41,10 @@
               <td 
                 data-label="Action"
                 class="flex flew-row justify-end w-full lg:w-auto px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <UserAddIcon v-show="item.user_id"  @click="$emit('handleAddProfile', item)" class="h-6 w-6 mr-1 cursor-pointer hover:opacity-50" />
-                <ViewIcon v-show="canUserView" @click="$emit('handleView', item)" class="h-6 w-6 mr-1 cursor-pointer hover:opacity-50" />
-                <EditIcon v-show="canUserEdit" @click="$emit('handleEdit', item)" class="h-6 w-6 mr-1 cursor-pointer hover:opacity-50" />
-                <DeleteIcon v-show="canUserDelete" @click="$emit('handleDelete', item)" class="h-6 w-6 mr-1 cursor-pointer hover:opacity-50" />
+                <UserAddIcon v-show="item.user_id"  @click="$emit('handleAddProfile', item)" class="text-green-700 h-6 w-6 mr-1 cursor-pointer hover:opacity-50" />
+                <ViewIcon v-show="canUserView" @click="$emit('handleView', item)" class="text-blue-700 h-6 w-6 mr-1 cursor-pointer hover:opacity-50" />
+                <EditIcon v-show="canUserEdit" @click="$emit('handleEdit', item)" class="text-green-700 h-6 w-6 mr-1 cursor-pointer hover:opacity-50" />
+                <DeleteIcon v-show="canUserDelete" @click="$emit('handleDelete', item)" class="text-red-700 h-6 w-6 mr-1 cursor-pointer hover:opacity-50" />
               </td>
             </tr>
           </tbody>
@@ -93,20 +102,18 @@
           </div>
         </div>
       </div>
-      debug: {{ meta }}
     </div>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { MetaPagination, MetaPaginationLinks } from '@/types/TablePagination'
-import ResponseData from "@/types/ResponseData";
-import UserAddIcon from '@/components/icons/UserAddIcon.vue'
-import ViewIcon from '@/components/icons/ViewIcon.vue'
-import EditIcon from '@/components/icons/EditIcon.vue'
-import DeleteIcon from '@/components/icons/DeleteIcon.vue'
-import ChevronLeftIcon from '@/components/icons/ChevronLeftIcon.vue'
-import ChevronRightIcon from '@/components/icons/ChevronRightIcon.vue'
+import { MetaPagination, MetaPaginationLinks } from '@/types/TablePagination';
+import UserAddIcon from '@/components/icons/UserAddIcon.vue';
+import ViewIcon from '@/components/icons/ViewIcon.vue';
+import EditIcon from '@/components/icons/EditIcon.vue';
+import DeleteIcon from '@/components/icons/DeleteIcon.vue';
+import ChevronLeftIcon from '@/components/icons/ChevronLeftIcon.vue';
+import ChevronRightIcon from '@/components/icons/ChevronRightIcon.vue';
 
 export default defineComponent({
   name: 'DataTable',
@@ -150,7 +157,7 @@ export default defineComponent({
   },
   data() {
     return {
-      currentSort: 'id' as string,
+      currentSort: '' as string,
       currentSortDir: 'asc' as string
     }
   },

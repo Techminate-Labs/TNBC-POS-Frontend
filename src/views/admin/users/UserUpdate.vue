@@ -1,10 +1,17 @@
 <template>
   <div class="flex-grow px-4 md:px-8 my-10">
     <p>Breadcrumb</p>
-    <div class="flex flex-nowrap justify-between">
-      <p class="text-2xl mb-4">Edit User</p>
+    <div class="flex flex-nowrap justify-between mb-2">
+      <p class="text-2xl">Edit User</p>
+      <div class="text-right">
+        <button
+          class="base-btn-outline" 
+          @click="$router.go(-1)">
+          Back
+        </button>
+      </div>
     </div>
-    <div class="grid grid-cols-2 gap-8 bg-white p-4 rounded-lg shadow-md">
+    <div class="grid grid-cols-1 bg-white p-4 rounded-lg shadow-md">
       <div>
         <h3 class="text-xl text-gray-600 font-light pb-2">User information</h3>
         <hr />
@@ -28,12 +35,12 @@
         </div>
         <div class="flex flex-col py-2">
           <label class="mb-2">Role:</label>
-          <select v-model="role" class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900">
-            <option :value="null">-- Please select an option --</option>
+          <select :value="role_id" class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900">
+            <option value="">-- Please select an option --</option>
             <option v-for="(role, index) in roles" :key="index" :value="role.value">{{role.name}}</option>
           </select>
         </div>
-        <button class="base-btn float-right" @click="updateUser">Save User</button>
+        <button class="base-btn float-right" @click="updateUser">Save and quit</button>
       </div>
     </div>
   </div>
@@ -53,33 +60,37 @@ export default defineComponent({
       name: '',
       email: '',
       role: '',
+      role_id: '',
       id: '',
       roles: [],
+      url: '/userList'
     }
   },
   methods: {
     async fetchUser(): Promise<void> {
       let token = this.$store.state.bearerToken
       let params = this.$route.params
-      let url = '/userList'
-      await UserService.list(url, token)
+      let id = parseInt(params.user_id as string)
+      await UserService.getById(id, token)
         .then((response: ResponseData) => {
-            let user_id: number = parseInt(params.user_id as string)
-            const filteredUser = response.data.data.filter((user: any) => user.user_id === user_id)
-            this.name  = filteredUser[0].name
-            this.email = filteredUser[0].email
-            this.role  = filteredUser[0].role
-            this.id    = filteredUser[0].id
-          })
+          let res = response.data
+          this.name  = res.name
+          this.email = res.email
+          this.role  = res.role
+          this.role_id    = res.role_id
+          this.id    = res.id
+        })
         .catch((e: Error) => {
           console.log(e);
         });
     },
     async fetchRoles(): Promise<void> {
       let token = this.$store.state.bearerToken
-      RoleService.list(token)
+      let url = 'roleList'
+      RoleService.list(`${url}?limit=0`, token)
         .then((response: ResponseData) => {
             let _data: any = []
+            console.log(response.data.data)
             response.data.data.map((role: any) => {
               _data.push({
                 value: role.id,
@@ -98,7 +109,7 @@ export default defineComponent({
       let data = {
         name: this.name,
         email: this.email,
-        role_id: this.role
+        role_id: this.role_id
       }
       console.log(data)
       let token = this.$store.state.bearerToken

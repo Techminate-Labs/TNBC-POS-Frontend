@@ -19,6 +19,7 @@
       :data="data"
       :type="type"
       :permissionsArrayNum="permissionsArrayNum"
+      @handleSearch="searchRole"
       @handleView="viewRole"
       @handleEdit="editRole"
       @handleDelete="deleteRole"
@@ -73,7 +74,8 @@ export default defineComponent({
   methods: {
     async fetchRoles(): Promise<void> {
       let token = this.$store.state.bearerToken
-      await RoleService.list(token)
+      let url = this.url
+      await RoleService.list(url, token)
         .then((response: ResponseData) => {
           let res = response.data
           this.data = res.data
@@ -117,6 +119,34 @@ export default defineComponent({
           })
           console.log(e)
         });
+    },
+    async searchRole(event: any): Promise<void> {
+      let token = this.$store.state.bearerToken
+      let value = event.target.value
+      let url = `/roleList/?q=${value}`
+
+      if (value.length > 2 || value.length === 0){
+        await RoleService.list(url, token)
+          .then((response: ResponseData) => {
+            let res = response.data
+            this.data = res.data
+            this.meta = {
+              current_page: res.current_page,
+              from: res.from,
+              last_page: res.last_page,
+              links: res.links,
+              path: res.path,
+              per_page: res.per_page,
+              to: res.to,
+              total: res.total
+            }
+            this.prev = res.prev_page_url
+            this.next = res.next_page_url
+          })
+          .catch((e: Error) => {
+            console.log(e);
+          });
+      }
     },
     pageChange(url: string):void {
       this.url = url

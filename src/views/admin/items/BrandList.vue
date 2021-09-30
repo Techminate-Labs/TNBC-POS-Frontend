@@ -17,6 +17,7 @@
       :prev="prev"
       :type="type"
       :permissionsArrayNum="permissionsArrayNum"
+      @handleSearch="searchBrand"
       @handleView="viewBrand"
       @handleEdit="showBrandEditModal"
       @handleDelete="deleteBrand"
@@ -123,7 +124,7 @@ export default defineComponent({
       await BrandService.edit(data, brandId, token)
         .then((response: ResponseData) => {
           this.$toast.open({
-            message: `Brand ${brandName} has been successfully created!`,
+            message: `Brand ${brandName} has been successfully updated!`,
             type: "success"
           })
           this.isEditing = false
@@ -157,9 +158,37 @@ export default defineComponent({
           console.log(e)
         });
     },
-    pageChange(url: string):void {
+    async searchBrand(event: any): Promise<void> {
+      let token = this.$store.state.bearerToken
+      let value = event.target.value
+      let url = `/brandList/?q=${value}`
+
+      if (value.length > 2 || value.length === 0){
+        await BrandService.list(url, token)
+          .then((response: ResponseData) => {
+            let res = response.data
+            this.data = res.data
+            this.meta = {
+              current_page: res.current_page,
+              from: res.from,
+              last_page: res.last_page,
+              links: res.links,
+              path: res.path,
+              per_page: res.per_page,
+              to: res.to,
+              total: res.total
+            }
+            this.prev = res.prev_page_url
+            this.next = res.next_page_url
+          })
+          .catch((e: Error) => {
+            console.log(e);
+          });
+      }
+    },
+    async pageChange(url: string): Promise<void> {
       this.url = url
-      this.fetchBrands()
+      await this.fetchBrands()
     },
     async pageLimitChange(limit: string): Promise<void> {
       let url = this.url
@@ -167,20 +196,20 @@ export default defineComponent({
       this.url = `${url}?limit=${limit}`
       this.fetchBrands()
     },
-    previousPage():void {
+    async previousPage(): Promise<void> {
       if (this.prev !== null){
         let url = this.prev
         let limit = this.maxItemsPerPage
         this.url = `${url}&limit=${limit}`
-        this.fetchBrands()
+        await this.fetchBrands()
       }
     },
-    nextPage(): void {
+    async nextPage(): Promise<void> {
       if (this.next !== null){
         let url = this.next
         let limit = this.maxItemsPerPage
         this.url = `${url}&limit=${limit}`
-        this.fetchBrands()
+        await this.fetchBrands()
       }
     },
     async createBrand(name: any): Promise<void> {
@@ -204,8 +233,8 @@ export default defineComponent({
         });
     }
   },
-  async mounted() {
-    this.fetchBrands()
+  async mounted(): Promise<void> {
+    await this.fetchBrands()
   },
 });
 </script>

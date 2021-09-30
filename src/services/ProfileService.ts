@@ -5,6 +5,10 @@ export default {
     return http.get(`/userProfileView/${id}`, { headers: { "Authorization": `Bearer ${token}` } });
   },
 
+  getById(user_id: number, token: any): Promise<any> {
+    return http.get(`userProfileGetById/${user_id}`, { headers: { "Authorization": `Bearer ${token}` } });
+  },
+
   create(data: any, token: any): Promise<any> {
     return http.post('/userProfileCreate', data, { headers: { "Authorization": `Bearer ${token}` } });
   },

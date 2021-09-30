@@ -1,13 +1,21 @@
 <template>
   <div class="flex-grow px-4 md:px-8 my-10">
     <p>Breadcrumb</p>
-    <div class="mb-4">
+    <div class="flex flex-nowrap justify-between mb-2">
       <p class="text-2xl">Role Permission</p>
       <p>Creating <span class="capitalize font-bold">{{ roleName }}</span></p> 
+      <div class="text-right">
+        <button
+          class="base-btn-outline" 
+          @click="$router.go(-1)">
+          Back
+        </button>
+      </div>
     </div>
     <CheckboxTable 
       @handleNameChange="changeName"
       @handleSave="createRole"
+      @handleSaveAndRedirect="createRoleAndRedirect"
       :columns="columns"
       :items="items" />
   </div>
@@ -28,6 +36,7 @@ export default defineComponent({
     return {
       items: [],
       roleName: '',
+      url: 'roleList',
       columns: [
         {
           name: 'create',
@@ -56,7 +65,8 @@ export default defineComponent({
     async fetchRoles(): Promise<void> {
       let params = this.$route.params
       let token = this.$store.state.bearerToken
-      await RoleService.list(token)
+      let url = this.url
+      await RoleService.list(url, token)
         .then((response: ResponseData) => {
             let role_id: number = parseInt(params.id as string)
             console.log(response)
@@ -100,6 +110,34 @@ export default defineComponent({
             message: `${this.roleName} has been successfully created!`,
             type: "success"
           })
+        })
+        .catch((e: Error) => {
+          this.$toast.open({
+            message: `There was an error creating that role.`,
+            type: "error"
+          })
+          console.log(e)
+        });
+    },
+    createRoleAndRedirect(items: any): void {
+      let _permissions: any = []
+      items.map((item: any) => {
+        _permissions.push({
+          [item.name]: item.permissions
+        })
+      })
+      let data = {
+        name: this.roleName,
+        permissions: _permissions
+      }
+      let token = this.$store.state.bearerToken
+      RoleService.create(data, token)
+        .then((response: ResponseData) => {
+          this.$toast.open({
+            message: `${this.roleName} has been successfully created!`,
+            type: "success"
+          })
+          this.$router.push({name: 'RolesList'})
         })
         .catch((e: Error) => {
           this.$toast.open({

@@ -29,6 +29,7 @@ export default defineComponent({
     return {
       items: [],
       roleName: '',
+      url: 'roleList',
       columns: [
         {
           name: 'create',
@@ -57,7 +58,8 @@ export default defineComponent({
     async fetchRoles(): Promise<void> {
       let params = this.$route.params
       let token = this.$store.state.bearerToken
-      await RoleService.list(token)
+      let url = this.url
+      await RoleService.list(url, token)
         .then((response: ResponseData) => {
           let role_id: number = parseInt(params.id as string)
           const filteredRoles = response.data.data.filter((role: any) => role.id === role_id)

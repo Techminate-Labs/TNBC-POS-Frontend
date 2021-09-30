@@ -52,46 +52,47 @@
         <div class="bg-white rounded-lg shadow-md p-4 mb-3">
           <div class="flex flex-col py-2">
             <label class="mb-2">Select Category:</label>
-            <select v-model="categoryId" class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900">
-              <option value="">-- Please select an option --</option>
-              <option v-for="(category, index) in getCategoryOptions" :key="index" :value="category.id">
-                {{ category.name }}
-              </option>
-            </select>
+            <Multiselect
+              v-model="categoryId"
+              :options="getCategoryOptions"
+              :searchable="true"
+              placeholder="Pick a Category"
+            />
+            {{categoryId}}
           </div>
           <div class="flex flex-col py-2">
             <label class="mb-2">Select Brand:</label>
-            <select v-model="brandId" class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900">
-              <option value="">-- Please select an option --</option>
-              <option v-for="(brand, index) in getBrandOptions" :key="index" :value="brand.id">
-                {{ brand.name }}
-              </option>
-            </select>
+            <Multiselect
+              v-model="brandId"
+              :options="getBrandOptions"
+              :searchable="true"
+              placeholder="Pick a Brand"
+            />
           </div>
           <div class="flex flex-col py-2">
             <label class="mb-2">Select Unit:</label>
-            <select v-model="unitId" class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900">
-              <option value="">-- Please select an option --</option>
-              <option v-for="(unit, index) in getUnitOptions" :key="index" :value="unit.id">
-                {{ unit.name }}
-              </option>
-            </select>
+            <Multiselect
+              v-model="unitId"
+              :options="getUnitOptions"
+              :searchable="true"
+              placeholder="Pick a Unit"
+            />
           </div>
           <div class="flex flex-col py-2">
             <label class="mb-2">Select Supplier:</label>
-            <select v-model="supplierId" class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900">
-              <option value="">-- Please select an option --</option>
-              <option v-for="(supplier, index) in getSupplierOptions" :key="index" :value="supplier.id">
-                {{ supplier.name }}
-              </option>
-            </select>
+            <Multiselect
+              v-model="supplierId"
+              :options="getSupplierOptions"
+              :searchable="true"
+              placeholder="Pick a Supplier"
+            />
           </div>
         </div>
         <div class="bg-white rounded-lg shadow-md p-4 mb-3">
           <h3 class="text-lg mb-3">Available to purchase</h3>
           <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
-            <input v-model="available" type="checkbox" name="toggle" id="toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
-            <label for="toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+            <input v-model="available" type="checkbox" name="availability-toggle" id="toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-2 appearance-none cursor-pointer"/>
+            <label for="availability-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
           </div>
         </div>
         <div class="bg-white rounded-lg shadow-md p-4 mb-3">
@@ -128,12 +129,21 @@ import CategoryService from '@/services/CategoryService';
 import BrandService from '@/services/BrandService';
 import UnitService from '@/services/UnitService';
 import SupplierService from '@/services/SupplierService';
-import { SupplierItem } from '@/types/Suppliers';
+import Multiselect from '@vueform/multiselect'
 
 export default defineComponent({
   name: 'ItemCreate',
+  components: {
+    Multiselect,
+  },
   data() {
     return {
+      value: null,
+        options: [
+          'Batman',
+          'Robin',
+          'Joker',
+      ],
       categoryId: '',
       brandId: '',
       unitId: '',
@@ -221,6 +231,7 @@ export default defineComponent({
       let token = this.$store.state.bearerToken
       await UnitService.list(`${url}/?limit=0`, token)
         .then((response: ResponseData) => {
+          console.log(response)
             this.units = response.data.data
           })
         .catch((e: Error) => {
@@ -240,17 +251,45 @@ export default defineComponent({
     },
   },
   computed:{
-    getCategoryOptions(): Array<SupplierItem> {
-      return this.categories
+    getCategoryOptions(): Array<any> {
+      let _: Array<any> = []
+      this.categories.map(function(cat: any) {
+        _.push({
+          value: cat.id,
+          label: cat.name
+        })
+      })
+      return _
     },
-    getBrandOptions(): Array<SupplierItem> {
-      return this.brands
+    getBrandOptions(): Array<any> {
+      let _: Array<any> = []
+      this.brands.map(function(brand: any) {
+        _.push({
+          value: brand.id,
+          label: brand.name
+        })
+      })
+      return _
     },
-    getUnitOptions(): Array<SupplierItem> {
-      return this.units
+    getUnitOptions(): Array<any> {
+      let _: Array<any> = []
+      this.units.map(function(unit: any) {
+        _.push({
+          value: unit.id,
+          label: unit.name
+        })
+      })
+      return _
     },
-    getSupplierOptions(): Array<SupplierItem> {
-      return this.suppliers
+    getSupplierOptions(): Array<any> {
+      let _: Array<any> = []
+      this.suppliers.map(function(supplier: any) {
+        _.push({
+          value: supplier.id,
+          label: supplier.name
+        })
+      })
+      return _
     },
   },
   async mounted() {
@@ -261,3 +300,6 @@ export default defineComponent({
   }
 });
 </script>
+
+<style src="@vueform/multiselect/themes/default.css">
+</style>

@@ -1,8 +1,8 @@
 import http from "@/http-common";
 
 export default {
-  list(token: any): Promise<any> {
-    return http.get('/roleList', { headers: { "Authorization": `Bearer ${token}` } });
+  list(url: any, token: any): Promise<any> {
+    return http.get(`${url}`, { headers: { "Authorization": `Bearer ${token}` } });
   },
 
   update(data: any, user_id: number, token: any): Promise<any> {
