@@ -45,23 +45,23 @@
             <div class="md:mr-6">
               <p class="text-sm text-gray-700">
                 Showing
-                <span class="font-medium">{{ meta.total }}</span>
+                <span class="font-medium">{{ meta.from }}</span>
                 out of
-                <span class="font-medium">{{ meta.total }}</span>
+                <span class="font-medium">{{ meta.to }}</span>
                 results
               </p>
             </div>
             <div class="md:mr-6 text-sm text-gray-700">
-            Show 
+            Show
             <select 
-              @change="onChange"
+              @change="onMaxItemsPerPageChange($event)"
+              v-model="meta.per_page"
               class="border-2 p-2 rounded-lg">
-              <option selected>{{ meta.per_page }}</option>
-              <option>5</option>
-              <option>10</option>
-              <option>20</option>
-              <option>50</option>
-              <option>100</option>
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
             </select>
               Items
             </div>
@@ -93,6 +93,7 @@
           </div>
         </div>
       </div>
+      debug: {{ meta }}
     </div>
   </div>
 </template>
@@ -150,13 +151,13 @@ export default defineComponent({
   data() {
     return {
       currentSort: 'id' as string,
-      currentSortDir: 'asc' as string,
+      currentSortDir: 'asc' as string
     }
   },
   methods: {
-    onChange(): void {
-      // this.sortedItems
-      // this.itemsInPage
+    onMaxItemsPerPageChange(event: any): void {
+      let value = event.target.value
+      this.$emit('maxItemsPerPageChange', value)
     },
     handlePageChange(url: string): void {
       this.$emit('pageChange', url as string)

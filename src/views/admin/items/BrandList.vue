@@ -22,7 +22,8 @@
       @handleDelete="deleteBrand"
       @pageChange="pageChange" 
       @previousPage="previousPage" 
-      @nextPage="nextPage" />
+      @nextPage="nextPage"
+      @maxItemsPerPageChange="pageLimitChange" />
     <div class="hidden" :class="isCreating ? 'active' : ''">
       <BrandModalCreate @handleSave="createBrand" @close-modal="isCreating = false" />
     </div>
@@ -56,6 +57,7 @@ export default defineComponent({
       meta: {},
       data: [],
       url: '/brandList',
+      maxItemsPerPage: '' || undefined as unknown as string,
       type: 'Users',
       permissionsArrayNum: 0,
       isCreating: false,
@@ -159,15 +161,25 @@ export default defineComponent({
       this.url = url
       this.fetchBrands()
     },
+    async pageLimitChange(limit: string): Promise<void> {
+      let url = this.url
+      this.maxItemsPerPage = limit
+      this.url = `${url}?limit=${limit}`
+      this.fetchBrands()
+    },
     previousPage():void {
       if (this.prev !== null){
-        this.url = this.prev
+        let url = this.prev
+        let limit = this.maxItemsPerPage
+        this.url = `${url}&limit=${limit}`
         this.fetchBrands()
       }
     },
     nextPage(): void {
       if (this.next !== null){
-        this.url = this.next
+        let url = this.next
+        let limit = this.maxItemsPerPage
+        this.url = `${url}&limit=${limit}`
         this.fetchBrands()
       }
     },
