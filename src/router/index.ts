@@ -108,7 +108,6 @@ const routes: Array<RouteRecordRaw> = [
         component: UserList,
         beforeEnter: (to, from, next) => {
           let canListUsers: boolean = store.state.permissions[0]['Users'].list
-          console.log(canListUsers)
           if (!canListUsers) next('/403')
           else next()
         }
