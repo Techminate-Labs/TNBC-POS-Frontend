@@ -8,6 +8,7 @@
     <CheckboxTable
       @handleNameChange="changeName"
       @handleSave="updateRole"
+      @handleSaveAndRedirect="updateRoleAndRedirect"
       :columns="columns" 
       :items="items" 
       :name="roleName" />
@@ -27,7 +28,7 @@ export default defineComponent({
   },
   data() {
     return {
-      items: [],
+      items: {},
       roleName: '',
       url: 'roleList',
       columns: [
@@ -65,15 +66,7 @@ export default defineComponent({
           const filteredRoles = response.data.data.filter((role: any) => role.id === role_id)
           this.roleName = filteredRoles[0].name
           let permissions = filteredRoles[0].permissions
-          let _items: any = []
-          permissions.map((permission: any) => {
-            let name = Object.getOwnPropertyNames(permission)[0]
-            _items.push({
-              name: name,
-              permissions: permission[name]
-            })
-          })
-          this.items = _items
+          this.items = permissions
         })
         .catch((e: Error) => {
           console.log(e)
@@ -84,7 +77,6 @@ export default defineComponent({
       let _permissions: any = []
       items.map((item: any) => {
         let name = item.name
-
         _permissions.push({
           [item.name]: item.permissions
         })
@@ -92,7 +84,30 @@ export default defineComponent({
       let role_id: number = parseInt(this.$route.params.id as string)
       let data = {
         name: this.roleName,
-        permissions: _permissions
+        permissions: items
+      }
+      console.log('clicked on save')
+      await RoleService.update(data as any, role_id as number, token as any)
+        .then((response: ResponseData) => {
+            this.$toast.open({
+              message: `${this.roleName} has been successfully updated!`,
+              type: "success"
+            })
+          })
+        .catch((e: Error) => {
+          this.$toast.open({
+            message: `There was an error updating that role.`,
+            type: "error"
+          })
+          console.log(e)
+        });
+    },
+    async updateRoleAndRedirect(items: any): Promise<void> {
+      let token = this.$store.state.bearerToken
+      let role_id: number = parseInt(this.$route.params.id as string)
+      let data = {
+        name: this.roleName,
+        permissions: items
       }
       await RoleService.update(data as any, role_id as number, token as any)
         .then((response: ResponseData) => {
@@ -100,6 +115,7 @@ export default defineComponent({
               message: `${this.roleName} has been successfully updated!`,
               type: "success"
             })
+            this.$router.push({name:'RoleList'})
           })
         .catch((e: Error) => {
           this.$toast.open({

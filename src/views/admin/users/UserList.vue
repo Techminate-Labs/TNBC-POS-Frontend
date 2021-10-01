@@ -53,10 +53,6 @@ export default defineComponent({
       permissionsArrayNum: 0,
       columns: [
         {
-          attribute: 'user_id',
-          name: 'id'
-        },
-        {
           attribute: 'name',
           name: 'name'
         },
@@ -205,7 +201,7 @@ export default defineComponent({
   },
   computed: {
     canUserCreate():boolean {
-      return this.$store.state.permissions[0]["Users"].create
+      return this.$store.state.permissions.Users.create
     }
   },
   async mounted(): Promise<void> {

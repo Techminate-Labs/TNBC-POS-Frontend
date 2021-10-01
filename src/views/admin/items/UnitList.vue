@@ -61,10 +61,6 @@ export default defineComponent({
       selectedUnit: { created_at: '', id: 0, name: '', slug: '', updated_at: '' } as UnitItem,
       columns: [
         {
-          attribute: 'id',
-          name: 'id'
-        },
-        {
           attribute: 'User ID',
           name: 'user_id'
         },

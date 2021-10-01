@@ -49,10 +49,6 @@ export default defineComponent({
       permissionsArrayNum: 0,
       columns: [
         {
-          attribute: 'id',
-          name: 'id'
-        },
-        {
           attribute: 'Supplier ID',
           name: 'Supplier_id'
         },

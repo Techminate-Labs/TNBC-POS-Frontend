@@ -66,10 +66,6 @@ export default defineComponent({
       selectedBrand: { created_at: '', id: 0, name: '', slug: '', updated_at: '' } as BrandItem,
       columns: [
         {
-          attribute: 'id',
-          name: 'id'
-        },
-        {
           attribute: 'name',
           name: 'name'
         },

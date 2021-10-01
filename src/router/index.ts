@@ -7,7 +7,7 @@ import GuestResetPassword from '../views/guest/GuestResetPassword.vue'
 import GuestResetPasswordSuccess from '../views/guest/GuestResetPasswordSuccess.vue'
 import Dashboard from '../views/admin/Dashboard.vue'
 import UserManagement from '../views/admin/users/UserManagement.vue'
-import RolesList from '../views/admin/users/RolesList.vue'
+import RoleList from '../views/admin/users/RoleList.vue'
 import RoleCreate from '../views/admin/users/RoleCreate.vue'
 import RoleUpdate from '../views/admin/users/RoleUpdate.vue'
 import UserList from '../views/admin/users/UserList.vue'
@@ -107,7 +107,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'UserList',
         component: UserList,
         beforeEnter: (to, from, next) => {
-          let canListUsers: boolean = store.state.permissions[0]['Users'].list
+          let canListUsers: boolean = store.state.permissions.Users.list
           if (!canListUsers) next('/403')
           else next()
         }
@@ -117,7 +117,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'UserCreate',
         component: UserCreate,
         beforeEnter: (to, from, next) => {
-          let canCreateUser: boolean = store.state.permissions[0]['Users'].create
+          let canCreateUser: boolean = store.state.permissions.Users.create
           if (!canCreateUser) next('/403')
           else next()
         }
@@ -127,17 +127,17 @@ const routes: Array<RouteRecordRaw> = [
         name: 'UserUpdate',
         component: UserUpdate,
         beforeEnter: (to, from, next) => {
-          let canEditUser: boolean = store.state.permissions[0]['Users'].edit
+          let canEditUser: boolean = store.state.permissions.Users.edit
           if (!canEditUser) next('/403')
           else next()
         }
       },
       {
         path: 'roles-list',
-        name: 'RolesList',
-        component: RolesList,
+        name: 'RoleList',
+        component: RoleList,
         beforeEnter: (to, from, next) => {
-          let canListRoles: boolean = store.state.permissions[1]['Roles'].list
+          let canListRoles: boolean = store.state.permissions.Roles.list
           if (!canListRoles) next('/403')
           else next()
         }
@@ -147,7 +147,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'RoleCreate',
         component: RoleCreate,
         beforeEnter: (to, from, next) => {
-          let canCreateRoles: boolean = store.state.permissions[1]['Roles'].create
+          let canCreateRoles: boolean = store.state.permissions.Roles.create
           if (!canCreateRoles) next('/403')
           else next()
         }
@@ -156,11 +156,11 @@ const routes: Array<RouteRecordRaw> = [
         path: 'role-update/:id',
         name: 'RoleUpdate',
         component: RoleUpdate,
-        // beforeEnter: (to, from, next) => {
-        //   let canEditRoles: boolean = store.state.permissions[1]['Roles'].edit
-        //   if (!canEditRoles) next('/403')
-        //   else next()
-        // }
+        beforeEnter: (to, from, next) => {
+          let canEditRoles: boolean = store.state.permissions.Roles.edit
+          if (!canEditRoles) next('/403')
+          else next()
+        }
       },
       {
         path: 'profile/:user_id',

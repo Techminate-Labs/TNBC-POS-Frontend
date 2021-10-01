@@ -90,17 +90,22 @@
           v-model="user.zip"
         >
       </div>
-      <div class="flex flex-col flex-nowrap py-2 grid-span-2 mb-2">
-        <label class="capitalize mb-2" for="image">Image</label>
-        <input 
-          type="file"
-          accept="image/*"
-          @change="handleFileChange($event)"
-          name="image"
-          class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900"
-        >
+      <div>
+        <div class="flex flex-row justify-between">
+          <p>Image</p>
+          <label class="flex flex-row items-center px-4 py-2 hover:text-blue-800 rounded-lg uppercase cursor-pointer">
+            <svg class="w-5 h-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+              <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+            </svg>
+            <span class="ml-2">Select a file</span>
+            <input @change="handleFileChange($event)" type='file' accept="image/*" class="hidden" />
+          </label>
+        </div>
+        <div v-show="user.imagePreview.length">
+          <p class="uppercase text-sm font-light">Preview</p>
+          <img :src="user.imagePreview" class="w-48 mb-6" />
+        </div>
       </div>
-      {{ user.image }}
       <div class="self-end">
         <button class="base-btn float-right" @click="addUserProfile">Save and exit</button>
       </div>
@@ -127,14 +132,15 @@ export default defineComponent({
         city:              '' as string,
         zip:               '' as string,
         identity_number:   '' as string,
-        image: null as any
+        image:             null as any,
+        imagePreview:      '' as any
       }
     }
   },
   methods: {
     async addUserProfile(): Promise<void> {
       let token = this.$store.state.bearerToken
-      let user_id: any = this.$route.params.id
+      let user_id: any = this.$route.params.user_id
       const fd = new FormData()
       fd.append('user_id', user_id)
       fd.append('first_name', this.user.first_name)
@@ -160,6 +166,7 @@ export default defineComponent({
     },
     handleFileChange(e: any): void {
       this.user.image = e.target.files[0]
+      this.user.imagePreview = URL.createObjectURL(e.target.files[0])
     }
   }
 });

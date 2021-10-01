@@ -16,7 +16,7 @@
         <h3 class="text-xl text-gray-600 font-light pb-2">User information</h3>
         <hr />
         <div class="flex flex-col py-2">
-          <label class="mb-2" for="name">Name:</label>
+          <label class="label" for="name">Name:</label>
           <input
             class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
             type="text" 
@@ -25,7 +25,7 @@
             placeholder="John Doe">
         </div>
         <div class="flex flex-col py-2">
-          <label class="mb-2" for="email">Email:</label>
+          <label class="label" for="email">Email:</label>
           <input
             class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
             type="email" 
@@ -34,7 +34,7 @@
             placeholder="mail@example.com">
         </div>
         <div class="flex flex-col py-2">
-          <label class="mb-2">Role:</label>
+          <label class="label">Role:</label>
           <select :value="role_id" class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900">
             <option value="">-- Please select an option --</option>
             <option v-for="(role, index) in roles" :key="index" :value="role.value">{{role.name}}</option>
@@ -117,6 +117,7 @@ export default defineComponent({
             message: `${this.name} successfully updated!`,
             type: "success"
           })
+          this.$router.push({name:'UserList'})
         })
         .catch((e: Error) => {
           this.$toast.open({

@@ -37,7 +37,7 @@ import ResponseData from "@/types/ResponseData";
 import formatDateMixin from '@/mixins/formatDateMixin';
 
 export default defineComponent({
-  name: 'RolesList',
+  name: 'RoleList',
   components: {
     DataTable
   },
@@ -51,10 +51,6 @@ export default defineComponent({
       url: '/roleList',
       permissionsArrayNum: 1,
       columns: [
-        {
-          name: '#',
-          attribute: 'id'
-        },
         {
           name: 'name',
           attribute: 'name'
@@ -167,7 +163,7 @@ export default defineComponent({
   },
   computed: {
     canUserCreate():boolean {
-      return this.$store.state.permissions[this.permissionsArrayNum]["Roles"].create
+      return this.$store.state.permissions.Roles.create
     }
   },
   async mounted() {

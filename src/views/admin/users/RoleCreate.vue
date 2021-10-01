@@ -136,7 +136,7 @@ export default defineComponent({
             message: `${this.roleName} has been successfully created!`,
             type: "success"
           })
-          this.$router.push({name: 'RolesList'})
+          this.$router.push({name: 'RoleList'})
         })
         .catch((e: Error) => {
           this.$toast.open({

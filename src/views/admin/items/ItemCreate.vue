@@ -7,7 +7,7 @@
     <div class="flex flex-nowrap justify-between">
       <div class="w-6/12 h-full bg-white p-4 rounded-lg shadow-md">
         <div class="flex flex-col py-2">
-          <label class="mb-2" for="name">Name:</label>
+          <label class="label" for="name">Name:</label>
           <input
             class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
             type="text" 
@@ -17,7 +17,7 @@
           >
         </div>
         <div class="flex flex-col py-2">
-          <label class="mb-2" for="price">Price:</label>
+          <label class="label" for="price">Price:</label>
           <input
             class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
             type="text" 
@@ -27,7 +27,7 @@
           >
         </div>
         <div class="flex flex-col py-2">
-          <label class="mb-2" for="discount">Discount:</label>
+          <label class="label" for="discount">Discount:</label>
           <input
             class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
             type="text" 
@@ -37,7 +37,7 @@
           >
         </div>
         <div class="flex flex-col py-2">
-          <label class="mb-2" for="inventory">Inventory:</label>
+          <label class="label" for="inventory">Inventory:</label>
           <input
             class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
             type="text" 
@@ -51,7 +51,7 @@
       <div class="w-5/12 h-full">
         <div class="bg-white rounded-lg shadow-md p-4 mb-3">
           <div class="flex flex-col py-2">
-            <label class="mb-2">Select Category:</label>
+            <label class="label">Select Category:</label>
             <Multiselect
               v-model="categoryId"
               :options="getCategoryOptions"
@@ -61,7 +61,7 @@
             {{categoryId}}
           </div>
           <div class="flex flex-col py-2">
-            <label class="mb-2">Select Brand:</label>
+            <label class="label">Select Brand:</label>
             <Multiselect
               v-model="brandId"
               :options="getBrandOptions"
@@ -70,7 +70,7 @@
             />
           </div>
           <div class="flex flex-col py-2">
-            <label class="mb-2">Select Unit:</label>
+            <label class="label">Select Unit:</label>
             <Multiselect
               v-model="unitId"
               :options="getUnitOptions"
@@ -79,7 +79,7 @@
             />
           </div>
           <div class="flex flex-col py-2">
-            <label class="mb-2">Select Supplier:</label>
+            <label class="label">Select Supplier:</label>
             <Multiselect
               v-model="supplierId"
               :options="getSupplierOptions"
@@ -97,7 +97,7 @@
         </div>
         <div class="bg-white rounded-lg shadow-md p-4 mb-3">
           <div class="flex flex-col py-2">
-            <label class="mb-2">Image</label>
+            <label class="label">Image</label>
             <input 
               type="file"
               accept="image/*"
@@ -109,7 +109,7 @@
         <div class="bg-white rounded-lg shadow-md p-4">
           <h3 class="text-lg mb-3">Expire Date</h3>
           <div class="flex flex-col py-2">
-            <label class="mb-2">Select Supplier:</label>
+            <label class="label">Select Supplier:</label>
             <input 
               type="date"
               @change="handleDateChange($event)"

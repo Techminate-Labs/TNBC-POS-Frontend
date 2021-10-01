@@ -6,7 +6,7 @@
     </div>
     <p class="text-xl font-semibold">Please enter your new password.</p>
     <div class="flex flex-col py-2">
-      <label class="mb-2" for="new-email">Your new password:</label>
+      <label class="label" for="new-email">Your new password:</label>
       <input 
         class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
         type="password" 
@@ -15,7 +15,7 @@
         placeholder="*******************">
     </div>
     <div class="flex flex-col py-2">
-      <label class="mb-2" for="new-password">Repeat the password:</label>
+      <label class="label" for="new-password">Repeat the password:</label>
       <input 
         class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
         type="password" 

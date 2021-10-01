@@ -6,6 +6,14 @@
   @apply block;
 }
 
+/* FORMS */
+.label {
+  @apply capitalize mb-2;
+}
+
+/* EDIT PAGE */
+
+
 /* BUTTONS */
 .base-btn {
   @apply uppercase bg-blue-900 hover:bg-blue-800 hover:border-blue-800 border-2 border-blue-900 shadow-md px-12 py-2 mt-3 text-white rounded-md;

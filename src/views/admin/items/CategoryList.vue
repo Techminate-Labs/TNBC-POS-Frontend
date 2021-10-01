@@ -65,10 +65,6 @@ export default defineComponent({
       selectedCategory: { created_at: '', id: 0, name: '', slug: '', updated_at: '' } as CategoryItem,
       columns: [
         {
-          attribute: 'id',
-          name: 'id'
-        },
-        {
           attribute: 'name',
           name: 'name'
         },

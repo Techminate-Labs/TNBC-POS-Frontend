@@ -5,7 +5,7 @@
       <h1 class="self-center text-4xl">TNB POS</h1>
     </div>
     <div class="flex flex-col py-2">
-      <label class="mb-2" for="email">Email:</label>
+      <label class="label" for="email">Email:</label>
       <input 
         class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
         type="text" 
@@ -15,7 +15,7 @@
       />
     </div>
     <div class="flex flex-col py-2">
-      <label class="mb-2" for="password">Password:</label>
+      <label class="label" for="password">Password:</label>
       <input 
         class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
         type="password" 
@@ -57,6 +57,7 @@ export default defineComponent({
         .then((response: ResponseData) => {
           this.user = response.data.user
           let permissions = this.user.role.permissions
+          console.log(permissions)
           this.$store.commit('setPermissions', permissions)
           this.$store.commit('setBearerToken', response.data.token)
           this.$store.commit('setAuthentication', true)

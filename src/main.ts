@@ -4,16 +4,15 @@ import router from '@/router'
 import store from '@/store'
 import axios, { AxiosStatic } from 'axios';
 import VueToast from 'vue-toast-notification';
-// Import any of available themes
+
 import 'vue-toast-notification/dist/theme-default.css';
-//import 'vue-toast-notification/dist/theme-sugar.css';
 import '@/index.css'
 
 axios.defaults.baseURL = 'http://192.168.1.225:8088';
 
 let toastOptions = {
-  position: 'bottom-right',
-  duration: 8000,
+  position: 'top-right',
+  duration: 6000,
   dismissible: true
 }
 
