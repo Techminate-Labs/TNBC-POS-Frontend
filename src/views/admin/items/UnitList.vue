@@ -58,7 +58,7 @@ export default defineComponent({
       permissionsArrayNum: 0,
       isCreating: false,
       isEditing: false,
-      selectedUnit: {} as UnitItem,
+      selectedUnit: { created_at: '', id: 0, name: '', slug: '', updated_at: '' } as UnitItem,
       columns: [
         {
           attribute: 'id',

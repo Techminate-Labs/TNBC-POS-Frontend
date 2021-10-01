@@ -90,7 +90,6 @@ export default defineComponent({
       RoleService.list(`${url}?limit=0`, token)
         .then((response: ResponseData) => {
             let _data: any = []
-            console.log(response.data.data)
             response.data.data.map((role: any) => {
               _data.push({
                 value: role.id,
@@ -111,7 +110,6 @@ export default defineComponent({
         email: this.email,
         role_id: this.role_id
       }
-      console.log(data)
       let token = this.$store.state.bearerToken
       await UserService.update(data, user_id, token)
         .then((response: ResponseData) => {

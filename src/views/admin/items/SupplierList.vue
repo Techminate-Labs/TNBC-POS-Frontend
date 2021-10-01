@@ -129,7 +129,6 @@ export default defineComponent({
       this.$router.push({name:'ProfileDetails', params: {id: item.id}})
     },
     editSupplier(item: any): void {
-      console.log(item.id)
       this.$router.push({name:'SupplierUpdate', params: {id: item.id}})
     },
     async deleteSupplier(item: any): Promise<void> {

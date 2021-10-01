@@ -8,7 +8,7 @@
           class="cursor-pointer hover:bg-gray-100">
           <div 
             v-if="item.submenus"
-            :class="selectedMenu === item ? 'selected' : ''"
+            :class="selectedMenu === item ? 'selected-menu-item' : ''"
             @click="handleSubmenuSidebar(item)">
             <div class="px-1 py-6 md:px-2 flex flex-col flex-nowrap" aria-label="home icon">
               <img class="dashboard-icon" :src="item.icon" />
@@ -16,7 +16,7 @@
             </div>
           </div>
           <div v-else
-            :class="selectedMenu === item ? 'selected' : ''"
+            :class="selectedMenu === item ? 'selected-menu-item' : ''"
             @click="handleSidebar(item)">
             <router-link :to="item.url">
               <div class="px-1 py-6 md:px-2 flex flex-col flex-nowrap" aria-label="home icon" >
@@ -28,7 +28,7 @@
         </li>
       </ul>
     </nav>
-    <div class="hidden md:block md:absolute z-10 w-full h-full top-0 z-0 bg-white shadow-lg"></div>
+    <div class="hidden md:block md:absolute w-full h-full top-0 z-0 bg-white shadow-lg"></div>
   </div>
 </template>
 <script lang="ts">
@@ -59,8 +59,3 @@ export default defineComponent({
   }
 });
 </script>
-<style scoped>
-.selected {
-  @apply border-r-4 border-blue-900 bg-gray-100;
-}
-</style>

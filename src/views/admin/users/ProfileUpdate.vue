@@ -141,7 +141,6 @@ export default defineComponent({
       }
       await ProfileService.create(data, token)
         .then((response: ResponseData) => {
-            console.log(response)
           })
         .catch((e: Error) => {
           console.log(e);

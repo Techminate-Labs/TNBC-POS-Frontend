@@ -8,8 +8,7 @@
             class="p-3 rounded-md border-solid border-2 border-gray-200"
             name="role-name"
             type="text"
-            placeholder="Search anything..."
-            v-model="roleName" />
+            placeholder="Search anything..." />
         </div>
         <table class="divide-y divide-gray-200 border-collapse w-full">
           <thead class="bg-gray-50">

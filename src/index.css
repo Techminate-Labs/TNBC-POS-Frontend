@@ -5,6 +5,8 @@
 .active {
   @apply block;
 }
+
+/* BUTTONS */
 .base-btn {
   @apply uppercase bg-blue-900 hover:bg-blue-800 hover:border-blue-800 border-2 border-blue-900 shadow-md px-12 py-2 mt-3 text-white rounded-md;
 }
@@ -17,11 +19,16 @@
 .base-btn-cancel-outline {
   @apply uppercase box-border border-2 bg-transparent border-red-900 text-red-900 hover:bg-red-900 hover:text-white px-12 py-2 mt-3 rounded-md;
 }
+
+/* SIBEDAR MENU */
 .dashboard-icon {
   @apply text-gray-400 self-center h-6 w-6;
 }
 .dashboard-submenu-icon {
   @apply text-gray-400 self-center h-4 w-4;
+}
+.selected-menu-item {
+  @apply border-r-4 border-blue-900 bg-gray-100;
 }
 
 /* CHECKBOX TOGGLE SWITCH */
@@ -36,11 +43,7 @@
   background-color: #68D391;
 }
 
-/* Multiselect Classes */
-
+/* MULTISELECT */
 .multiselect-search {
   height: 100%;
 }
-
-/* Custom File Input */
-

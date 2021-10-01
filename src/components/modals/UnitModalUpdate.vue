@@ -26,24 +26,24 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 
 export default defineComponent({
   name: 'UnitModalUpdate',
   props: {
     name: {
-      type: String || null as any,
+      type: undefined || String as PropType<string>,
       required: true
     }
   },
   data() {
     return {
-      unitName: ''
+      unitName: '' as any
     }
   },
   watch: {
     name: function () {
-      this.unitName = this.name
+      this.unitName = this.name as any
     }
   }
 

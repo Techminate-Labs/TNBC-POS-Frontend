@@ -149,7 +149,6 @@ export default defineComponent({
 
       await ProfileService.create(fd, token)
         .then((response: ResponseData) => {
-            console.log(response)
             this.$toast.open({
             message: `Profile has been successfully added to the database!`,
             type: "success"

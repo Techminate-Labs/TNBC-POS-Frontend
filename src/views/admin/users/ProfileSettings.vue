@@ -96,7 +96,6 @@ export default defineComponent({
       let token = this.$store.state.bearerToken
       await ProfileService.getById(user_id, token)
         .then((response: ResponseData) => {
-          console.log(response)
           this.user.image = response.data.image
         })
     },

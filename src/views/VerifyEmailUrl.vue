@@ -19,7 +19,6 @@ export default defineComponent({
         let url: any = query.verify_url + '' + query.expires + '' + query.signature
         DataService.verifyEmail(url)
           .then((res: ResponseData) => {
-            console.log(res)
             this.$toast.open({
               message: `Your email has been successfully verified!`,
               type: "info"

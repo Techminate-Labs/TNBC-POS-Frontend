@@ -231,7 +231,6 @@ export default defineComponent({
       let token = this.$store.state.bearerToken
       await UnitService.list(`${url}/?limit=0`, token)
         .then((response: ResponseData) => {
-          console.log(response)
             this.units = response.data.data
           })
         .catch((e: Error) => {

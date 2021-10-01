@@ -90,7 +90,6 @@ export default defineComponent({
       await UserService.list(url, token)
         .then((response: ResponseData) => {
           let res = response.data
-          console.log(response.data)
           this.data = res.data.map((user: User) => ({
             ...user, 
             roleName: user.role, 
@@ -150,7 +149,6 @@ export default defineComponent({
         await UserService.list(url, token)
           .then((response: ResponseData) => {
             let res = response.data
-            console.log(response.data)
             this.data = res.data.map((user: User) => ({
               ...user, 
               roleName: user.role, 

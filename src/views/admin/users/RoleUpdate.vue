@@ -64,7 +64,6 @@ export default defineComponent({
           let role_id: number = parseInt(params.id as string)
           const filteredRoles = response.data.data.filter((role: any) => role.id === role_id)
           this.roleName = filteredRoles[0].name
-          console.log(this.roleName)
           let permissions = filteredRoles[0].permissions
           let _items: any = []
           permissions.map((permission: any) => {

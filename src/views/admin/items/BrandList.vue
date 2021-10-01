@@ -63,7 +63,7 @@ export default defineComponent({
       permissionsArrayNum: 0,
       isCreating: false,
       isEditing: false,
-      selectedBrand: {} as BrandItem,
+      selectedBrand: { created_at: '', id: 0, name: '', slug: '', updated_at: '' } as BrandItem,
       columns: [
         {
           attribute: 'id',

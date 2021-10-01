@@ -69,7 +69,6 @@ export default defineComponent({
       await RoleService.list(url, token)
         .then((response: ResponseData) => {
             let role_id: number = parseInt(params.id as string)
-            console.log(response)
             const filteredRoles = response.data.data[0]
             let permissions = filteredRoles.permissions
             let _items: any = []

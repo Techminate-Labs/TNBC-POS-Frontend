@@ -137,11 +137,11 @@ const routes: Array<RouteRecordRaw> = [
         path: 'roles-list',
         name: 'RolesList',
         component: RolesList,
-        // beforeEnter: (to, from, next) => {
-        //   let canListRoles: boolean = store.state.permissions[1]['Roles'].list
-        //   if (!canListRoles) next('/403')
-        //   else next()
-        // }
+        beforeEnter: (to, from, next) => {
+          let canListRoles: boolean = store.state.permissions[1]['Roles'].list
+          if (!canListRoles) next('/403')
+          else next()
+        }
       },
       {
         path: 'role-create',
@@ -272,10 +272,11 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   let isAuthenticated = store.state.isAuthenticated
+  let hasToken = store.state.bearerToken.length
   if (to.meta.auth && !isAuthenticated) {
     next('/')
-    // } else if (to.name === "GuestLogin" && isAuthenticated && hasToken) {
-    //   next('/dashboard')
+    } else if (to.name === "GuestLogin" && isAuthenticated && hasToken) {
+      next('/dashboard')
   } else {
     next()
   }

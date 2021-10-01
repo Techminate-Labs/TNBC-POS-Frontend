@@ -91,7 +91,6 @@ export default defineComponent({
       await ItemService.getById(id, token)
         .then((response: ResponseData) => {
             this.item = response.data
-            console.log(this.item)
           })
         .catch((e: Error) => {
           console.log(e);

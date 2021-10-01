@@ -21,7 +21,7 @@
       @handleView="viewCategory"
       @handleEdit="showCategoryEditModal"
       @handleDelete="deleteCategory"
-      @pageChange="pageChange" 
+      @pageChange="pageChange"
       @previousPage="previousPage" 
       @nextPage="nextPage" 
       @maxItemsPerPageChange="pageLimitChange" />
@@ -62,7 +62,7 @@ export default defineComponent({
       permissionsArrayNum: 0,
       isCreating: false,
       isEditing: false,
-      selectedCategory: {} as CategoryItem,
+      selectedCategory: { created_at: '', id: 0, name: '', slug: '', updated_at: '' } as CategoryItem,
       columns: [
         {
           attribute: 'id',
@@ -91,7 +91,6 @@ export default defineComponent({
         .then((response: ResponseData) => {
           let res = response.data
           this.data = res.data
-          console.log(res)
           this.meta = {
             current_page: res.current_page,
             from: res.from,
@@ -185,6 +184,10 @@ export default defineComponent({
             console.log(e);
           });
       }
+    },
+    async pageChange(url: string): Promise<void> {
+      this.url = url
+      await this.fetchCategories()
     },
     async pageLimitChange(limit: string): Promise<void> {
       let url = this.url
