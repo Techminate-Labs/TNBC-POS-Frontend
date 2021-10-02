@@ -12,11 +12,10 @@
       :next="next"
       :prev="prev"
       :type="type"
-      :permissionsArrayNum="permissionsArrayNum"
       @handleSearch="searchUnit"
       @handleView="viewUnit"
       @handleEdit="showUnitEditModal"
-      @handleDelete="deleteUnit"
+      @handleDelete="showDeleteModal"
       @pageChange="pageChange" 
       @previousPage="previousPage" 
       @nextPage="nextPage" 
@@ -27,6 +26,9 @@
     <div class="hidden" :class="isEditing ? 'active' : ''">
       <UnitModalUpdate :name="selectedUnit.name" @handleSave="editUnit" @close-modal="isEditing = false" />
     </div>
+    <div class="hidden" :class="isDeleting ? 'active' : ''">
+      <DeleteModal :name="selectedUnit.name" @handleConfirmDelete="deleteUnit" @close-modal="isDeleting = false" />
+    </div>
   </div>
 </template>
 
@@ -35,6 +37,7 @@ import { defineComponent } from 'vue';
 import DataTable from '@/components/tables/DataTable.vue'
 import UnitModalCreate from '@/components/modals/UnitModalCreate.vue'
 import UnitModalUpdate from '@/components/modals/UnitModalUpdate.vue'
+import DeleteModal from '@/components/modals/DeleteModal.vue'
 import UnitService from "@/services/UnitService";
 import ResponseData from "@/types/ResponseData";
 import { UnitItem } from "@/types/UnitTables";
@@ -44,7 +47,8 @@ export default defineComponent({
   components: {
     DataTable,
     UnitModalCreate,
-    UnitModalUpdate
+    UnitModalUpdate,
+    DeleteModal
   },
   data() {
     return {
@@ -55,15 +59,12 @@ export default defineComponent({
       url: '/unitList',
       maxItemsPerPage: '' || undefined as unknown as string,
       type: 'Users',
-      permissionsArrayNum: 0,
       isCreating: false,
       isEditing: false,
-      selectedUnit: {} as UnitItem,
+      isDeleting: false,
+      selectedUnit: { created_at: '', id: 0, name: '', slug: '', updated_at: '' } as UnitItem,
+      selectedUnitId: 0 as number,
       columns: [
-        {
-          attribute: 'id',
-          name: 'id'
-        },
         {
           attribute: 'User ID',
           name: 'user_id'
@@ -137,16 +138,20 @@ export default defineComponent({
           console.log(e)
         });
     },
-    async deleteUnit(item: any): Promise<void> {
+    showDeleteModal(item: any): any {
+      this.isDeleting = true
+      this.selectedUnitId = item.id
+    },
+    async deleteUnit(): Promise<void> {
       let token = this.$store.state.bearerToken
-      let UnitId = item.id
+      let UnitId = this.selectedUnitId
       await UnitService.delete(UnitId, token)
         .then((response: ResponseData) => {
           this.$toast.open({
             message: `Unit has been successfully deleted.`,
             type: "success"
           })
-          this.isEditing = false
+          this.isDeleting = false
           this.fetchUnits()
         })
         .catch((e: Error) => {

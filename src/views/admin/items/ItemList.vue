@@ -15,58 +15,70 @@
       :meta="meta"
       :data="data"
       :type="type"
-      :permissionsArrayNum="permissionsArrayNum"
       @handleSearch="searchItem"
-      @handleAddProfile="addItemProfile"
       @handleView="viewItem"
       @handleEdit="editItem"
-      @handleDelete="deleteItem"
+      @handleDelete="showDeleteModal"
       @pageChange="pageChange" 
       @previousPage="previousPage" 
       @nextPage="nextPage" 
       @maxItemsPerPageChange="pageLimitChange" />
+    <div class="hidden" :class="isDeleting ? 'active' : ''">
+      <DeleteModal @handleConfirmDelete="deleteItem" @close-modal="isDeleting = false" />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import DataTable from '@/components/tables/DataTable.vue'
+import DeleteModal from '@/components/modals/DeleteModal.vue'
 import ItemService from "@/services/ItemService";
-import { ItemsItem } from '@/types/Items'
+import { ItemObject } from '@/types/Items'
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
   name: 'ItemList',
   components: {
-    DataTable
+    DataTable,
+    DeleteModal
   },
   data() {
     return {
       next: '',
       prev: '',
       meta: {},
-      data: [] as Array<ItemsItem>,
+      data: [] as Array<ItemObject>,
       type: "Users",
       url: '/itemList',
       maxItemsPerPage: '' || undefined as unknown as string,
-      permissionsArrayNum: 0,
+      isDeleting: false,
+      selectedItemId: 0 as number,
       columns: [
         {
-          attribute: 'item_id',
-          name: 'id'
+          attribute: 'image',
+          name: 'image'
         },
         {
           attribute: 'name',
           name: 'name'
         },
         {
-          attribute: 'slug',
-          name: 'slug'
+          attribute: 'category',
+          name: 'category'
         },
         {
-          attribute: 'number_of_products',
-          name: 'number of products'
-        }
+          attribute: 'price',
+          name: 'price'
+        },
+        {
+          attribute: 'inventory',
+          name: 'stock'
+        },
+        {
+          attribute: 'available',
+          name: 'availability'
+        },
       ]
     }
   },
@@ -78,6 +90,7 @@ export default defineComponent({
         .then((response: ResponseData) => {
           let res = response.data
           this.data = res.data
+          console.log(res.data)
           this.meta = {
             current_page: res.current_page,
             from: res.from,
@@ -121,22 +134,22 @@ export default defineComponent({
         await this.fetchItems()
       }
     },
-    addItemProfile(item: any): void {
-      this.$router.push({name:'ProfileCreate', params: {id: item.id}})
-    },
     viewItem(item: any): void {
-      console.log(item)
       this.$router.push({name:'ItemDetails', params: {id: item.item_id}})
     },
     editItem(item: any): void {
-      console.log(item.id)
       this.$router.push({name:'ItemUpdate', params: {id: item.item_id}})
+    },
+    showDeleteModal(item: any){
+      this.isDeleting = true
+      this.selectedItemId = item.id
     },
     async deleteItem(item: any): Promise<void> {
       let token = this.$store.state.bearerToken
-      let id = item.item_id
+      let id = this.selectedItemId
       await ItemService.delete(id, token)
         .then((response: ResponseData) => {
+          this.isDeleting = false
           this.fetchItems()
           this.$toast.open({
             message: `${item.name} successfully deleted.`,

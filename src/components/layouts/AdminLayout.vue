@@ -133,7 +133,6 @@ export default defineComponent({
       let token = this.$store.state.bearerToken
       DataService.requestEmailVerification(data, token)
         .then((response: ResponseData) => {
-          console.log(response.data)
           if (response.data.message === "Already Verified"){
             this.$store.commit('setEmailVerification', true)
             this.$toast.open({

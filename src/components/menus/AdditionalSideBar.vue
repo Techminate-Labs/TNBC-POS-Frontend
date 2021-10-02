@@ -24,11 +24,6 @@ export default defineComponent({
       type: Object as PropType<MenuItem>,
       required: true
     },
-  },
-  methods: {
-    handleDebug():void {
-      console.log(this.singleMenu)
-    }
   }
 });
 </script>

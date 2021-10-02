@@ -3,7 +3,6 @@
     <p>Breadcrumb</p>
     <div class="flex flex-nowrap justify-between mb-2">
       <p class="text-2xl">Role Permission</p>
-      <p>Creating <span class="capitalize font-bold">{{ roleName }}</span></p> 
       <div class="text-right">
         <button
           class="base-btn-outline" 
@@ -69,41 +68,20 @@ export default defineComponent({
       await RoleService.list(url, token)
         .then((response: ResponseData) => {
             let role_id: number = parseInt(params.id as string)
-            console.log(response)
-            const filteredRoles = response.data.data[0]
-            let permissions = filteredRoles.permissions
-            let _items: any = []
-            permissions.map((permission: any) => {
-              let name = Object.getOwnPropertyNames(permission)[0]
-              _items.push({
-                name: name,
-                permissions: {
-                  create: false,
-                  delete: false,
-                  edit: false,
-                  view: false,
-                  list: false
-                }
-              })
-            })
-            this.items = _items
+            const filteredRoles = response.data.data
+            let permissions = filteredRoles[0].permissions
+            this.items = permissions
           })
         .catch((e: Error) => {
           console.log(e);
         });
     },
     createRole(items: any): void {
-      let _permissions: any = []
-      items.map((item: any) => {
-        _permissions.push({
-          [item.name]: item.permissions
-        })
-      })
+      let token = this.$store.state.bearerToken
       let data = {
         name: this.roleName,
-        permissions: _permissions
+        permissions: items
       }
-      let token = this.$store.state.bearerToken
       RoleService.create(data, token)
         .then((response: ResponseData) => {
           this.$toast.open({
@@ -120,24 +98,18 @@ export default defineComponent({
         });
     },
     createRoleAndRedirect(items: any): void {
-      let _permissions: any = []
-      items.map((item: any) => {
-        _permissions.push({
-          [item.name]: item.permissions
-        })
-      })
+      let token = this.$store.state.bearerToken
       let data = {
         name: this.roleName,
-        permissions: _permissions
+        permissions: items
       }
-      let token = this.$store.state.bearerToken
       RoleService.create(data, token)
         .then((response: ResponseData) => {
           this.$toast.open({
             message: `${this.roleName} has been successfully created!`,
             type: "success"
           })
-          this.$router.push({name: 'RolesList'})
+          this.$router.push({name: 'RoleList'})
         })
         .catch((e: Error) => {
           this.$toast.open({

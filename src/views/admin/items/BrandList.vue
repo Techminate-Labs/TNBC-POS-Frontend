@@ -16,11 +16,10 @@
       :next="next"
       :prev="prev"
       :type="type"
-      :permissionsArrayNum="permissionsArrayNum"
       @handleSearch="searchBrand"
       @handleView="viewBrand"
       @handleEdit="showBrandEditModal"
-      @handleDelete="deleteBrand"
+      @handleDelete="showDeleteModal"
       @pageChange="pageChange" 
       @previousPage="previousPage" 
       @nextPage="nextPage"
@@ -31,6 +30,9 @@
     <div class="hidden" :class="isEditing ? 'active' : ''">
       <BrandModalUpdate :name="selectedBrand.name" @handleSave="editBrand" @close-modal="isEditing = false" />
     </div>
+    <div class="hidden" :class="isDeleting ? 'active' : ''">
+      <DeleteModal @handleConfirmDelete="deleteBrand" @close-modal="isDeleting = false" />
+    </div>
   </div>
 </template>
 
@@ -39,6 +41,7 @@ import { defineComponent } from 'vue';
 import DataTable from '@/components/tables/DataTable.vue'
 import BrandModalCreate from '@/components/modals/BrandModalCreate.vue'
 import BrandModalUpdate from '@/components/modals/BrandModalUpdate.vue'
+import DeleteModal from '@/components/modals/DeleteModal.vue'
 import BrandService from "@/services/BrandService";
 import ResponseData from "@/types/ResponseData";
 import { BrandItem } from "@/types/BrandTables";
@@ -48,7 +51,8 @@ export default defineComponent({
   components: {
     DataTable,
     BrandModalCreate,
-    BrandModalUpdate
+    BrandModalUpdate,
+    DeleteModal
   },
   data() {
     return {
@@ -60,15 +64,12 @@ export default defineComponent({
       url: '/brandList',
       maxItemsPerPage: '' || undefined as unknown as string,
       type: 'Users',
-      permissionsArrayNum: 0,
       isCreating: false,
       isEditing: false,
-      selectedBrand: {} as BrandItem,
+      isDeleting: false,
+      selectedBrand: { created_at: '', id: 0, name: '', slug: '', updated_at: '' } as BrandItem,
+      selectedBrandId: 0 as number,
       columns: [
-        {
-          attribute: 'id',
-          name: 'id'
-        },
         {
           attribute: 'name',
           name: 'name'
@@ -138,16 +139,20 @@ export default defineComponent({
           console.log(e)
         });
     },
-    async deleteBrand(item: any): Promise<void> {
+    showDeleteModal(item: any): void {
+      this.selectedBrandId = item.id
+      this.isDeleting = true
+    },
+    async deleteBrand(): Promise<void> {
       let token = this.$store.state.bearerToken
-      let BrandId = item.id
-      await BrandService.delete(BrandId, token)
+      let brandId = this.selectedBrandId
+      await BrandService.delete(brandId, token)
         .then((response: ResponseData) => {
           this.$toast.open({
             message: `Brand has been successfully deleted.`,
             type: "success"
           })
-          this.isEditing = false
+          this.isDeleting = false
           this.fetchBrands()
         })
         .catch((e: Error) => {

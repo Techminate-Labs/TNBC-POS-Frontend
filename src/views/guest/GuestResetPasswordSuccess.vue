@@ -18,11 +18,6 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'GuestResetPasswordSuccess',
-  methods: {
-    sendRecoverLink(): void {
-      console.log('sent revocer link!');
-    }
-  }
+  name: 'GuestResetPasswordSuccess'
 });
 </script>

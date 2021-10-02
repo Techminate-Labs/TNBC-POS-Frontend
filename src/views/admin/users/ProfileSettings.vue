@@ -44,7 +44,7 @@
       </div>
       <div class="bg-white shadow-md rounded-md p-4 grid-span-1 row-start-2">
         <div class="flex flex-cols flex-nowrap py-2 mb-2">
-          <label class="capitalize mb-2" for="last_name">Email Verification</label>
+          <label class="label" for="last_name">Email Verification</label>
           <button class="base-btn">Verify</button>
         </div>
       </div>
@@ -96,7 +96,6 @@ export default defineComponent({
       let token = this.$store.state.bearerToken
       await ProfileService.getById(user_id, token)
         .then((response: ResponseData) => {
-          console.log(response)
           this.user.image = response.data.image
         })
     },

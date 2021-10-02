@@ -16,12 +16,11 @@
       :next="next"
       :prev="prev"
       :type="type"
-      :permissionsArrayNum="permissionsArrayNum"
       @handleSearch="searchCategory"
       @handleView="viewCategory"
       @handleEdit="showCategoryEditModal"
-      @handleDelete="deleteCategory"
-      @pageChange="pageChange" 
+      @handleDelete="showDeleteModal"
+      @pageChange="pageChange"
       @previousPage="previousPage" 
       @nextPage="nextPage" 
       @maxItemsPerPageChange="pageLimitChange" />
@@ -30,6 +29,9 @@
     </div>
     <div class="hidden" :class="isEditing ? 'active' : ''">
       <CategoryModalUpdate :name="selectedCategory.name" @handleSave="editCategory" @close-modal="isEditing = false" />
+    </div>
+    <div class="hidden" :class="isDeleting ? 'active' : ''">
+      <DeleteModal @handleConfirmDelete="deleteCategory" @close-modal="isDeleting = false" />
     </div>
   </div>
 </template>
@@ -40,6 +42,7 @@ import CategoryService from "@/services/CategoryService";
 import DataTable from '@/components/tables/DataTable.vue';
 import CategoryModalCreate from '@/components/modals/CategoryModalCreate.vue';
 import CategoryModalUpdate from '@/components/modals/CategoryModalUpdate.vue';
+import DeleteModal from '@/components/modals/DeleteModal.vue';
 import ResponseData from "@/types/ResponseData";
 import { CategoryItem } from "@/types/CategoryTables";
 
@@ -48,7 +51,8 @@ export default defineComponent({
   components: {
     DataTable,
     CategoryModalCreate,
-    CategoryModalUpdate
+    CategoryModalUpdate,
+    DeleteModal
   },
   data() {
     return {
@@ -59,15 +63,12 @@ export default defineComponent({
       url: '/categoryList',
       maxItemsPerPage: '' || undefined as unknown as string,
       type: 'Users',
-      permissionsArrayNum: 0,
       isCreating: false,
       isEditing: false,
-      selectedCategory: {} as CategoryItem,
+      isDeleting: false,
+      selectedCategory: { created_at: '', id: 0, name: '', slug: '', updated_at: '' } as CategoryItem,
+      selectedCategoryId: 0 as number,
       columns: [
-        {
-          attribute: 'id',
-          name: 'id'
-        },
         {
           attribute: 'name',
           name: 'name'
@@ -91,7 +92,6 @@ export default defineComponent({
         .then((response: ResponseData) => {
           let res = response.data
           this.data = res.data
-          console.log(res)
           this.meta = {
             current_page: res.current_page,
             from: res.from,
@@ -138,16 +138,20 @@ export default defineComponent({
           console.log(e)
         });
     },
+    showDeleteModal(item: any): void {
+      this.isDeleting = true
+      this.selectedCategoryId = item.id
+    },
     async deleteCategory(item: any): Promise<void> {
       let token = this.$store.state.bearerToken
-      let categoryId = item.id
+      let categoryId = this.selectedCategoryId
       await CategoryService.delete(categoryId, token)
         .then((response: ResponseData) => {
           this.$toast.open({
             message: `Category has been successfully deleted.`,
             type: "success"
           })
-          this.isEditing = false
+          this.isDeleting = false
           this.fetchCategories()
         })
         .catch((e: Error) => {
@@ -185,6 +189,10 @@ export default defineComponent({
             console.log(e);
           });
       }
+    },
+    async pageChange(url: string): Promise<void> {
+      this.url = url
+      await this.fetchCategories()
     },
     async pageLimitChange(limit: string): Promise<void> {
       let url = this.url

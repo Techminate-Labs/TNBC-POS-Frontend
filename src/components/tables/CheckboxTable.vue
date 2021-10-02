@@ -21,7 +21,6 @@
                   Section
                 </th>
                 <th 
-                  @click="sort(column.attribute)" 
                   v-for="(column, index) in columns" 
                   :key="index" 
                   scope="col" 
@@ -34,7 +33,7 @@
               <tr v-for="(item, key, i) in items" :key="i" class="bg-transparent flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
                 <td
                 class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">
-                  {{item.name}}
+                  {{key}}
                 </td>
                 <td 
                   v-for="(column, j) in allColumns" 
@@ -43,7 +42,7 @@
                   class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">
                   <div class="flex-shrink-0">
                     <div>
-                      <input type="checkbox" v-model="item.permissions[column.attribute]" />
+                      <input type="checkbox" v-model="item[column.attribute]" />
                     </div>
                   </div>
                 </td>
@@ -76,7 +75,7 @@ export default defineComponent({
   name: 'CheckboxTable',
   props: {
     items: {
-      type: Array as any,
+      type: Object as PropType<any>,
       required: true
     },
     columns: {

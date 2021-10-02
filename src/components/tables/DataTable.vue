@@ -8,17 +8,19 @@
             class="p-3 rounded-md border-solid border-2 border-gray-200"
             name="role-name"
             type="text"
-            placeholder="Search anything..."
-            v-model="roleName" />
+            placeholder="Search anything..." />
         </div>
         <table class="divide-y divide-gray-200 border-collapse w-full">
           <thead class="bg-gray-50">
             <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                ID
+              </th>
               <th 
-                v-for="(column, index) in columns" 
+                v-for="(column, key, index) in columns" 
                 :key="index" 
                 scope="col" 
-                @click="sort(column.attribute)" 
+                @click="sort(column.attribute)"
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 {{ column.name }}
               </th>
@@ -29,12 +31,18 @@
           </thead>
           <tbody class="divide-y divide-gray-200">
             <tr v-for="(item, i) in sortedItems" :key="i" class="bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+              <td class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">
+                {{ i + 1 }}
+              </td>
               <td 
                 v-for="(textColumn, j) in textColumns" 
                 :key="j" 
                 :data-label="textColumn.attribute"
                 class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">
-                <div class="flex-shrink-0">
+                <div v-if="textColumn.attribute === 'image'" class="flex-shrink-0">
+                  <img :src="item.image" class="w-12" />
+                </div>
+                <div v-else class="flex-shrink-0">
                   {{ item[textColumn.attribute] }}
                 </div>
               </td>
@@ -149,11 +157,7 @@ export default defineComponent({
     type: {
       type: String,
       required: false
-    },
-    permissionsArrayNum: {
-      type: Number,
-      required: false
-    },
+    }
   },
   data() {
     return {
@@ -199,25 +203,25 @@ export default defineComponent({
       });
     },
     textColumns(): any[] {
-      return this.columns.filter((c: any) => c.attribute !== 'image' )
+      return this.columns
     },
     canUserEdit(): boolean | null {
-      if (this.permissionsArrayNum !== undefined) {
-        return this.$store.state.permissions[this.permissionsArrayNum][this.type].edit
+      if (this.$store.state.permissions !== undefined) {
+        return this.$store.state.permissions[this.type].edit
       } else {
         return null
       }
     },
     canUserView(): boolean | null {
-      if (this.permissionsArrayNum !== undefined) {
-        return this.$store.state.permissions[this.permissionsArrayNum][this.type].view
+      if (this.$store.state.permissions !== undefined) {
+        return this.$store.state.permissions[this.type].view
       } else {
         return null
       }
     },
     canUserDelete(): boolean | null {
-      if (this.permissionsArrayNum !== undefined) {
-        return this.$store.state.permissions[this.permissionsArrayNum][this.type].delete
+      if (this.$store.state.permissions !== undefined) {
+        return this.$store.state.permissions[this.type].delete
       } else {
         return null
       } 

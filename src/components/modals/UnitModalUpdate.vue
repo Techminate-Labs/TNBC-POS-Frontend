@@ -4,7 +4,7 @@
       <button @click="$emit('close-modal')" class="float-right hover:text-red-600">Close modal</button>
       <p class="text-2xl mb-4">Unit List</p>
       <div class="flex flex-col py-2">
-        <label class="mb-2" for="name">Name:</label>
+        <label class="label" for="name">Name:</label>
         <input
           class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
           type="text" 
@@ -26,24 +26,24 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 
 export default defineComponent({
   name: 'UnitModalUpdate',
   props: {
     name: {
-      type: String || null as any,
+      type: undefined || String as PropType<string>,
       required: true
     }
   },
   data() {
     return {
-      unitName: ''
+      unitName: '' as any
     }
   },
   watch: {
     name: function () {
-      this.unitName = this.name
+      this.unitName = this.name as any
     }
   }
 

@@ -2,7 +2,7 @@
   <div class="flex-grow px-4 md:px-8 my-10">
     <p>Breadcrumb</p>
     <div class="flex flex-nowrap justify-between mb-2">
-      <p class="text-2xl mb-4">Add Product</p>
+      <p class="text-2xl mb-4">Edit item</p>
       <div class="text-right">
         <button
           class="base-btn-outline" 
@@ -14,80 +14,80 @@
     <div class="flex flex-nowrap justify-between">
       <div class="w-6/12 h-full bg-white p-4 rounded-lg shadow-md">
         <div class="flex flex-col py-2">
-          <label class="label" for="name">Name:</label>
+          <label class="label" for="name">Name</label>
           <input
             class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
             type="text" 
             name="name" 
-            v-model="name" 
+            v-model="item.name" 
             placeholder="Winter Jacket"
           >
         </div>
         <div class="flex flex-col py-2">
-          <label class="label" for="price">Price:</label>
+          <label class="label" for="price">Price</label>
           <input
             class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
             type="text" 
             name="price" 
-            v-model="price" 
+            v-model="item.price" 
             placeholder="15"
           >
         </div>
         <div class="flex flex-col py-2">
-          <label class="label" for="discount">Discount:</label>
+          <label class="label" for="discount">Discount</label>
           <input
             class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
             type="text" 
             name="discount" 
-            v-model="discount" 
+            v-model="item.discount" 
             placeholder="13"
           >
         </div>
         <div class="flex flex-col py-2">
-          <label class="label" for="inventory">Inventory:</label>
+          <label class="label" for="inventory">Inventory</label>
           <input
             class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
             type="text" 
             name="inventory" 
-            v-model="inventory" 
+            v-model="item.inventory" 
             placeholder="3"
           >
         </div>
-        <button class="base-btn float-right" @click="addItem">Save</button>
+        <button class="base-btn float-right" @click="updateSupplier">Save</button>
       </div>
       <div class="w-5/12 h-full">
         <div class="bg-white rounded-lg shadow-md p-4 mb-3">
           <div class="flex flex-col py-2">
-            <label class="label">Select Category:</label>
+            <label class="label">Select Category</label>
             <Multiselect
-              v-model="categoryId"
+              v-model="item.category_id"
               :options="getCategoryOptions"
               :searchable="true"
               placeholder="Pick a Category"
             />
           </div>
           <div class="flex flex-col py-2">
-            <label class="label">Select Brand:</label>
+            <label class="label">Select Brand</label>
             <Multiselect
-              v-model="brandId"
+              v-model="item.brand_id"
               :options="getBrandOptions"
               :searchable="true"
               placeholder="Pick a Brand"
             />
           </div>
           <div class="flex flex-col py-2">
-            <label class="label">Select Unit:</label>
+            <label class="label">Select Unit</label>
             <Multiselect
-              v-model="unitId"
+              v-model="item.unit_id"
               :options="getUnitOptions"
               :searchable="true"
               placeholder="Pick a Unit"
             />
           </div>
           <div class="flex flex-col py-2">
-            <label class="label">Select Supplier:</label>
+            <label class="label">Select Supplier</label>
             <Multiselect
-              v-model="supplierId"
+              v-model="item.unit_id"
               :options="getSupplierOptions"
               :searchable="true"
               placeholder="Pick a Supplier"
@@ -95,29 +95,40 @@
           </div>
         </div>
         <div class="bg-white rounded-lg shadow-md p-4 mb-3">
-          <h3 class="text-lg mb-3">Available to purchase</h3>
+          <h3 class="label">Available to purchase</h3>
           <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
-            <input v-model="available" type="checkbox" name="availability-toggle" id="toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-2 appearance-none cursor-pointer"/>
+            <input v-model="item.available" type="checkbox" name="availability-toggle" id="toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-2 appearance-none cursor-pointer"/>
             <label for="availability-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
           </div>
         </div>
         <div class="bg-white rounded-lg shadow-md p-4 mb-3">
-          <div class="flex flex-col py-2">
-            <label class="label">Image</label>
-            <input 
-              type="file"
-              accept="image/*"
-              @change="handleFileChange($event)"
-              name="image"
-              class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900">
+          <div class="flex flex-row justify-between">
+            <p class="label">Image</p>
+            <label class="flex flex-row items-center px-4 py-2 hover:text-blue-800 rounded-lg uppercase cursor-pointer">
+              <svg class="w-5 h-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+              </svg>
+              <span class="ml-2">Select a file</span>
+              <input @change="handleFileChange($event)" type='file' accept="image/*" class="hidden" />
+            </label>
+          </div>
+          <div class="">
+            <div class="w-48">
+              <img :src="item.image" />
+            </div>
+          </div>
+          <div v-show="newImagePreview.length">
+            <p class="uppercase text-sm font-light">Preview</p>
+            <img :src="newImagePreview" class="w-48 mb-6" />
+            <button @click="confirmNewImage" class="base-btn-outline">upload</button>
           </div>
         </div>
         <div class="bg-white rounded-lg shadow-md p-4">
-          <h3 class="text-lg mb-3">Expire Date</h3>
           <div class="flex flex-col py-2">
-            <label class="label">Select Supplier:</label>
+            <label class="label">Select Expire Date</label>
             <input 
               type="date"
+              v-model="item.expire_date"
               @change="handleDateChange($event)"
               class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900">
           </div>
@@ -130,79 +141,64 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import ItemService from "@/services/ItemService";
+import BrandService from "@/services/BrandService";
+import CategoryService from "@/services/ItemService";
+import SupplierService from "@/services/ItemService";
+import UnitService from "@/services/ItemService";
 import ResponseData from "@/types/ResponseData";
-import CategoryService from '@/services/CategoryService';
-import BrandService from '@/services/BrandService';
-import UnitService from '@/services/UnitService';
-import SupplierService from '@/services/SupplierService';
+import { SingleItem } from "@/types/Items"
 import Multiselect from '@vueform/multiselect'
 
 export default defineComponent({
-  name: 'ItemCreate',
+  name: 'ItemUpdate',
   components: {
-    Multiselect,
+    Multiselect
   },
   data() {
     return {
-      categoryId: '',
-      brandId: '',
-      unitId: '',
-      supplierId: '',
-      name: '',
-      price: '',
-      discount: '',
-      inventory: '',
-      expireDate: '',
-      available: '',
-      image: null as any,
+      item: {
+        item_id: 0 as number,
+        category_id: 0 as number,
+        brand_id: 0 as number,
+        unit_id: 0 as number,
+        supplier_id: 0 as number,
+        category: '' as string,
+        brand: '' as string,
+        unit: '' as string,
+        supplier: '' as string,
+        company: '' as string,
+        name: '' as string,
+        slug: '' as string,
+        sku: 0 as number,
+        price: 0 as number,
+        discount: 0 as number,
+        inventory: 0 as number,
+        expire_date: '' as string,
+        available: false as boolean,
+        image: null as any,
+        created_at: '' as string,
+        updated_at: '' as string
+      } as SingleItem,
       categories: [],
       brands: [],
       units: [],
       suppliers: [],
+      newImage: null as any,
+      newImagePreview: '' as any
     }
   },
   methods: {
-    async addItem(): Promise<void> {
+    async fetchItem(): Promise<void> {
       let token = this.$store.state.bearerToken
-      let date = new Date(this.expireDate)
-      let available = '';
-      if (this.available){
-        available = '1'
-      } else if (!this.available){
-        available = '0'
-      }
-      const fd = new FormData()
-      fd.append('category_id', this.categoryId)
-      fd.append('brand_id', this.brandId)
-      fd.append('unit_id', this.unitId)
-      fd.append('supplier_id', this.supplierId)
-      fd.append('name', this.name)
-      fd.append('price', this.price)
-      fd.append('discount', this.discount)
-      fd.append('inventory', this.inventory)
-      fd.append('expire_date', this.expireDate)
-      fd.append('available', available)
-      fd.append('image', this.image, this.image.name)
-      await ItemService.create(fd, token)
+      let id = this.$route.params.id
+      await ItemService.getById(id, token)
         .then((response: ResponseData) => {
-            this.$toast.open({
-              message: `${this.name} has been successfully added to the database!`,
-              type: "success"
-            })
+            this.item = response.data
+            console.log(response.data)
           })
         .catch((e: Error) => {
-          this.$toast.open({
-            message: `There was an error creating that item.`,
-            type: "error"
-          })
-          console.log(e)
+          console.log(e);
         });
-    },
-    handleFileChange(e: any): void {
-      this.image = e.target.files[0]
-    },
-    handleDateChange(e: any): void {
-      this.expireDate = e.target.value
     },
     async fetchCategories(): Promise<void> {
       let url = 'categoryList'
@@ -247,6 +243,49 @@ export default defineComponent({
         .catch((e: Error) => {
           console.log(e);
         });
+    },
+    async updateSupplier(): Promise<void> {
+      let id = this.$route.params.id
+      let token = this.$store.state.bearerToken
+      let data: SingleItem = this.item
+      console.log(data)
+      const fd = new FormData()
+      fd.append('category_id', data.category_id.toString())
+      fd.append('brand_id', data.brand_id.toString())
+      fd.append('unit_id', data.unit_id.toString())
+      fd.append('supplier_id', data.supplier_id.toString())
+      fd.append('name', data.name)
+      fd.append('price', data.price.toString())
+      fd.append('discount', data.discount.toString())
+      fd.append('inventory', data.inventory.toString())
+      fd.append('expire_date', data.expire_date)
+      fd.append('available', data.available.toString())
+      // fd.append('image', data.image, data.image.name)
+      console.log('form data', fd)
+
+      await ItemService.edit(fd, id, token)
+        .then((response: ResponseData) => {
+          this.$toast.open({
+            message: `${data.name} successfully updated!`,
+            type: "success"
+          })
+        })
+        .catch((e: Error) => {
+          this.$toast.open({
+            message: `There was an error updating that supplier.`,
+            type: "error"
+          })
+          console.log(e)
+        });
+    },
+    handleFileChange(e: any): void {
+      this.newImage = e.target.files[0]
+      this.newImagePreview = URL.createObjectURL(e.target.files[0])
+    },
+    confirmNewImage(e: any): void {
+      this.item.image = this.newImage
+      this.newImage = null
+      this.newImagePreview = ''
     }
   },
   computed: {
@@ -289,16 +328,14 @@ export default defineComponent({
         })
       })
       return _
-    },
+    }
   },
   async mounted() {
+    this.fetchItem()
+    this.fetchSuppliers()
     this.fetchCategories()
     this.fetchBrands()
     this.fetchUnits()
-    this.fetchSuppliers()
-  }
+  },
 });
 </script>
-
-<style src="@vueform/multiselect/themes/default.css">
-</style>

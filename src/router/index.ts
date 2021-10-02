@@ -7,7 +7,7 @@ import GuestResetPassword from '../views/guest/GuestResetPassword.vue'
 import GuestResetPasswordSuccess from '../views/guest/GuestResetPasswordSuccess.vue'
 import Dashboard from '../views/admin/Dashboard.vue'
 import UserManagement from '../views/admin/users/UserManagement.vue'
-import RolesList from '../views/admin/users/RolesList.vue'
+import RoleList from '../views/admin/users/RoleList.vue'
 import RoleCreate from '../views/admin/users/RoleCreate.vue'
 import RoleUpdate from '../views/admin/users/RoleUpdate.vue'
 import UserList from '../views/admin/users/UserList.vue'
@@ -25,6 +25,7 @@ import UnitList from '../views/admin/items/UnitList.vue'
 import CategoryList from '../views/admin/items/CategoryList.vue'
 import BrandList from '../views/admin/items/BrandList.vue'
 import ItemList from '../views/admin/items/ItemList.vue'
+import ItemUpdate from '../views/admin/items/ItemUpdate.vue'
 import ItemCreate from '../views/admin/items/ItemCreate.vue'
 import ItemDetails from '../views/admin/items/ItemDetails.vue'
 import PointOfSale from '../views/admin/pos/PointOfSale.vue'
@@ -107,8 +108,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'UserList',
         component: UserList,
         beforeEnter: (to, from, next) => {
-          let canListUsers: boolean = store.state.permissions[0]['Users'].list
-          console.log(canListUsers)
+          let canListUsers: boolean = store.state.permissions.Users.list
           if (!canListUsers) next('/403')
           else next()
         }
@@ -118,7 +118,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'UserCreate',
         component: UserCreate,
         beforeEnter: (to, from, next) => {
-          let canCreateUser: boolean = store.state.permissions[0]['Users'].create
+          let canCreateUser: boolean = store.state.permissions.Users.create
           if (!canCreateUser) next('/403')
           else next()
         }
@@ -128,27 +128,27 @@ const routes: Array<RouteRecordRaw> = [
         name: 'UserUpdate',
         component: UserUpdate,
         beforeEnter: (to, from, next) => {
-          let canEditUser: boolean = store.state.permissions[0]['Users'].edit
+          let canEditUser: boolean = store.state.permissions.Users.edit
           if (!canEditUser) next('/403')
           else next()
         }
       },
       {
         path: 'roles-list',
-        name: 'RolesList',
-        component: RolesList,
-        // beforeEnter: (to, from, next) => {
-        //   let canListRoles: boolean = store.state.permissions[1]['Roles'].list
-        //   if (!canListRoles) next('/403')
-        //   else next()
-        // }
+        name: 'RoleList',
+        component: RoleList,
+        beforeEnter: (to, from, next) => {
+          let canListRoles: boolean = store.state.permissions.Roles.list
+          if (!canListRoles) next('/403')
+          else next()
+        }
       },
       {
         path: 'role-create',
         name: 'RoleCreate',
         component: RoleCreate,
         beforeEnter: (to, from, next) => {
-          let canCreateRoles: boolean = store.state.permissions[1]['Roles'].create
+          let canCreateRoles: boolean = store.state.permissions.Roles.create
           if (!canCreateRoles) next('/403')
           else next()
         }
@@ -157,11 +157,11 @@ const routes: Array<RouteRecordRaw> = [
         path: 'role-update/:id',
         name: 'RoleUpdate',
         component: RoleUpdate,
-        // beforeEnter: (to, from, next) => {
-        //   let canEditRoles: boolean = store.state.permissions[1]['Roles'].edit
-        //   if (!canEditRoles) next('/403')
-        //   else next()
-        // }
+        beforeEnter: (to, from, next) => {
+          let canEditRoles: boolean = store.state.permissions.Roles.edit
+          if (!canEditRoles) next('/403')
+          else next()
+        }
       },
       {
         path: 'profile/:user_id',
@@ -235,6 +235,11 @@ const routes: Array<RouteRecordRaw> = [
         component: ItemCreate,
       },
       {
+        path: 'items-update/:id',
+        name: 'ItemUpdate',
+        component: ItemUpdate,
+      },
+      {
         path: 'items-details/:id',
         name: 'ItemDetails',
         component: ItemDetails,
@@ -272,10 +277,11 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   let isAuthenticated = store.state.isAuthenticated
+  let hasToken = store.state.bearerToken.length
   if (to.meta.auth && !isAuthenticated) {
     next('/')
-    // } else if (to.name === "GuestLogin" && isAuthenticated && hasToken) {
-    //   next('/dashboard')
+    } else if (to.name === "GuestLogin" && isAuthenticated && hasToken) {
+      next('/dashboard')
   } else {
     next()
   }

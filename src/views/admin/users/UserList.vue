@@ -16,16 +16,18 @@
       :meta="meta"
       :data="data"
       :type="type"
-      :permissionsArrayNum="permissionsArrayNum"
       @handleAddProfile="addUserProfile"
       @handleSearch="searchUser"
       @handleView="viewUser"
       @handleEdit="editUser"
-      @handleDelete="deleteUser"
+      @handleDelete="showDeleteModal"
       @pageChange="pageChange" 
       @previousPage="previousPage" 
       @nextPage="nextPage" 
       @maxItemsPerPageChange="pageLimitChange" />
+    <div class="hidden" :class="isDeleting ? 'active' : ''">
+      <DeleteModal @handleConfirmDelete="deleteUser" @close-modal="isDeleting = false" />
+    </div>
   </div>
 </template>
 
@@ -34,12 +36,14 @@ import { defineComponent } from 'vue';
 import UserService from "@/services/UserService";
 import ResponseData from "@/types/ResponseData";
 import DataTable from '@/components/tables/DataTable.vue'
+import DeleteModal from '@/components/modals/DeleteModal.vue'
 import { User } from '@/types/UserTables'
 
 export default defineComponent({
   name: 'UserList',
   components: {
-    DataTable
+    DataTable,
+    DeleteModal
   },
   data() {
     return {
@@ -50,12 +54,9 @@ export default defineComponent({
       type: "Users",
       url: '/userList',
       maxItemsPerPage: '' || undefined as unknown as string,
-      permissionsArrayNum: 0,
+      isDeleting: false,
+      selectedUserId: 0 as number,
       columns: [
-        {
-          attribute: 'user_id',
-          name: 'id'
-        },
         {
           attribute: 'name',
           name: 'name'
@@ -90,7 +91,6 @@ export default defineComponent({
       await UserService.list(url, token)
         .then((response: ResponseData) => {
           let res = response.data
-          console.log(response.data)
           this.data = res.data.map((user: User) => ({
             ...user, 
             roleName: user.role, 
@@ -98,6 +98,7 @@ export default defineComponent({
             email_verified_at: user.email_verified_at,
             updated_at: user.updated_at
           }))
+          console.log(res.links)
           this.meta = {
             current_page: res.current_page,
             from: res.from,
@@ -150,7 +151,6 @@ export default defineComponent({
         await UserService.list(url, token)
           .then((response: ResponseData) => {
             let res = response.data
-            console.log(response.data)
             this.data = res.data.map((user: User) => ({
               ...user, 
               roleName: user.role, 
@@ -175,7 +175,6 @@ export default defineComponent({
             console.log(e);
           });
       }
-
     },
     addUserProfile(item: any): void {
       this.$router.push({name:'ProfileCreate', params: {user_id: item.user_id}})
@@ -186,10 +185,16 @@ export default defineComponent({
     editUser(item: any): void {
       this.$router.push({name:'UserUpdate', params: {user_id: item.user_id}})
     },
-    async deleteUser(id: number): Promise<void> {
+    showDeleteModal(user: any): void {
+      this.selectedUserId = user.user_id
+      this.isDeleting = true
+    },
+    async deleteUser(): Promise<void> {
       let token = this.$store.state.bearerToken
+      let id = this.selectedUserId
       await UserService.delete(id, token)
         .then((response: ResponseData) => {
+          this.isDeleting = false
           this.fetchUsers()
           this.$toast.open({
             message: `User successfully deleted.`,
@@ -207,7 +212,7 @@ export default defineComponent({
   },
   computed: {
     canUserCreate():boolean {
-      return this.$store.state.permissions[0]["Users"].create
+      return this.$store.state.permissions.Users.create
     }
   },
   async mounted(): Promise<void> {

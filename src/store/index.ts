@@ -9,7 +9,7 @@ export default createStore({
     userId: null,
     isEmailVerified: false,
     // setup permissions for components
-    permissions: [] as any
+    permissions: undefined as any
   },
   mutations: {
     initializeStore(state) {

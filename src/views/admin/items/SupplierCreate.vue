@@ -6,7 +6,7 @@
     </div>
     <div class="bg-white p-4 rounded-lg shadow-md">
       <div class="flex flex-col py-2">
-        <label class="mb-2" for="name">Name:</label>
+        <label class="label" for="name">Name:</label>
         <input
           class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
           type="text" 
@@ -16,7 +16,7 @@
         >
       </div>
       <div class="flex flex-col py-2">
-        <label class="mb-2" for="email">Email:</label>
+        <label class="label" for="email">Email:</label>
         <input
           class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
           type="email" 
@@ -26,7 +26,7 @@
         >
       </div>
       <div class="flex flex-col py-2">
-        <label class="mb-2" for="phone">Phone:</label>
+        <label class="label" for="phone">Phone:</label>
         <input
           class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
           type="phone" 
@@ -36,7 +36,7 @@
         >
       </div>
       <div class="flex flex-col py-2">
-        <label class="mb-2" for="company-name">Company name:</label>
+        <label class="label" for="company-name">Company name:</label>
         <input
           class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
           type="text" 
@@ -45,8 +45,10 @@
           placeholder="ACME Inc."
         >
       </div>
+      <div class="text-right">
+        <button class="base-btn" @click="addSupplier">Save and exit</button>
+      </div>
     </div>
-    <button class="base-btn float-right" @click="addSupplier">Save</button>
   </div>
 </template>
 
@@ -80,6 +82,7 @@ export default defineComponent({
             message: `${this.name} successfully added to database!`,
             type: "success"
           })
+          this.$router.push({name: 'SupplierList'})
         })
         .catch((e: Error) => {
           this.$toast.open({
