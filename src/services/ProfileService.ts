@@ -14,7 +14,7 @@ export default {
   },
   
   update(data: any, user_id: number, token: any): Promise<any> {
-    return http.post(`/userProfileUpdate/${user_id}`, data, { headers: { "Authorization": `Bearer ${token}` } });
+    return http.put(`/userProfileUpdate/${user_id}`, data, { headers: { "Authorization": `Bearer ${token}` } });
   },
 
   updatePassword(data: any, token: any): Promise<any> {

@@ -8,7 +8,11 @@
 
 /* FORMS */
 .label {
-  @apply capitalize mb-2;
+  @apply capitalize text-lg mb-1 text-gray-900;
+}
+
+.field-display {
+  @apply text-base text-gray-700;
 }
 
 /* EDIT PAGE */

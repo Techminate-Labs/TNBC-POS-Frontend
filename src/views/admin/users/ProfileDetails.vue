@@ -4,7 +4,7 @@
     <div class="flex flex-nowrap justify-between mb-2">
       <p class="text-2xl">User Profile</p>
       <button 
-        @click="$router.go(-1)" 
+        @click="$router.push({name: 'UserList'})" 
         class="base-btn-outline float-right">
         Back
       </button>
@@ -19,53 +19,54 @@
         <div class="col-span-1 col-start-1">
           <div class="mb-6">
             <h3 class="label">First Name</h3>
-            <p class="">{{ profile.first_name }}</p>
+            <p class="field-display">{{ profile.first_name }}</p>
           </div>
           <div class="mb-6">
             <h3 class="label">Email</h3>
-            <p class="">{{ profile.email }}</p>
+            <p class="field-display">{{ profile.email }}</p>
           </div>
           <div class="mb-6">
             <h3 class="label">Present Address</h3>
-            <p class="">{{ profile.present_address }}</p>
+            <p class="field-display">{{ profile.present_address }}</p>
           </div>
           <div class="mb-6">
             <h3 class="label">City</h3>
-            <p class="">{{ profile.city }}</p>
+            <p class="field-display">{{ profile.city }}</p>
           </div>
           <div class="mb-6">
             <h3 class="label">Identification Number</h3>
-            <p class="">{{ profile.identity_number }}</p>
+            <p class="field-display">{{ profile.identity_number }}</p>
           </div>
           <div class="mb-6">
             <h3 class="label">Updated On</h3>
-            <p class="">{{ profile.updated_at }}</p>
+            <p class="field-display">{{ profile.updated_at }}</p>
           </div>
         </div>
         <div class="col-span-1 col-start-2">
           <div class="mb-6">
             <h3 class="label">Last Name</h3>
-            <p class="">{{ profile.last_name }}</p>
+            <p class="field-display">{{ profile.last_name }}</p>
           </div>
           <div class="mb-6">
             <h3 class="label">Phone</h3>
-            <p class="">{{ profile.mobile }}</p>
+            <p class="field-display">{{ profile.mobile }}</p>
           </div>
           <div class="mb-6">
             <h3 class="label">Permanent Address</h3>
-            <p class="">{{ profile.permanent_address }}</p>
+            <p class="field-display">{{ profile.permanent_address }}</p>
           </div>
           <div class="mb-6">
             <h3 class="label">Zip Code</h3>
-            <p class="">{{ profile.zip }}</p>
+            <p class="field-display">{{ profile.zip }}</p>
           </div>
           <div class="mb-6">
             <h3 class="label">Registered On</h3>
-            <p class="">{{ profile.created_at }}</p>
+            <p class="field-display">{{ profile.created_at }}</p>
           </div>
         </div>
         <div class="col-span-1 col-start-3 row-span-1">
           <div class="w-48">
+            <h3 class="label">Image</h3>
             <img :src="profile.image" />
           </div>
         </div>

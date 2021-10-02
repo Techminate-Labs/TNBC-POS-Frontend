@@ -16,16 +16,18 @@
       :meta="meta"
       :data="data"
       :type="type"
-      :permissionsArrayNum="permissionsArrayNum"
       @handleAddProfile="addUserProfile"
       @handleSearch="searchUser"
       @handleView="viewUser"
       @handleEdit="editUser"
-      @handleDelete="deleteUser"
+      @handleDelete="showDeleteModal"
       @pageChange="pageChange" 
       @previousPage="previousPage" 
       @nextPage="nextPage" 
       @maxItemsPerPageChange="pageLimitChange" />
+    <div class="hidden" :class="isDeleting ? 'active' : ''">
+      <DeleteModal @handleConfirmDelete="deleteUser" @close-modal="isDeleting = false" />
+    </div>
   </div>
 </template>
 
@@ -34,12 +36,14 @@ import { defineComponent } from 'vue';
 import UserService from "@/services/UserService";
 import ResponseData from "@/types/ResponseData";
 import DataTable from '@/components/tables/DataTable.vue'
+import DeleteModal from '@/components/modals/DeleteModal.vue'
 import { User } from '@/types/UserTables'
 
 export default defineComponent({
   name: 'UserList',
   components: {
-    DataTable
+    DataTable,
+    DeleteModal
   },
   data() {
     return {
@@ -50,7 +54,8 @@ export default defineComponent({
       type: "Users",
       url: '/userList',
       maxItemsPerPage: '' || undefined as unknown as string,
-      permissionsArrayNum: 0,
+      isDeleting: false,
+      selectedUserId: 0 as number,
       columns: [
         {
           attribute: 'name',
@@ -180,10 +185,16 @@ export default defineComponent({
     editUser(item: any): void {
       this.$router.push({name:'UserUpdate', params: {user_id: item.user_id}})
     },
-    async deleteUser(id: number): Promise<void> {
+    showDeleteModal(user: any): void {
+      this.selectedUserId = user.user_id
+      this.isDeleting = true
+    },
+    async deleteUser(): Promise<void> {
       let token = this.$store.state.bearerToken
+      let id = this.selectedUserId
       await UserService.delete(id, token)
         .then((response: ResponseData) => {
+          this.isDeleting = false
           this.fetchUsers()
           this.$toast.open({
             message: `User successfully deleted.`,
