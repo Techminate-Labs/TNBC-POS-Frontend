@@ -39,7 +39,10 @@
                 :key="j" 
                 :data-label="textColumn.attribute"
                 class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">
-                <div class="flex-shrink-0">
+                <div v-if="textColumn.attribute === 'image'" class="flex-shrink-0">
+                  <img :src="item.image" class="w-12" />
+                </div>
+                <div v-else class="flex-shrink-0">
                   {{ item[textColumn.attribute] }}
                 </div>
               </td>
@@ -200,7 +203,7 @@ export default defineComponent({
       });
     },
     textColumns(): any[] {
-      return this.columns.filter((c: any) => c.attribute !== 'image' )
+      return this.columns
     },
     canUserEdit(): boolean | null {
       if (this.$store.state.permissions !== undefined) {

@@ -16,7 +16,6 @@
       :data="data"
       :type="type"
       @handleSearch="searchItem"
-      @handleAddProfile="addItemProfile"
       @handleView="viewItem"
       @handleEdit="editItem"
       @handleDelete="showDeleteModal"
@@ -35,7 +34,7 @@ import { defineComponent } from 'vue';
 import DataTable from '@/components/tables/DataTable.vue'
 import DeleteModal from '@/components/modals/DeleteModal.vue'
 import ItemService from "@/services/ItemService";
-import { ItemsItem } from '@/types/Items'
+import { ItemObject } from '@/types/Items'
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
@@ -49,7 +48,7 @@ export default defineComponent({
       next: '',
       prev: '',
       meta: {},
-      data: [] as Array<ItemsItem>,
+      data: [] as Array<ItemObject>,
       type: "Users",
       url: '/itemList',
       maxItemsPerPage: '' || undefined as unknown as string,
@@ -57,21 +56,29 @@ export default defineComponent({
       selectedItemId: 0 as number,
       columns: [
         {
-          attribute: 'item_id',
-          name: 'id'
+          attribute: 'image',
+          name: 'image'
         },
         {
           attribute: 'name',
           name: 'name'
         },
         {
-          attribute: 'slug',
-          name: 'slug'
+          attribute: 'category',
+          name: 'category'
         },
         {
-          attribute: 'number_of_products',
-          name: 'number of products'
-        }
+          attribute: 'price',
+          name: 'price'
+        },
+        {
+          attribute: 'inventory',
+          name: 'stock'
+        },
+        {
+          attribute: 'available',
+          name: 'availability'
+        },
       ]
     }
   },
@@ -83,6 +90,7 @@ export default defineComponent({
         .then((response: ResponseData) => {
           let res = response.data
           this.data = res.data
+          console.log(res.data)
           this.meta = {
             current_page: res.current_page,
             from: res.from,
@@ -125,9 +133,6 @@ export default defineComponent({
         this.url = `${url}&limit=${limit}`
         await this.fetchItems()
       }
-    },
-    addItemProfile(item: any): void {
-      this.$router.push({name:'ProfileCreate', params: {id: item.id}})
     },
     viewItem(item: any): void {
       this.$router.push({name:'ItemDetails', params: {id: item.item_id}})

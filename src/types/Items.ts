@@ -1,6 +1,4 @@
-var Permissions = require('./Permissions')
-
-interface ItemsItem {
+interface ItemObject {
   company: string,
   created_at: string,
   email: string,
@@ -10,4 +8,24 @@ interface ItemsItem {
   updated_at: string
 }
 
-export { ItemsItem }
+interface SingleItem {
+  item_id: number,
+  category: string,
+  brand: string,
+  unit: string,
+  supplier: string,
+  company: string,
+  name: string,
+  slug: string,
+  sku: number,
+  price: number,
+  discount: number,
+  inventory: number,
+  expire_date: string,
+  available: number,
+  image: string,
+  created_at: string,
+  updated_at: string
+}
+
+export { ItemObject, SingleItem }

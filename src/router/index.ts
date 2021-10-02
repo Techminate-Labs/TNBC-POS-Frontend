@@ -25,6 +25,7 @@ import UnitList from '../views/admin/items/UnitList.vue'
 import CategoryList from '../views/admin/items/CategoryList.vue'
 import BrandList from '../views/admin/items/BrandList.vue'
 import ItemList from '../views/admin/items/ItemList.vue'
+import ItemUpdate from '../views/admin/items/ItemUpdate.vue'
 import ItemCreate from '../views/admin/items/ItemCreate.vue'
 import ItemDetails from '../views/admin/items/ItemDetails.vue'
 import PointOfSale from '../views/admin/pos/PointOfSale.vue'
@@ -232,6 +233,11 @@ const routes: Array<RouteRecordRaw> = [
         path: 'items-create',
         name: 'ItemCreate',
         component: ItemCreate,
+      },
+      {
+        path: 'items-update/:id',
+        name: 'ItemUpdate',
+        component: ItemUpdate,
       },
       {
         path: 'items-details/:id',

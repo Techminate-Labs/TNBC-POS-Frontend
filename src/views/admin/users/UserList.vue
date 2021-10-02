@@ -98,6 +98,7 @@ export default defineComponent({
             email_verified_at: user.email_verified_at,
             updated_at: user.updated_at
           }))
+          console.log(res.links)
           this.meta = {
             current_page: res.current_page,
             from: res.from,
