@@ -53,14 +53,14 @@
             placeholder="3"
           >
         </div>
-        <button class="base-btn float-right" @click="addItem">Save</button>
+        <button class="base-btn float-right" @click="updateSupplier">Save</button>
       </div>
       <div class="w-5/12 h-full">
         <div class="bg-white rounded-lg shadow-md p-4 mb-3">
           <div class="flex flex-col py-2">
             <label class="label">Select Category</label>
             <Multiselect
-              v-model="categoryId"
+              v-model="item.category_id"
               :options="getCategoryOptions"
               :searchable="true"
               placeholder="Pick a Category"
@@ -69,7 +69,7 @@
           <div class="flex flex-col py-2">
             <label class="label">Select Brand</label>
             <Multiselect
-              v-model="brandId"
+              v-model="item.brand_id"
               :options="getBrandOptions"
               :searchable="true"
               placeholder="Pick a Brand"
@@ -78,7 +78,7 @@
           <div class="flex flex-col py-2">
             <label class="label">Select Unit</label>
             <Multiselect
-              v-model="unitId"
+              v-model="item.unit_id"
               :options="getUnitOptions"
               :searchable="true"
               placeholder="Pick a Unit"
@@ -87,7 +87,7 @@
           <div class="flex flex-col py-2">
             <label class="label">Select Supplier</label>
             <Multiselect
-              v-model="supplierId"
+              v-model="item.unit_id"
               :options="getSupplierOptions"
               :searchable="true"
               placeholder="Pick a Supplier"
@@ -120,6 +120,7 @@
           <div v-show="newImagePreview.length">
             <p class="uppercase text-sm font-light">Preview</p>
             <img :src="newImagePreview" class="w-48 mb-6" />
+            <button @click="confirmNewImage" class="base-btn-outline">upload</button>
           </div>
         </div>
         <div class="bg-white rounded-lg shadow-md p-4">
@@ -155,11 +156,29 @@ export default defineComponent({
   },
   data() {
     return {
-      item: {} as SingleItem,
-      categoryId: '',
-      brandId: '',
-      unitId: '',
-      supplierId: '',
+      item: {
+        item_id: 0 as number,
+        category_id: 0 as number,
+        brand_id: 0 as number,
+        unit_id: 0 as number,
+        supplier_id: 0 as number,
+        category: '' as string,
+        brand: '' as string,
+        unit: '' as string,
+        supplier: '' as string,
+        company: '' as string,
+        name: '' as string,
+        slug: '' as string,
+        sku: 0 as number,
+        price: 0 as number,
+        discount: 0 as number,
+        inventory: 0 as number,
+        expire_date: '' as string,
+        available: false as boolean,
+        image: null as any,
+        created_at: '' as string,
+        updated_at: '' as string
+      } as SingleItem,
       categories: [],
       brands: [],
       units: [],
@@ -226,10 +245,25 @@ export default defineComponent({
         });
     },
     async updateSupplier(): Promise<void> {
-      let data = this.item
       let id = this.$route.params.id
       let token = this.$store.state.bearerToken
-      await ItemService.edit(data, id, token)
+      let data: SingleItem = this.item
+      console.log(data)
+      const fd = new FormData()
+      fd.append('category_id', data.category_id.toString())
+      fd.append('brand_id', data.brand_id.toString())
+      fd.append('unit_id', data.unit_id.toString())
+      fd.append('supplier_id', data.supplier_id.toString())
+      fd.append('name', data.name)
+      fd.append('price', data.price.toString())
+      fd.append('discount', data.discount.toString())
+      fd.append('inventory', data.inventory.toString())
+      fd.append('expire_date', data.expire_date)
+      fd.append('available', data.available.toString())
+      // fd.append('image', data.image, data.image.name)
+      console.log('form data', fd)
+
+      await ItemService.edit(fd, id, token)
         .then((response: ResponseData) => {
           this.$toast.open({
             message: `${data.name} successfully updated!`,
@@ -247,6 +281,11 @@ export default defineComponent({
     handleFileChange(e: any): void {
       this.newImage = e.target.files[0]
       this.newImagePreview = URL.createObjectURL(e.target.files[0])
+    },
+    confirmNewImage(e: any): void {
+      this.item.image = this.newImage
+      this.newImage = null
+      this.newImagePreview = ''
     }
   },
   computed: {

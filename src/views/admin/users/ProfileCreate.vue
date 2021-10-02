@@ -152,14 +152,15 @@ export default defineComponent({
       fd.append('zip', this.user.zip)
       fd.append('city', this.user.city)
       fd.append('image', this.user.image, this.user.image.name)
+      console.log('form data', fd)
 
       await ProfileService.create(fd, token)
         .then((response: ResponseData) => {
-            this.$toast.open({
+          this.$toast.open({
             message: `Profile has been successfully added to the database!`,
             type: "success"
           })
-          })
+        })
         .catch((e: Error) => {
           console.log(e);
         });

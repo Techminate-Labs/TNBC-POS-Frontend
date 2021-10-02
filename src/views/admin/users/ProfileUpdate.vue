@@ -153,22 +153,22 @@ export default defineComponent({
         });
     },
     async updateUserProfile(): Promise<void> {
-      console.log("clicked on update")
       let token = this.$store.state.bearerToken
       let user_id = parseInt(this.$route.params.user_id as string)
-      let data = {
-        user_id: user_id,
-        first_name: this.user.first_name,
-        last_name: this.user.last_name,
-        mobile: this.user.mobile,
-        present_address: this.user.present_address,
-        permanent_address: this.user.permanent_address,
-        identity_number: this.user.identity_number,
-        city: this.user.city,
-        zip: this.user.zip,
-        image: this.newImage
-      }
-      await ProfileService.update(data, user_id, token)
+      let user = this.user
+      const fd = new FormData()
+      fd.append('user_id', user_id.toString())
+      fd.append('first_name', user.first_name)
+      fd.append('last_name', user.last_name)
+      fd.append('mobile', user.mobile)
+      fd.append('present_address', user.present_address)
+      fd.append('permanent_address', user.permanent_address)
+      fd.append('identity_number', user.identity_number)
+      fd.append('city', user.city)
+      fd.append('zip', user.zip)
+      fd.append('image', user.image, user.image.name)
+
+      await ProfileService.update(fd, user_id, token)
         .then((response: ResponseData) => {
           this.$toast.open({
             message: `${this.user.first_name} ${this.user.last_name} has been successfully updated!`,
@@ -186,7 +186,7 @@ export default defineComponent({
         });
     },
     handleFileChange(e: any): void {
-      this.newImage = e.target.files[0]
+      this.user.image = e.target.files[0]
       this.newImagePreview = URL.createObjectURL(e.target.files[0])
     }
   },

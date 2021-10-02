@@ -10,6 +10,10 @@ interface ItemObject {
 
 interface SingleItem {
   item_id: number,
+  category_id: number,
+  brand_id: number,
+  unit_id: number,
+  supplier_id: number,
   category: string,
   brand: string,
   unit: string,
@@ -22,8 +26,8 @@ interface SingleItem {
   discount: number,
   inventory: number,
   expire_date: string,
-  available: number,
-  image: string,
+  available: boolean,
+  image: any,
   created_at: string,
   updated_at: string
 }
