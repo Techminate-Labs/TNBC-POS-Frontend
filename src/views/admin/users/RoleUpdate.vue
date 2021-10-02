@@ -3,7 +3,14 @@
     <p class="mb-2">Breadcrumb</p>
     <div class="mb-4">
       <p class="text-2xl">Role Permission</p>
-      <p>Updating <span class="capitalize font-bold">{{ roleName }}</span></p> 
+      <p>Updating <span class="capitalize font-bold">{{ roleName }}</span></p>
+      <div class="text-right">
+        <button
+          class="base-btn-outline" 
+          @click="$router.go(-1)">
+          Back
+        </button>
+      </div>
     </div>
     <CheckboxTable
       @handleNameChange="changeName"
@@ -74,19 +81,11 @@ export default defineComponent({
     },
     async updateRole(items: any): Promise<void> {
       let token = this.$store.state.bearerToken
-      let _permissions: any = []
-      items.map((item: any) => {
-        let name = item.name
-        _permissions.push({
-          [item.name]: item.permissions
-        })
-      })
       let role_id: number = parseInt(this.$route.params.id as string)
       let data = {
         name: this.roleName,
         permissions: items
       }
-      console.log('clicked on save')
       await RoleService.update(data as any, role_id as number, token as any)
         .then((response: ResponseData) => {
             this.$toast.open({

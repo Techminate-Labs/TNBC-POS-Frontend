@@ -21,7 +21,6 @@
                   Section
                 </th>
                 <th 
-                  @click="sort(column.attribute)" 
                   v-for="(column, index) in columns" 
                   :key="index" 
                   scope="col" 

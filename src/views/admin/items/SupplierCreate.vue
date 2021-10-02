@@ -45,8 +45,10 @@
           placeholder="ACME Inc."
         >
       </div>
+      <div class="text-right">
+        <button class="base-btn" @click="addSupplier">Save and exit</button>
+      </div>
     </div>
-    <button class="base-btn float-right" @click="addSupplier">Save</button>
   </div>
 </template>
 
@@ -80,6 +82,7 @@ export default defineComponent({
             message: `${this.name} successfully added to database!`,
             type: "success"
           })
+          this.$router.push({name: 'SupplierList'})
         })
         .catch((e: Error) => {
           this.$toast.open({

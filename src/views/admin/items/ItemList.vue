@@ -15,22 +15,25 @@
       :meta="meta"
       :data="data"
       :type="type"
-      :permissionsArrayNum="permissionsArrayNum"
       @handleSearch="searchItem"
       @handleAddProfile="addItemProfile"
       @handleView="viewItem"
       @handleEdit="editItem"
-      @handleDelete="deleteItem"
+      @handleDelete="showDeleteModal"
       @pageChange="pageChange" 
       @previousPage="previousPage" 
       @nextPage="nextPage" 
       @maxItemsPerPageChange="pageLimitChange" />
+    <div class="hidden" :class="isDeleting ? 'active' : ''">
+      <DeleteModal @handleConfirmDelete="deleteItem" @close-modal="isDeleting = false" />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import DataTable from '@/components/tables/DataTable.vue'
+import DeleteModal from '@/components/modals/DeleteModal.vue'
 import ItemService from "@/services/ItemService";
 import { ItemsItem } from '@/types/Items'
 import ResponseData from "@/types/ResponseData";
@@ -38,7 +41,8 @@ import ResponseData from "@/types/ResponseData";
 export default defineComponent({
   name: 'ItemList',
   components: {
-    DataTable
+    DataTable,
+    DeleteModal
   },
   data() {
     return {
@@ -49,7 +53,8 @@ export default defineComponent({
       type: "Users",
       url: '/itemList',
       maxItemsPerPage: '' || undefined as unknown as string,
-      permissionsArrayNum: 0,
+      isDeleting: false,
+      selectedItemId: 0 as number,
       columns: [
         {
           attribute: 'item_id',
@@ -130,11 +135,16 @@ export default defineComponent({
     editItem(item: any): void {
       this.$router.push({name:'ItemUpdate', params: {id: item.item_id}})
     },
+    showDeleteModal(item: any){
+      this.isDeleting = true
+      this.selectedItemId = item.id
+    },
     async deleteItem(item: any): Promise<void> {
       let token = this.$store.state.bearerToken
-      let id = item.item_id
+      let id = this.selectedItemId
       await ItemService.delete(id, token)
         .then((response: ResponseData) => {
+          this.isDeleting = false
           this.fetchItems()
           this.$toast.open({
             message: `${item.name} successfully deleted.`,

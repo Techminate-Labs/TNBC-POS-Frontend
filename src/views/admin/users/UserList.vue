@@ -174,7 +174,6 @@ export default defineComponent({
             console.log(e);
           });
       }
-
     },
     addUserProfile(item: any): void {
       this.$router.push({name:'ProfileCreate', params: {user_id: item.user_id}})

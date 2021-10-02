@@ -12,22 +12,25 @@
       :meta="meta"
       :data="data"
       :type="type"
-      :permissionsArrayNum="permissionsArrayNum"
       @handleSearch="searchSupplier"
       @handleAddProfile="addSupplierProfile"
       @handleView="viewSupplier"
       @handleEdit="editSupplier"
-      @handleDelete="deleteSupplier"
+      @handleDelete="showDeleteModal"
       @pageChange="pageChange" 
       @previousPage="previousPage" 
       @nextPage="nextPage" 
       @maxItemsPerPageChange="pageLimitChange" />
+    <div class="hidden" :class="isDeleting ? 'active' : ''">
+      <DeleteModal @handleConfirmDelete="deleteSupplier" @close-modal="isDeleting = false" />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import DataTable from '@/components/tables/DataTable.vue'
+import DeleteModal from '@/components/modals/DeleteModal.vue'
 import SupplierService from "@/services/SupplierService";
 import { SupplierItem } from '@/types/Suppliers'
 import ResponseData from "@/types/ResponseData";
@@ -35,7 +38,8 @@ import ResponseData from "@/types/ResponseData";
 export default defineComponent({
   name: 'SupplierList',
   components: {
-    DataTable
+    DataTable,
+    DeleteModal
   },
   data() {
     return {
@@ -46,23 +50,24 @@ export default defineComponent({
       type: "Users",
       url: '/supplierList',
       maxItemsPerPage: '' || undefined as unknown as string,
-      permissionsArrayNum: 0,
+      isDeleting: false,
+      selectedSupplierId: 0 as number,
       columns: [
-        {
-          attribute: 'Supplier ID',
-          name: 'Supplier_id'
-        },
         {
           attribute: 'name',
           name: 'name'
         },
         {
-          attribute: 'created_at',
-          name: 'registered on'
+          attribute: 'email',
+          name: 'email'
         },
         {
-          attribute: 'updated_at',
-          name: 'updated on'
+          attribute: 'phone',
+          name: 'phone'
+        },
+        {
+          attribute: 'company',
+          name: 'company name'
         }
       ]
     }
@@ -127,14 +132,19 @@ export default defineComponent({
     editSupplier(item: any): void {
       this.$router.push({name:'SupplierUpdate', params: {id: item.id}})
     },
-    async deleteSupplier(item: any): Promise<void> {
+    showDeleteModal(item: any): any {
+      this.isDeleting = true
+      this.selectedSupplierId = item.id
+    },
+    async deleteSupplier(): Promise<void> {
       let token = this.$store.state.bearerToken
-      let id = item.id
+      let id = this.selectedSupplierId
       await SupplierService.delete(id, token)
         .then((response: ResponseData) => {
+          this.isDeleting = false
           this.fetchSuppliers()
           this.$toast.open({
-            message: `supplier successfully deleted.`,
+            message: `Supplier successfully deleted.`,
             type: "success"
           })
         })

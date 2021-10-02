@@ -18,14 +18,17 @@
       :meta="meta"
       :data="data"
       :type="type"
-      :permissionsArrayNum="permissionsArrayNum"
       @handleSearch="searchRole"
       @handleView="viewRole"
       @handleEdit="editRole"
-      @handleDelete="deleteRole"
+      @handleDelete="showDeleteModal"
       @pageChange="pageChange" 
       @previousPage="previousPage" 
-      @nextPage="nextPage" />
+      @nextPage="nextPage" 
+      @maxItemsPerPageChange="pageLimitChange" />
+      <div class="hidden" :class="isDeleting ? 'active' : ''">
+        <DeleteModal @handleConfirmDelete="deleteRole" @close-modal="isDeleting = false" />
+      </div>
   </div>
 </template>
 
@@ -34,12 +37,14 @@ import { defineComponent } from 'vue';
 import DataTable from '@/components/tables/DataTable.vue';
 import RoleService from "@/services/RoleService";
 import ResponseData from "@/types/ResponseData";
-import formatDateMixin from '@/mixins/formatDateMixin';
+import DeleteModal from '@/components/modals/DeleteModal.vue'
+import { RoleObject } from '@/types/Roles'
 
 export default defineComponent({
   name: 'RoleList',
   components: {
-    DataTable
+    DataTable,
+    DeleteModal
   },
   data() {
     return {
@@ -49,7 +54,9 @@ export default defineComponent({
       data: [],
       type: "Roles",
       url: '/roleList',
-      permissionsArrayNum: 1,
+      maxItemsPerPage: '' || undefined as unknown as string,
+      isDeleting: false,
+      selectedRoleId: 0 as number,
       columns: [
         {
           name: 'name',
@@ -66,7 +73,6 @@ export default defineComponent({
       ]
     }
   },
-  mixins: [formatDateMixin],
   methods: {
     async fetchRoles(): Promise<void> {
       let token = this.$store.state.bearerToken
@@ -92,29 +98,31 @@ export default defineComponent({
           console.log(e);
         });
     },
-    viewRole(item: any): void {
-      console.log('waiting for roleView component')
+    async pageChange(url: string): Promise<void> {
+      this.url = url
+      await this.fetchRoles()
     },
-    editRole(item: any): void {
-      this.$router.push({name: 'RoleUpdate', params: {id: item.id}})
+    async pageLimitChange(limit: string): Promise<void> {
+      let url = this.url
+      this.maxItemsPerPage = limit
+      this.url = `${url}?limit=${limit}`
+      await this.fetchRoles()
     },
-    async deleteRole(item: any): Promise<void> {
-      let token = this.$store.state.bearerToken
-      await RoleService.delete(item.id, token)
-        .then((response: ResponseData) => {
-            this.fetchRoles()
-            this.$toast.open({
-              message: `This role has been successfully deleted.`,
-              type: "success"
-            })
-          })
-        .catch((e: Error) => {
-          this.$toast.open({
-            message: `Could not delete that role.`,
-            type: "error"
-          })
-          console.log(e)
-        });
+    async previousPage(): Promise<void> {
+      if (this.prev !== null){
+        let url = this.prev
+        let limit = this.maxItemsPerPage
+        this.url = `${url}&limit=${limit}`
+        await this.fetchRoles()
+      }
+    },
+    async nextPage(): Promise<void> {
+      if (this.next !== null){
+        let url = this.next
+        let limit = this.maxItemsPerPage
+        this.url = `${url}&limit=${limit}`
+        await this.fetchRoles()
+      }
     },
     async searchRole(event: any): Promise<void> {
       let token = this.$store.state.bearerToken
@@ -144,22 +152,36 @@ export default defineComponent({
           });
       }
     },
-    pageChange(url: string):void {
-      this.url = url
-      this.fetchRoles()
+    viewRole(item: any): void {
+      console.log('waiting for roleView component')
     },
-    previousPage():void {
-      if (this.prev !== null){
-        this.url = this.prev
-        this.fetchRoles()
-      }
+    editRole(item: any): void {
+      this.$router.push({name: 'RoleUpdate', params: {id: item.id}})
     },
-    nextPage():void {
-      if (this.next !== null){
-        this.url = this.next
-        this.fetchRoles()
-      }
+    showDeleteModal(role: any): void {
+      this.selectedRoleId = role.id
+      this.isDeleting = true
     },
+    async deleteRole(): Promise<void> {
+      let token = this.$store.state.bearerToken
+      let id = this.selectedRoleId
+      await RoleService.delete(id, token)
+        .then((response: ResponseData) => {
+            this.isDeleting = false
+            this.fetchRoles()
+            this.$toast.open({
+              message: `This role has been successfully deleted.`,
+              type: "success"
+            })
+          })
+        .catch((e: Error) => {
+          this.$toast.open({
+            message: `Could not delete that role.`,
+            type: "error"
+          })
+          console.log(e)
+        });
+    }
   },
   computed: {
     canUserCreate():boolean {

@@ -84,7 +84,6 @@
 import { defineComponent } from 'vue';
 import ProfileService from "@/services/ProfileService";
 import ResponseData from "@/types/ResponseData";
-import formatDateMixin from '@/mixins/formatDateMixin';
 
 export default defineComponent({
   name: 'ProfileDetails',
@@ -93,7 +92,6 @@ export default defineComponent({
       profile: { user_id: 0 }
     }
   },
-  mixins: [formatDateMixin],
   methods: {
     async fetchProfile(): Promise<void> {
       let params = this.$route.params
