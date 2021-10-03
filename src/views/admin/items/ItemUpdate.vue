@@ -226,6 +226,7 @@ export default defineComponent({
       let token = this.$store.state.bearerToken
       let data: SingleItem = this.item
       console.log(data)
+      let available = (data.available ? 1 : 0)
 
       const fd: any = new FormData()
       fd.append("category_id", data.category_id)
@@ -237,7 +238,7 @@ export default defineComponent({
       fd.append("inventory", data.inventory)
       fd.append("discount", data.discount)
       fd.append('expire_date', data.expire_date)
-      fd.append('available', 0)
+      fd.append('available', available)
       // fd.append('image', data.image, data.name)
       fd.append('_method', 'PUT')
       console.log('form data', fd)
