@@ -97,9 +97,10 @@ export default defineComponent({
       let params = this.$route.params
       let user_id = parseInt(params.user_id as string)
       let token = this.$store.state.bearerToken
+      console.log(params)
       await ProfileService.list(user_id, token)
         .then((response: ResponseData) => {
-            this.profile  = response.data
+          this.profile  = response.data
             console.log(this.profile)
           })
         .catch((e: Error) => {

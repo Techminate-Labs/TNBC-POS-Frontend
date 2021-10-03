@@ -120,11 +120,14 @@ import { defineComponent } from 'vue';
 import ProfileService from "@/services/ProfileService";
 import ResponseData from "@/types/ResponseData";
 
+type Int = number & { __int__: void };
+
 export default defineComponent({
   name: 'ProfileUpdate',
   data() {
     return {
        user: {
+        user_id:           0 as Int,
         first_name:        '',
         last_name:         '',
         email:             '',
@@ -144,9 +147,10 @@ export default defineComponent({
     async fetchUserProfile(): Promise<void> {
       let token = this.$store.state.bearerToken
       let user_id = parseInt(this.$route.params.user_id as string)
-      await ProfileService.getById(user_id, token)
+      await ProfileService.list(7, token)
         .then((response: ResponseData) => {
           this.user = response.data
+          console.log(response.data)
         })
         .catch((e: Error) => {
           console.log(e);
@@ -156,8 +160,9 @@ export default defineComponent({
       let token = this.$store.state.bearerToken
       let user_id = parseInt(this.$route.params.user_id as string)
       let user = this.user
-      const fd = new FormData()
-      fd.append('user_id', user_id.toString())
+      console.log('user', user)
+      const fd: any = new FormData()
+      fd.append('user_id', user.user_id as Int)
       fd.append('first_name', user.first_name)
       fd.append('last_name', user.last_name)
       fd.append('mobile', user.mobile)
@@ -166,9 +171,10 @@ export default defineComponent({
       fd.append('identity_number', user.identity_number)
       fd.append('city', user.city)
       fd.append('zip', user.zip)
-      fd.append('image', user.image, user.image.name)
+      fd.append('_method', 'PUT')
+      // fd.append('image', user.image, user.image.name)
 
-      await ProfileService.update(fd, user_id, token)
+      await ProfileService.update(fd, 6, token)
         .then((response: ResponseData) => {
           this.$toast.open({
             message: `${this.user.first_name} ${this.user.last_name} has been successfully updated!`,

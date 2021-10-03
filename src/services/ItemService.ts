@@ -14,7 +14,7 @@ export default {
   },
 
   edit(data: any, itemId: any, token: any): Promise<any> {
-    return http.put(`/itemUpdate/${itemId}`, data, { headers: { "Authorization": `Bearer ${token}` } });
+    return http.post(`/itemUpdate/${itemId}`, data, { headers: { "Authorization": `Bearer ${token}`, "content-type": "multipart/form-data" } });
   },
 
   delete(itemId: any, token: any): Promise<any> {
