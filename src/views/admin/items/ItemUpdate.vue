@@ -130,8 +130,6 @@
               type="date"
               v-model="item.expire_date"
               class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900">
-              {{ item.expire_date }}
-              {{ typeof item.expire_date }}
           </div>
         </div>
       </div>
@@ -239,7 +237,7 @@ export default defineComponent({
       fd.append("inventory", data.inventory)
       fd.append("discount", data.discount)
       fd.append('expire_date', data.expire_date)
-      fd.append('available', data.available)
+      fd.append('available', 0)
       // fd.append('image', data.image, data.name)
       fd.append('_method', 'PUT')
       console.log('form data', fd)
