@@ -129,8 +129,9 @@
             <input 
               type="date"
               v-model="item.expire_date"
-              @change="handleDateChange($event)"
               class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900">
+              {{ item.expire_date }}
+              {{ typeof item.expire_date }}
           </div>
         </div>
       </div>
@@ -156,29 +157,7 @@ export default defineComponent({
   },
   data() {
     return {
-      item: {
-        item_id: 0 as number,
-        category_id: 0 as number,
-        brand_id: 0 as number,
-        unit_id: 0 as number,
-        supplier_id: 0 as number,
-        category: '' as string,
-        brand: '' as string,
-        unit: '' as string,
-        supplier: '' as string,
-        company: '' as string,
-        name: '' as string,
-        slug: '' as string,
-        sku: 0 as number,
-        price: 0 as number,
-        discount: 0 as number,
-        inventory: 0 as number,
-        expire_date: '' as string,
-        available: false as boolean,
-        image: null as any,
-        created_at: '' as string,
-        updated_at: '' as string
-      } as SingleItem,
+      item: {} as SingleItem,
       categories: [],
       brands: [],
       units: [],
@@ -249,18 +228,20 @@ export default defineComponent({
       let token = this.$store.state.bearerToken
       let data: SingleItem = this.item
       console.log(data)
-      const fd = new FormData()
-      fd.append('category_id', data.category_id.toString())
-      fd.append('brand_id', data.brand_id.toString())
-      fd.append('unit_id', data.unit_id.toString())
-      fd.append('supplier_id', data.supplier_id.toString())
-      fd.append('name', data.name)
-      fd.append('price', data.price.toString())
-      fd.append('discount', data.discount.toString())
-      fd.append('inventory', data.inventory.toString())
+
+      const fd: any = new FormData()
+      fd.append("category_id", data.category_id)
+      fd.append("brand_id", data.brand_id)
+      fd.append("unit_id", data.unit_id)
+      fd.append("supplier_id", data.supplier_id)
+      fd.append("name", data.name)
+      fd.append("price", data.price)
+      fd.append("inventory", data.inventory)
+      fd.append("discount", data.discount)
       fd.append('expire_date', data.expire_date)
-      fd.append('available', data.available.toString())
-      // fd.append('image', data.image, data.image.name)
+      fd.append('available', data.available)
+      // fd.append('image', data.image, data.name)
+      fd.append('_method', 'PUT')
       console.log('form data', fd)
 
       await ItemService.edit(fd, id, token)
@@ -281,6 +262,9 @@ export default defineComponent({
     handleFileChange(e: any): void {
       this.newImage = e.target.files[0]
       this.newImagePreview = URL.createObjectURL(e.target.files[0])
+    },
+    handleDateChange(e: any): void {
+      this.item.expire_date = e.target.value
     },
     confirmNewImage(e: any): void {
       this.item.image = this.newImage
