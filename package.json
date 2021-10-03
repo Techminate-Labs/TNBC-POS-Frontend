@@ -8,7 +8,6 @@
         "start": "node server.js"
     },
     "dependencies": {
-        "@novicell/vue-breadcrumb": "^1.1.3",
         "@vueform/multiselect": "^2.2.0",
         "axios": "^0.21.1",
         "core-js": "^3.6.5",

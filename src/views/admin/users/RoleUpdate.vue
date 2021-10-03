@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-grow px-4 md:px-8 my-10">
+  <div>
     <p class="mb-2">Breadcrumb</p>
     <div class="mb-4">
       <p class="text-2xl">Role Permission</p>

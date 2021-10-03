@@ -1,6 +1,6 @@
 <template>
-  <div class="flex-grow px-4 md:px-8 my-10">
-    <p>Breadcrumb</p>
+  <div>
+    
     <div class="flex flex-nowrap justify-between mb-2">
       <p class="text-2xl mb-4">Edit item</p>
       <div class="text-right">

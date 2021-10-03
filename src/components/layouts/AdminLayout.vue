@@ -14,11 +14,11 @@
           @close-additional-sidebar="closeAdditionalSidebar"
           :class="openAdditionalSideBar ? 'active' : ''" 
         />
-        <div class="w-9/12 flex-grow overflow-x-hidden" @click="openAdditionalSideBar = false">
+        <div class="w-9/12 flex-grow overflow-x-hidden m-12" @click="openAdditionalSideBar = false">
           <div class="bg-red-300 text-wite w-full py-2 px-8 text-lg" v-if="!isEmailVerified">
             <p>Your account has not been verified ! Please <button @click="requestEmailVerification" class="underline">send a verification email to your inbox.</button></p>
           </div>
-          <Breadcrumb />
+          <Breadcrumb :key="$route.path" />
           <router-view />
         </div>
       </div>
