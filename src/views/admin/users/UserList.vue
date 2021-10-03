@@ -37,7 +37,7 @@ import UserService from "@/services/UserService";
 import ResponseData from "@/types/ResponseData";
 import DataTable from '@/components/tables/DataTable.vue'
 import DeleteModal from '@/components/modals/DeleteModal.vue'
-import { User } from '@/types/UserTables'
+import { User } from '@/types/Users'
 
 export default defineComponent({
   name: 'UserList',

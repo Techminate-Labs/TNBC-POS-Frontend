@@ -1,4 +1,4 @@
-interface CategoryItem {
+interface Unit {
   created_at: string,
   id: number,
   name: string,
@@ -6,4 +6,4 @@ interface CategoryItem {
   updated_at: string
 }
 
-export { CategoryItem }
+export { Unit }

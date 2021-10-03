@@ -160,6 +160,7 @@ export default defineComponent({
             message: `Profile has been successfully added to the database!`,
             type: "success"
           })
+          this.$router.push({ name: 'UserList' })
         })
         .catch((e: Error) => {
           console.log(e);

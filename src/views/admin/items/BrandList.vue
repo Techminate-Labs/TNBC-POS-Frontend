@@ -44,7 +44,7 @@ import BrandModalUpdate from '@/components/modals/BrandModalUpdate.vue'
 import DeleteModal from '@/components/modals/DeleteModal.vue'
 import BrandService from "@/services/BrandService";
 import ResponseData from "@/types/ResponseData";
-import { BrandItem } from "@/types/BrandTables";
+import { Brand } from "@/types/Brands";
 
 export default defineComponent({
   name: 'BrandList',
@@ -67,7 +67,7 @@ export default defineComponent({
       isCreating: false,
       isEditing: false,
       isDeleting: false,
-      selectedBrand: { created_at: '', id: 0, name: '', slug: '', updated_at: '' } as BrandItem,
+      selectedBrand: { created_at: '', id: 0, name: '', slug: '', updated_at: '' } as Brand,
       selectedBrandId: 0 as number,
       columns: [
         {

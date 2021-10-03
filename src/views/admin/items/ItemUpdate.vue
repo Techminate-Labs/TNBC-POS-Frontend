@@ -53,7 +53,7 @@
             placeholder="3"
           >
         </div>
-        <button class="base-btn float-right" @click="updateSupplier">Save</button>
+        <button class="base-btn float-right" @click="updateSupplier">Save and exit</button>
       </div>
       <div class="w-5/12 h-full">
         <div class="bg-white rounded-lg shadow-md p-4 mb-3">
@@ -120,7 +120,6 @@
           <div v-show="newImagePreview.length">
             <p class="uppercase text-sm font-light">Preview</p>
             <img :src="newImagePreview" class="w-48 mb-6" />
-            <button @click="confirmNewImage" class="base-btn-outline">upload</button>
           </div>
         </div>
         <div class="bg-white rounded-lg shadow-md p-4">
@@ -225,8 +224,8 @@ export default defineComponent({
       let id = this.$route.params.id
       let token = this.$store.state.bearerToken
       let data: SingleItem = this.item
-      console.log(data)
       let available = (data.available ? 1 : 0)
+      let image = this.newImage
 
       const fd: any = new FormData()
       fd.append("category_id", data.category_id)
@@ -239,7 +238,7 @@ export default defineComponent({
       fd.append("discount", data.discount)
       fd.append('expire_date', data.expire_date)
       fd.append('available', available)
-      // fd.append('image', data.image, data.name)
+      fd.append('image', image)
       fd.append('_method', 'PUT')
       console.log('form data', fd)
 
@@ -249,6 +248,7 @@ export default defineComponent({
             message: `${data.name} successfully updated!`,
             type: "success"
           })
+          this.$router.push({ name:'ItemList' })
         })
         .catch((e: Error) => {
           this.$toast.open({
@@ -264,11 +264,6 @@ export default defineComponent({
     },
     handleDateChange(e: any): void {
       this.item.expire_date = e.target.value
-    },
-    confirmNewImage(e: any): void {
-      this.item.image = this.newImage
-      this.newImage = null
-      this.newImagePreview = ''
     }
   },
   computed: {

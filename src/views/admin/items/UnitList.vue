@@ -40,7 +40,7 @@ import UnitModalUpdate from '@/components/modals/UnitModalUpdate.vue'
 import DeleteModal from '@/components/modals/DeleteModal.vue'
 import UnitService from "@/services/UnitService";
 import ResponseData from "@/types/ResponseData";
-import { UnitItem } from "@/types/UnitTables";
+import { Unit } from "@/types/Units";
 
 export default defineComponent({
   name: 'UnitList',
@@ -62,7 +62,7 @@ export default defineComponent({
       isCreating: false,
       isEditing: false,
       isDeleting: false,
-      selectedUnit: { created_at: '', id: 0, name: '', slug: '', updated_at: '' } as UnitItem,
+      selectedUnit: { created_at: '', id: 0, name: '', slug: '', updated_at: '' } as Unit,
       selectedUnitId: 0 as number,
       columns: [
         {
