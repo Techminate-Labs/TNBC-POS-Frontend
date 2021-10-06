@@ -2,7 +2,7 @@
   <div class="flex flex-col">
     <div class="py-2 align-middle inline-block w-full">
       <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-        <div class="flex flex-col flex-nowrap w-full p-4">
+        <div class="bg-white flex flex-col flex-nowrap w-full p-4">
           <input
             @input="$emit('handleSearch', $event)"
             class="p-3 rounded-md border-solid border-2 border-gray-200"
@@ -11,7 +11,7 @@
             placeholder="Search anything..." />
         </div>
         <table class="divide-y divide-gray-200 border-collapse w-full">
-          <thead class="bg-gray-50">
+          <thead class="bg-white">
             <tr>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 ID
@@ -91,14 +91,14 @@
                 <ChevronLeftIcon class="h-4 w-4" />
               </a>
               <!-- Temporarily disabling this part of pagination until links is fixed-->
-              <!--<a 
+              <a 
                 @click="handlePageChange(item.url)"
                 v-for="(item, index) in displayPagination" 
                 :key="index" href="#" 
                 :class="item.active === true ? 'current' : ''"
                 class="bg-white mx-2 shadow-md text-gray-500 hover:bg-gray-50 relative inline-flex items-center justify-center h-4 w-4 px-4 py-4 text-sm font-medium rounded-full">
                 {{ item.label }}
-              </a>-->
+              </a>
               <a
                 @click="changeToNextPage"
                 href="#"
@@ -188,7 +188,11 @@ export default defineComponent({
   },
   computed: {
     displayPagination() {
-      return this.meta.links
+      if (this.meta.links){
+        return this.meta.links.slice(1, -1)
+      } else {
+        return null
+      }
     },
     itemsInPage(): any[] {
       return this.data

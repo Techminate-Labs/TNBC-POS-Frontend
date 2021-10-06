@@ -1,6 +1,6 @@
 <template>
-  <div class="flex-grow px-4 md:px-8 my-10">
-    <p>Breadcrumb</p>
+  <div>
+    
     <div class="flex flex-nowrap justify-between">
       <p class="text-2xl mb-4">Unit List</p>
       <button @click="showUnitCreateModal" class="base-btn">Create Unit</button>
@@ -40,7 +40,7 @@ import UnitModalUpdate from '@/components/modals/UnitModalUpdate.vue'
 import DeleteModal from '@/components/modals/DeleteModal.vue'
 import UnitService from "@/services/UnitService";
 import ResponseData from "@/types/ResponseData";
-import { UnitItem } from "@/types/UnitTables";
+import { Unit } from "@/types/Units";
 
 export default defineComponent({
   name: 'UnitList',
@@ -62,7 +62,7 @@ export default defineComponent({
       isCreating: false,
       isEditing: false,
       isDeleting: false,
-      selectedUnit: { created_at: '', id: 0, name: '', slug: '', updated_at: '' } as UnitItem,
+      selectedUnit: { created_at: '', id: 0, name: '', slug: '', updated_at: '' } as Unit,
       selectedUnitId: 0 as number,
       columns: [
         {
@@ -191,7 +191,8 @@ export default defineComponent({
       }
     },
     async pageChange(url: string): Promise<void> {
-      this.url = url
+      let limit = this.maxItemsPerPage
+      this.url = `${url}&limit=${limit}`
       await this.fetchUnits()
     },
     async pageLimitChange(limit: string): Promise<void> {

@@ -14,10 +14,11 @@
           @close-additional-sidebar="closeAdditionalSidebar"
           :class="openAdditionalSideBar ? 'active' : ''" 
         />
-        <div class="w-9/12 flex-grow overflow-x-hidden" @click="openAdditionalSideBar = false">
+        <div class="w-9/12 flex-grow overflow-x-hidden m-12" @click="openAdditionalSideBar = false">
           <div class="bg-red-300 text-wite w-full py-2 px-8 text-lg" v-if="!isEmailVerified">
             <p>Your account has not been verified ! Please <button @click="requestEmailVerification" class="underline">send a verification email to your inbox.</button></p>
           </div>
+          <Breadcrumb :key="$route.path" />
           <router-view />
         </div>
       </div>
@@ -27,11 +28,12 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { MenuItem, SubMenuItem } from '@/types/SideBar'
+import { MenuItem } from '@/types/SideBar'
 import SideBar from '@/components/menus/SideBar.vue'
 import TopNavigation from '@/components/menus/TopNavigation.vue'
 import Footer from '@/components/footer/Footer.vue'
 import AdditionalSideBar from '@/components/menus/AdditionalSideBar.vue'
+import Breadcrumb from "@/components/Breadcrumb.vue"
 import DataService from "@/services/DataService";
 import ResponseData from "@/types/ResponseData";
 
@@ -41,7 +43,8 @@ export default defineComponent({
     SideBar,
     TopNavigation,
     AdditionalSideBar,
-    Footer
+    Footer,
+    Breadcrumb
   },
   data() {
     return {

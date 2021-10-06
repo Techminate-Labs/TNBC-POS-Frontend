@@ -1,6 +1,6 @@
 <template>
-  <div class="flex-grow px-4 md:px-8 my-10">
-    <p>Breadcrumb</p>
+  <div>
+    
     <div class="flex flex-nowrap justify-between mb-2">
       <p class="text-2xl">User Profile</p>
       <button 
@@ -11,8 +11,8 @@
     </div>
     <div class="bg-white p-4 rounded-lg shadow-md">
       <div 
-        v-if="!profile" 
-        class="bg-white p-4 rounded-lg shadow-md">
+        v-if="!profile.first_name" 
+        class="text-xl text-gray-700">
         This user doesn't have any profile
       </div>
       <div v-else class="grid grid-cols-3 gap-4">
@@ -73,7 +73,7 @@
       </div>
       <div class="text-right">
         <router-link :to="{name: 'ProfileUpdate', params: { user_id: profile.user_id }}">
-          <button v-show="profile" class="base-btn">Edit</button>
+          <button v-show="profile.first_name" class="base-btn">Edit</button>
         </router-link>
       </div>
     </div>

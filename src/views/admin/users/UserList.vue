@@ -1,6 +1,5 @@
 <template>
-  <div class="flex-grow px-4 md:px-8 my-10">
-    <p>Breadcrumb</p>
+  <div>
     <div class="flex flex-nowrap justify-between">
       <p class="text-2xl mb-4">User List</p>
       <router-link 
@@ -37,7 +36,7 @@ import UserService from "@/services/UserService";
 import ResponseData from "@/types/ResponseData";
 import DataTable from '@/components/tables/DataTable.vue'
 import DeleteModal from '@/components/modals/DeleteModal.vue'
-import { User } from '@/types/UserTables'
+import { User } from '@/types/Users'
 
 export default defineComponent({
   name: 'UserList',
@@ -117,7 +116,8 @@ export default defineComponent({
         });
     },
     async pageChange(url: string): Promise<void> {
-      this.url = url
+      let limit = this.maxItemsPerPage
+      this.url = `${url}&limit=${limit}`
       await this.fetchUsers()
     },
     async pageLimitChange(limit: string): Promise<void> {

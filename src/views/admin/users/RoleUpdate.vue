@@ -1,6 +1,5 @@
 <template>
-  <div class="flex-grow px-4 md:px-8 my-10">
-    <p class="mb-2">Breadcrumb</p>
+  <div>
     <div class="mb-4">
       <p class="text-2xl">Role Permission</p>
       <p>Updating <span class="capitalize font-bold">{{ roleName }}</span></p>

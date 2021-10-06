@@ -1,4 +1,4 @@
-interface UnitItem {
+interface Brand {
   created_at: string,
   id: number,
   name: string,
@@ -6,4 +6,4 @@ interface UnitItem {
   updated_at: string
 }
 
-export { UnitItem }
+export { Brand }

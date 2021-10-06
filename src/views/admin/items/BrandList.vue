@@ -1,6 +1,5 @@
 <template>
-  <div class="flex-grow px-4 md:px-8 my-10">
-    <p>Breadcrumb</p>
+  <div>
     <div class="flex flex-nowrap justify-between">
       <p class="text-2xl mb-4">Brand List</p>
       <button
@@ -44,7 +43,7 @@ import BrandModalUpdate from '@/components/modals/BrandModalUpdate.vue'
 import DeleteModal from '@/components/modals/DeleteModal.vue'
 import BrandService from "@/services/BrandService";
 import ResponseData from "@/types/ResponseData";
-import { BrandItem } from "@/types/BrandTables";
+import { Brand } from "@/types/Brands";
 
 export default defineComponent({
   name: 'BrandList',
@@ -67,7 +66,7 @@ export default defineComponent({
       isCreating: false,
       isEditing: false,
       isDeleting: false,
-      selectedBrand: { created_at: '', id: 0, name: '', slug: '', updated_at: '' } as BrandItem,
+      selectedBrand: { created_at: '', id: 0, name: '', slug: '', updated_at: '' } as Brand,
       selectedBrandId: 0 as number,
       columns: [
         {
@@ -192,7 +191,8 @@ export default defineComponent({
       }
     },
     async pageChange(url: string): Promise<void> {
-      this.url = url
+      let limit = this.maxItemsPerPage
+      this.url = `${url}&limit=${limit}`
       await this.fetchBrands()
     },
     async pageLimitChange(limit: string): Promise<void> {
