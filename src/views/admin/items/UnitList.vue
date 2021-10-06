@@ -191,7 +191,8 @@ export default defineComponent({
       }
     },
     async pageChange(url: string): Promise<void> {
-      this.url = url
+      let limit = this.maxItemsPerPage
+      this.url = `${url}&limit=${limit}`
       await this.fetchUnits()
     },
     async pageLimitChange(limit: string): Promise<void> {

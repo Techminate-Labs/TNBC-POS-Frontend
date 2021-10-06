@@ -2,7 +2,7 @@
   <div class="flex flex-col">
     <div class="py-2 align-middle inline-block w-full">
       <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-        <div class="flex flex-col flex-nowrap w-full p-4">
+        <div class="bg-white flex flex-col flex-nowrap w-full p-4">
           <input
             @input="$emit('handleSearch', $event)"
             class="p-3 rounded-md border-solid border-2 border-gray-200"
@@ -11,7 +11,7 @@
             placeholder="Search anything..." />
         </div>
         <table class="divide-y divide-gray-200 border-collapse w-full">
-          <thead class="bg-gray-50">
+          <thead class="bg-white">
             <tr>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 ID
