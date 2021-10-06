@@ -52,23 +52,23 @@
       </div>
       <div class="flex flex-col flex-nowrap py-2 grid-span-1 mb-2">
         <label class="capitalize mb-2" for="present_address">Present Address</label>
-        <input 
-          type="text"
+        <textarea
           name="present_address"
+          cols="40"
+          rows="2"
           class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900"
           placeholder="45 Freedom Av."
-          v-model="user.present_address"
-        >
+          v-model="user.present_address"></textarea>
       </div>
       <div class="flex flex-col flex-nowrap py-2 grid-span-1 mb-2">
         <label class="capitalize mb-2" for="permanent_address">Permanent Address</label>
-        <input 
-          type="text"
+        <textarea 
           name="permanent_address"
+          cols="40"
+          rows="2"
           class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900"
-          placeholder="45668A Liberty Bvd"
-          v-model="user.permanent_address"
-        >
+          placeholder="45 Freedom Av."
+          v-model="user.permanent_address"></textarea>
       </div>
       <div class="flex flex-col flex-nowrap py-2 grid-span-1 mb-2">
         <label class="capitalize mb-2" for="city">City</label>
