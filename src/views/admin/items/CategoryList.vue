@@ -165,9 +165,11 @@ export default defineComponent({
     async searchCategory(event: any): Promise<void> {
       let token = this.$store.state.bearerToken
       let value = event.target.value
-      let url = `/categoryList/?q=${value}`
+      let url = '/categoryList'
 
-      if (value.length > 2 || value.length === 0){
+      if (value.length > 2 || value.length == 0) {
+        if (value.length > 2)
+          url = `/categoryList/?q=${value}`
         await CategoryService.list(url, token)
           .then((response: ResponseData) => {
             let res = response.data

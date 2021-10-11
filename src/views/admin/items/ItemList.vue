@@ -168,9 +168,11 @@ export default defineComponent({
     async searchItem(event: any): Promise<void> {
       let token = this.$store.state.bearerToken
       let value = event.target.value
-      let url = `/itemList/?q=${value}`
+      let url = '/itemList'
 
-      if (value.length > 2 || value.length === 0){
+      if (value.length > 2 || value.length == 0) {
+        if (value.length > 2)
+          url = `/itemList/?q=${value}`
         await ItemService.list(url, token)
           .then((response: ResponseData) => {
             let res = response.data

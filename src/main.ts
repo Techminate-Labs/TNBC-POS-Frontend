@@ -2,13 +2,13 @@ import { createApp } from 'vue'
 import App from '@/App.vue'
 import router from '@/router'
 import store from '@/store'
-import axios, { AxiosStatic } from 'axios';
+// import axios, { AxiosStatic } from 'axios';
 import VueToast from 'vue-toast-notification';
 
 import 'vue-toast-notification/dist/theme-default.css';
 import '@/index.css'
 
-axios.defaults.baseURL = 'http://192.168.1.225:8088';
+// axios.defaults.baseURL = 'http://192.168.1.225:8088';
 
 let toastOptions = {
   position: 'top-right',

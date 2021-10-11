@@ -165,9 +165,11 @@ export default defineComponent({
     async searchUnit(event: any): Promise<void> {
       let token = this.$store.state.bearerToken
       let value = event.target.value
-      let url = `/unitList/?q=${value}`
+      let url = '/unitList'
 
-      if (value.length > 2 || value.length === 0){
+      if (value.length > 2 || value.length == 0) {
+        if (value.length > 2)
+          url = `/unitList/?q=${value}`
         await UnitService.list(url, token)
           .then((response: ResponseData) => {
             let res = response.data

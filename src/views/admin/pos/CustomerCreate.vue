@@ -2,7 +2,7 @@
   <div>
     
     <div class="flex flex-nowrap justify-between mb-2">
-      <p class="text-2xl mb-4">Update Supplier</p>
+      <p class="text-2xl mb-4">Add Customer</p>
       <div class="text-right">
         <button
           class="base-btn-outline" 
@@ -43,82 +43,86 @@
         >
       </div>
       <div class="flex flex-col py-2">
-        <label class="label" for="company-name">Company name:</label>
+        <label class="label" for="address">Address:</label>
         <input
           class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
           type="text" 
-          name="company-name" 
-          v-model="companyName" 
-          placeholder="ACME Inc."
+          name="address" 
+          v-model="address" 
+          placeholder="15 Lonely Road"
         >
       </div>
+            <div class="my-2 text-right">
+        <button class="base-btn-outline ml-2" @click="addCustomer">Save and create a new one</button>
+        <button class="base-btn ml-2" @click="addCustomerAndRedirect">Save and exit</button>
+      </div>
     </div>
-    <button class="base-btn float-right" @click="updateSupplier">Save</button>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import SupplierService from "@/services/SupplierService";
+import CustomerService from "@/services/CustomerService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
-  name: 'SupplierCreate',
+  name: 'CustomerCreate',
   data() {
     return {
       name: '',
       email: '',
       phone: '',
-      companyName: '',
-      id: ''
+      address: ''
     }
   },
   methods: {
-    async fetchSuppliers(): Promise<void> {
-      let token = this.$store.state.bearerToken
-      let params = this.$route.params
-      let url = '/supplierList'
-      await SupplierService.list(url, token)
-        .then((response: ResponseData) => {
-            let id: number = parseInt(params.id as string)
-            const filteredUser = response.data.data.filter((supplier: any) => supplier.id === id)
-            this.name  = filteredUser[0].name
-            this.email = filteredUser[0].email
-            this.phone = filteredUser[0].phone
-            this.companyName = filteredUser[0].company
-            this.id = filteredUser[0].id
-          })
-        .catch((e: Error) => {
-          console.log(e);
-        });
-    },
-    async updateSupplier(): Promise<void> {
+    async addCustomer(): Promise<void> {
       let data = {
         name: this.name,
         email: this.email,
         phone: this.phone,
-        company: this.companyName,
+        address: this.address
       }
-      let id = parseInt(this.id)
       let token = this.$store.state.bearerToken
-      await SupplierService.update(data, id, token)
+      await CustomerService.create(data, token)
         .then((response: ResponseData) => {
           this.$toast.open({
-            message: `${this.name} successfully updated!`,
+            message: `${this.name} successfully added to database!`,
             type: "success"
           })
         })
         .catch((e: Error) => {
           this.$toast.open({
-            message: `There was an error updating that supplier.`,
+            message: `There was an error adding that customer to the database.`,
             type: "error"
           })
           console.log(e)
         });
     },
-  },
-  async mounted() {
-    this.fetchSuppliers()
-  },
+    async addCustomerAndRedirect(): Promise<void> {
+      let data = {
+        name: this.name,
+        email: this.email,
+        phone: this.phone,
+        address: this.address
+      }
+      let token = this.$store.state.bearerToken
+      await CustomerService.create(data, token)
+        .then((response: ResponseData) => {
+          this.$toast.open({
+            message: `${this.name} successfully added to database!`,
+            type: "success"
+          })
+          this.$router.push({name: 'CustomerList'})
+        })
+        .catch((e: Error) => {
+          this.$toast.open({
+            message: `There was an error adding that customer to the database.`,
+            type: "error"
+          })
+          console.log(e)
+        });
+    },
+  }
 });
 </script>

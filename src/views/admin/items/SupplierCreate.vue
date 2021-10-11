@@ -1,8 +1,15 @@
 <template>
   <div>
     
-    <div class="flex flex-nowrap justify-between">
+    <div class="flex flex-nowrap justify-between mb-2">
       <p class="text-2xl mb-4">Add Supplier</p>
+      <div class="text-right">
+        <button
+          class="base-btn-outline" 
+          @click="$router.go(-1)">
+          Back
+        </button>
+      </div>
     </div>
     <div class="bg-white p-4 rounded-lg shadow-md">
       <div class="flex flex-col py-2">
@@ -45,8 +52,9 @@
           placeholder="ACME Inc."
         >
       </div>
-      <div class="text-right">
-        <button class="base-btn" @click="addSupplier">Save and exit</button>
+      <div class="my-2 text-right">
+        <button class="base-btn-outline ml-2" @click="addSupplier">Save and create a new one</button>
+        <button class="base-btn ml-2" @click="addSupplierAndRedirect">Save and exit</button>
       </div>
     </div>
   </div>
@@ -82,6 +90,29 @@ export default defineComponent({
             message: `${this.name} successfully added to database!`,
             type: "success"
           })
+        })
+        .catch((e: Error) => {
+          this.$toast.open({
+            message: `There was an error adding that Supplier to the database.`,
+            type: "error"
+          })
+          console.log(e)
+        });
+    },
+    async addSupplierAndRedirect(): Promise<void> {
+      let data = {
+        name: this.name,
+        email: this.email,
+        phone: this.phone,
+        company: this.companyName
+      }
+      let token = this.$store.state.bearerToken
+      await SupplierService.create(data, token)
+        .then((response: ResponseData) => {
+          this.$toast.open({
+            message: `${this.name} successfully added to database!`,
+            type: "success"
+          })
           this.$router.push({name: 'SupplierList'})
         })
         .catch((e: Error) => {
@@ -91,7 +122,7 @@ export default defineComponent({
           })
           console.log(e)
         });
-    }
+    },
   }
 });
 </script>

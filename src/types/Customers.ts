@@ -1,4 +1,4 @@
-interface SupplierItem {
+interface CustomerItem {
   company: string,
   created_at: string,
   email: string,
@@ -8,4 +8,4 @@ interface SupplierItem {
   updated_at: string
 }
 
-export { SupplierItem }
+export { CustomerItem }

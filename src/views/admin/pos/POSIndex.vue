@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3 class="text-xl">Hello, this is the Point of Sale component</h3>
+    <router-view></router-view>
   </div>
 </template>
 

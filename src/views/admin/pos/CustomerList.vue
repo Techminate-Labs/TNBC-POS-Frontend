@@ -2,8 +2,8 @@
   <div>
     
     <div class="flex flex-nowrap justify-between">
-      <p class="text-2xl mb-4">Supplier List</p>
-      <router-link :to="{ name: 'SupplierCreate' }"><button class="base-btn">Create Supplier</button></router-link>
+      <p class="text-2xl mb-4">Customer List</p>
+      <router-link :to="{ name: 'CustomerCreate' }"><button class="base-btn">Create Customer</button></router-link>
     </div>
     <DataTable
       :columns="columns"
@@ -12,17 +12,17 @@
       :meta="meta"
       :data="data"
       :type="type"
-      @handleSearch="searchSupplier"
-      @handleAddProfile="addSupplierProfile"
-      @handleView="viewSupplier"
-      @handleEdit="editSupplier"
+      @handleSearch="searchCustomer"
+      @handleAddProfile="addCustomerProfile"
+      @handleView="viewCustomer"
+      @handleEdit="editCustomer"
       @handleDelete="showDeleteModal"
       @pageChange="pageChange" 
       @previousPage="previousPage" 
       @nextPage="nextPage" 
       @maxItemsPerPageChange="pageLimitChange" />
     <div class="hidden" :class="isDeleting ? 'active' : ''">
-      <DeleteModal @handleConfirmDelete="deleteSupplier" @close-modal="isDeleting = false" />
+      <DeleteModal @handleConfirmDelete="deleteCustomer" @close-modal="isDeleting = false" />
     </div>
   </div>
 </template>
@@ -31,12 +31,12 @@
 import { defineComponent } from 'vue';
 import DataTable from '@/components/tables/DataTable.vue'
 import DeleteModal from '@/components/modals/DeleteModal.vue'
-import SupplierService from "@/services/SupplierService";
-import { SupplierItem } from '@/types/Suppliers'
+import CustomerService from "@/services/CustomerService";
+import { CustomerItem } from '@/types/Customers'
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
-  name: 'SupplierList',
+  name: 'CustomerList',
   components: {
     DataTable,
     DeleteModal
@@ -46,39 +46,44 @@ export default defineComponent({
       next: '',
       prev: '',
       meta: {},
-      data: [] as Array<SupplierItem>,
+      data: [] as Array<CustomerItem>,
       type: "Users",
-      url: '/supplierList',
+      url: '/customerList',
       maxItemsPerPage: '' || undefined as unknown as string,
       isDeleting: false,
-      selectedSupplierId: 0 as number,
+      selectedCustomerId: 0 as number,
       columns: [
         {
           attribute: 'name',
           name: 'name'
         },
         {
-          attribute: 'email',
-          name: 'email'
-        },
-        {
           attribute: 'phone',
           name: 'phone'
         },
         {
-          attribute: 'company',
-          name: 'company name'
+          attribute: 'email',
+          name: 'email'
+        },
+        {
+          attribute: 'address',
+          name: 'address'
+        },
+        {
+          attribute: 'point',
+          name: 'point'
         }
       ]
     }
   },
   methods: {
-    async fetchSuppliers(): Promise<void> {
+    async fetchCustomers(): Promise<void> {
       let token = this.$store.state.bearerToken
       let url = this.url
-      await SupplierService.list(url, token)
+      await CustomerService.list(url, token)
         .then((response: ResponseData) => {
           let res = response.data
+          console.log(res)
           this.data = res.data
           this.meta = {
             current_page: res.current_page,
@@ -100,20 +105,20 @@ export default defineComponent({
     async pageChange(url: string): Promise<void> {
       let limit = this.maxItemsPerPage
       this.url = `${url}&limit=${limit}`
-      await this.fetchSuppliers()
+      await this.fetchCustomers()
     },
     async pageLimitChange(limit: string): Promise<void> {
       let url = this.url
       this.maxItemsPerPage = limit
       this.url = `${url}?limit=${limit}`
-      await this.fetchSuppliers()
+      await this.fetchCustomers()
     },
     async previousPage(): Promise<void> {
       if (this.prev !== null){
         let url = this.prev
         let limit = this.maxItemsPerPage
         this.url = `${url}&limit=${limit}`
-        await this.fetchSuppliers()
+        await this.fetchCustomers()
       }
     },
     async nextPage(): Promise<void> {
@@ -121,51 +126,49 @@ export default defineComponent({
         let url = this.next
         let limit = this.maxItemsPerPage
         this.url = `${url}&limit=${limit}`
-        await this.fetchSuppliers()
+        await this.fetchCustomers()
       }
     },
-    addSupplierProfile(item: any): void {
+    addCustomerProfile(item: any): void {
       this.$router.push({name:'ProfileCreate', params: {id: item.id}})
     },
-    viewSupplier(item: any): void {
+    viewCustomer(item: any): void {
       this.$router.push({name:'ProfileDetails', params: {id: item.id}})
     },
-    editSupplier(item: any): void {
-      this.$router.push({name:'SupplierUpdate', params: {id: item.id}})
+    editCustomer(item: any): void {
+      this.$router.push({name:'CustomerUpdate', params: {id: item.id}})
     },
     showDeleteModal(item: any): any {
       this.isDeleting = true
-      this.selectedSupplierId = item.id
+      this.selectedCustomerId = item.id
     },
-    async deleteSupplier(): Promise<void> {
+    async deleteCustomer(): Promise<void> {
       let token = this.$store.state.bearerToken
-      let id = this.selectedSupplierId
-      await SupplierService.delete(id, token)
+      let id = this.selectedCustomerId
+      await CustomerService.delete(id, token)
         .then((response: ResponseData) => {
           this.isDeleting = false
-          this.fetchSuppliers()
+          this.fetchCustomers()
           this.$toast.open({
-            message: `Supplier successfully deleted.`,
+            message: `Customer successfully deleted.`,
             type: "success"
           })
         })
         .catch((e: Error) => {
           this.$toast.open({
-            message: `Could not delete that supplier.`,
+            message: `Could not delete that customer.`,
             type: "error"
           })
           console.log(e)
         });
     },
-    async searchSupplier(event: any): Promise<void> {
+    async searchCustomer(event: any): Promise<void> {
       let token = this.$store.state.bearerToken
       let value = event.target.value
-      let url = '/supplierList'
-
-      if (value.length > 2 || value.length == 0) {
-        if (value.length > 2)
-          url = `/supplierList/?q=${value}`
-        await SupplierService.list(url, token)
+      let url = `/customerList/?q=${value}`
+      console.log(value.length)
+      if (value.length > 2 || value.length === 0){
+        await CustomerService.list(url, token)
           .then((response: ResponseData) => {
             let res = response.data
             this.data = res.data
@@ -189,7 +192,7 @@ export default defineComponent({
     }
   },
   async mounted(): Promise<void> {
-    await this.fetchSuppliers()
+    await this.fetchCustomers()
   },
 });
 </script>

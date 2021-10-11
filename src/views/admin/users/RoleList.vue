@@ -128,9 +128,11 @@ export default defineComponent({
     async searchRole(event: any): Promise<void> {
       let token = this.$store.state.bearerToken
       let value = event.target.value
-      let url = `/roleList/?q=${value}`
+      let url = '/roleList'
 
-      if (value.length > 2 || value.length === 0){
+      if (value.length > 2 || value.length == 0) {
+        if (value.length > 2)
+          url = `/roleList/?q=${value}`
         await RoleService.list(url, token)
           .then((response: ResponseData) => {
             let res = response.data

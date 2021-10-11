@@ -165,9 +165,11 @@ export default defineComponent({
     async searchBrand(event: any): Promise<void> {
       let token = this.$store.state.bearerToken
       let value = event.target.value
-      let url = `/brandList/?q=${value}`
+      let url = '/brandList'
 
-      if (value.length > 2 || value.length === 0){
+      if (value.length > 2 || value.length == 0) {
+        if (value.length > 2)
+          url = `/brandList/?q=${value}`
         await BrandService.list(url, token)
           .then((response: ResponseData) => {
             let res = response.data

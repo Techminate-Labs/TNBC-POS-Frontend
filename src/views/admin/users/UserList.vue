@@ -145,9 +145,11 @@ export default defineComponent({
     async searchUser(event: any): Promise<void> {
       let token = this.$store.state.bearerToken
       let value = event.target.value
-      let url = `/userList/?q=${value}`
+      let url = '/userList'
 
-      if (value.length > 2 || value.length === 0){
+      if (value.length > 2 || value.length == 0) {
+        if (value.length > 2)
+          url = `/userList/?q=${value}`
         await UserService.list(url, token)
           .then((response: ResponseData) => {
             let res = response.data
