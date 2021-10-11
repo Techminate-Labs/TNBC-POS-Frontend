@@ -6,7 +6,7 @@
     </div>
     <NotificationIcon class="w-7 h-7 text-gray-500 mr-5 self-center" />
     <UserIcon @click="handleUserSettings" class="w-7 h-7 text-gray-500 mr-5 self-center cursor-pointer" />
-    <router-link to="/" @click="logOutUser">Log out</router-link>
+    <LogoutIcon @click="logOutUser" class="w-7 h-7 text-gray-500 mr-5 self-center cursor-pointer" />
   </div>
 </template>
 
@@ -14,12 +14,13 @@
 import { defineComponent } from 'vue';
 import UserIcon from "@/components/icons/UserIcon.vue";
 import NotificationIcon from "@/components/icons/NotificationIcon.vue";
+import LogoutIcon from "@/components/icons/LogoutIcon.vue";
 import UserService from "@/services/UserService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
   name: 'NavigationLinks',
-  components: { UserIcon, NotificationIcon },
+  components: { UserIcon, NotificationIcon, LogoutIcon },
   methods: {
     async logOutUser(): Promise<void> {
       let token = this.$store.state.bearerToken

@@ -87,24 +87,27 @@
           >
         </div>
         <div>
-          <div class="flex flex-row justify-between">
-            <p>Image</p>
-            <label class="flex flex-row items-center px-4 py-2 hover:text-blue-800 rounded-lg uppercase cursor-pointer">
-              <svg class="w-5 h-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
-              </svg>
-              <span class="ml-2">Select a file</span>
-              <input @change="handleFileChange($event)" type='file' accept="image/*" class="hidden" />
-            </label>
-          </div>
-          <div class="">
+          <div class="border-2 border-gray-200 rounded-md p-4">
+            <div class="flex flew-row flew-nowrap justify-between">
+              <p>Image</p>
+              <label class="flex flex-row items-center px-4 py-2 hover:text-blue-800 rounded-lg uppercase cursor-pointer">
+                <svg class="w-5 h-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+                </svg>
+                <span class="ml-2">Select a file</span>
+                <input @change="handleFileChange($event)" type='file' accept="image/*" class="hidden" />
+              </label>
+            </div>
             <div class="w-48">
               <img :src="user.image" />
             </div>
-          </div>
-          <div v-show="newImagePreview.length">
-            <p class="uppercase text-sm font-light">Preview</p>
-            <img :src="newImagePreview" class="w-48 mb-6" />
+            <div v-show="newImagePreview.length">
+              <p class="uppercase text-sm font-light">Preview</p>
+              <div class="flex flex-nowrap">
+                <img :src="newImagePreview" class="w-48 mb-6" />
+                <CancelIcon class="w-6 h-6 hover:text-red-600 cursor-pointer" @click="cancelImageUpload" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -120,9 +123,11 @@ import { defineComponent } from 'vue';
 import ProfileService from "@/services/ProfileService";
 import ResponseData from "@/types/ResponseData";
 import { UserSingle } from "@/types/Users"
+import CancelIcon from "@/components/icons/CancelIcon.vue"
 
 export default defineComponent({
   name: 'ProfileUpdate',
+  components: { CancelIcon },
   data() {
     return {
       user: {} as UserSingle,
@@ -137,7 +142,6 @@ export default defineComponent({
       await ProfileService.list(user_id, token)
         .then((response: ResponseData) => {
           this.user = response.data
-          console.log(response.data)
         })
         .catch((e: Error) => {
           console.log(e);
@@ -162,7 +166,6 @@ export default defineComponent({
       fd.append('zip', user.zip)
       fd.append('image', image)
       fd.append('_method', 'PUT')
-      // fd.append('image', user.image, user.image.name)
 
       await ProfileService.update(fd, user_id, token)
         .then((response: ResponseData) => {
@@ -170,7 +173,6 @@ export default defineComponent({
             message: `${this.user.first_name} ${this.user.last_name} has been successfully updated!`,
             type: "success"
           })
-          console.log(response)
           this.$router.push({name:'ProfileDetails', params: { user_id: user_id }})
         })
         .catch((e: Error) => {
@@ -180,6 +182,10 @@ export default defineComponent({
           })
           console.log(e)
         });
+    },
+    cancelImageUpload(): void {
+      this.newImage = null
+      this.newImagePreview = ''
     },
     handleFileChange(e: any): void {
       this.newImage = e.target.files[0]

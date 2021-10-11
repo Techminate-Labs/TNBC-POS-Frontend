@@ -1,10 +1,10 @@
 <template>
   <div class="flex flex-row flew-nowrap text-lg">
     <router-link :to="{ name: 'Dashboard' }" class="self-center">
-      <HomeIcon class="w-4 h-4 text-blue-900 hover:text-blue-700 cursor-pointer" />
+      <HomeIcon class="w-4 h-4 text-gray-700 hover:text-gray-400 cursor-pointer" />
     </router-link>
     <router-link v-for="(link, index) in links" :key="index" :to="link.path">
-      <span class="text-blue-900 hover:text-blue-700 ml-2 flex flex-row flew-nowrap">
+      <span class="text-gray-700 hover:text-gray-400 ml-2 flex flex-row flew-nowrap">
         <span class="mr-2 self-center">
           <ArrowNarrowRightIcon class="h-5 w-5" />
         </span>
@@ -33,7 +33,6 @@ export default defineComponent({
   },
   updated(){
     this.populateLinks()
-    console.log(this.links)
   },
   mounted() {
     this.populateLinks()

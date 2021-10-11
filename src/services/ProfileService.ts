@@ -19,5 +19,9 @@ export default {
 
   updatePassword(data: any, token: any): Promise<any> {
     return http.post(`/profileSettingPasswordUpdate`, data, { headers: { "Authorization": `Bearer ${token}` } });
+  },
+
+  updatePhoto(data: any, token: any): Promise<any> {
+    return http.post(`/profileSettingPhotoUpdate`, data, { headers: { "Authorization": `Bearer ${token}` } });
   }
 }
