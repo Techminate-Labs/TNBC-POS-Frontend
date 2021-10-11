@@ -51,7 +51,8 @@
           </table>
         </div>
         <div class="mt-2 text-right">
-          <button 
+          <button
+            v-show="(this.$route.name) !== 'RoleUpdate'"
             class="base-btn-outline ml-2" 
             @click="$emit('handleSave', items)">
             Save and Create a New Role
@@ -68,8 +69,6 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import DataService from "@/services/DataService";
-import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
   name: 'CheckboxTable',

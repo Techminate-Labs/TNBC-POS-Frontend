@@ -132,8 +132,8 @@ export default defineComponent({
       this.openAdditionalSideBar = false
     },
     requestEmailVerification():void {
-      let data: any = []
       let token = this.$store.state.bearerToken
+      let data: any = []
       DataService.requestEmailVerification(data, token)
         .then((response: ResponseData) => {
           if (response.data.message === "Already Verified"){

@@ -8,7 +8,7 @@
 
 /* FORMS */
 .label {
-  @apply capitalize text-lg mb-1 text-gray-900;
+  @apply capitalize font-semibold text-lg mb-1 text-gray-900;
 }
 
 .field-display {
@@ -30,6 +30,20 @@
 }
 .base-btn-cancel-outline {
   @apply uppercase box-border border-2 bg-transparent border-red-900 text-red-900 hover:bg-red-900 hover:text-white px-12 py-2 mt-3 rounded-md;
+}
+
+/* TABLE */
+
+.table-number-button {
+  @apply bg-white mx-2 shadow-md text-gray-500 transition-all hover:shadow-sm relative inline-flex items-center justify-center h-4 w-4 px-4 py-4 text-sm font-medium rounded-full cursor-pointer;
+}
+
+.current {
+  @apply text-blue-500 shadow-sm;
+}
+
+.disabled {
+  @apply hover:bg-white cursor-not-allowed text-gray-200 shadow-none;
 }
 
 /* SIBEDAR MENU */

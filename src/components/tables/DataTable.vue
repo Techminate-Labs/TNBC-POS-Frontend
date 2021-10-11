@@ -87,7 +87,7 @@
                 @click="changeToPreviousPage"
                 href="#"
                 :class="prev === null ? 'disabled' : ''"
-                class="relative inline-flex items-center mr-2 px-2 py-2 rounded-full bg-white text-sm font-medium text-gray-500 shadow-md hover:bg-gray-50">
+                class="relative inline-flex items-center mr-2 px-2 py-2 rounded-full bg-white text-sm font-medium text-gray-500 shadow-md hover:shadow-sm">
                 <ChevronLeftIcon class="h-4 w-4" />
               </a>
               <!-- Temporarily disabling this part of pagination until links is fixed-->
@@ -96,14 +96,14 @@
                 v-for="(item, index) in displayPagination" 
                 :key="index" href="#" 
                 :class="item.active === true ? 'current' : ''"
-                class="bg-white mx-2 shadow-md text-gray-500 hover:bg-gray-50 relative inline-flex items-center justify-center h-4 w-4 px-4 py-4 text-sm font-medium rounded-full">
+                class="table-number-button">
                 {{ item.label }}
               </a>
               <a
                 @click="changeToNextPage"
                 href="#"
                 :class="next === null ? 'disabled' : ''"
-                class="relative inline-flex items-center ml-2 px-2 py-2 rounded-full bg-white text-sm font-medium text-gray-500 shadow-md hover:bg-gray-50">
+                class="relative inline-flex items-center ml-2 px-2 py-2 rounded-full bg-white text-sm font-medium text-gray-500 shadow-md hover:shadow-sm">
                  <ChevronRightIcon class="h-4 w-4" />
               </a>
             </nav>
@@ -234,12 +234,6 @@ export default defineComponent({
 });
 </script>
 <style scoped>
-.current {
-  @apply z-10 bg-blue-500 text-white hover:bg-blue-500;
-}
-.disabled {
-  @apply hover:bg-white cursor-not-allowed text-gray-200 shadow-none
-}
 @media (max-width: 1024px) {
   table {
     border: 0;

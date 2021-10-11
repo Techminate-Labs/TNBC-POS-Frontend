@@ -67,10 +67,17 @@ export default defineComponent({
       let url = this.url
       await RoleService.list(url, token)
         .then((response: ResponseData) => {
-            let role_id: number = parseInt(params.id as string)
-            const filteredRoles = response.data.data
-            let permissions = filteredRoles[0].permissions
-            this.items = permissions
+            const roles = response.data.data
+            // we copy a permission
+            let emptyPermissions = roles[0].permissions
+
+            // we set all permissions types to false
+            for (var section in emptyPermissions) {
+              for (var type in emptyPermissions[section]) {
+                emptyPermissions[section][type] = false
+              }
+            }
+            this.items = emptyPermissions
           })
         .catch((e: Error) => {
           console.log(e);
