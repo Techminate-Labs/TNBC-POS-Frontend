@@ -43,7 +43,7 @@
           <label for="active" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
         </div>
       </div>
-            <div class="my-2 text-right">
+      <div class="my-2 text-right">
         <button class="base-btn-outline ml-2" @click="addCoupon">Save and create a new one</button>
         <button class="base-btn ml-2" @click="addCouponAndRedirect">Save and exit</button>
       </div>

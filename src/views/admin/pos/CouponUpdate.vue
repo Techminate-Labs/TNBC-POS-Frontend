@@ -6,47 +6,40 @@
     </div>
     <div class="bg-white p-4 rounded-lg shadow-md">
       <div class="flex flex-col py-2">
-        <label class="label" for="name">Name:</label>
+        <label class="label" for="discount">Discount:</label>
         <input
           class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
-          type="text" 
-          name="name" 
-          v-model="name" 
+          type="number" 
+          name="discount" 
+          v-model="discount" 
           placeholder="John Doe"
         >
       </div>
       <div class="flex flex-col py-2">
-        <label class="label" for="email">Email:</label>
-        <input
-          class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
-          type="email" 
-          name="email" 
-          v-model="email" 
-          placeholder="mail@example.com"
-        >
+        <label class="label" for="start_date">Start Date:</label>
+        <input 
+          type="date"
+          v-model="start_date"
+          class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900">
       </div>
       <div class="flex flex-col py-2">
-        <label class="label" for="phone">Phone:</label>
-        <input
-          class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
-          type="phone" 
-          name="phone" 
-          v-model="phone" 
-          placeholder="+33 6 7856 218"
-        >
+        <label class="label" for="end_date">End Date:</label>
+        <input 
+          type="date"
+          v-model="end_date"
+          class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900">
       </div>
       <div class="flex flex-col py-2">
-        <label class="label" for="address-name">Address:</label>
-        <input
-          class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
-          type="text" 
-          name="address" 
-          v-model="address" 
-          placeholder="ACME Inc."
-        >
+        <label class="label" for="active">Active:</label>
+        <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+          <input v-model="active" type="checkbox" name="active" id="toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-2 appearance-none cursor-pointer"/>
+          <label for="active" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+        </div>
+      </div>
+      <div class="my-2 text-right">
+        <button class="base-btn" @click="updateCoupon">Save and Exit</button>
       </div>
     </div>
-    <button class="base-btn float-right" @click="updateCoupon">Save and Exit</button>
   </div>
 </template>
 
@@ -59,11 +52,10 @@ export default defineComponent({
   name: 'CouponCreate',
   data() {
     return {
-      name: '',
-      email: '',
-      phone: '',
-      address: '',
-      id: ''
+      discount: 0,
+      start_date: '',
+      end_date: '',
+      active: false
     }
   },
   methods: {
@@ -73,12 +65,10 @@ export default defineComponent({
       await CouponService.getById(Coupon_id, token)
         .then((response: ResponseData) => {
             let res = response.data
-            console.log(res)
-            this.name  = res.name
-            this.email = res.email
-            this.phone = res.phone
-            this.address = res.address
-            this.id = res.id
+            this.discount = res.discount
+            this.start_date = res.start_date
+            this.end_date = res.end_date
+            this.active = (res.active == 1) ? true : false
           })
         .catch((e: Error) => {
           console.log(e);
@@ -86,17 +76,17 @@ export default defineComponent({
     },
     async updateCoupon(): Promise<void> {
       let data = {
-        name: this.name,
-        email: this.email,
-        phone: this.phone,
-        address: this.address,
+        discount: this.discount,
+        start_date: this.start_date,
+        end_date: this.end_date,
+        active: (this.active) ? 1 : 0
       }
-      let id = parseInt(this.id)
+      let id = this.$route.params.id
       let token = this.$store.state.bearerToken
       await CouponService.update(data, id, token)
         .then((response: ResponseData) => {
           this.$toast.open({
-            message: `${this.name} successfully updated!`,
+            message: `Coupon successfully updated!`,
             type: "success"
           })
           this.$router.push({ name: 'CouponList' })
