@@ -71,7 +71,7 @@ export default defineComponent({
           url: '/point-of-sale',
           icon: 'https://epqrpjmozlcsvbgkxjkp.supabase.in/storage/v1/object/sign/tnbc-pos/svgs/cash.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0bmJjLXBvcy9zdmdzL2Nhc2guc3ZnIiwiaWF0IjoxNjMwMDg4MTYzLCJleHAiOjE5NDU0NDgxNjN9.-N6SSb5frPDmWHStJ27gyjjpW8Yt597X8D8Qh8NGM0Y',
           submenus: [
-            { name: 'Launch POS', url: '/launch-pos' },
+            { name: 'Point of Sale', url: '/point-of-sale' },
             { name: 'Units', url: '/units-list' },
             { name: 'Customers', url: '/customers-list' },
             { name: 'Coupons', url: '/coupons-list' },

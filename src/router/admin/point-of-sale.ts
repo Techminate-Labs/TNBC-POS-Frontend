@@ -7,6 +7,7 @@ import CustomerUpdate from '@/views/admin/pos/CustomerUpdate.vue'
 import CouponList from '@/views/admin/pos/CouponList.vue'
 import CouponCreate from '@/views/admin/pos/CouponCreate.vue'
 import CouponUpdate from '@/views/admin/pos/CouponUpdate.vue'
+import PointOfSale from '@/views/admin/pos/PointOfSale.vue'
 
 const PointOfSaleRoutes = [
     {
@@ -47,6 +48,11 @@ const PointOfSaleRoutes = [
                 path: 'coupons-update/:id',
                 name: 'CouponUpdate',
                 component: CouponUpdate,
+            },
+            {
+                path: 'point-of-sale',
+                name: 'PointOfSale',
+                component: PointOfSale,
             },
         ]
     },
