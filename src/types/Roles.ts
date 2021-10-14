@@ -1,21 +1,21 @@
 interface PermissionObject {
-  key: Permission
+    key: Permission
 }
 
 interface Permission {
-  create: boolean,
-  view: boolean,
-  edit: boolean,
-  delete: boolean,
-  list: boolean
+    create: boolean,
+    view: boolean,
+    edit: boolean,
+    delete: boolean,
+    list: boolean
 }
 
 interface RoleObject {
-  created_at: string,
-  id: number,
-  name: string,
-  permissions: PermissionObject,
-  updated_at: string,
+    created_at: string,
+    id: number,
+    name: string,
+    permissions: PermissionObject,
+    updated_at: string,
 }
 
 export { RoleObject }

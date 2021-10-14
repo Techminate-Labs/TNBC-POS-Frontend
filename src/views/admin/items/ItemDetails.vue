@@ -1,82 +1,81 @@
 <template>
-  <div>
-    
-    <div class="flex flex-nowrap justify-between mb-2">
-      <p class="text-2xl mb-4">Item Details</p>
-      <div class="text-right">
-        <button
-          class="base-btn-outline" 
-          @click="$router.go(-1)">
-          Back
-        </button>
-      </div>
-    </div>
-    <div class="grid grid-cols-3 gap-4 bg-white p-4 rounded-lg shadow-md">
-      <div class="grid-span-1 p-4">
-        <div class="flex flex-col py-2">
-          <h3 class="text-xl capitalize">Name</h3>
-          <p class="text-gray-500 text-md">{{ item.name }}</p>
-        </div>
-        <div class="flex flex-col py-2">
-          <h3 class="text-xl capitalize">Category</h3>
-          <p class="text-gray-500 text-md">{{ item.category }}</p>
-        </div>
-        <div class="flex flex-col py-2">
-          <h3 class="text-xl capitalize">Unit</h3>
-          <p class="text-gray-500 text-md">{{ item.unit }}</p>
-        </div>
-        <div class="flex flex-col py-2">
-          <h3 class="text-xl capitalize">Price</h3>
-          <p class="text-gray-500 text-md">{{ item.price }}</p>
-        </div>
-        <div class="flex flex-col py-2">
-          <h3 class="text-xl capitalize">SKU ID</h3>
-          <p class="text-gray-500 text-md">{{ item.sku }}</p>
-        </div>
-        <div class="flex flex-col py-2">
-          <h3 class="text-xl capitalize">Available to Purchase</h3>
-          <p class="text-gray-500 text-md">{{ item.available }}</p>
-        </div>
-      </div>
-      <div class="grid-span-1 p-4">
-        <div class="flex flex-col py-2">
-          <h3 class="text-xl capitalize">Slug</h3>
-          <p class="text-gray-500 text-md">{{ item.slug }}</p>
-        </div>
-        <div class="flex flex-col py-2">
-          <h3 class="text-xl capitalize">Brand</h3>
-          <p class="text-gray-500 text-md">{{ item.brand }}</p>
-        </div>
-        <div class="flex flex-col py-2">
-          <h3 class="text-xl capitalize">Supplier</h3>
-          <p class="text-gray-500 text-md">{{ item.supplier }}</p>
-        </div>
-        <div class="flex flex-col py-2">
-          <h3 class="text-xl capitalize">Discount</h3>
-          <p class="text-gray-500 text-md">{{ item.discount }}</p>
-        </div>
-        <div class="flex flex-col py-2">
-          <h3 class="text-xl capitalize">Inventory</h3>
-          <p class="text-gray-500 text-md">{{ item.inventory }}</p>
-        </div>
-        <div class="flex flex-col py-2">
-          <h3 class="text-xl capitalize">Expired Date</h3>
-          <p class="text-gray-500 text-md">{{ item.expire_date }}</p>
-        </div>
-      </div>
-      <div class="grid-span-1 p-4">
-        <div class="flex flex-col py-2 justify-between h-full">
-          <div>
-            <h3 class="font-regular text-xl capitalize">Image</h3>
-            <img class="w-36 h-auto" :src="item.image" :alt="item.name"/>
-          </div>
-          <div class="place-self-end self-end">
-            <button class="base-btn float-right" @click="generateBarcode">Generate Barcode</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div>
+		<div class="flex flex-nowrap justify-between mb-2">
+			<p class="text-2xl mb-4">Item Details</p>
+			<div class="text-right">
+				<button
+					class="base-btn-outline" 
+					@click="$router.go(-1)">
+					Back
+				</button>
+			</div>
+		</div>
+		<div class="grid grid-cols-3 gap-4 bg-white p-4 rounded-lg shadow-md">
+			<div class="grid-span-1 p-4">
+				<div class="flex flex-col py-2">
+				<h3 class="text-xl capitalize">Name</h3>
+				<p class="text-gray-500 text-md">{{ item.name }}</p>
+				</div>
+				<div class="flex flex-col py-2">
+				<h3 class="text-xl capitalize">Category</h3>
+				<p class="text-gray-500 text-md">{{ item.category }}</p>
+				</div>
+				<div class="flex flex-col py-2">
+				<h3 class="text-xl capitalize">Unit</h3>
+				<p class="text-gray-500 text-md">{{ item.unit }}</p>
+				</div>
+				<div class="flex flex-col py-2">
+				<h3 class="text-xl capitalize">Price</h3>
+				<p class="text-gray-500 text-md">{{ item.price }}</p>
+				</div>
+				<div class="flex flex-col py-2">
+				<h3 class="text-xl capitalize">SKU ID</h3>
+				<p class="text-gray-500 text-md">{{ item.sku }}</p>
+				</div>
+				<div class="flex flex-col py-2">
+				<h3 class="text-xl capitalize">Available to Purchase</h3>
+				<p class="text-gray-500 text-md">{{ item.available }}</p>
+				</div>
+			</div>
+			<div class="grid-span-1 p-4">
+				<div class="flex flex-col py-2">
+				<h3 class="text-xl capitalize">Slug</h3>
+				<p class="text-gray-500 text-md">{{ item.slug }}</p>
+				</div>
+				<div class="flex flex-col py-2">
+				<h3 class="text-xl capitalize">Brand</h3>
+				<p class="text-gray-500 text-md">{{ item.brand }}</p>
+				</div>
+				<div class="flex flex-col py-2">
+				<h3 class="text-xl capitalize">Supplier</h3>
+				<p class="text-gray-500 text-md">{{ item.supplier }}</p>
+				</div>
+				<div class="flex flex-col py-2">
+				<h3 class="text-xl capitalize">Discount</h3>
+				<p class="text-gray-500 text-md">{{ item.discount }}</p>
+				</div>
+				<div class="flex flex-col py-2">
+				<h3 class="text-xl capitalize">Inventory</h3>
+				<p class="text-gray-500 text-md">{{ item.inventory }}</p>
+				</div>
+				<div class="flex flex-col py-2">
+				<h3 class="text-xl capitalize">Expired Date</h3>
+				<p class="text-gray-500 text-md">{{ item.expire_date }}</p>
+				</div>
+			</div>
+			<div class="grid-span-1 p-4">
+				<div class="flex flex-col py-2 justify-between h-full">
+					<div>
+						<h3 class="font-regular text-xl capitalize">Image</h3>
+						<img class="w-36 h-auto" :src="item.image" :alt="item.name"/>
+					</div>
+					<div class="place-self-end self-end">
+						<button class="base-btn float-right" @click="generateBarcode">Generate Barcode</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script lang="ts">

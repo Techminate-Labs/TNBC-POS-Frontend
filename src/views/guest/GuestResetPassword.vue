@@ -1,35 +1,35 @@
 <template>
-  <div class="home">
-    <div class="flex flex-row flew-nowrap my-4">
-      <img class="pr-4" src="@/assets/TNB_POS_LOGO.png" />
-      <h1 class="self-center text-4xl">TNB POS</h1>
+    <div class="home">
+        <div class="flex flex-row flew-nowrap my-4">
+            <img class="pr-4" src="@/assets/TNB_POS_LOGO.png" />
+            <h1 class="self-center text-4xl">TNB POS</h1>
+        </div>
+        <p class="text-xl font-semibold">Please enter your new password.</p>
+        <div class="flex flex-col py-2">
+            <label class="label" for="new-email">Your new password:</label>
+            <input 
+                class="text-input" 
+                type="password" 
+                name="new-email" 
+                v-model="password" 
+                placeholder="*******************">
+        </div>
+        <div class="flex flex-col py-2">
+            <label class="label" for="new-password">Repeat the password:</label>
+            <input 
+                class="text-input" 
+                type="password" 
+                name="new-password" 
+                v-model="repeatPassword" 
+                placeholder="*******************">
+        </div>
+        <button class="base-btn" @click="confirmResetPassword">
+            Reset your password
+        </button>
+        <div>
+            <router-link to="/" class="hover:underline">Nevermind, I just remembered it!</router-link>
+        </div>
     </div>
-    <p class="text-xl font-semibold">Please enter your new password.</p>
-    <div class="flex flex-col py-2">
-      <label class="label" for="new-email">Your new password:</label>
-      <input 
-        class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
-        type="password" 
-        name="new-email" 
-        v-model="password" 
-        placeholder="*******************">
-    </div>
-    <div class="flex flex-col py-2">
-      <label class="label" for="new-password">Repeat the password:</label>
-      <input 
-        class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
-        type="password" 
-        name="new-password" 
-        v-model="repeatPassword" 
-        placeholder="*******************">
-    </div>
-    <button class="base-btn" @click="confirmResetPassword">
-      Reset your password
-    </button>
-    <div>
-      <router-link to="/" class="hover:underline">Nevermind, I just remembered it!</router-link>
-    </div>
-  </div>
 </template>
 
 <script lang="ts">
@@ -38,51 +38,51 @@ import UserService from "@/services/UserService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
-  name: 'GuestResetPassword',
-  data() {
-    return {
-      email: '',
-      password: '',
-      repeatPassword: '',
-      token: ''
-    }
-  },
-  methods: {
-    async confirmResetPassword(): Promise<void> {
-      if (this.$route.query.token){
-        let _token: string = this.$route.query.token.toString()
-        this.token = _token
-        let data = {
-          token: this.token,
-          email: this.$store.state.userEmail,
-          password: this.password,
-          password_confirmation: this.repeatPassword,
+    name: 'GuestResetPassword',
+    data() {
+        return {
+            email: '',
+            password: '',
+            repeatPassword: '',
+            token: ''
         }
-        await UserService.resetPassword(data)
-          .then((res: ResponseData) => {
-            this.$toast.open({
-              message: `Your password has been changed.`,
-              type: "success"
-            })
-            UserService.login(data)
-              .then((response: ResponseData) => {
-                  this.$store.commit('setBearerToken', response.data.token)
-                  this.$store.commit('setAuthentication', true)
-                  this.$router.push('/dashboard')
-                  this.$toast.open({
-                  message: `You are now successfully connected.`,
-                  type: "info"
-                })
-              })
-              .catch((e: Error) => {
-                console.log(e);
-              });
-          })
-          .catch((e: Error) => {
-            console.log(e);
-          });
-      }
+    },
+    methods: {
+        async confirmResetPassword(): Promise<void> {
+            if (this.$route.query.token){
+                let _token: string = this.$route.query.token.toString()
+                this.token = _token
+                let data = {
+                    token: this.token,
+                    email: this.$store.state.userEmail,
+                    password: this.password,
+                    password_confirmation: this.repeatPassword,
+                }
+                await UserService.resetPassword(data)
+                    .then((res: ResponseData) => {
+                        this.$toast.open({
+                            message: `Your password has been changed.`,
+                            type: "success"
+                        })
+                        UserService.login(data)
+                            .then((response: ResponseData) => {
+                                    this.$store.commit('setBearerToken', response.data.token)
+                                    this.$store.commit('setAuthentication', true)
+                                    this.$router.push('/dashboard')
+                                    this.$toast.open({
+                                    message: `You are now successfully connected.`,
+                                    type: "info"
+                                })
+                            })
+                            .catch((e: Error) => {
+                                console.log(e);
+                            });
+                    })
+                    .catch((e: Error) => {
+                        console.log(e);
+                    });
+            }
+        }
     }
-  }
 });
 </script>
