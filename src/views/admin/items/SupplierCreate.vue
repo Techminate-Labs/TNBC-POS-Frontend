@@ -14,7 +14,7 @@
 			<div class="flex flex-col py-2">
 				<label class="label" for="name">Name:</label>
 				<input
-					class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
+					class="text-input" 
 					type="text" 
 					name="name" 
 					v-model="name" 
@@ -24,7 +24,7 @@
 			<div class="flex flex-col py-2">
 				<label class="label" for="email">Email:</label>
 				<input
-					class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
+					class="text-input" 
 					type="email" 
 					name="email" 
 					v-model="email" 
@@ -34,7 +34,7 @@
 			<div class="flex flex-col py-2">
 				<label class="label" for="phone">Phone:</label>
 				<input
-					class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
+					class="text-input" 
 					type="phone" 
 					name="phone" 
 					v-model="phone" 
@@ -44,7 +44,7 @@
 			<div class="flex flex-col py-2">
 				<label class="label" for="company-name">Company name:</label>
 				<input
-					class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
+					class="text-input" 
 					type="text" 
 					name="company-name" 
 					v-model="companyName" 

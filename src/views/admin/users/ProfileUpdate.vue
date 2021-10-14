@@ -17,7 +17,7 @@
 				<input 
 					type="text"
 					name="first_name"
-					class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900"
+					class="text-input"
 					placeholder="John"
 					v-model="user.first_name"
 				>
@@ -27,7 +27,7 @@
 				<input 
 					type="text"
 					name="last_name"
-					class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900"
+					class="text-input"
 					placeholder="Doe"
 					v-model="user.last_name"
 				>
@@ -37,7 +37,7 @@
 				<input 
 					type="text"
 					name="mobile"
-					class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900"
+					class="text-input"
 					placeholder="02 45 84 55 65"
 					v-model="user.mobile"
 				>
@@ -47,7 +47,7 @@
 				<input 
 					type="number"
 					name="identity_number"
-					class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900"
+					class="text-input"
 					placeholder="45685318"
 					v-model="user.identity_number"
 				>
@@ -58,7 +58,7 @@
 					name="present_address"
 					cols="40"
 					rows="2"
-					class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900"
+					class="text-input"
 					placeholder="45 Freedom Av."
 					v-model="user.present_address"></textarea>
 				</div>
@@ -68,7 +68,7 @@
 					name="permanent_address"
 					cols="40"
 					rows="2"
-					class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900"
+					class="text-input"
 					placeholder="45 Freedom Av."
 					v-model="user.permanent_address"></textarea>
 				</div>
@@ -77,7 +77,7 @@
 				<input 
 					type="text"
 					name="city"
-					class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900"
+					class="text-input"
 					placeholder="New York"
 					v-model="user.city"
 				>
@@ -87,7 +87,7 @@
 				<input 
 					type="text"
 					name="zip"
-					class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900"
+					class="text-input"
 					placeholder="456 21"
 					v-model="user.zip"
 				>

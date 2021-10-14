@@ -1,5 +1,5 @@
 <template>
-	<div class="text-center bg-white shadow-md rounded-md">
+	<div class="text-center bg-white my-4 rounded-md">
 		<table class="divide-y divide-gray-200 border-collapse w-full text-left">
 			<thead>
 				<tr>

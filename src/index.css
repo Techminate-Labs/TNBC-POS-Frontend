@@ -15,6 +15,10 @@
   @apply text-base text-gray-700;
 }
 
+.text-input {
+  @apply p-3 rounded-md border-solid border-2 border-gray-200;
+}
+
 /* EDIT PAGE */
 
 

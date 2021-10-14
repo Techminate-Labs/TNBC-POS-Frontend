@@ -12,7 +12,7 @@
         <div class="flex flex-col py-2">
             <label class="label" for="email">Email:</label>
             <input 
-                class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
+                class="text-input" 
                 type="text" 
                 name="email"
                 v-model="email" placeholder="mail@example.com">

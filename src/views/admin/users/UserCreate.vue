@@ -14,7 +14,7 @@
 			<div class="flex flex-col py-2">
 				<label class="label" for="name">Name:</label>
 				<input
-					class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
+					class="text-input" 
 					type="text" 
 					name="name" 
 					v-model="name" 
@@ -24,7 +24,7 @@
 			<div class="flex flex-col py-2">
 				<label class="label" for="email">Email:</label>
 				<input
-					class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
+					class="text-input" 
 					type="email" 
 					name="email" 
 					v-model="email" 
@@ -33,7 +33,7 @@
 			</div>
 			<div class="flex flex-col py-2">
 				<label class="label">Role:</label>
-				<select v-model="role" class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900">
+				<select v-model="role" class="text-input">
 					<option :value="null">-- Please select an option --</option>
 					<option v-for="(role, index) in roles" :key="index" :value="role.value">{{role.name}}</option>
 				</select>
@@ -41,7 +41,7 @@
 			<div class="flex flex-col py-2">
 				<label class="label" for="password">Password:</label>
 				<input
-					class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
+					class="text-input" 
 					type="password" 
 					name="password" 
 					v-model="password" 
@@ -51,7 +51,7 @@
 			<div class="flex flex-col py-2">
 				<label class="label" for="password-confirmation">Password Confirmation:</label>
 				<input
-					class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
+					class="text-input" 
 					type="password" 
 					name="password-confirmation" 
 					v-model="passwordConfirmation" 

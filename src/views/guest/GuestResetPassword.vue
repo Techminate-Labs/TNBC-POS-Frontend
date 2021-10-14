@@ -8,7 +8,7 @@
         <div class="flex flex-col py-2">
             <label class="label" for="new-email">Your new password:</label>
             <input 
-                class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
+                class="text-input" 
                 type="password" 
                 name="new-email" 
                 v-model="password" 
@@ -17,7 +17,7 @@
         <div class="flex flex-col py-2">
             <label class="label" for="new-password">Repeat the password:</label>
             <input 
-                class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
+                class="text-input" 
                 type="password" 
                 name="new-password" 
                 v-model="repeatPassword" 

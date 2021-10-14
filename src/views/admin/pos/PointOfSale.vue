@@ -24,26 +24,32 @@
                     type="text"
                     placeholder="Search customers..." />
             </div>
-            <div class="rounded-md">
+            <div class="shadow-md">
                 <ul class="flex flew-row flew-nowrap justify-evenly text-center divide-x-2 divide-gray-200">
-                    <li class="flex-grow" @click="setActive('cart')">
+                    <li 
+                        @click="setActive('cart')"
+                        class="flex-grow hover:bg-gray-100 rounded-tl-md">
                         <div 
-                            class="px-3 py-2 cursor-pointer hover:bg-gray-100 bg-white text-gray-900"
-                            :class="isActive('cart') ? 'border-b-4 border-blue-900 bg-gray-100' : ''">
+                            :class="isActive('cart') ? 'border-b-4 border-blue-900 bg-gray-100 rounded-tl-md' : ''"
+                            class="px-3 py-2 cursor-pointer text-gray-900">
                             <span>Cart Items</span>
                         </div>
                     </li>
-                    <li class="flex-grow" @click="setActive('invoice')">
-                        <div
-                            class="px-3 py-2 cursor-pointer hover:bg-gray-100 bg-white text-gray-900"
-                            :class="isActive('invoice') ? 'border-b-4 border-blue-900 bg-gray-100' : ''">
+                    <li 
+                        @click="setActive('invoice')"
+                        class="flex-grow hover:bg-gray-100">
+                        <div 
+                            :class="isActive('invoice') ? 'border-b-4 border-blue-900 bg-gray-100' : ''"
+                            class="px-3 py-2 cursor-pointer text-gray-900">
                             <span>Invoice</span>
                         </div>
                     </li>
-                    <li class="flex-grow" @click="setActive('customer')">
-                        <div
-                            class="px-3 py-2 cursor-pointer hover:bg-gray-100 bg-white text-gray-900"
-                            :class="isActive('customer') ? 'border-b-4 border-blue-900 bg-gray-100' : ''">
+                    <li 
+                        @click="setActive('customer')"
+                        class="flex-grow hover:bg-gray-100 rounded-tr-md">
+                        <div 
+                            :class="isActive('customer') ? 'border-b-4 border-blue-900 bg-gray-100 rounded-tr-md' : ''"
+                            class="px-3 py-2 cursor-pointer text-gray-900">
                             <span>Add Customer</span>
                         </div>
                     </li>
@@ -55,7 +61,9 @@
                 <div :class="isActive('invoice') ? 'block' : 'hidden'">
                     <Invoice />
                 </div>
-                <div :class="isActive('customer') ? 'block' : 'hidden'">Add Customer</div>
+                <div :class="isActive('customer') ? 'block' : 'hidden'">
+                    <CustomerForm />
+                </div>
             </div>
         </div>
     </div>
@@ -65,17 +73,18 @@ import { defineComponent } from 'vue';
 import ItemCard from "@/components/pos/ItemCard.vue"
 import CartTable from "@/components/pos/CartTable.vue"
 import Invoice from "@/components/pos/Invoice.vue"
+import CustomerForm from "@/components/pos/CustomerForm.vue"
 import ResponseData from "@/types/ResponseData";
 import ItemService from "@/services/ItemService";
 import { ItemObject } from '@/types/Items'
 
 export default defineComponent({
     name: 'PointOfSale',
-    components: { ItemCard, CartTable, Invoice },
+    components: { ItemCard, CartTable, Invoice, CustomerForm },
     data(){
         return {
             data: [] as Array<ItemObject>,
-            activeItem: 'invoice'
+            activeItem: 'customer'
         }
     },
     methods: {

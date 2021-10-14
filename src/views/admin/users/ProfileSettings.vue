@@ -15,7 +15,7 @@
 					<input 
 						type="password"
 						name="current_password"
-						class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900"
+						class="text-input"
 						placeholder="**********"
 						v-model="user.current_password"
 						/>
@@ -25,7 +25,7 @@
 					<input 
 						type="password"
 						name="new_password"
-						class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900"
+						class="text-input"
 						placeholder="**********"
 						v-model="user.new_password"
 					/>
@@ -35,7 +35,7 @@
 					<input 
 						type="password"
 						name="repeat_new_password"
-						class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900"
+						class="text-input"
 						placeholder="**********"
 						v-model="user.repeat_new_password"
 						/>

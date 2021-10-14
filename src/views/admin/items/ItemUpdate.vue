@@ -15,7 +15,7 @@
 				<div class="flex flex-col py-2">
 					<label class="label" for="name">Name</label>
 					<input
-						class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
+						class="text-input" 
 						type="text" 
 						name="name" 
 						v-model="item.name" 
@@ -25,7 +25,7 @@
 				<div class="flex flex-col py-2">
 					<label class="label" for="price">Price</label>
 					<input
-						class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
+						class="text-input" 
 						type="text" 
 						name="price" 
 						v-model="item.price" 
@@ -35,7 +35,7 @@
 				<div class="flex flex-col py-2">
 					<label class="label" for="discount">Discount</label>
 					<input
-						class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
+						class="text-input" 
 						type="text" 
 						name="discount" 
 						v-model="item.discount" 
@@ -45,7 +45,7 @@
 				<div class="flex flex-col py-2">
 					<label class="label" for="inventory">Inventory</label>
 					<input
-						class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
+						class="text-input" 
 						type="text" 
 						name="inventory" 
 						v-model="item.inventory" 
@@ -133,7 +133,7 @@
 						<input 
 							type="date"
 							v-model="item.expire_date"
-							class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900"
+							class="text-input"
 							/>
 					</div>
 				</div>

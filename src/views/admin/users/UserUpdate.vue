@@ -17,7 +17,7 @@
 				<div class="flex flex-col py-2">
 					<label class="label" for="name">Name:</label>
 					<input
-						class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
+						class="text-input" 
 						type="text" 
 						name="name" 
 						v-model="name" 
@@ -27,7 +27,7 @@
 				<div class="flex flex-col py-2">
 					<label class="label" for="email">Email:</label>
 					<input
-						class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900" 
+						class="text-input" 
 						type="email" 
 						name="email" 
 						v-model="email" 
@@ -36,7 +36,7 @@
 					</div>
 				<div class="flex flex-col py-2">
 					<label class="label">Role:</label>
-					<select :value="role_id" class="p-3 rounded-md border-solid border-2 border-gray-200 focus:border-gray-900">
+					<select :value="role_id" class="text-input">
 						<option value="">-- Please select an option --</option>
 						<option v-for="(role, index) in roles" :key="index" :value="role.value">{{role.name}}</option>
 					</select>
