@@ -1,9 +1,9 @@
 interface Brand {
-  created_at: string,
-  id: number,
-  name: string,
-  slug: string,
-  updated_at: string
+    created_at: string,
+    id: number,
+    name: string,
+    slug: string,
+    updated_at: string
 }
 
 export { Brand }

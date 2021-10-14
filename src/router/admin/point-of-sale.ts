@@ -1,5 +1,3 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import store from '@/store'
 import POSIndex from '@/views/admin/pos/POSIndex.vue'
 import CustomerList from '@/views/admin/pos/CustomerList.vue'
 import CustomerCreate from '@/views/admin/pos/CustomerCreate.vue'
@@ -15,8 +13,8 @@ const PointOfSaleRoutes = [
         name: 'POSIndex',
         component: POSIndex,
         meta: {
-          layout: 'AdminLayout',
-          auth: true
+            layout: 'AdminLayout',
+            auth: true
         },
         children: [
             {

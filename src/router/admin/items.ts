@@ -1,5 +1,3 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import store from '@/store'
 import ItemsIndex from '@/views/admin/items/ItemsIndex.vue'
 import SupplierList from '@/views/admin/items/SupplierList.vue'
 import SupplierCreate from '@/views/admin/items/SupplierCreate.vue'
@@ -18,8 +16,8 @@ const ItemsRoutes = [
         name: 'Items',
         component: ItemsIndex,
         meta: {
-          layout: 'AdminLayout',
-          auth: true
+            layout: 'AdminLayout',
+            auth: true
         },
         children: [
             {

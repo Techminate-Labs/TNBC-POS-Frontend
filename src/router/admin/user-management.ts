@@ -19,8 +19,8 @@ const UserManagementRoutes: Array<RouteRecordRaw> = [
         name: 'UserManagement',
         component: UserManagement,
         meta: {
-          layout: 'AdminLayout',
-          auth: true
+            layout: 'AdminLayout',
+            auth: true
         },
         children: [
             {
@@ -108,11 +108,11 @@ const UserManagementRoutes: Array<RouteRecordRaw> = [
 ]
 
 const VerifyRoutes: Array<RouteRecordRaw> = [
-  {
+    {
     path: '/email_verify_url',
     name: 'VerifyEmailUrl',
     component: VerifyEmailUrl
-  },
+    },
 ]
 
 export { UserManagementRoutes, VerifyRoutes }
