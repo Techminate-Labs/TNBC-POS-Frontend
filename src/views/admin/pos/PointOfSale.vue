@@ -1,6 +1,6 @@
 <template>
     <div class="grid grid-cols-2 gap-3">
-        <div class="bg-white rounded-md col-span-1 p-4">
+        <div class="bg-white rounded-md shadow-md col-span-1 p-4">
             <div class="flex flex-col flex-nowrap w-full mb-4 rounded-md shadow-md">
                 <input
                     @input="$emit('handleSearch', $event)"
@@ -15,7 +15,7 @@
                 </div>
             </div>
         </div>
-        <div class="bg-white rounded-md col-span-1 col-start-2 p-4">
+        <div class="bg-white rounded-md shadow-md col-span-1 col-start-2 p-4">
             <div class="flex flex-col flex-nowrap w-full mb-4 rounded-md shadow-md">
                 <input
                     @input="$emit('handleSearch', $event)"
@@ -52,7 +52,9 @@
                     <CartTable />
                     <TotalTable />
                 </div>
-                <div :class="isActive('invoice') ? 'block' : 'hidden'">Invoice</div>
+                <div :class="isActive('invoice') ? 'block' : 'hidden'">
+                    <Invoice />
+                </div>
                 <div :class="isActive('customer') ? 'block' : 'hidden'">Add Customer</div>
             </div>
         </div>
@@ -62,17 +64,18 @@
 import { defineComponent } from 'vue';
 import ItemCard from "@/components/pos/ItemCard.vue"
 import CartTable from "@/components/pos/CartTable.vue"
+import Invoice from "@/components/pos/Invoice.vue"
 import ResponseData from "@/types/ResponseData";
 import ItemService from "@/services/ItemService";
 import { ItemObject } from '@/types/Items'
 
 export default defineComponent({
     name: 'PointOfSale',
-    components: { ItemCard, CartTable },
+    components: { ItemCard, CartTable, Invoice },
     data(){
         return {
             data: [] as Array<ItemObject>,
-            activeItem: 'cart'
+            activeItem: 'invoice'
         }
     },
     methods: {
