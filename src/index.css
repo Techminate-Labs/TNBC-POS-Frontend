@@ -68,6 +68,12 @@
   @apply: bg-green-400;
   background-color: #68D391;
 }
+.base-toggle-input {
+  @apply absolute block w-6 h-6 rounded-full bg-white border-2 appearance-none cursor-pointer;
+}
+.base-toggle-label {
+  @apply block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer;
+}
 
 /* MULTISELECT */
 .multiselect-search {
