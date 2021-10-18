@@ -9,11 +9,11 @@
                     <div 
                         :class="selectedMenu === item ? 'selected-menu-item' : ''"
                         @click="handleSubmenuSidebar(item)">
-                        <div class="px-1 py-6 md:px-2 flex flex-col flex-nowrap" aria-label="home icon">
-                            <router-link :to="`/point-of-sale${item.url}`">
+                        <router-link :to="item.url">
+                            <div class="px-1 py-6 md:px-2 flex flex-col flex-nowrap" aria-label="home icon">
                                 <h2 class="text-sm">{{item.name}}</h2>
-                            </router-link>
-                        </div>
+                            </div>
+                        </router-link>
                     </div>
                 </li>
             </ul>

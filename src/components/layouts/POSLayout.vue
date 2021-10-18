@@ -45,16 +45,20 @@ export default defineComponent({
             singleMenu: null || {},
             menuPOS: [
                 {
+                    name: 'Home',
+                    url: '/dashboard',
+                },
+                {
                     name: 'Point of Sale',
-                    url: '/point-of-sale',
+                    url: '/point-of-sale/point-of-sale',
                 },
                 {
                     name: 'Customers',
-                    url: '/customers-list',
+                    url: '/point-of-sale/customers-list',
                 },
                 {
                     name: 'Invoices',
-                    url: '/invoices-list',
+                    url: '/point-of-sale/invoices-list',
                 }
             ] as any,
             menuActions: [
