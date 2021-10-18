@@ -22,7 +22,7 @@ export default {
     },
 
     addToCart(data: any, token: any): Promise<any> {
-        return http.post(`/cartItemCreate`, data, { headers: { "Authorization": `Bearer ${token}` } });
+        return http.post(`/cartItemCreate/`, data, { headers: { "Authorization": `Bearer ${token}` } });
     },
 
 
