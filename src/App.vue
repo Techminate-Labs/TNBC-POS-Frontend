@@ -5,12 +5,14 @@
 <script>
 import GuestLayout from '@/components/layouts/GuestLayout.vue'
 import AdminLayout from '@/components/layouts/AdminLayout.vue'
+import POSLayout from '@/components/layouts/POSLayout.vue'
 
 export default {
   name: 'App',
   components: {
     GuestLayout,
-    AdminLayout
+    AdminLayout,
+    POSLayout
   },
     beforeCreate () {
     this.$store.commit('initializeStore')

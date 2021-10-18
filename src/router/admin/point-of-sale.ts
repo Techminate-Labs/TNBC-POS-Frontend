@@ -13,7 +13,7 @@ const PointOfSaleRoutes = [
         name: 'POSIndex',
         component: POSIndex,
         meta: {
-            layout: 'AdminLayout',
+            layout: 'POSLayout',
             auth: true
         },
         children: [

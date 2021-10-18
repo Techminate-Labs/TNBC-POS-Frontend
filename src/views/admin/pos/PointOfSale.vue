@@ -2,12 +2,31 @@
     <div class="grid grid-cols-2 gap-3">
         <div class="bg-white rounded-md shadow-md col-span-1 p-4">
             <div class="flex flex-col flex-nowrap w-full mb-4 rounded-md shadow-md">
-                <input
-                    @input="$emit('handleSearch', $event)"
-                    class="p-3 m-4 rounded-md border-solid border-2 border-gray-200"
-                    name="role-name"
-                    type="text"
-                    placeholder="Search products..." />
+                <Multiselect
+                    v-model="itemId"
+                    @select="addItemToCart()"
+                    :delay="0"
+                    :filterResults="true"
+                    :resolveOnLoad="true"
+                    :searchable="true"
+                    placeholder="Pick an Item"
+                    :options="async function(query, $event) {
+                        return await fetchItems(query) // check JS block in JSFiddle for implementation
+                    }"
+                    >
+                        <template v-slot:singleLabel="{ value }">
+                            <div class="multiselect-single-label">
+                            <img class="w-1/2 h-32 object-cover mr-4" :src="value.img">
+                            <span class="text-xl">
+                                {{ value.label }}
+                            </span>
+                            </div>
+                        </template>
+
+                        <template v-slot:option="{ option }">
+                            <img class="w-1/2 h-32 object-cover mr-4" :src="option.img">{{ option.label }}
+                        </template>
+                    </Multiselect>
             </div>
             <div class="grid grid-cols-3 gap-3">
                 <div v-for="(item, index) in data" :key="index">
@@ -17,15 +36,21 @@
         </div>
         <div class="bg-white rounded-md shadow-md col-span-1 col-start-2 p-4">
             <div class="flex flex-col flex-nowrap w-full mb-4 rounded-md shadow-md">
-                <input
-                    @input="$emit('handleSearch', $event)"
-                    class="p-3 m-4 rounded-md border-solid border-2 border-gray-200"
-                    name="role-name"
-                    type="text"
-                    placeholder="Search customers..." />
+                <Multiselect
+                    v-model="customerId"
+                    @select="addCustomerToCart()"
+                    :delay="0"
+                    :filterResults="true"
+                    :resolveOnLoad="true"
+                    :searchable="true"
+                    placeholder="Pick a Customer"
+                    :options="async function(query, $event) {
+                        return await fetchCustomers(query) // check JS block in JSFiddle for implementation
+                    }"
+                    />
             </div>
             <div class="shadow-md">
-                <ul class="flex flew-row flew-nowrap justify-evenly text-center divide-x-2 divide-gray-200">
+                <ul class="flex flew-row flew-nowrap justify-evenly text-center divide-x-2 divide-gray-200 border-b-2 border-gray-100">
                     <li 
                         @click="setActive('cart')"
                         class="flex-grow hover:bg-gray-100 rounded-tl-md">
@@ -56,7 +81,7 @@
                 </ul>
                 <div :class="isActive('cart') ? 'block' : 'hidden'">
                     <CartTable />
-                    <TotalTable />
+                    <Payments />
                 </div>
                 <div :class="isActive('invoice') ? 'block' : 'hidden'">
                     <Invoice />
@@ -72,33 +97,75 @@
 import { defineComponent } from 'vue';
 import ItemCard from "@/components/pos/ItemCard.vue"
 import CartTable from "@/components/pos/CartTable.vue"
+import Payments from "@/components/pos/Payments.vue"
 import Invoice from "@/components/pos/Invoice.vue"
 import CustomerForm from "@/components/pos/CustomerForm.vue"
 import ResponseData from "@/types/ResponseData";
 import ItemService from "@/services/ItemService";
+import CartService from "@/services/CartService";
+import CustomerService from "@/services/CustomerService";
 import { ItemObject } from '@/types/Items'
+import Multiselect from '@vueform/multiselect'
 
 export default defineComponent({
     name: 'PointOfSale',
-    components: { ItemCard, CartTable, Invoice, CustomerForm },
+    components: { ItemCard, CartTable, Payments, Invoice, CustomerForm, Multiselect },
     data(){
         return {
             data: [] as Array<ItemObject>,
-            activeItem: 'customer'
+            activeItem: 'cart',
+            items: [],
+            itemId: '',
+            customerId: ''
         }
     },
     methods: {
-        async fetchItems(): Promise<void> {
-        let token = this.$store.state.bearerToken
-        let url = '/itemList'
-        await ItemService.list(url, token)
-            .then((response: ResponseData) => {
-            let res = response.data
-            this.data = res.data
-            })
-            .catch((e: Error) => {
-                console.log(e);
-            });
+        async fetchPopularItems(): Promise<void> {
+            let token = this.$store.state.bearerToken
+            let url = `/itemList`
+            await ItemService.list(url, token)
+                .then((response: ResponseData) => {
+                    let res = response.data
+                    this.data = res.data
+                })
+                .catch((e: Error) => {
+                    console.log(e);
+                });
+        },
+        async fetchItems(query: any): Promise<void> {
+            if (query){
+                let token = this.$store.state.bearerToken
+                let url = `/itemList?q=${query}`
+                let results = await ItemService.list(url, token)
+                    .then((response: ResponseData) => {
+                        let res = response.data
+                        return res.data.map((item: any) => {
+                            return { value: item.item_id, label: item.name, img: item.image }
+                        })
+                    })
+                    .catch((e: Error) => {
+                        console.log(e);
+                    });
+                return results
+            }
+        },
+        async fetchCustomers(query: any): Promise<void> {
+            if (query){
+                let token = this.$store.state.bearerToken
+                let url = `/customerList?q=${query}`
+                let results = await CustomerService.list(url, token)
+                    .then((response: ResponseData) => {
+                        let res = response.data
+                        return res.data.map((item: any) => {
+                            return { value: item.id, label: item.name }
+                        })
+                    })
+                    .catch((e: Error) => {
+                        console.log(e);
+                    });
+                console.log(results)
+                return results
+            }
         },
         setActive(tabItem: string): void {
             this.activeItem = tabItem
@@ -106,9 +173,41 @@ export default defineComponent({
         isActive(tabItem: string): boolean {
             return this.activeItem === tabItem
         },
+        customLabel ({ title, desc }: any) {
+            return `${title} – ${desc}`
+        },
+        async addCustomerToCart(): Promise<void>{
+            console.log('added customer to cart')
+            let item = this.customerId as string
+            let token = this.$store.state.bearerToken
+            
+            let fd = new FormData()
+            fd.append('customer_id', item)
+            await CartService.addCustomer(fd, token)
+                .then((response) => {
+                    console.log(response)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        },
+        async addItemToCart(): Promise<void>{
+            let item = this.itemId as string
+            let token = this.$store.state.bearerToken
+
+            let fd = new FormData()
+            fd.append('item_id', item)
+            await CartService.addItem(fd, token)
+                .then((response) => {
+                    console.log(response)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        }
     },
     mounted() {
-        this.fetchItems()
+        this.fetchPopularItems()
     }
 });
 </script>
