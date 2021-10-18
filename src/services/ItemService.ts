@@ -19,11 +19,7 @@ export default {
 
     delete(itemId: any, token: any): Promise<any> {
         return http.delete(`/itemDelete/${itemId}`, { headers: { "Authorization": `Bearer ${token}` } });
-    },
-
-    addToCart(data: any, token: any): Promise<any> {
-        return http.post(`/cartItemCreate/`, data, { headers: { "Authorization": `Bearer ${token}` } });
-    },
+    }
 
 
 }
