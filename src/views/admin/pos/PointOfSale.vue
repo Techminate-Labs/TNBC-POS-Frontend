@@ -25,7 +25,7 @@
                     placeholder="Search customers..." />
             </div>
             <div class="shadow-md">
-                <ul class="flex flew-row flew-nowrap justify-evenly text-center divide-x-2 divide-gray-200">
+                <ul class="flex flew-row flew-nowrap justify-evenly text-center divide-x-2 divide-gray-200 border-b-2 border-gray-100">
                     <li 
                         @click="setActive('cart')"
                         class="flex-grow hover:bg-gray-100 rounded-tl-md">
@@ -56,7 +56,7 @@
                 </ul>
                 <div :class="isActive('cart') ? 'block' : 'hidden'">
                     <CartTable />
-                    <TotalTable />
+                    <Payments />
                 </div>
                 <div :class="isActive('invoice') ? 'block' : 'hidden'">
                     <Invoice />
@@ -72,6 +72,7 @@
 import { defineComponent } from 'vue';
 import ItemCard from "@/components/pos/ItemCard.vue"
 import CartTable from "@/components/pos/CartTable.vue"
+import Payments from "@/components/pos/Payments.vue"
 import Invoice from "@/components/pos/Invoice.vue"
 import CustomerForm from "@/components/pos/CustomerForm.vue"
 import ResponseData from "@/types/ResponseData";
@@ -80,11 +81,11 @@ import { ItemObject } from '@/types/Items'
 
 export default defineComponent({
     name: 'PointOfSale',
-    components: { ItemCard, CartTable, Invoice, CustomerForm },
+    components: { ItemCard, CartTable, Payments, Invoice, CustomerForm },
     data(){
         return {
             data: [] as Array<ItemObject>,
-            activeItem: 'customer'
+            activeItem: 'cart'
         }
     },
     methods: {
