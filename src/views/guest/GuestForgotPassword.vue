@@ -20,8 +20,8 @@
         <button class="base-btn" @click="sendRecoverLink">
             Submit
         </button>
-        <div>
-            <router-link to="/" class="hover:underline">Nevermind, I just remembered it!</router-link>
+        <div class="pt-4">
+            <router-link to="/" class="text-blue-500">Nevermind, I just remembered it!</router-link>
         </div>
     </div>
 </template>

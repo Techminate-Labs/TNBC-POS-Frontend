@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="flex flex-nowrap justify-between mb-4">
-			<p class="text-2xl mb-4">Add User Profile</p>
+			<p class="text-2xl mb-4 pt-4">Add User Profile</p>
 			<div class="text-right">
 				<button
 					class="base-btn-outline" 

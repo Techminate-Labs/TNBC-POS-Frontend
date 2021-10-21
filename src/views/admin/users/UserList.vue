@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="flex flex-nowrap justify-between">
-      <p class="text-2xl mb-4">User List</p>
+      <p class="text-2xl pt-4 mb-4">User List</p>
       <router-link 
         v-show="canUserCreate"
         :to="{ name: 'UserCreate' }">

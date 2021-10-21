@@ -1,9 +1,9 @@
 <template>
 	<div>
-		<div class="mb-4">
-			<p class="text-2xl">Role Permission</p>
-			<p>Updating <span class="capitalize font-bold">{{ roleName }}</span></p>
-			<div class="text-right">
+		<div >
+			<p class="text-2xl pt-4">Role Permission</p>
+			<div class="text-right flex flex-nowrap justify-between mb-2">
+				<p class="pt-4">Updating <span class="capitalize font-bold">{{ roleName }}</span></p>
 				<button
 				class="base-btn-outline" 
 				@click="$router.go(-1)">

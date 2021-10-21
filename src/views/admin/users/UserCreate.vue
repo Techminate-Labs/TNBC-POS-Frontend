@@ -1,8 +1,8 @@
 <template>
-	<div class="flex-grow px-4 md:px-8 py-10">
+	<div >
 		<div class="flex flex-nowrap justify-between mb-2">
-			<p class="text-2xl mb-4">Add User</p>
-			<div class="text-right">
+			<p class="text-2xl mb-4 pt-4">Add User</p>
+			<div class="text-right pt-4">
 				<button
 					class="base-btn-outline" 
 					@click="$router.go(-1)">
