@@ -12,7 +12,7 @@
                     class="base-btn-outline">
                     Cancel
                 </button>
-                <button class="base-btn-cancel border-2 ml-2" @click="$emit('handleConfirmDelete')">Delete</button>
+                <button class="base-btn-cancel  border-2 ml-2" @click="$emit('handleConfirmDelete')">Delete</button>
             </div>
         </div>
         <div class="bg-gray-800 h-screen w-full opacity-90 z-30 fixed top-0 left-0"></div>

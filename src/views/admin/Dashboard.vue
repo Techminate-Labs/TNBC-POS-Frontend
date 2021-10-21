@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<router-view></router-view>
-		<p class="text-4xl">Hello, this is the dashboard</p>
+		<p class="text-4xl pt-3">Hello, this is the dashboard</p>
 	</div>
 </template>
 

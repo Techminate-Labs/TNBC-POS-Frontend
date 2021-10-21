@@ -27,8 +27,8 @@
         <button class="base-btn" @click="logInUser">
             Log In
         </button>
-        <div>
-            <router-link :to="{ name: 'GuestForgotPassword' }" class="hover:underline">Reset your password here</router-link>
+        <div class="pt-4">
+            <router-link :to="{ name: 'GuestForgotPassword' }" class="text-blue-500">Reset your password here .</router-link>
         </div>
     </div>
 </template>

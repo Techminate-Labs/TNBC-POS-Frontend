@@ -2,7 +2,7 @@
   <div>
     
     <div class="flex flex-nowrap justify-between ">
-      <p class="text-2xl mb-4">User Roles</p>
+      <p class="text-2xl pt-4 mb-4">User Roles</p>
       <router-link
         v-show="canUserCreate"
         :to="{ name: 'RoleCreate' }">

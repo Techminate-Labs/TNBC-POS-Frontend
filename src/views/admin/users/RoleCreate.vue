@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="flex flex-nowrap justify-between mb-2">
-			<p class="text-2xl">Role Permission</p>
+			<p class="text-2xl pt-4">Role Permission</p>
 			<div class="text-right">
 				<button
 					class="base-btn-outline" 
