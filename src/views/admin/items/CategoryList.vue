@@ -1,10 +1,10 @@
 <template>
 	<div>
-		<div class="flex flex-nowrap justify-between">
+		<div class="flex flex-nowrap justify-between pt-4">
 			<p class="text-2xl mb-4">Category List</p>
 			<button
 				@click="showCategoryCreateModal"
-				class="base-btn">
+				class="base-btn mb-2">
 				Create Category
 			</button>
 		</div>
@@ -78,7 +78,7 @@ export default defineComponent({
 					name: 'slug'
 				},
 				{
-					attribute: 'number_of_products',
+					attribute: 'item_count',
 					name: 'number of products'
 				}
 			]

@@ -1,8 +1,8 @@
 <template>
 	<div>
-		<div class="flex flex-nowrap justify-between">
+		<div class="flex flex-nowrap justify-between pt-4">
 			<p class="text-2xl mb-4">Unit List</p>
-			<button @click="showUnitCreateModal" class="base-btn">
+			<button @click="showUnitCreateModal" class="base-btn mb-2">
 				Create Unit
 			</button>
 		</div>
@@ -74,6 +74,10 @@ export default defineComponent({
 				{
 					attribute: 'name',
 					name: 'name'
+				},
+				{
+					attribute: 'item_count',
+					name: 'number of products'
 				},
 				{
 					attribute: 'created_at',

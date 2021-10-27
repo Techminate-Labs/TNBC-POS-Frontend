@@ -1,9 +1,9 @@
 <template>
 	<div>
-		<div class="flex flex-nowrap justify-between">
+		<div class="flex flex-nowrap justify-between pt-4">
 			<p class="text-2xl mb-4">Supplier List</p>
 			<router-link :to="{ name: 'SupplierCreate' }">
-				<button class="base-btn">Create Supplier</button>
+				<button class="base-btn mb-2">Create Supplier</button>
 			</router-link>
 		</div>
 		<DataTable
@@ -70,6 +70,10 @@ export default defineComponent({
 				{
 					attribute: 'company',
 					name: 'company name'
+				},
+				{
+					attribute: 'item_count',
+					name: 'number of products'
 				}
 			]
 		}
