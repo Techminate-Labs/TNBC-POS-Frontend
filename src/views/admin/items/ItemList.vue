@@ -1,10 +1,10 @@
 <template>
 	<div>
-		<div class="flex flex-nowrap justify-between">
+		<div class="flex flex-nowrap justify-between pt-4">
 			<p class="text-2xl mb-4">Items List</p>
 			<router-link :to="{ name: 'ItemCreate' }">
 				<button
-					class="base-btn">
+					class="base-btn mb-2">
 					Create Item
 				</button>
 			</router-link>

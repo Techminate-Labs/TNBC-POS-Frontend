@@ -1,10 +1,10 @@
 <template>
 	<div>
-		<div class="flex flex-nowrap justify-between mb-2">
+		<div class="flex flex-nowrap justify-between mb-2 pt-4">
 			<p class="text-2xl mb-4">Add Product</p>
-			<div class="text-right">
+			<div class="text-right ">
 				<button
-					class="base-btn-outline" 
+					class="base-btn-outline mb-2" 
 					@click="$router.go(-1)">
 					Back
 				</button>
