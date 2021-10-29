@@ -4,7 +4,7 @@ import router from '@/router';
 process.env.NODE_ENV
 
 const apiClient: AxiosInstance = axios.create({
-  baseURL: process.env.NODE_ENV === 'development' ? "https://tnbpos.tk/api" : "https://tnbpos.tk/api",
+  baseURL: process.env.NODE_ENV === 'development' ? "http://tnbpos.tk/api" : "https://tnbpos.tk/api",
   headers: {
     "Content-type": "application/json"
   },
