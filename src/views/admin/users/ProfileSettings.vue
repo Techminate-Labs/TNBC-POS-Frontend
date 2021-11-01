@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="flex flex-nowrap justify-between mb-2">
-			<p class="text-2xl">Profile Settings</p>
+			<p class="text-2xl pt-4">Profile Settings</p>
 			<button 
 				@click="$router.go(-1)" 
 				class="base-btn-outline float-right">

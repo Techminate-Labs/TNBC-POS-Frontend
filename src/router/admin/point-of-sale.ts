@@ -6,6 +6,7 @@ import CouponList from '@/views/admin/pos/CouponList.vue'
 import CouponCreate from '@/views/admin/pos/CouponCreate.vue'
 import CouponUpdate from '@/views/admin/pos/CouponUpdate.vue'
 import PointOfSale from '@/views/admin/pos/PointOfSale.vue'
+import GeneratedQrCode from '@/views/admin/pos/GeneratedQrCode.vue'
 
 const PointOfSaleRoutes = [
     {
@@ -51,6 +52,11 @@ const PointOfSaleRoutes = [
                 path: 'point-of-sale',
                 name: 'PointOfSale',
                 component: PointOfSale,
+            },
+            {
+                path: 'generated-qr-code',
+                name: 'GeneratedQrCode',
+                component: GeneratedQrCode,
             },
         ]
     },

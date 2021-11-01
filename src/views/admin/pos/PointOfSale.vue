@@ -197,6 +197,7 @@ export default defineComponent({
 
             let fd = new FormData()
             fd.append('item_id', item)
+            console.log(fd)
             await CartService.addItem(fd, token)
                 .then((response) => {
                     console.log(response)

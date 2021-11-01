@@ -7,7 +7,7 @@ export default {
     },
 
     addItem(data: any, token: any): Promise<any> {
-        return http.post(`/cartItemCreate/`, data, { headers: { "Authorization": `Bearer ${token}` } });
+        return http.post(`/cartItemCreate/`, data, { headers: { "Authorization": `Bearer ${token}`, "Accept": "application/json" } });
     },
 
 }

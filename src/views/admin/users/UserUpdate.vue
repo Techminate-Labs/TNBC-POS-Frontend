@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="flex flex-nowrap justify-between mb-2">
-			<p class="text-2xl">Edit User</p>
+			<p class="text-2xl pt-4">Edit User</p>
 			<div class="text-right">
 				<button
 					class="base-btn-outline" 
@@ -12,8 +12,6 @@
 		</div>
 		<div class="grid grid-cols-1 bg-white p-4 rounded-lg shadow-md">
 			<div>
-				<h3 class="text-xl text-gray-600 font-light pb-2">User information</h3>
-				<hr />
 				<div class="flex flex-col py-2">
 					<label class="label" for="name">Name:</label>
 					<input
