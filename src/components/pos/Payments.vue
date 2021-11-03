@@ -7,7 +7,17 @@
 		</div>
 		<div class="flex-grow flex flex-col flex-nowrap pl-4">
 			<button class="text-2xl shadow-md base-btn flex-grow">Print Receipt</button>
-			<button class="shadow-md base-btn-outline">Discount Coupon</button>
+			<div class="flex flex-col flex-nowrap py-2 grid-span-1 mb-2">
+				<label class="capitalize mb-2" for="first_name">Discount Coupon</label>
+				<input 
+					type="text"
+					name="first_name"
+					class="text-input"
+					placeholder="154951"
+					v-model="discount"
+					@input="$emit('discountChange', $event)"
+					/>
+			</div>
 		</div>
 	</div>
 </template>
@@ -15,6 +25,11 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-	name: 'Payments'
+	name: 'Payments',
+	data() {
+		return {
+			discount: ''
+		}
+	}
 })
 </script>

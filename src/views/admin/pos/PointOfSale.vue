@@ -29,7 +29,7 @@
                     </Multiselect>
             </div>
             <div class="grid grid-cols-3 gap-3">
-                <div v-for="(item, index) in data" :key="index">
+                <div v-for="(item, index) in popularItems" :key="index">
                     <ItemCard :item="item" />
                 </div>
             </div>
@@ -80,8 +80,8 @@
                     </li>
                 </ul>
                 <div :class="isActive('cart') ? 'block' : 'hidden'">
-                    <CartTable />
-                    <Payments />
+                    <CartTable :cart="cart" @fetchCart="fetchCartItems" />
+                    <Payments @discountChange="setDiscount" />
                 </div>
                 <div :class="isActive('invoice') ? 'block' : 'hidden'">
                     <Invoice />
@@ -112,21 +112,36 @@ export default defineComponent({
     components: { ItemCard, CartTable, Payments, Invoice, CustomerForm, Multiselect },
     data(){
         return {
-            data: [] as Array<ItemObject>,
+            popularItems: [] as Array<ItemObject>,
             activeItem: 'cart',
-            items: [],
+            cart: [],
             itemId: '',
-            customerId: ''
+            customerId: '',
+            discountCode: '',
+            paymentMethod: 'fiat'
         }
     },
     methods: {
         async fetchPopularItems(): Promise<void> {
             let token = this.$store.state.bearerToken
-            let url = `/itemList`
+            let url = `/itemList?limit=0`
             await ItemService.list(url, token)
                 .then((response: ResponseData) => {
                     let res = response.data
-                    this.data = res.data
+                    this.popularItems = res.data
+                })
+                .catch((e: Error) => {
+                    console.log(e);
+                });
+        },
+        async fetchCartItems(): Promise<void> {
+            let token = this.$store.state.bearerToken
+            let params = `?discount=${this.discountCode}&payment_method=${this.paymentMethod}`
+            await CartService.listItems(params, token)
+                .then((response: ResponseData) => {
+                    let res = response.data
+                    this.cart = res
+                    this.paymentMethod = res.payment_method
                 })
                 .catch((e: Error) => {
                     console.log(e);
@@ -167,6 +182,9 @@ export default defineComponent({
                 return results
             }
         },
+        setDiscount(e: any): void {
+            this.discountCode = e.target.value.toString()
+        },
         setActive(tabItem: string): void {
             this.activeItem = tabItem
         },
@@ -177,7 +195,6 @@ export default defineComponent({
             return `${title} – ${desc}`
         },
         async addCustomerToCart(): Promise<void>{
-            console.log('added customer to cart')
             let item = this.customerId as string
             let token = this.$store.state.bearerToken
             
@@ -201,6 +218,7 @@ export default defineComponent({
             await CartService.addItem(fd, token)
                 .then((response) => {
                     console.log(response)
+                    this.fetchCartItems()
                 })
                 .catch((error) => {
                     console.log(error)
@@ -209,6 +227,7 @@ export default defineComponent({
     },
     mounted() {
         this.fetchPopularItems()
+        this.fetchCartItems()
     }
 });
 </script>
