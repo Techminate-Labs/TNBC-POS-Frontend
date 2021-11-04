@@ -10,58 +10,49 @@
 				</tr>
 			</thead>
 			<tbody class="divide-y divide-gray-200">
-				<tr>
-					<td class="w-full lg:w-auto py-4 whitespace-nowrap">American Jersey</td>
-					<td class="w-full lg:w-auto py-4 whitespace-nowrap">18.50</td>
-					<td class="w-full lg:w-auto py-4 whitespace-nowrap">1</td>
-					<td class="w-full lg:w-auto py-4 whitespace-nowrap">18.50</td>
-				</tr>
-				<tr>
-					<td class="w-full lg:w-auto py-4 whitespace-nowrap">American Jersey</td>
-					<td class="w-full lg:w-auto py-4 whitespace-nowrap">18.50</td>
-					<td class="w-full lg:w-auto py-4 whitespace-nowrap">1</td>
-					<td class="w-full lg:w-auto py-4 whitespace-nowrap">18.50</td>
+				<tr v-for="(item) in invoice.invoiceItems" :key="item.id">
+					<td class="w-full lg:w-auto py-4 whitespace-nowrap">{{ item.item_name }}</td>
+					<td class="w-full lg:w-auto py-4 whitespace-nowrap">{{ item.unit_price }}</td>
+					<td class="w-full lg:w-auto py-4 whitespace-nowrap">{{ item.qty }}</td>
+					<td class="w-full lg:w-auto py-4 whitespace-nowrap">{{ item.total }}</td>
 				</tr>
 			</tbody>
 			<tfoot class="text-left">
 				<tr>
 					<th class="pb-1 pt-4">Subtotal</th>
 					<td></td>
-					<td colspan="2" class="text-right pt-4">17.50 TNBC</td>
+					<td colspan="2" class="text-right pt-4">{{ invoice.subtotal }} TNBC</td>
 				</tr>
 				<tr>
 					<th class="py-1">Discount</th>
 					<td></td>
-					<td colspan="2" class="text-right">1.50 TNBC</td>
+					<td colspan="2" class="text-right">{{ invoice.discount }} TNBC</td>
 				</tr>
 				<tr>
 					<th class="py-1">Total</th>
 					<td></td>
-					<td colspan="2" class="text-right">21 TNBC</td>
+					<td colspan="2" class="text-right">{{ invoice.total }} TNBC</td>
 				</tr>
 				<tr>
 					<th class="py-1">Tax</th>
 					<td></td>
-					<td colspan="2" class="text-right">2 TNBC</td>
-				</tr>
-				<tr>
-					<th class="py-1">Payment</th>
-					<td></td>
-					<td colspan="2" class="text-right">2 TNBC</td>
+					<td colspan="2" class="text-right">{{ invoice.tax }} TNBC</td>
 				</tr>
 			</tfoot>
 		</table>
-		<div class="flex flex-nowrap justify-between border-t border-dashed border-gray-300 my-2 pt-4">
-			<p>Change</p>
-			<p>0 TNBC</p>
-		</div>
-		<p class="text-right italic">Paid with TNBC</p>
+		<p class="text-right italic">Paid with {{ invoice.payment_method }}</p>
 	</div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-	name: 'InvoiceTable'
+	name: 'InvoiceTable',
+	props: {
+		invoice: {
+            // type: Object,
+            required: true
+        },
+	}
 })
 </script>

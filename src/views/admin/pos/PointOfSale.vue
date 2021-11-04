@@ -81,10 +81,10 @@
                 </ul>
                 <div :class="isActive('cart') ? 'block' : 'hidden'">
                     <CartTable :cart="cart" @fetchCart="fetchCartItems" />
-                    <Payments @discountChange="setDiscount" />
+                    <Payments @discountChange="setDiscount" @prepareInvoice="prepareInvoice" />
                 </div>
                 <div :class="isActive('invoice') ? 'block' : 'hidden'">
-                    <Invoice />
+                    <Invoice :invoice="invoice" />
                 </div>
                 <div :class="isActive('customer') ? 'block' : 'hidden'">
                     <CustomerForm />
@@ -115,6 +115,7 @@ export default defineComponent({
             popularItems: [] as Array<ItemObject>,
             activeItem: 'cart',
             cart: [],
+            invoice: {} as Object,
             itemId: '',
             customerId: '',
             discountCode: '',
@@ -181,6 +182,20 @@ export default defineComponent({
                 console.log(results)
                 return results
             }
+        },
+        async prepareInvoice(): Promise<void> {
+            console.log('preparingInvoice...')
+            let token = this.$store.state.bearerToken
+            let params = `?coupon=${this.discountCode}&payment_method=${this.paymentMethod}`
+            await CartService.prepareInvoice(params, token)
+                .then((response: ResponseData) => {
+                    console.log('Invoice successfully prepared.')
+                    this.invoice = response.data
+                    console.log(this.invoice)
+                })
+                .catch((e: Error) => {
+                    console.log(e);
+                });
         },
         setDiscount(e: any): void {
             this.discountCode = e.target.value.toString()

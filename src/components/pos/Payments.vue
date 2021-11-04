@@ -6,7 +6,11 @@
 			<button class="shadow-md base-btn-outline">Transaction Explorer</button>
 		</div>
 		<div class="flex-grow flex flex-col flex-nowrap pl-4">
-			<button class="text-2xl shadow-md base-btn flex-grow">Print Receipt</button>
+			<button 
+				@click="$emit('prepareInvoice')"
+				class="text-2xl shadow-md base-btn flex-grow">
+				Print Receipt
+			</button>
 			<div class="flex flex-col flex-nowrap py-2 grid-span-1 mb-2">
 				<label class="capitalize mb-2" for="first_name">Discount Coupon</label>
 				<input 

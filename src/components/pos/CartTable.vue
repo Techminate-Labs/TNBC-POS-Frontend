@@ -12,21 +12,20 @@
 				</tr>
 			</thead>
 			<tbody class="divide-y divide-gray-200">
-				<tr v-for="(item) in cart.cartItems" 
-					:key="item.id">
+				<tr v-for="(item) in cart.cartItems" :key="item.id">
 					<td class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">{{ item.item_name }}</td>
 					<td class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">{{ item.unit }}</td>
 					<td class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">{{ item.unit_price }}</td>
 					<td class="w-full lg:w-auto px-6 py-4 whitespace-nowrap flex justify-around">
 						<button 
 							@click="reduceItemQuantity(item.qty, item.id)" 
-							class="text-4xl self-center font-mono bg-blue-900 hover:bg-blue-800 text-white rounded-full p-1 mr-2">
+							class="text-4xl self-center font-mono bg-blue-900 hover:bg-blue-800 text-white rounded-full mr-2">
 							<MinusIcon class="w-6 h-6" />
 						</button>
-						{{ item.qty }}
+						<span class="text-lg">{{ item.qty }}</span>
 						<button 
 							@click="augmentItemQuantity(item.qty, item.id)" 
-							class="text-4xl self-center font-mono bg-blue-900 hover:bg-blue-800 text-white rounded-full p-1 ml-2">
+							class="text-4xl self-center font-mono bg-blue-900 hover:bg-blue-800 text-white rounded-full ml-2">
 							<PlusIcon class="w-6 h-6" />
 						</button>
 					</td>
