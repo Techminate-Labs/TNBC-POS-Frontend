@@ -17,9 +17,23 @@
 					<td class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">{{ item.item_name }}</td>
 					<td class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">{{ item.unit }}</td>
 					<td class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">{{ item.unit_price }}</td>
-					<td class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">{{ item.qty }}</td>
+					<td class="w-full lg:w-auto px-6 py-4 whitespace-nowrap flex justify-around">
+						<button 
+							@click="reduceItemQuantity(item.qty, item.id)" 
+							class="text-4xl self-center font-mono bg-blue-900 hover:bg-blue-800 text-white rounded-full p-1 mr-2">
+							<MinusIcon class="w-6 h-6" />
+						</button>
+						{{ item.qty }}
+						<button 
+							@click="augmentItemQuantity(item.qty, item.id)" 
+							class="text-4xl self-center font-mono bg-blue-900 hover:bg-blue-800 text-white rounded-full p-1 ml-2">
+							<PlusIcon class="w-6 h-6" />
+						</button>
+					</td>
 					<td class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">{{ item.total }}</td>
-					<td class="w-full lg:w-auto px-6 py-4 whitespace-nowrap"><DeleteIcon @click="deleteItem(item.id)" class="cursor-pointer hover:text-red-700 w-5 h-5" /></td>
+					<td class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">
+						<DeleteIcon @click="deleteItem(item.id)" class="cursor-pointer hover:text-red-700 w-5 h-5" />
+					</td>
 				</tr>
 			</tbody>
 			<tfoot class="text-left bg-blue-900 text-white shadow-md">
@@ -64,10 +78,12 @@ import { defineComponent, PropType } from 'vue';
 import DeleteIcon from "@/components/icons/DeleteIcon.vue"
 import CartService from '@/services/CartService';
 import ResponseData from "@/types/ResponseData";
+import PlusIcon from "@/components/icons/PlusIcon.vue"
+import MinusIcon from "@/components/icons/MinusIcon.vue"
 
 export default defineComponent({
 	name: 'CartTable',
-	components: { DeleteIcon },
+	components: { DeleteIcon, PlusIcon, MinusIcon },
 	props: {
 		cart: {
             type: Object,
@@ -86,6 +102,47 @@ export default defineComponent({
 				.catch((e: Error) => {
                     console.log(e);
                 });
+		},
+		async reduceItemQuantity(qty: number, id: number): Promise<any> {
+			let token = this.$store.state.bearerToken
+			if (qty > 1) {
+				qty -= 1
+				let body = {
+					qty: qty,
+					'_method': 'PUT'
+				}
+				await CartService.updateItem(body, id, token)
+					.then((res: ResponseData) => {
+						console.log(res)
+						this.$emit('fetchCart')
+					})
+					.catch((e: Error) => {
+						console.log(e);
+					});
+			
+			} else if (qty = 1) {
+				this.deleteItem(id)
+			}
+		},
+		async augmentItemQuantity(qty: number, id: number): Promise<any> {
+			let token = this.$store.state.bearerToken
+			if (qty > 0) {
+				qty += 1
+				let body = {
+					qty: qty,
+					'_method': 'PUT'
+				}
+				await CartService.updateItem(body, id, token)
+					.then((res: ResponseData) => {
+						console.log(res)
+						this.$emit('fetchCart')
+					})
+					.catch((e: Error) => {
+						console.log(e);
+					});
+			
+			}
+			
 		}
 	}
 })

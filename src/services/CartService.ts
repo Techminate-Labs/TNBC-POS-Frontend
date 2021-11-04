@@ -16,6 +16,10 @@ export default {
 
     deleteItem(item_id: any, token: any): Promise<any> {
         return http.delete(`/cartItemDelete/${item_id}`, { headers: { "Authorization": `Bearer ${token}`, "Accept": "application/json" } });
+    },
+
+    updateItem(body: any, item_id: any, token: any): Promise<any> {
+        return http.post(`/cartItemUpdate/${item_id}`, body, { headers: { "Authorization": `Bearer ${token}`, "Accept": "application/json" } });
     }
 
 }

@@ -24,7 +24,7 @@
                         </template>
 
                         <template v-slot:option="{ option }">
-                            <img class="w-1/2 h-32 object-cover mr-4" :src="option.img">{{ option.label }}
+                            <img class="w-1/2 h-16 object-cover mr-4" :src="option.img">{{ option.label }}
                         </template>
                     </Multiselect>
             </div>
