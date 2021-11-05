@@ -41,34 +41,34 @@
 					<td></td>
 					<td></td>
 					<td></td>
-					<td colspan="2" class="px-6 text-right">{{ cart.subtotal }} TNBC</td>
+					<td colspan="2" class="px-6 text-right">{{ cart.subtotal }} {{ getPaymentMethod }}</td>
 				</tr>
 				<tr>
 					<th class="px-6 py-2">Discount</th>
 					<td></td>
 					<td></td>
 					<td></td>
-					<td colspan="2" class="px-6 text-right">{{ cart.discount }} TNBC</td>
+					<td colspan="2" class="px-6 text-right">{{ cart.discount }} {{ getPaymentMethod }}</td>
 				</tr>
 				<tr>
 					<th class="px-6 py-2">Tax</th>
 					<td></td>
 					<td></td>
 					<td></td>
-					<td colspan="2" class="px-6 text-right">{{ cart.tax }} TNBC</td>
+					<td colspan="2" class="px-6 text-right">{{ cart.tax }} {{ getPaymentMethod }}</td>
 				</tr>
 				<tr>
 					<th class="px-6 py-2">Total</th>
 					<td></td>
 					<td></td>
 					<td></td>
-					<td colspan="2" class="px-6 text-right">{{ cart.total }} TNBC</td>
+					<td colspan="2" class="px-6 text-right">{{ cart.total }} {{ getPaymentMethod }}</td>
 				</tr>
 			</tfoot>
 		</table>
 		<div class="bg-red-800 text-white flex flex-nowrap justify-between px-6 py-4 rounded-b-md shadow-md">
 			<p>Total Payment</p>
-			<p>{{ cart.total }} TNBC</p>
+			<p>{{ cart.total }} {{ getPaymentMethod }}</p>
 		</div>
 	</div>
 </template>
@@ -142,6 +142,19 @@ export default defineComponent({
 			
 			}
 			
+		}
+	},
+	computed: {
+		getPaymentMethod(): string {
+			console.log(this.cart.payment_method)
+			switch (this.cart.payment_method) {
+				case 'fiat':
+					return '$'
+				case 'tnbc':
+					return 'TNBC'
+				default:
+					return ''
+			}
 		}
 	}
 })

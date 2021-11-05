@@ -25,9 +25,9 @@ export default defineComponent({
 	components: { InvoiceTable },
 	props: {
 		invoice: {
-            // type: Object as PropType<any>,
+            type: Object as any,
             required: true
         },
-	}
+	},
 })
 </script>

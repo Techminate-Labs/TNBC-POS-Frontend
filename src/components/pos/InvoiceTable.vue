@@ -21,22 +21,22 @@
 				<tr>
 					<th class="pb-1 pt-4">Subtotal</th>
 					<td></td>
-					<td colspan="2" class="text-right pt-4">{{ invoice.subtotal }} TNBC</td>
+					<td colspan="2" class="text-right pt-4">{{ invoice.subtotal }} {{ getPaymentMethod }}</td>
 				</tr>
 				<tr>
 					<th class="py-1">Discount</th>
 					<td></td>
-					<td colspan="2" class="text-right">{{ invoice.discount }} TNBC</td>
+					<td colspan="2" class="text-right">{{ invoice.discount }} {{ getPaymentMethod }}</td>
 				</tr>
 				<tr>
 					<th class="py-1">Total</th>
 					<td></td>
-					<td colspan="2" class="text-right">{{ invoice.total }} TNBC</td>
+					<td colspan="2" class="text-right">{{ invoice.total }} {{ getPaymentMethod }}</td>
 				</tr>
 				<tr>
 					<th class="py-1">Tax</th>
 					<td></td>
-					<td colspan="2" class="text-right">{{ invoice.tax }} TNBC</td>
+					<td colspan="2" class="text-right">{{ invoice.tax }} {{ getPaymentMethod }}</td>
 				</tr>
 			</tfoot>
 		</table>
@@ -50,9 +50,22 @@ export default defineComponent({
 	name: 'InvoiceTable',
 	props: {
 		invoice: {
-            // type: Object,
+            type: Object,
             required: true
         },
+	},
+		computed: {
+		getPaymentMethod(): string {
+			console.log(this.invoice.payment_method)
+			switch (this.invoice.payment_method) {
+				case 'fiat':
+					return '$'
+				case 'tnbc':
+					return 'TNBC'
+				default:
+					return ''
+			}
+		}
 	}
 })
 </script>

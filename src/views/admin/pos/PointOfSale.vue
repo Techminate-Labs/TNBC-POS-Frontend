@@ -30,7 +30,7 @@
             </div>
             <div class="grid grid-cols-3 gap-3">
                 <div v-for="(item, index) in popularItems" :key="index">
-                    <ItemCard :item="item" />
+                    <ItemCard :item="item" @click="addPopularItemToCart(item.item_id)" />
                 </div>
             </div>
         </div>
@@ -81,7 +81,10 @@
                 </ul>
                 <div :class="isActive('cart') ? 'block' : 'hidden'">
                     <CartTable :cart="cart" @fetchCart="fetchCartItems" />
-                    <Payments @discountChange="setDiscount" @prepareInvoice="prepareInvoice" />
+                    <Payments 
+                        @discountChange="setDiscount" 
+                        @prepareInvoice="prepareInvoice"
+                        @changePaymentMethod="updateCartMethod" />
                 </div>
                 <div :class="isActive('invoice') ? 'block' : 'hidden'">
                     <Invoice :invoice="invoice" />
@@ -130,6 +133,20 @@ export default defineComponent({
                 .then((response: ResponseData) => {
                     let res = response.data
                     this.popularItems = res.data
+                })
+                .catch((e: Error) => {
+                    console.log(e);
+                });
+        },
+        async updateCartMethod(method: string): Promise<void> {
+            let token = this.$store.state.bearerToken
+            let params = `?discount=${this.discountCode}&payment_method=${method}`
+            await CartService.listItems(params, token)
+                .then((response: ResponseData) => {
+                    let res = response.data
+                    console.log(res)
+                    this.cart = res
+                    this.paymentMethod = res.payment_method
                 })
                 .catch((e: Error) => {
                     console.log(e);
@@ -184,13 +201,16 @@ export default defineComponent({
             }
         },
         async prepareInvoice(): Promise<void> {
-            console.log('preparingInvoice...')
             let token = this.$store.state.bearerToken
             let params = `?coupon=${this.discountCode}&payment_method=${this.paymentMethod}`
             await CartService.prepareInvoice(params, token)
                 .then((response: ResponseData) => {
-                    console.log('Invoice successfully prepared.')
                     this.invoice = response.data
+                    this.$toast.open({
+                        message: `The invoice has been prepared.`,
+                        type: "success"
+                    })
+                    this.activeItem = 'invoice'
                     console.log(this.invoice)
                 })
                 .catch((e: Error) => {
@@ -217,6 +237,10 @@ export default defineComponent({
             fd.append('customer_id', item)
             await CartService.addCustomer(fd, token)
                 .then((response) => {
+                    this.$toast.open({
+                        message: `A customer has been linked to the cart!`,
+                        type: "success"
+                    })
                     console.log(response)
                 })
                 .catch((error) => {
@@ -232,13 +256,34 @@ export default defineComponent({
             console.log(fd)
             await CartService.addItem(fd, token)
                 .then((response) => {
-                    console.log(response)
+                    this.$toast.open({
+                        message: `Item has been added to the cart!`,
+                        type: "success"
+                    })
                     this.fetchCartItems()
                 })
                 .catch((error) => {
                     console.log(error)
                 })
-        }
+        },
+        async addPopularItemToCart(id: number): Promise<void>{
+            let token = this.$store.state.bearerToken
+
+            let fd = new FormData()
+            fd.append('item_id', id.toString())
+            console.log(fd)
+            await CartService.addItem(fd, token)
+                .then((response) => {
+                    this.$toast.open({
+                        message: `Item has been added to the cart!`,
+                        type: "success"
+                    })
+                    this.fetchCartItems()
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        },
     },
     mounted() {
         this.fetchPopularItems()
