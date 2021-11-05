@@ -79,7 +79,7 @@ export default defineComponent({
 				end_date: this.end_date,
 				active: this.active
 			}
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			await CouponService.create(data, token)
 				.then((response: ResponseData) => {
 					this.$toast.open({
@@ -102,7 +102,7 @@ export default defineComponent({
 				end_date: this.end_date,
 				active: this.active
 			}
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			await CouponService.create(data, token)
 				.then((response: ResponseData) => {
 					this.$toast.open({

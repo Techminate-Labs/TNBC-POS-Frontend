@@ -91,7 +91,7 @@ export default defineComponent({
 	},
 	methods: {
 		async deleteItem(id: number): Promise<any> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			await CartService.deleteItem(id, token)
 				.then((res: ResponseData) => {
 					console.log(res)
@@ -103,7 +103,7 @@ export default defineComponent({
                 });
 		},
 		async reduceItemQuantity(qty: number, id: number): Promise<any> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			if (qty > 1) {
 				qty -= 1
 				let body = {
@@ -124,7 +124,7 @@ export default defineComponent({
 			}
 		},
 		async augmentItemQuantity(qty: number, id: number): Promise<any> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			if (qty > 0) {
 				qty += 1
 				let body = {

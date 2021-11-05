@@ -102,7 +102,7 @@ export default defineComponent({
 				password_confirmation: this.passwordConfirmation,
 				role_id: Number(this.role),
 			}
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			await UserService.create(data, token)
 				.then((response: ResponseData) => {
 					this.$toast.open({
@@ -126,7 +126,7 @@ export default defineComponent({
 				password_confirmation: this.passwordConfirmation,
 				role_id: Number(this.role),
 			}
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			await UserService.create(data, token)
 				.then((response: ResponseData) => {
 					this.$toast.open({
@@ -145,7 +145,7 @@ export default defineComponent({
 		},
 		async fetchRoles(): Promise<void> {
 			let params = this.$route.params
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let url = this.url
 			await RoleService.list(url, token)
 				.then((response: ResponseData) => {

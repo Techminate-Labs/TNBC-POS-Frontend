@@ -82,7 +82,7 @@ export default defineComponent({
 				phone: this.phone,
 				company: this.companyName
 			}
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			await SupplierService.create(data, token)
 				.then((response: ResponseData) => {
 					this.$toast.open({
@@ -105,7 +105,7 @@ export default defineComponent({
 				phone: this.phone,
 				company: this.companyName
 			}
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			await SupplierService.create(data, token)
 				.then((response: ResponseData) => {
 					this.$toast.open({

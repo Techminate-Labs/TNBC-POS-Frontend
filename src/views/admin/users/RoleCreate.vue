@@ -62,7 +62,7 @@ export default defineComponent({
 	},
 	methods: {
 		async fetchRoles(): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let url = this.url
 			await RoleService.list(url, token)
 				.then((response: ResponseData) => {
@@ -83,7 +83,7 @@ export default defineComponent({
 				});
 		},
 		createRole(items: any): void {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let data = {
 				name: this.roleName,
 				permissions: items
@@ -104,7 +104,7 @@ export default defineComponent({
 				});
 		},
 		createRoleAndRedirect(items: any): void {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let data = {
 				name: this.roleName,
 				permissions: items

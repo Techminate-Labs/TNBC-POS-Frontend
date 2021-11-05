@@ -141,7 +141,7 @@ export default defineComponent({
 	},
 	methods: {
 		async fetchUserProfile(): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let user_id = parseInt(this.$route.params.user_id as string)
 			await ProfileService.list(user_id, token)
 				.then((response: ResponseData) => {
@@ -152,7 +152,7 @@ export default defineComponent({
 				});
 		},
 		async updateUserProfile(): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let user_id = parseInt(this.$route.params.user_id as string)
 			let user: UserSingle = this.user
 

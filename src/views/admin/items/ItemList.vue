@@ -86,7 +86,7 @@ export default defineComponent({
 	},
 	methods: {
 		async fetchItems(): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let url = this.url
 			await ItemService.list(url, token)
 				.then((response: ResponseData) => {
@@ -147,7 +147,7 @@ export default defineComponent({
 			this.selectedItemId = item.id
 		},
 		async deleteItem(item: any): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let id = this.selectedItemId
 			await ItemService.delete(id, token)
 				.then((response: ResponseData) => {
@@ -167,7 +167,7 @@ export default defineComponent({
 				});
 		},
 		async searchItem(event: any): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let value = event.target.value
 			let url = '/itemList'
 

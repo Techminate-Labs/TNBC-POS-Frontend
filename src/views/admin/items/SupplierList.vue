@@ -80,7 +80,7 @@ export default defineComponent({
 	},
 	methods: {
 		async fetchSuppliers(): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let url = this.url
 			await SupplierService.list(url, token)
 				.then((response: ResponseData) => {
@@ -144,7 +144,7 @@ export default defineComponent({
 			this.selectedSupplierId = item.id
 		},
 		async deleteSupplier(): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let id = this.selectedSupplierId
 			await SupplierService.delete(id, token)
 				.then((response: ResponseData) => {
@@ -164,7 +164,7 @@ export default defineComponent({
 				});
 		},
 		async searchSupplier(event: any): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let value = event.target.value
 			let url = '/supplierList'
 

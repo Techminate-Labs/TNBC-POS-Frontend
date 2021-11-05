@@ -5,6 +5,8 @@
 				<h1 class="text-3xl mb-4">We Accept TNBC</h1>
 				<qrcode-vue :value="publicKeyObject" :size="size" level="H" class="mx-auto mb-4" />
 				<p class="mb-4">Public key: {{ publicKey }}</p>
+				<p class="mb-4">To Pay: {{ total }}</p>
+				debug: {{ this.publicKeyObject }}
 			</div>
 		</div>  
 		<div class="w-full bg-gray-200">
@@ -31,6 +33,7 @@
 import { defineComponent } from 'vue';
 import QrcodeVue from 'qrcode.vue'
 import ConfigurationService from "@/services/ConfigurationService"
+import CartService from "@/services/CartService"
 
 export default defineComponent({
 	name: 'GeneratedQrCode',
@@ -38,25 +41,44 @@ export default defineComponent({
 	data(){
 		return {
 			publicKey: '',
-			publicKeyObject: ''
+			publicKeyObject: '',
+			total: 0
 		}
 	},
 	methods: {
 		async fetchConfigurations(): Promise<any> {
-            let token = this.$store.state.bearerToken
+            let token = this.$store.state.session.bearerToken
             await ConfigurationService.listConfigurations(token)
                 .then((res) => {
-					const publicKey = {"address": res.data.tnbc_pk}
-                    this.publicKey = res.data.tnbc_pk 
+					this.publicKey = res.data.tnbc_pk 
+					const publicKey = { "address": res.data.tnbc_pk }
                     this.publicKeyObject = JSON.stringify(publicKey) 
                 })
                 .catch(e => {
                     console.log(e)
                 })
         },
+		async fetchTotal(): Promise<any> {
+			const cart = this.$store.state.cart
+			if (cart.paymentMethod != 'fiat'){
+				const token = this.$store.state.session.bearerToken
+				const coupon = cart.coupon ? cart.coupon : ''
+				let params = `?coupon=${coupon}&payment_method=${cart.paymentMethod}`
+				await CartService.prepareInvoice(params, token)
+					.then((res) => {
+						this.total = res.data.total
+						const publicKey = { "address": this.publicKey, "amount": res.data.total.toString() }
+						this.publicKeyObject = JSON.stringify(publicKey) 
+					})
+					.catch(e => {
+						console.log(e)
+					})
+			}
+        },
 	},
 	mounted(){
 		this.fetchConfigurations()
+		this.fetchTotal()
 	}
 })
 </script>

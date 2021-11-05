@@ -171,7 +171,7 @@ export default defineComponent({
 	},
 	methods: {
 		async fetchItem(): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let id = this.$route.params.id
 			await ItemService.getById(id, token)
 				.then((response: ResponseData) => {
@@ -184,7 +184,7 @@ export default defineComponent({
 		},
 		async fetchCategories(): Promise<void> {
 			let url = 'categoryList'
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			await CategoryService.list(`${url}/?limit=0`, token)
 				.then((response: ResponseData) => {
 					this.categories = response.data.data
@@ -195,7 +195,7 @@ export default defineComponent({
 		},
 		async fetchBrands(): Promise<void> {
 			let url = 'brandList'
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			await BrandService.list(`${url}/?limit=0`, token)
 				.then((response: ResponseData) => {
 					this.brands = response.data.data
@@ -206,7 +206,7 @@ export default defineComponent({
 		},
 		async fetchUnits(): Promise<void> {
 			let url = 'unitList'
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			await UnitService.list(`${url}/?limit=0`, token)
 				.then((response: ResponseData) => {
 					this.units = response.data.data
@@ -217,7 +217,7 @@ export default defineComponent({
 		},
 		async fetchSuppliers(): Promise<void> {
 			let url = 'supplierList'
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			await SupplierService.list(`${url}/?limit=0`, token)
 				.then((response: ResponseData) => {
 					this.suppliers = response.data.data
@@ -228,7 +228,7 @@ export default defineComponent({
 		},
 		async updateSupplier(): Promise<void> {
 			let id = this.$route.params.id
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let data: SingleItem = this.item
 			let available = (data.available ? 1 : 0)
 			let image = this.newImage

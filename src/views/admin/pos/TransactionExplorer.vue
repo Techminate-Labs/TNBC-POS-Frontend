@@ -42,7 +42,7 @@ export default defineComponent({
     },
     methods: {
         async fetchTransactions(): Promise<any> {
-            let token = this.$store.state.bearerToken
+            let token = this.$store.state.session.bearerToken
             await TransactionService.listTransactions(token)
                 .then((res) => {
                     this.transactions = res.data.transactions
@@ -53,7 +53,7 @@ export default defineComponent({
                 })
         },
         async fetchConfigurations(): Promise<any> {
-            let token = this.$store.state.bearerToken
+            let token = this.$store.state.session.bearerToken
             await ConfigurationService.listConfigurations(token)
                 .then((res) => {
                     this.configurations = res.data
@@ -61,7 +61,7 @@ export default defineComponent({
                 .catch(e => {
                     console.log(e)
                 })
-        },
+        }
     },
     async created(): Promise<void> {
         await this.fetchTransactions()

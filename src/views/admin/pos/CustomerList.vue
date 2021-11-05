@@ -78,7 +78,7 @@ export default defineComponent({
 	},
 	methods: {
 		async fetchCustomers(): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let url = this.url
 			await CustomerService.list(url, token)
 				.then((response: ResponseData) => {
@@ -142,7 +142,7 @@ export default defineComponent({
 			this.selectedCustomerId = item.id
 		},
 		async deleteCustomer(): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let id = this.selectedCustomerId
 			await CustomerService.delete(id, token)
 				.then((response: ResponseData) => {
@@ -162,7 +162,7 @@ export default defineComponent({
 				});
 		},
 		async searchCustomer(event: any): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let value = event.target.value
 			let url = `/customerList/?q=${value}`
 			if (value.length > 2 || value.length === 0){

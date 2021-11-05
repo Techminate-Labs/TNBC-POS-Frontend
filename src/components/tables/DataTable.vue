@@ -210,22 +210,22 @@ export default defineComponent({
             return this.columns
         },
         canUserEdit(): boolean | null {
-            if (this.$store.state.permissions !== undefined) {
-                return this.$store.state.permissions[this.type].edit
+            if (this.$store.state.user.permissions !== undefined) {
+                return this.$store.state.user.permissions[this.type].edit
             } else {
                 return null
             }
         },
         canUserView(): boolean | null {
-            if (this.$store.state.permissions !== undefined) {
-                return this.$store.state.permissions[this.type].view
+            if (this.$store.state.user.permissions !== undefined) {
+                return this.$store.state.user.permissions[this.type].view
             } else {
                 return null
             }
         },
         canUserDelete(): boolean | null {
-            if (this.$store.state.permissions !== undefined) {
-                return this.$store.state.permissions[this.type].delete
+            if (this.$store.state.user.permissions !== undefined) {
+                return this.$store.state.user.permissions[this.type].delete
             } else {
                 return null
             } 

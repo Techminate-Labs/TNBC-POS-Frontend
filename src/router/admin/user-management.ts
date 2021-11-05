@@ -28,7 +28,7 @@ const UserManagementRoutes: Array<RouteRecordRaw> = [
                 name: 'UserList',
                 component: UserList,
                 beforeEnter: (to, from, next) => {
-                let canListUsers: boolean = store.state.permissions.Users.list
+                let canListUsers: boolean = store.state.user.permissions.Users.list
                 if (!canListUsers) next('/403')
                 else next()
                 }
@@ -38,7 +38,7 @@ const UserManagementRoutes: Array<RouteRecordRaw> = [
                 name: 'UserCreate',
                 component: UserCreate,
                 beforeEnter: (to, from, next) => {
-                let canCreateUser: boolean = store.state.permissions.Users.create
+                let canCreateUser: boolean = store.state.user.permissions.Users.create
                 if (!canCreateUser) next('/403')
                 else next()
                 }
@@ -48,7 +48,7 @@ const UserManagementRoutes: Array<RouteRecordRaw> = [
                 name: 'UserUpdate',
                 component: UserUpdate,
                 beforeEnter: (to, from, next) => {
-                let canEditUser: boolean = store.state.permissions.Users.edit
+                let canEditUser: boolean = store.state.user.permissions.Users.edit
                 if (!canEditUser) next('/403')
                 else next()
                 }
@@ -58,7 +58,7 @@ const UserManagementRoutes: Array<RouteRecordRaw> = [
                 name: 'RoleList',
                 component: RoleList,
                 beforeEnter: (to, from, next) => {
-                let canListRoles: boolean = store.state.permissions.Roles.list
+                let canListRoles: boolean = store.state.user.permissions.Roles.list
                 if (!canListRoles) next('/403')
                 else next()
                 }
@@ -68,7 +68,7 @@ const UserManagementRoutes: Array<RouteRecordRaw> = [
                 name: 'RoleCreate',
                 component: RoleCreate,
                 beforeEnter: (to, from, next) => {
-                let canCreateRoles: boolean = store.state.permissions.Roles.create
+                let canCreateRoles: boolean = store.state.user.permissions.Roles.create
                 if (!canCreateRoles) next('/403')
                 else next()
                 }
@@ -78,7 +78,7 @@ const UserManagementRoutes: Array<RouteRecordRaw> = [
                 name: 'RoleUpdate',
                 component: RoleUpdate,
                 beforeEnter: (to, from, next) => {
-                let canEditRoles: boolean = store.state.permissions.Roles.edit
+                let canEditRoles: boolean = store.state.user.permissions.Roles.edit
                 if (!canEditRoles) next('/403')
                 else next()
                 }

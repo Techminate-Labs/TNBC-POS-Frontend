@@ -92,7 +92,7 @@ export default defineComponent({
 	},
 	methods: {
 		async fetchUnits(): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let url = this.url
 			await UnitService.list(url, token)
 				.then((response: ResponseData) => {
@@ -124,7 +124,7 @@ export default defineComponent({
 		},
 		viewUnit(): void {},
 		async editUnit(UnitName: string): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let data = { name: UnitName }
 			let UnitId = this.selectedUnit.id
 			await UnitService.edit(data, UnitId, token)
@@ -149,7 +149,7 @@ export default defineComponent({
 			this.selectedUnitId = item.id
 		},
 		async deleteUnit(): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let UnitId = this.selectedUnitId
 			await UnitService.delete(UnitId, token)
 				.then((response: ResponseData) => {
@@ -169,7 +169,7 @@ export default defineComponent({
 				});
 		},
 		async searchUnit(event: any): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let value = event.target.value
 			let url = '/unitList'
 
@@ -226,7 +226,7 @@ export default defineComponent({
 			}
 		},
 		async createUnit(name: any): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let data = { name: name }
 			await UnitService.create(data, token)
 				.then((response: ResponseData) => {

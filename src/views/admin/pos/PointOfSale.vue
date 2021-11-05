@@ -127,7 +127,7 @@ export default defineComponent({
     },
     methods: {
         async fetchPopularItems(): Promise<void> {
-            let token = this.$store.state.bearerToken
+            let token = this.$store.state.session.bearerToken
             let url = `/itemList?limit=0`
             await ItemService.list(url, token)
                 .then((response: ResponseData) => {
@@ -139,27 +139,28 @@ export default defineComponent({
                 });
         },
         async updateCartMethod(method: string): Promise<void> {
-            let token = this.$store.state.bearerToken
+            let token = this.$store.state.session.bearerToken
             let params = `?discount=${this.discountCode}&payment_method=${method}`
             await CartService.listItems(params, token)
                 .then((response: ResponseData) => {
                     let res = response.data
-                    console.log(res)
                     this.cart = res
                     this.paymentMethod = res.payment_method
+                    this.$store.commit('setPaymentMethod', res.payment_method)
                 })
                 .catch((e: Error) => {
                     console.log(e);
                 });
         },
         async fetchCartItems(): Promise<void> {
-            let token = this.$store.state.bearerToken
+            let token = this.$store.state.session.bearerToken
             let params = `?discount=${this.discountCode}&payment_method=${this.paymentMethod}`
             await CartService.listItems(params, token)
                 .then((response: ResponseData) => {
                     let res = response.data
                     this.cart = res
                     this.paymentMethod = res.payment_method
+                    this.$store.commit('setPaymentMethod', res.payment_method)
                 })
                 .catch((e: Error) => {
                     console.log(e);
@@ -167,7 +168,7 @@ export default defineComponent({
         },
         async fetchItems(query: any): Promise<void> {
             if (query){
-                let token = this.$store.state.bearerToken
+                let token = this.$store.state.session.bearerToken
                 let url = `/itemList?q=${query}`
                 let results = await ItemService.list(url, token)
                     .then((response: ResponseData) => {
@@ -184,7 +185,7 @@ export default defineComponent({
         },
         async fetchCustomers(query: any): Promise<void> {
             if (query){
-                let token = this.$store.state.bearerToken
+                let token = this.$store.state.session.bearerToken
                 let url = `/customerList?q=${query}`
                 let results = await CustomerService.list(url, token)
                     .then((response: ResponseData) => {
@@ -201,7 +202,7 @@ export default defineComponent({
             }
         },
         async prepareInvoice(): Promise<void> {
-            let token = this.$store.state.bearerToken
+            let token = this.$store.state.session.bearerToken
             let params = `?coupon=${this.discountCode}&payment_method=${this.paymentMethod}`
             await CartService.prepareInvoice(params, token)
                 .then((response: ResponseData) => {
@@ -211,7 +212,6 @@ export default defineComponent({
                         type: "success"
                     })
                     this.activeItem = 'invoice'
-                    console.log(this.invoice)
                 })
                 .catch((e: Error) => {
                     console.log(e);
@@ -219,6 +219,7 @@ export default defineComponent({
         },
         setDiscount(e: any): void {
             this.discountCode = e.target.value.toString()
+            this.$store.commit('setCoupon', e.target.value.toString())
         },
         setActive(tabItem: string): void {
             this.activeItem = tabItem
@@ -231,7 +232,7 @@ export default defineComponent({
         },
         async addCustomerToCart(): Promise<void>{
             let item = this.customerId as string
-            let token = this.$store.state.bearerToken
+            let token = this.$store.state.session.bearerToken
             
             let fd = new FormData()
             fd.append('customer_id', item)
@@ -249,7 +250,7 @@ export default defineComponent({
         },
         async addItemToCart(): Promise<void>{
             let item = this.itemId as string
-            let token = this.$store.state.bearerToken
+            let token = this.$store.state.session.bearerToken
 
             let fd = new FormData()
             fd.append('item_id', item)
@@ -267,7 +268,7 @@ export default defineComponent({
                 })
         },
         async addPopularItemToCart(id: number): Promise<void>{
-            let token = this.$store.state.bearerToken
+            let token = this.$store.state.session.bearerToken
 
             let fd = new FormData()
             fd.append('item_id', id.toString())

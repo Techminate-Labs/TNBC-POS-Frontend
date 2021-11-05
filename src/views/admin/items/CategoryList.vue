@@ -86,7 +86,7 @@ export default defineComponent({
 	},
 	methods: {
 		async fetchCategories(): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let url = this.url
 			await CategoryService.list(url, token)
 				.then((response: ResponseData) => {
@@ -118,7 +118,7 @@ export default defineComponent({
 		},
 		viewCategory(): void {},
 		async editCategory(categoryName: string): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let data = { name: categoryName }
 			let categoryId = this.selectedCategory.id
 			await CategoryService.edit(data, categoryId, token)
@@ -143,7 +143,7 @@ export default defineComponent({
 			this.selectedCategoryId = item.id
 		},
 		async deleteCategory(item: any): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let categoryId = this.selectedCategoryId
 			await CategoryService.delete(categoryId, token)
 				.then((response: ResponseData) => {
@@ -163,7 +163,7 @@ export default defineComponent({
 				});
 		},
 		async searchCategory(event: any): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let value = event.target.value
 			let url = '/categoryList'
 
@@ -220,7 +220,7 @@ export default defineComponent({
 			}
 		},
 		async createCategory(name: any): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let data = { name: name }
 			await CategoryService.create(data, token)
 				.then((response: ResponseData) => {

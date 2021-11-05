@@ -3,41 +3,55 @@ import createPersistedState from 'vuex-persistedstate'
 
 export default createStore({
     state: {
-        isAuthenticated: false,
-        bearerToken: '',
-        userEmail: '',
-        userId: null,
-        isEmailVerified: false,
+        user: {
+            isAuthenticated: false,
+            userEmail: '',
+            userId: null,
+            isEmailVerified: false,
+            permissions: undefined as any
+        },
+        session: {
+            bearerToken: '',
+        },
+        cart: {
+            paymentMethod: 'fiat',
+            coupon: '0',
+        }
         // setup permissions for components
-        permissions: undefined as any
     },
     mutations: {
         initializeStore(state) {
         },
         setBearerToken(state, bearerToken) {
-            state.bearerToken = bearerToken
+            state.session.bearerToken = bearerToken
         },
         setAuthentication(state, authentication) {
-            state.isAuthenticated = authentication
+            state.user.isAuthenticated = authentication
         },
         setUserEmail(state, email) {
-            state.userEmail = email
+            state.user.userEmail = email
         },
         setUserId(state, user_id) {
-            state.userId = user_id
+            state.user.userId = user_id
         },
         setEmailVerification(state, verification) {
-            state.isEmailVerified = verification
+            state.user.isEmailVerified = verification
         },
         setPermissions(state, permissions) {
-            state.permissions = permissions
+            state.user.permissions = permissions
         },
+        setPaymentMethod(state, method){
+            state.cart.paymentMethod = method
+        },
+        setCoupon(state, coupon){
+            state.cart.coupon = coupon
+        }
     },
     actions: {
     },
     modules: {
     },
     plugins: [createPersistedState({
-        paths: ['isAuthenticated', 'bearerToken', 'userEmail', 'userId', 'isEmailVerified', 'permissions'],
+        paths: ['user', 'session', 'cart'],
     })]
 })

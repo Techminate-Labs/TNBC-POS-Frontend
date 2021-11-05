@@ -65,7 +65,7 @@ export default defineComponent({
 	methods: {
 		async fetchRoles(): Promise<void> {
 			let params = this.$route.params
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let url = this.url
 			await RoleService.list(url, token)
 				.then((response: ResponseData) => {
@@ -80,7 +80,7 @@ export default defineComponent({
 				});
 		},
 		async updateRole(items: any): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let role_id: number = parseInt(this.$route.params.id as string)
 			let data = {
 				name: this.roleName,
@@ -102,7 +102,7 @@ export default defineComponent({
 				});
 		},
 		async updateRoleAndRedirect(items: any): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let role_id: number = parseInt(this.$route.params.id as string)
 			let data = {
 				name: this.roleName,
