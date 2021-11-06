@@ -94,8 +94,6 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			await CartService.deleteItem(id, token)
 				.then((res: ResponseData) => {
-					console.log(res)
-					console.log('deleted')
 					this.$emit('fetchCart')
 				})
 				.catch((e: Error) => {
@@ -112,7 +110,6 @@ export default defineComponent({
 				}
 				await CartService.updateItem(body, id, token)
 					.then((res: ResponseData) => {
-						console.log(res)
 						this.$emit('fetchCart')
 					})
 					.catch((e: Error) => {
@@ -133,7 +130,6 @@ export default defineComponent({
 				}
 				await CartService.updateItem(body, id, token)
 					.then((res: ResponseData) => {
-						console.log(res)
 						this.$emit('fetchCart')
 					})
 					.catch((e: Error) => {

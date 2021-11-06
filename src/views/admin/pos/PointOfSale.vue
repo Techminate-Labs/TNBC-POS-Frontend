@@ -87,7 +87,7 @@
                         @changePaymentMethod="updateCartMethod" />
                 </div>
                 <div :class="isActive('invoice') ? 'block' : 'hidden'">
-                    <Invoice />
+                    <Invoice :invoice="cart "/>
                 </div>
                 <div :class="isActive('customer') ? 'block' : 'hidden'">
                     <CustomerForm />
@@ -118,6 +118,7 @@ export default defineComponent({
             popularItems: [] as Array<ItemObject>,
             activeItem: 'cart',
             cart: [],
+            invoice: {},
             itemId: '',
             customerId: '',
             discountCode: '',
@@ -204,18 +205,34 @@ export default defineComponent({
         async prepareInvoice(): Promise<void> {
             let token = this.$store.state.session.bearerToken
             let params = `?coupon=${this.discountCode}&payment_method=${this.paymentMethod}`
+            console.log('test')
             await CartService.prepareInvoice(params, token)
                 .then((response: ResponseData) => {
                     this.$toast.open({
                         message: `The invoice has been prepared.`,
                         type: "success"
                     })
+                    this.fetchInvoice()
                     this.activeItem = 'invoice'
                 })
                 .catch((e: Error) => {
                     console.log(e);
                 });
         },
+        async fetchInvoice(): Promise<void> {
+			const token = this.$store.state.session.bearerToken
+			const cart = this.$store.state.cart
+			const params = `?invoice_number=${cart.invoiceNumber}&coupon=${cart.coupon}&payment_method=${cart.paymentMethod}`
+			await CartService.prepareInvoice(params, token)
+				.then((response: ResponseData) => {
+                    let res = response.data
+					console.log('fetchInvoice response', res)
+                    this.invoice = res
+                })
+                .catch((e: Error) => {
+                    console.log(e);
+                });
+		},
         setDiscount(e: any): void {
             this.discountCode = e.target.value.toString()
             this.$store.commit('setCoupon', e.target.value.toString())

@@ -16,7 +16,7 @@ export default createStore({
         cart: {
             invoiceNumber: '',
             paymentMethod: 'fiat',
-            coupon: '0',
+            coupon: '',
         }
         // setup permissions for components
     },

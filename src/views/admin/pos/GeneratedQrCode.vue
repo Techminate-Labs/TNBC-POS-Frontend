@@ -6,7 +6,7 @@
 				<qrcode-vue :value="publicKeyObject" :size="size" level="H" class="mx-auto mb-4" />
 				<p class="mb-4">Public key: {{ publicKey }}</p>
 				<p class="mb-4">To Pay: {{ total }}</p>
-				debug: {{ this.publicKeyObject }}
+				<p class="mb-4">Memo: {{ memo }}</p>
 			</div>
 		</div>  
 		<div class="w-full bg-gray-200">
@@ -42,7 +42,8 @@ export default defineComponent({
 		return {
 			publicKey: '',
 			publicKeyObject: '',
-			total: 0
+			total: 0,
+			memo: ''
 		}
 	},
 	methods: {
@@ -59,15 +60,21 @@ export default defineComponent({
                 })
         },
 		async fetchTotal(): Promise<any> {
+			console.log('fetching total')
 			const cart = this.$store.state.cart
 			if (cart.paymentMethod != 'fiat'){
 				const token = this.$store.state.session.bearerToken
 				const coupon = cart.coupon ? cart.coupon : ''
 				let params = `?coupon=${coupon}&payment_method=${cart.paymentMethod}`
-				await CartService.prepareInvoice(params, token)
+				await CartService.listItems(params, token)
 					.then((res) => {
 						this.total = res.data.total
-						const publicKey = { "address": this.publicKey, "amount": res.data.total.toString() }
+						this.memo = res.data.invoice_number
+						const publicKey = { 
+							"address": this.publicKey, 
+							"amount": res.data.total.toString(),
+							"memo": res.data.invoice_number
+						}
 						this.publicKeyObject = JSON.stringify(publicKey) 
 					})
 					.catch(e => {

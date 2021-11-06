@@ -10,7 +10,7 @@
 				</tr>
 			</thead>
 			<tbody class="divide-y divide-gray-200">
-				<tr v-for="(item) in invoice.invoiceItems" :key="item.id">
+				<tr v-for="(item) in invoice.cartItems" :key="item.id">
 					<td class="w-full lg:w-auto py-4 whitespace-nowrap">{{ item.item_name }}</td>
 					<td class="w-full lg:w-auto py-4 whitespace-nowrap">{{ item.unit_price }}</td>
 					<td class="w-full lg:w-auto py-4 whitespace-nowrap">{{ item.qty }}</td>
@@ -21,7 +21,7 @@
 				<tr>
 					<th class="pb-1 pt-4">Subtotal</th>
 					<td></td>
-					<td colspan="2" class="text-right pt-4">{{ invoice.subtotal }} {{ getPaymentMethod }}</td>
+					<td colspan="2" class="text-right pt-4">{{ invoice.subTotal }} {{ getPaymentMethod }}</td>
 				</tr>
 				<tr>
 					<th class="py-1">Discount</th>
