@@ -87,7 +87,7 @@
                         @changePaymentMethod="updateCartMethod" />
                 </div>
                 <div :class="isActive('invoice') ? 'block' : 'hidden'">
-                    <Invoice :invoice="invoice" />
+                    <Invoice />
                 </div>
                 <div :class="isActive('customer') ? 'block' : 'hidden'">
                     <CustomerForm />
@@ -118,7 +118,6 @@ export default defineComponent({
             popularItems: [] as Array<ItemObject>,
             activeItem: 'cart',
             cart: [],
-            invoice: {} as Object,
             itemId: '',
             customerId: '',
             discountCode: '',
@@ -161,6 +160,7 @@ export default defineComponent({
                     this.cart = res
                     this.paymentMethod = res.payment_method
                     this.$store.commit('setPaymentMethod', res.payment_method)
+                    this.$store.commit('setInvoiceNumber', res.invoice_number)
                 })
                 .catch((e: Error) => {
                     console.log(e);
@@ -206,7 +206,6 @@ export default defineComponent({
             let params = `?coupon=${this.discountCode}&payment_method=${this.paymentMethod}`
             await CartService.prepareInvoice(params, token)
                 .then((response: ResponseData) => {
-                    this.invoice = response.data
                     this.$toast.open({
                         message: `The invoice has been prepared.`,
                         type: "success"

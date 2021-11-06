@@ -14,6 +14,7 @@ export default createStore({
             bearerToken: '',
         },
         cart: {
+            invoiceNumber: '',
             paymentMethod: 'fiat',
             coupon: '0',
         }
@@ -39,6 +40,9 @@ export default createStore({
         },
         setPermissions(state, permissions) {
             state.user.permissions = permissions
+        },
+        setInvoiceNumber(state, invoiceNumber){
+            state.cart.invoiceNumber = invoiceNumber
         },
         setPaymentMethod(state, method){
             state.cart.paymentMethod = method

@@ -19,15 +19,35 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import InvoiceTable from "@/components/pos/InvoiceTable.vue"
+import CartService from "@/services/CartService"
+import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
 	name: 'Invoice',
 	components: { InvoiceTable },
-	props: {
-		invoice: {
-            type: Object as any,
-            required: true
-        },
+	data() {
+		return {
+			invoice: {}
+		}
 	},
+	methods: {
+		async fetchInvoice(): Promise<void> {
+			const token = this.$store.state.session.bearerToken
+			const invoiceNumber = this.$store.state.cart.invoiceNumber
+			const cart = this.$store.state.cart
+			const params = `?invoice_number=${cart.invoiceNumber}&coupon=${cart.coupon}&payment_method=${cart.paymentMethod}`
+			await CartService.prepareInvoice(params, token)
+				.then((response: ResponseData) => {
+                    let res = response.data
+					console.log(res)
+                })
+                .catch((e: Error) => {
+                    console.log(e);
+                });
+		}
+	},
+	async mounted() {
+		await this.fetchInvoice()
+	}
 })
 </script>
