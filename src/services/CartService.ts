@@ -9,5 +9,21 @@ export default {
     addItem(data: any, token: any): Promise<any> {
         return http.post(`/cartItemCreate/`, data, { headers: { "Authorization": `Bearer ${token}`, "Accept": "application/json" } });
     },
+    
+    listItems(params: any, token: any): Promise<any> {
+        return http.get(`/cartItemList/${params}`, { headers: { "Authorization": `Bearer ${token}`, "Accept": "application/json" } });
+    },
+
+    deleteItem(item_id: any, token: any): Promise<any> {
+        return http.delete(`/cartItemDelete/${item_id}`, { headers: { "Authorization": `Bearer ${token}`, "Accept": "application/json" } });
+    },
+
+    updateItem(body: any, item_id: any, token: any): Promise<any> {
+        return http.post(`/cartItemUpdate/${item_id}`, body, { headers: { "Authorization": `Bearer ${token}`, "Accept": "application/json" } });
+    },
+
+    prepareInvoice(params: any, token: any): Promise<any> {
+        return http.get(`/invoice/${params}`, { headers: { "Authorization": `Bearer ${token}`, "Accept": "application/json" } });
+    },
 
 }

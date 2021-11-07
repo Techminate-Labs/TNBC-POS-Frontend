@@ -46,7 +46,7 @@
 				<div class="flex flex-cols flex-nowrap justify-between py-2 mb-2">
 					<label class="label" for="last_name">Email Verification</label>
 					<p 
-						v-if="this.$store.state.isEmailVerified" 
+						v-if="this.$store.state.user.isEmailVerified" 
 						class="text-md text-gray-600">
 						Your email has already been verified
 					</p>
@@ -105,7 +105,7 @@ export default defineComponent({
 	methods: {
 		async fetchProfile(): Promise<void> {
 			let user_id = parseInt(this.$route.params.user_id as string)
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			await ProfileService.getById(user_id, token)
 				.then((response: ResponseData) => {
 					this.user.image = response.data.image
@@ -117,7 +117,7 @@ export default defineComponent({
 				new_password: this.user.newPassword,
 				new_confirm_password: this.user.repeatNewPassword
 			}
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			await ProfileService.updatePassword(data, token)
 				.then((response: ResponseData) => {
 					this.$toast.open({
@@ -135,7 +135,7 @@ export default defineComponent({
 				});
 		},
 		async saveNewImage(): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 
 			this.user.image = this.newImage
 			this.newImage = null
@@ -161,7 +161,7 @@ export default defineComponent({
 				});
 		},
 		async sendEmailVerification(): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let data: any = []
 			console.log('Clicked on verify, request is pending...')
 			await DataService.requestEmailVerification(data, token)

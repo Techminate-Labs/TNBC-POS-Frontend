@@ -77,7 +77,7 @@ export default defineComponent({
 	},
 	methods: {
 		async fetchCoupons(): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let url = this.url
 			await CouponService.list(url, token)
 				.then((response: ResponseData) => {
@@ -142,7 +142,7 @@ export default defineComponent({
 			this.selectedCouponId = item.id
 		},
 		async deleteCoupon(): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let id = this.selectedCouponId
 			await CouponService.delete(id, token)
 				.then((response: ResponseData) => {
@@ -162,7 +162,7 @@ export default defineComponent({
 			});
 		},
 		async searchCoupon(event: any): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let value = event.target.value
 			let url = `/couponList/?q=${value}`
 			

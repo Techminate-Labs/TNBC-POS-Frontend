@@ -92,7 +92,7 @@ export default defineComponent({
   },
   methods: {
     async fetchItem(): Promise<void> {
-      let token = this.$store.state.bearerToken
+      let token = this.$store.state.session.bearerToken
       let id = this.$route.params.id
       await ItemService.getById(id, token)
         .then((response: ResponseData) => {

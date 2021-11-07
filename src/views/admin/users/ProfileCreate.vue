@@ -140,7 +140,7 @@ export default defineComponent({
   },
   methods: {
     async addUserProfile(): Promise<void> {
-      let token = this.$store.state.bearerToken
+      let token = this.$store.state.session.bearerToken
       let user_id: any = this.$route.params.user_id
       const fd = new FormData()
       fd.append('user_id', user_id)

@@ -54,7 +54,7 @@ export default defineComponent({
                 this.token = _token
                 let data = {
                     token: this.token,
-                    email: this.$store.state.userEmail,
+                    email: this.$store.state.user.userEmail,
                     password: this.password,
                     password_confirmation: this.repeatPassword,
                 }

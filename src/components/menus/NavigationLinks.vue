@@ -23,7 +23,7 @@ export default defineComponent({
     components: { UserIcon, NotificationIcon, LogoutIcon },
     methods: {
         async logOutUser(): Promise<void> {
-            let token = this.$store.state.bearerToken
+            let token = this.$store.state.session.bearerToken
             await UserService.logout(token)
                 .then((response: ResponseData) => {
                     localStorage.setItem('bearerToken', '')
@@ -47,7 +47,7 @@ export default defineComponent({
                 });
         },
         handleUserSettings(): void {
-            let user_id = this.$store.state.userId
+            let user_id = this.$store.state.user.userId
             this.$router.push({name: 'ProfileSettings', params: {user_id: user_id}})
         }
     }

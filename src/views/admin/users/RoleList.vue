@@ -75,7 +75,7 @@ export default defineComponent({
 	},
 	methods: {
 		async fetchRoles(): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let url = this.url
 			await RoleService.list(url, token)
 				.then((response: ResponseData) => {
@@ -126,7 +126,7 @@ export default defineComponent({
 			}
 		},
 		async searchRole(event: any): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let value = event.target.value
 			let url = '/roleList'
 	
@@ -166,7 +166,7 @@ export default defineComponent({
 			this.isDeleting = true
 		},
 		async deleteRole(): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let id = this.selectedRoleId
 			await RoleService.delete(id, token)
 				.then((response: ResponseData) => {
@@ -188,7 +188,7 @@ export default defineComponent({
 	},
 	computed: {
 		canUserCreate():boolean {
-			return this.$store.state.permissions.Roles.create
+			return this.$store.state.user.permissions.Roles.create
 		}
 	},
 	async mounted() {

@@ -132,7 +132,7 @@ export default defineComponent({
             this.openAdditionalSideBar = false
         },
         requestEmailVerification():void {
-            let token = this.$store.state.bearerToken
+            let token = this.$store.state.session.bearerToken
             let data: any = []
             DataService.requestEmailVerification(data, token)
                 .then((response: ResponseData) => {
@@ -160,7 +160,7 @@ export default defineComponent({
     },
     computed: {
         isEmailVerified() {
-            return this.$store.state.isEmailVerified
+            return this.$store.state.user.isEmailVerified
         }
     }
 });

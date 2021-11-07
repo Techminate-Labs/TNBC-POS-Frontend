@@ -67,7 +67,7 @@ export default defineComponent({
 	},
 	methods: {
 		async fetchCustomers(): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let customer_id = this.$route.params.id
 			await CustomerService.getById(customer_id, token)
 				.then((response: ResponseData) => {
@@ -90,7 +90,7 @@ export default defineComponent({
 				address: this.address,
 			}
 			let id = parseInt(this.id)
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			await CustomerService.update(data, id, token)
 				.then((response: ResponseData) => {
 					this.$toast.open({

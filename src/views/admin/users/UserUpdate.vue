@@ -66,7 +66,7 @@ export default defineComponent({
 	},
 	methods: {
 		async fetchUser(): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let params = this.$route.params
 			let id = parseInt(params.user_id as string)
 			await UserService.getById(id, token)
@@ -83,7 +83,7 @@ export default defineComponent({
 				});
 		},
 		async fetchRoles(): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let url = 'roleList'
 			RoleService.list(`${url}?limit=0`, token)
 				.then((response: ResponseData) => {
@@ -108,7 +108,7 @@ export default defineComponent({
 				email: this.email,
 				role_id: this.role_id
 			}
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			await UserService.update(data, user_id, token)
 				.then((response: ResponseData) => {
 					this.$toast.open({

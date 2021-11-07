@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+
+/* RESET BASE STYLES */
+
+/* Removing arrows from inputs with type number */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 .active {
   @apply block;
 }

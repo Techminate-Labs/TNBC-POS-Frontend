@@ -85,7 +85,7 @@ export default defineComponent({
 	},
 	methods: {
 		async fetchUsers(): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let url = this.url
 			await UserService.list(url, token)
 				.then((response: ResponseData) => {
@@ -142,7 +142,7 @@ export default defineComponent({
 			}
 		},
 		async searchUser(event: any): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let value = event.target.value
 			let url = '/userList'
 
@@ -191,7 +191,7 @@ export default defineComponent({
 			this.isDeleting = true
 		},
 		async deleteUser(): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let id = this.selectedUserId
 			await UserService.delete(id, token)
 				.then((response: ResponseData) => {
@@ -213,7 +213,7 @@ export default defineComponent({
 	},
 	computed: {
 		canUserCreate():boolean {
-			return this.$store.state.permissions.Users.create
+			return this.$store.state.user.permissions.Users.create
 		}
 	},
 	async mounted(): Promise<void> {

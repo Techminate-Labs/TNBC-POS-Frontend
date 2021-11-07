@@ -62,6 +62,7 @@ export default defineComponent({
     },
     methods:{
         handleSubmenuSidebar(item: MenuItem): void {
+            if (item.name === 'Generate QR Code') this.$router.push({name: 'GeneratedQrCode'})
             this.selectedMenu = item
         },
         handleSidebar(item: MenuItem): void {

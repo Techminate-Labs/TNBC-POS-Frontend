@@ -115,7 +115,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { MetaPagination, MetaPaginationLinks } from '@/types/TablePagination';
+import { MetaPagination } from '@/types/TablePagination';
 import UserAddIcon from '@/components/icons/UserAddIcon.vue';
 import ViewIcon from '@/components/icons/ViewIcon.vue';
 import EditIcon from '@/components/icons/EditIcon.vue';
@@ -144,15 +144,15 @@ export default defineComponent({
         },
         meta: {
             type: Object as PropType<MetaPagination>,
-            required: true
+            required: false
         },
         next: {
             type: null,
-            required: true
+            required: false
         },
         prev: {
             type: null,
-            required: true
+            required: false
         },
         type: {
             type: String,
@@ -188,7 +188,7 @@ export default defineComponent({
     },
     computed: {
         displayPagination() {
-            if (this.meta.links){
+            if (this.meta && this.meta.links){
                 return this.meta.links.slice(1, -1)
             } else {
                 return null
@@ -210,22 +210,22 @@ export default defineComponent({
             return this.columns
         },
         canUserEdit(): boolean | null {
-            if (this.$store.state.permissions !== undefined) {
-                return this.$store.state.permissions[this.type].edit
+            if (this.$store.state.user.permissions !== undefined) {
+                return this.$store.state.user.permissions[this.type].edit
             } else {
                 return null
             }
         },
         canUserView(): boolean | null {
-            if (this.$store.state.permissions !== undefined) {
-                return this.$store.state.permissions[this.type].view
+            if (this.$store.state.user.permissions !== undefined) {
+                return this.$store.state.user.permissions[this.type].view
             } else {
                 return null
             }
         },
         canUserDelete(): boolean | null {
-            if (this.$store.state.permissions !== undefined) {
-                return this.$store.state.permissions[this.type].delete
+            if (this.$store.state.user.permissions !== undefined) {
+                return this.$store.state.user.permissions[this.type].delete
             } else {
                 return null
             } 

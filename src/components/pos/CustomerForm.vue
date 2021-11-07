@@ -69,7 +69,7 @@ export default defineComponent({
 				phone: phone,
 				address: this.address
 			}
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			await CustomerService.create(data, token)
 				.then((response: ResponseData) => {
 					this.$toast.open({

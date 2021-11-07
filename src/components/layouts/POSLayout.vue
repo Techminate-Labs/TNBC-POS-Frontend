@@ -8,11 +8,10 @@
                 :menuActions="menuActions"
                 :class="toogleSideBar ? 'active' : ''" 
                 />
-            <div class="w-9/12 flex-grow overflow-x-hidden m-12" @click="openAdditionalSideBar = false">
+            <div class="w-9/12 flex-grow overflow-x-hidden m-4" @click="openAdditionalSideBar = false">
                 <div class="bg-red-300 text-wite w-full py-2 px-8 text-lg" v-if="!isEmailVerified">
                     <p>Your account has not been verified ! Please <button @click="requestEmailVerification" class="underline">send a verification email to your inbox.</button></p>
                 </div>
-                <Breadcrumb :key="$route.path" />
                 <router-view />
             </div>
         </div>
@@ -88,7 +87,7 @@ export default defineComponent({
             this.openAdditionalSideBar = false
         },
         requestEmailVerification():void {
-            let token = this.$store.state.bearerToken
+            let token = this.$store.state.session.bearerToken
             let data: any = []
             DataService.requestEmailVerification(data, token)
                 .then((response: ResponseData) => {
@@ -116,7 +115,7 @@ export default defineComponent({
     },
     computed: {
         isEmailVerified() {
-            return this.$store.state.isEmailVerified
+            return this.$store.state.user.isEmailVerified
         }
     }
 });

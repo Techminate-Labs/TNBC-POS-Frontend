@@ -87,7 +87,7 @@ export default defineComponent({
 	},
 	methods: {
 		async fetchBrands(): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let url = this.url
 			await BrandService.list(url, token)
 				.then((response: ResponseData) => {
@@ -119,7 +119,7 @@ export default defineComponent({
 		},
 		viewBrand(): void {},
 		async editBrand(brandName: string): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let data = { name: brandName }
 			let brandId = this.selectedBrand.id
 			await BrandService.edit(data, brandId, token)
@@ -144,7 +144,7 @@ export default defineComponent({
 			this.isDeleting = true
 		},
 		async deleteBrand(): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let brandId = this.selectedBrandId
 			await BrandService.delete(brandId, token)
 				.then((response: ResponseData) => {
@@ -164,7 +164,7 @@ export default defineComponent({
 				});
 		},
 		async searchBrand(event: any): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let value = event.target.value
 			let url = '/brandList'
 
@@ -221,7 +221,7 @@ export default defineComponent({
 			}
 		},
 		async createBrand(name: any): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let data = { name: name }
 			await BrandService.create(data, token)
 				.then((response: ResponseData) => {

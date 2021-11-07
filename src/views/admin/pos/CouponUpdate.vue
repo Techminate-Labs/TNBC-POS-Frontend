@@ -67,7 +67,7 @@ export default defineComponent({
 	},
 	methods: {
 		async fetchCoupons(): Promise<void> {
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			let Coupon_id = this.$route.params.id
 			await CouponService.getById(Coupon_id, token)
 				.then((response: ResponseData) => {
@@ -89,7 +89,7 @@ export default defineComponent({
 				active: (this.active) ? 1 : 0
 			}
 			let id = this.$route.params.id
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			await CouponService.update(data, id, token)
 				.then((response: ResponseData) => {
 					this.$toast.open({

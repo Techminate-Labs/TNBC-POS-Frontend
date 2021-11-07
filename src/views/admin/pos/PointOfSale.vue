@@ -24,13 +24,13 @@
                         </template>
 
                         <template v-slot:option="{ option }">
-                            <img class="w-1/2 h-32 object-cover mr-4" :src="option.img">{{ option.label }}
+                            <img class="w-1/2 h-16 object-cover mr-4" :src="option.img">{{ option.label }}
                         </template>
                     </Multiselect>
             </div>
             <div class="grid grid-cols-3 gap-3">
-                <div v-for="(item, index) in data" :key="index">
-                    <ItemCard :item="item" />
+                <div v-for="(item, index) in popularItems" :key="index">
+                    <ItemCard :item="item" @click="addPopularItemToCart(item.item_id)" />
                 </div>
             </div>
         </div>
@@ -80,11 +80,15 @@
                     </li>
                 </ul>
                 <div :class="isActive('cart') ? 'block' : 'hidden'">
-                    <CartTable />
-                    <Payments />
+                    <CartTable :cart="cart" @fetchCart="fetchCartItems" />
+                    <Payments 
+                        @discountChange="setDiscount" 
+                        @prepareInvoice="prepareInvoice"
+                        @loadExplorer="$router.push({name: 'TransactionExplorer'})"
+                        @changePaymentMethod="updateCartMethod" />
                 </div>
                 <div :class="isActive('invoice') ? 'block' : 'hidden'">
-                    <Invoice />
+                    <Invoice :invoice="cart "/>
                 </div>
                 <div :class="isActive('customer') ? 'block' : 'hidden'">
                     <CustomerForm />
@@ -112,21 +116,53 @@ export default defineComponent({
     components: { ItemCard, CartTable, Payments, Invoice, CustomerForm, Multiselect },
     data(){
         return {
-            data: [] as Array<ItemObject>,
+            popularItems: [] as Array<ItemObject>,
             activeItem: 'cart',
-            items: [],
+            cart: [],
+            invoice: {},
             itemId: '',
-            customerId: ''
+            customerId: '',
+            discountCode: '',
+            paymentMethod: 'fiat'
         }
     },
     methods: {
         async fetchPopularItems(): Promise<void> {
-            let token = this.$store.state.bearerToken
-            let url = `/itemList`
+            let token = this.$store.state.session.bearerToken
+            let url = `/itemList?limit=0`
             await ItemService.list(url, token)
                 .then((response: ResponseData) => {
                     let res = response.data
-                    this.data = res.data
+                    this.popularItems = res.data
+                })
+                .catch((e: Error) => {
+                    console.log(e);
+                });
+        },
+        async updateCartMethod(method: string): Promise<void> {
+            let token = this.$store.state.session.bearerToken
+            let params = `?discount=${this.discountCode}&payment_method=${method}`
+            await CartService.listItems(params, token)
+                .then((response: ResponseData) => {
+                    let res = response.data
+                    this.cart = res
+                    this.paymentMethod = res.payment_method
+                    this.$store.commit('setPaymentMethod', res.payment_method)
+                })
+                .catch((e: Error) => {
+                    console.log(e);
+                });
+        },
+        async fetchCartItems(): Promise<void> {
+            let token = this.$store.state.session.bearerToken
+            let params = `?discount=${this.discountCode}&payment_method=${this.paymentMethod}`
+            await CartService.listItems(params, token)
+                .then((response: ResponseData) => {
+                    let res = response.data
+                    this.cart = res
+                    this.paymentMethod = res.payment_method
+                    this.$store.commit('setPaymentMethod', res.payment_method)
+                    this.$store.commit('setInvoiceNumber', res.invoice_number)
                 })
                 .catch((e: Error) => {
                     console.log(e);
@@ -134,7 +170,7 @@ export default defineComponent({
         },
         async fetchItems(query: any): Promise<void> {
             if (query){
-                let token = this.$store.state.bearerToken
+                let token = this.$store.state.session.bearerToken
                 let url = `/itemList?q=${query}`
                 let results = await ItemService.list(url, token)
                     .then((response: ResponseData) => {
@@ -151,7 +187,7 @@ export default defineComponent({
         },
         async fetchCustomers(query: any): Promise<void> {
             if (query){
-                let token = this.$store.state.bearerToken
+                let token = this.$store.state.session.bearerToken
                 let url = `/customerList?q=${query}`
                 let results = await CustomerService.list(url, token)
                     .then((response: ResponseData) => {
@@ -167,6 +203,41 @@ export default defineComponent({
                 return results
             }
         },
+        async prepareInvoice(): Promise<void> {
+            let token = this.$store.state.session.bearerToken
+            let params = `?coupon=${this.discountCode}&payment_method=${this.paymentMethod}`
+            console.log('test')
+            await CartService.prepareInvoice(params, token)
+                .then((response: ResponseData) => {
+                    this.$toast.open({
+                        message: `The invoice has been prepared.`,
+                        type: "success"
+                    })
+                    this.fetchInvoice()
+                    this.activeItem = 'invoice'
+                })
+                .catch((e: Error) => {
+                    console.log(e);
+                });
+        },
+        async fetchInvoice(): Promise<void> {
+			const token = this.$store.state.session.bearerToken
+			const cart = this.$store.state.cart
+			const params = `?invoice_number=${cart.invoiceNumber}&coupon=${cart.coupon}&payment_method=${cart.paymentMethod}`
+			await CartService.prepareInvoice(params, token)
+				.then((response: ResponseData) => {
+                    let res = response.data
+					console.log('fetchInvoice response', res)
+                    this.invoice = res
+                })
+                .catch((e: Error) => {
+                    console.log(e);
+                });
+		},
+        setDiscount(e: any): void {
+            this.discountCode = e.target.value.toString()
+            this.$store.commit('setCoupon', e.target.value.toString())
+        },
         setActive(tabItem: string): void {
             this.activeItem = tabItem
         },
@@ -177,14 +248,17 @@ export default defineComponent({
             return `${title} – ${desc}`
         },
         async addCustomerToCart(): Promise<void>{
-            console.log('added customer to cart')
             let item = this.customerId as string
-            let token = this.$store.state.bearerToken
+            let token = this.$store.state.session.bearerToken
             
             let fd = new FormData()
             fd.append('customer_id', item)
             await CartService.addCustomer(fd, token)
                 .then((response) => {
+                    this.$toast.open({
+                        message: `A customer has been linked to the cart!`,
+                        type: "success"
+                    })
                     console.log(response)
                 })
                 .catch((error) => {
@@ -193,22 +267,45 @@ export default defineComponent({
         },
         async addItemToCart(): Promise<void>{
             let item = this.itemId as string
-            let token = this.$store.state.bearerToken
+            let token = this.$store.state.session.bearerToken
 
             let fd = new FormData()
             fd.append('item_id', item)
             console.log(fd)
             await CartService.addItem(fd, token)
                 .then((response) => {
-                    console.log(response)
+                    this.$toast.open({
+                        message: `Item has been added to the cart!`,
+                        type: "success"
+                    })
+                    this.fetchCartItems()
                 })
                 .catch((error) => {
                     console.log(error)
                 })
-        }
+        },
+        async addPopularItemToCart(id: number): Promise<void>{
+            let token = this.$store.state.session.bearerToken
+
+            let fd = new FormData()
+            fd.append('item_id', id.toString())
+            console.log(fd)
+            await CartService.addItem(fd, token)
+                .then((response) => {
+                    this.$toast.open({
+                        message: `Item has been added to the cart!`,
+                        type: "success"
+                    })
+                    this.fetchCartItems()
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        },
     },
     mounted() {
         this.fetchPopularItems()
+        this.fetchCartItems()
     }
 });
 </script>

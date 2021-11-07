@@ -74,7 +74,7 @@ export default defineComponent({
 	},
 	methods: {
 		async fetchSuppliers(): Promise<void> {
-		let token = this.$store.state.bearerToken
+		let token = this.$store.state.session.bearerToken
 		let params = this.$route.params
 		let url = '/supplierList'
 		await SupplierService.list(url, token)
@@ -99,7 +99,7 @@ export default defineComponent({
 				company: this.companyName,
 			}
 			let id = parseInt(this.id)
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			await SupplierService.update(data, id, token)
 				.then((response: ResponseData) => {
 					this.$toast.open({

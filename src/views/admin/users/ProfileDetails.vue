@@ -96,7 +96,7 @@ export default defineComponent({
 		async fetchProfile(): Promise<void> {
 			let params = this.$route.params
 			let user_id = parseInt(params.user_id as string)
-			let token = this.$store.state.bearerToken
+			let token = this.$store.state.session.bearerToken
 			await ProfileService.list(user_id, token)
 				.then((response: ResponseData) => {
 					this.profile  = response.data
