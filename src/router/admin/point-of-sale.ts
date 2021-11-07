@@ -60,7 +60,7 @@ const PointOfSaleRoutes = [
                 component: GeneratedQrCode,
             },
             {
-                path: 'transaction-explorer:params*',
+                path: 'transaction-explorer',
                 name: 'TransactionExplorer',
                 component: TransactionExplorer,
             },

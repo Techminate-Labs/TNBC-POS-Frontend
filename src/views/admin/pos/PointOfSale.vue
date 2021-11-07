@@ -84,6 +84,7 @@
                     <Payments 
                         @discountChange="setDiscount" 
                         @prepareInvoice="prepareInvoice"
+                        @loadExplorer="$router.push({name: 'TransactionExplorer'})"
                         @changePaymentMethod="updateCartMethod" />
                 </div>
                 <div :class="isActive('invoice') ? 'block' : 'hidden'">

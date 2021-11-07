@@ -28,10 +28,7 @@
 								:key="j" 
 								:data-label="column.attribute"
 								class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">
-								<div v-if="column.attribute === 'image'" class="flex-shrink-0">
-									<img :src="item.image" class="w-12" />
-								</div>
-								<div v-else class="flex-shrink-0">
+								<div class="flex-shrink-0">
 									{{ item[column.attribute] }}
 								</div>
 							</td>

@@ -1,15 +1,21 @@
 <template>
     <div class="flex flex-col">
-        <div class="bg-white shadow px-6 py-4 rounded-md mb-2">
-            <p>Store TNBC Public Key: {{ configurations.tnbc_pk }}</p>
+        <div class="grid grid-cols-2 gap-2">
+            <div class="bg-white shadow px-6 py-4 rounded-md mb-2">
+                <p>Last transaction amount: {{ configurations.lastTransactionAmount }}</p>
+            </div>
+            <div class="bg-white shadow px-6 py-4 rounded-md mb-2">
+                <p>Last transaction memo: {{ configurations.lastTransactionMemo }}</p>
+            </div>
         </div>
         <div class="bg-white shadow px-6 py-4 rounded-md mb-2">
-            <p>Last Transaction Public Key: {{ transactions[0].amount }}</p>
+            <p>Store TNBC Public Key: {{ configurations.storePK }}</p>
         </div>
         <div class="bg-white shadow px-6 py-4 rounded-md mb-2">
-            <p>Last Transaction Amount: {{ transactions[0].amount }}</p>
+            <p>Last transaction Public Key: {{ configurations.lastSenderPK }}</p>
         </div>
         <TransactionTable
+            class="mt-6"
             :columns="columns"
             :data="transactions"
             />
@@ -19,7 +25,6 @@
 import { defineComponent } from 'vue';
 import TransactionService from '@/services/TransactionService'
 import TransactionTable from "@/components/tables/TransactionTable.vue"
-import ConfigurationService from "@/services/ConfigurationService"
 
 export default defineComponent({
     name: 'TransactionExplorer',
@@ -34,8 +39,16 @@ export default defineComponent({
 					name: 'date'
 				},
 				{
+					attribute: 'sender',
+					name: 'sender'
+				},
+				{
 					attribute: 'amount',
 					name: 'amount'
+				},
+				{
+					attribute: 'memo',
+					name: 'memo'
 				}
 			]
         }
@@ -45,27 +58,21 @@ export default defineComponent({
             let token = this.$store.state.session.bearerToken
             await TransactionService.listTransactions(token)
                 .then((res) => {
-                    this.transactions = res.data.transactions
-                    console.log(this.transactions)
-                })
-                .catch(e => {
-                    console.log(e)
-                })
-        },
-        async fetchConfigurations(): Promise<any> {
-            let token = this.$store.state.session.bearerToken
-            await ConfigurationService.listConfigurations(token)
-                .then((res) => {
-                    this.configurations = res.data
+                    this.transactions = res.data.tableData.data
+                    this.configurations = {
+                        storePK: res.data.storePK,
+                        lastSenderPK: res.data.lastSenderPK,
+                        lastTransactionAmount: res.data.lastTransactionAmount,
+                        lastTransactionMemo: res.data.lastTransactionMemo,
+                    }
                 })
                 .catch(e => {
                     console.log(e)
                 })
         }
     },
-    async created(): Promise<void> {
+    async mounted(): Promise<void> {
         await this.fetchTransactions()
-        await this.fetchConfigurations()
     }
 });
 </script>
