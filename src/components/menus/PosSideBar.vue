@@ -1,11 +1,11 @@
 <template>
     <div class="bg-white z-20 relative shadow-lg">
-        <nav class="block relative mx-auto justify-between text-gray-700 z-20" aria-label="Side Bar Navigation">
-            <ul class="flex flex-wrap md:flex-col md:flex-nowrap justify-evenly lg:grid lg:grid-cols-1 md:divide-x-0 md:divide-y-2 divide-gray-200 text-center text-lg">
+        <nav class="block pt-10 mt-10 relative mx-auto justify-between text-gray-700 z-20" aria-label="Side Bar Navigation">
+            <ul class="flex flex-wrap pt-10 md:flex-col md:flex-nowrap justify-evenly lg:grid lg:grid-cols-1 md:divide-x-0 md:divide-y-4 divide-gray-200 text-center text-lg">
                 <li 
                     v-for="(item, index) in menuPOS" 
                     :key="index"
-                    class="cursor-pointer hover:bg-gray-100">
+                    class="cursor-pointer bg-blue-900 text-white">
                     <div 
                         :class="selectedMenu === item ? 'selected-menu-item' : ''"
                         @click="handleSubmenuSidebar(item)">
@@ -17,12 +17,12 @@
                     </div>
                 </li>
             </ul>
-            <div class="h-2 bg-gray-200" ></div>
-            <ul class="flex flex-wrap md:flex-col md:flex-nowrap justify-evenly lg:grid lg:grid-cols-1 md:divide-x-0 md:divide-y-2 divide-gray-200 text-center text-lg">
+            <div class="h-1 bg-gray-200" ></div>
+            <ul class="flex flex-wrap md:flex-col md:flex-nowrap justify-evenly lg:grid lg:grid-cols-1 md:divide-x-0 md:divide-y-4 divide-gray-200 text-center text-lg">
                 <li 
                     v-for="(item, index) in menuActions" 
                     :key="index"
-                    class="cursor-pointer hover:bg-gray-100">
+                    class="cursor-pointer bg-blue-900 text-white">
                     <div 
                         :class="selectedMenu === item ? 'selected-menu-item' : ''"
                         @click="handleSubmenuSidebar(item)">
@@ -62,7 +62,6 @@ export default defineComponent({
     },
     methods:{
         handleSubmenuSidebar(item: MenuItem): void {
-            if (item.name === 'Generate QR Code') this.$router.push({name: 'GeneratedQrCode'})
             this.selectedMenu = item
         },
         handleSidebar(item: MenuItem): void {

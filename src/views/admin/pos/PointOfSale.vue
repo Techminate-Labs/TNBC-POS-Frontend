@@ -1,7 +1,7 @@
 <template>
     <div class="grid grid-cols-2 gap-3">
         <div class="bg-white rounded-md shadow-md col-span-1 p-4">
-            <div class="flex flex-col flex-nowrap w-full mb-4 rounded-md shadow-md">
+            <div class="flex flex-col flex-nowrap w-full mb-4 rounded-2xl shadow-md">
                 <Multiselect
                     v-model="itemId"
                     @select="addItemToCart()"
@@ -24,18 +24,18 @@
                         </template>
 
                         <template v-slot:option="{ option }">
-                            <img class="w-1/2 h-16 object-cover mr-4" :src="option.img">{{ option.label }}
+                            <img class="w-1/2 h-16 object-cover rounded-xl mr-4" :src="option.img">{{ option.label }}
                         </template>
                     </Multiselect>
             </div>
-            <div class="grid grid-cols-3 gap-3">
+            <div class="grid grid-cols-3 rounded-2xl gap-3">
                 <div v-for="(item, index) in popularItems" :key="index">
                     <ItemCard :item="item" @click="addPopularItemToCart(item.item_id)" />
                 </div>
             </div>
         </div>
         <div class="bg-white rounded-md shadow-md col-span-1 col-start-2 p-4">
-            <div class="flex flex-col flex-nowrap w-full mb-4 rounded-md shadow-md">
+            <div class="flex flex-col flex-nowrap w-full mb-4 rounded-2xl shadow-md">
                 <Multiselect
                     v-model="customerId"
                     @select="addCustomerToCart()"
@@ -50,31 +50,31 @@
                     />
             </div>
             <div class="shadow-md">
-                <ul class="flex flew-row flew-nowrap justify-evenly text-center divide-x-2 divide-gray-200 border-b-2 border-gray-100">
+                <ul class="flex flew-row flew-nowrap justify-evenly text-center bg-gray-200">
                     <li 
                         @click="setActive('cart')"
-                        class="flex-grow hover:bg-gray-100 rounded-tl-md">
+                        class="flex-grow">
                         <div 
-                            :class="isActive('cart') ? 'border-b-4 border-blue-900 bg-gray-100 rounded-tl-md' : ''"
-                            class="px-3 py-2 cursor-pointer text-gray-900">
+                            :class="isActive('cart') ? 'text-white bg-blue-900 rounded-tl-md' : ''"
+                            class="px-3 py-2 cursor-pointer">
                             <span>Cart Items</span>
                         </div>
                     </li>
                     <li 
                         @click="setActive('invoice')"
-                        class="flex-grow hover:bg-gray-100">
+                        class="flex-grow">
                         <div 
-                            :class="isActive('invoice') ? 'border-b-4 border-blue-900 bg-gray-100' : ''"
-                            class="px-3 py-2 cursor-pointer text-gray-900">
+                            :class="isActive('invoice') ? 'text-white bg-blue-900 rounded-tl-md' : ''"
+                            class="px-3 py-2 cursor-pointer">
                             <span>Invoice</span>
                         </div>
                     </li>
                     <li 
                         @click="setActive('customer')"
-                        class="flex-grow hover:bg-gray-100 rounded-tr-md">
+                        class="flex-grow">
                         <div 
-                            :class="isActive('customer') ? 'border-b-4 border-blue-900 bg-gray-100 rounded-tr-md' : ''"
-                            class="px-3 py-2 cursor-pointer text-gray-900">
+                            :class="isActive('customer') ? 'text-white bg-blue-900 rounded-tl-md' : ''"
+                            class="px-3 py-2 cursor-pointer">
                             <span>Add Customer</span>
                         </div>
                     </li>
@@ -309,3 +309,26 @@ export default defineComponent({
     }
 });
 </script>
+<style scoped>
+
+li.flex-grow {
+  position: relative;
+  display: block;
+  outline: none;
+  cursor: pointer;
+  overflow: hidden;
+}
+li.flex-grow:after {
+  position: absolute;
+  content: '';
+  left: 60px;
+  top: 0;
+  height: 490%;
+  width: 160%;  
+  height: 50px;
+  background: #fff;
+  bottom: 0px;
+  right: -150px;
+  transform: rotate(45deg);
+}
+</style>
