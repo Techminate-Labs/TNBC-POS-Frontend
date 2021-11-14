@@ -26,7 +26,6 @@ export default defineComponent({
             let token = this.$store.state.session.bearerToken
             await UserService.logout(token)
                 .then((response: ResponseData) => {
-                    localStorage.setItem('bearerToken', '')
                     this.$store.commit('setPermissions', [])
                     this.$store.commit('setBearerToken', '')
                     this.$store.commit('setAuthentication', false)

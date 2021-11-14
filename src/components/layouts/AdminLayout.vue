@@ -93,8 +93,7 @@ export default defineComponent({
                     url: '/sales-invoices',
                     icon: 'https://epqrpjmozlcsvbgkxjkp.supabase.in/storage/v1/object/sign/tnbc-pos/svgs/document-text.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0bmJjLXBvcy9zdmdzL2RvY3VtZW50LXRleHQuc3ZnIiwiaWF0IjoxNjMwMDg4MzEwLCJleHAiOjE5NDU0NDgzMTB9.YMblc4CxvBKs-mjUo7-ZLofMhZo6YlQ8JSDflk6niEc',
                     submenus: [
-                        { name: 'Sales Records', url: '/sales-records' },
-                        { name: 'Sold Items', url: '/sold-items' },
+                        { name: 'Sales Invoices', url: '/invoice-list' }
                     ]
                 },
                 {
@@ -107,12 +106,9 @@ export default defineComponent({
                     ]
                 },
                 {
-                    name: 'Settings',
-                    url: '/settings',
+                    name: 'Configuration',
+                    url: '/configuration',
                     icon: 'https://epqrpjmozlcsvbgkxjkp.supabase.in/storage/v1/object/sign/tnbc-pos/svgs/adjustments.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0bmJjLXBvcy9zdmdzL2FkanVzdG1lbnRzLnN2ZyIsImlhdCI6MTYzMDA4ODM0NiwiZXhwIjoxOTQ1NDQ4MzQ2fQ.z4IZrOKkDsVWQAicUSg3ytrqSaOaJFuwPSn7cIRQtsg',
-                    submenus: [
-                        { name: 'General Settings', url: '#' }
-                    ]
                 },
             // ] as unknown as PropType<Array<MenuItem>>
             ] as any

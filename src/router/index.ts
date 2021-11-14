@@ -6,6 +6,8 @@ import { UserManagementRoutes, VerifyRoutes } from './admin/user-management'
 import ItemsRoutes from './admin/items'
 import PointOfSaleRoutes from './admin/point-of-sale'
 import ErrorsRoutes from './errors'
+import ConfigurationRoutes from './admin/configuration'
+import SalesRoutes from './admin/sales'
 
 const routes = [
     ...GuestRoutes, 
@@ -14,6 +16,8 @@ const routes = [
     ...VerifyRoutes, 
     ...ItemsRoutes,
     ...PointOfSaleRoutes,
+    ...ConfigurationRoutes,
+    ...SalesRoutes,
     ...ErrorsRoutes
 ];
 
