@@ -1,8 +1,20 @@
 <template>
 	<div class="flex flex-nowrap p-2">
 		<div class="flex flex-col flex-nowrap w-1/2 pr-4">
-			<button @click="$emit('changePaymentMethod', 'tnbc')" class="shadow-md base-btn-outline">Pay with TNBC</button>
-			<button @click="$emit('changePaymentMethod', 'fiat')" class="shadow-md base-btn-outline">Pay with Cash</button>
+			<button @click="$emit('changePaymentMethod', 'tnbc')" class="shadow-2xl base-btn-outline flex">
+				<span class="flex-1">Pay with TNBC</span>
+				<img 
+					class="absolute object-cover h-7 w-7"
+					src="@/assets/tnbc.png" 
+					/>
+				</button>
+			<button @click="$emit('changePaymentMethod', 'fiat')" class="shadow-md base-btn-outline flex">
+		        <span class="flex-1">Pay with Cash</span>
+				<img 
+					class="absolute object-cover h-7 w-7 hover:text-white bg-white rounded-circle"
+					src="@/assets/doller.png" 
+					/>
+			</button>
 			<button 
 				@click="$emit('loadExplorer')" 
 				class="shadow-md base-btn-outline">

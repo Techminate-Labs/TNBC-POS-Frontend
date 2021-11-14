@@ -1,8 +1,7 @@
 <template>
 	<div
-		
-		class="text-center bg-white shadow-md rounded-md cursor-pointer hover:shadow-lg">
-		<img class="h-32 object-cover w-full rounded-md" :src="item.image" />
+		class="text-center bg-white shadow-md rounded-2xl gap-8 cursor-pointer hover:shadow-lg">
+		<img class="h-32 rounded-t-2xl object-cover w-80" :src="item.image" />
 		<div class="py-4 text-blue-900">
 			<p class="mb-2 font-semibold">{{ item.name }}</p>
 			<p>$USD {{ item.price }}</p>
