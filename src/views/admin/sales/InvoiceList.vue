@@ -10,17 +10,18 @@
 			:meta="meta"
 			:data="data"
 			:type="type"
-			@handleSearch="searchItem"
 			@handleView="viewItem"
-			@handleEdit="editItem"
-			@handleDelete="showDeleteModal"
+			@handleDelete="null"
 			@pageChange="pageChange" 
 			@previousPage="previousPage" 
 			@nextPage="nextPage" 
 			@maxItemsPerPageChange="pageLimitChange" 
 			/>
-		<div class="hidden" :class="isDeleting ? 'active' : ''">
-			<DeleteModal @handleConfirmDelete="deleteItem" @close-modal="isDeleting = false" />
+		<div class="hidden" :class="isViewing ? 'active' : ''">
+			<InvoiceModal
+				@close-modal="closeModal"
+				:propInvoice="singleInvoice"
+				 />
 		</div>
 	</div>
 </template>
@@ -28,7 +29,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import DataTable from '@/components/tables/DataTable.vue'
-import DeleteModal from '@/components/modals/DeleteModal.vue'
+import InvoiceModal from '@/components/modals/InvoiceModal.vue'
 import SalesService from "@/services/SalesService";
 import ResponseData from "@/types/ResponseData";
 
@@ -36,7 +37,7 @@ export default defineComponent({
 	name: 'InvoiceList',
 	components: {
 		DataTable,
-		DeleteModal
+		InvoiceModal
 	},
 	data() {
 		return {
@@ -47,8 +48,8 @@ export default defineComponent({
 			type: "Users",
 			url: '/invoiceList',
 			maxItemsPerPage: '' || undefined as unknown as string,
-			isDeleting: false,
-			selectedItemId: 0 as number,
+			isViewing: false,
+			singleInvoice: {},
 			columns: [
 				{
 					attribute: 'invoice_number',
@@ -85,7 +86,6 @@ export default defineComponent({
 				.then((response: ResponseData) => {
 					let res = response.data
 					this.data = res.data
-					console.log(res.data)
 					this.meta = {
 						current_page: res.current_page,
 						from: res.from,
@@ -130,15 +130,21 @@ export default defineComponent({
 				await this.fetchItems()
 			}
 		},
-		viewItem(item: any): void {
-			this.$router.push({name:'ItemDetails', params: {id: item.item_id}})
+		async viewItem(item: any): Promise<void> {
+			this.isViewing = true
+            const token = this.$store.state.session.bearerToken
+            
+            await SalesService.getById(item.id, token)
+                .then(res => {
+					this.singleInvoice = res.data
+                })
+                .catch(err => {
+                    console.log(err)
+                })
 		},
-		editItem(item: any): void {
-			this.$router.push({name:'ItemUpdate', params: {id: item.item_id}})
-		},
-		showDeleteModal(item: any){
-			this.isDeleting = true
-			this.selectedItemId = item.id
+		closeModal(item: any): void {
+			this.isViewing = false
+			this.singleInvoice = {}
 		},
 	},
 	async mounted(): Promise<void> {

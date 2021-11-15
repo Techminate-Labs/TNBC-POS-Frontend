@@ -49,7 +49,7 @@
                             <td 
                                 data-label="Action"
                                 class="flex flew-row justify-end w-full lg:w-auto px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <UserAddIcon v-show="item.user_id"    @click="$emit('handleAddProfile', item)" class="text-green-700 h-6 w-6 mr-1 cursor-pointer hover:opacity-50" />
+                                <UserAddIcon v-show="isUsingProfile" @click="$emit('handleAddProfile', item)" class="text-green-700 h-6 w-6 mr-1 cursor-pointer hover:opacity-50" />
                                 <ViewIcon v-show="canUserView" @click="$emit('handleView', item)" class="text-blue-700 h-6 w-6 mr-1 cursor-pointer hover:opacity-50" />
                                 <EditIcon v-show="canUserEdit" @click="$emit('handleEdit', item)" class="text-green-700 h-6 w-6 mr-1 cursor-pointer hover:opacity-50" />
                                 <DeleteIcon v-show="canUserDelete" @click="$emit('handleDelete', item)" class="text-red-700 h-6 w-6 mr-1 cursor-pointer hover:opacity-50" />
@@ -230,6 +230,10 @@ export default defineComponent({
                 return null
             } 
         },
+        isUsingProfile(): any {
+            if (this.$route.name === 'UserList') return true
+            return false
+        }
     }
 });
 </script>

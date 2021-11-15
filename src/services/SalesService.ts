@@ -6,6 +6,6 @@ export default {
     },
 
     getById(invoice_id: any, token: any): Promise<any> {
-        return http.post(`/invoiceGetById/${invoice_id}`, { headers: { "Authorization": `Bearer ${token}` } });
+        return http.get(`/invoiceGetById/${invoice_id}`, { headers: { "Authorization": `Bearer ${token}` } });
     },
 }
