@@ -205,7 +205,8 @@ export default defineComponent({
         },
         async prepareInvoice(): Promise<void> {
             let token = this.$store.state.session.bearerToken
-            let params = `?coupon=${this.discountCode}&payment_method=${this.paymentMethod}`
+            let cart = this.$store.state.cart
+            let params = `?invoice_number=${cart.invoiceNumber}&coupon=${this.discountCode}&payment_method=${this.paymentMethod}`
             console.log('test')
             await CartService.prepareInvoice(params, token)
                 .then((response: ResponseData) => {

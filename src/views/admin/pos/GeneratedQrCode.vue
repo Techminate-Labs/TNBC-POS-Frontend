@@ -49,7 +49,7 @@ export default defineComponent({
 	methods: {
 		async fetchConfigurations(): Promise<any> {
             let token = this.$store.state.session.bearerToken
-            await ConfigurationService.listConfigurations(token)
+            await ConfigurationService.list(token)
                 .then((res) => {
 					this.publicKey = res.data.tnbc_pk 
 					const publicKey = { "address": res.data.tnbc_pk }

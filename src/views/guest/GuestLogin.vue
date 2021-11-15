@@ -57,7 +57,6 @@ export default defineComponent({
                 .then((response: ResponseData) => {
                     this.user = response.data.user
                     let permissions = this.user.role.permissions
-                    console.log(permissions)
                     this.$store.commit('setPermissions', permissions)
                     this.$store.commit('setBearerToken', response.data.token)
                     this.$store.commit('setAuthentication', true)
