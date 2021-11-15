@@ -45,35 +45,35 @@ export default defineComponent({
 			meta: {},
 			data: [] as Array<any>,
 			type: "Users",
-			url: '/itemList',
+			url: '/invoiceList',
 			maxItemsPerPage: '' || undefined as unknown as string,
 			isDeleting: false,
 			selectedItemId: 0 as number,
 			columns: [
 				{
-					attribute: 'Invoice No.',
-					name: 'image'
+					attribute: 'invoice_number',
+					name: 'Invoice No.'
 				},
 				{
-					attribute: 'name',
-					name: 'name'
+					attribute: 'date',
+					name: 'date'
 				},
 				{
-					attribute: 'category',
-					name: 'category'
+					attribute: 'user_id',
+					name: 'sales by'
 				},
 				{
-					attribute: 'price',
-					name: 'price'
+					attribute: 'customer_id',
+					name: 'customer'
 				},
 				{
-					attribute: 'inventory',
-					name: 'stock'
+					attribute: 'total',
+					name: 'amount'
 				},
 				{
-					attribute: 'available',
-					name: 'availability'
-				},
+					attribute: 'payment_method',
+					name: 'payment type'
+				}
 			]
 		}
 	},
@@ -85,6 +85,7 @@ export default defineComponent({
 				.then((response: ResponseData) => {
 					let res = response.data
 					this.data = res.data
+					console.log(res.data)
 					this.meta = {
 						current_page: res.current_page,
 						from: res.from,

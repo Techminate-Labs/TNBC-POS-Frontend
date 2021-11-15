@@ -89,11 +89,11 @@ export default defineComponent({
                     ]
                 },
                 {
-                    name: 'Sales Invoices',
-                    url: '/sales-invoices',
+                    name: 'Sales',
+                    url: '/sales',
                     icon: 'https://epqrpjmozlcsvbgkxjkp.supabase.in/storage/v1/object/sign/tnbc-pos/svgs/document-text.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0bmJjLXBvcy9zdmdzL2RvY3VtZW50LXRleHQuc3ZnIiwiaWF0IjoxNjMwMDg4MzEwLCJleHAiOjE5NDU0NDgzMTB9.YMblc4CxvBKs-mjUo7-ZLofMhZo6YlQ8JSDflk6niEc',
                     submenus: [
-                        { name: 'Sales Invoices', url: '/invoice-list' }
+                        { name: 'Sales Invoices', url: '/invoices-list' }
                     ]
                 },
                 {
