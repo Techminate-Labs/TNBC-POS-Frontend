@@ -16,7 +16,7 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
-                    <tr v-for="(item) in invoice.invoiceItems" :key="item.id">
+                    <tr v-for="(item) in invoiceItems" :key="item.id">
                         <td class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">{{ item.item_name }}</td>
                         <td class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">{{ item.unit }}</td>
                         <td class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">{{ item.unit_price }}</td>
@@ -30,28 +30,28 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <!-- <td colspan="2" class="px-6 text-right">{{ invoice.subtotal }} {{ getPaymentMethod }}</td> -->
+                        <td colspan="2" class="px-6 text-right">{{ invoice.subTotal }} {{ getPaymentMethod }}</td>
                     </tr>
                     <tr>
                         <th class="px-6 py-2">Discount</th>
                         <td></td>
                         <td></td>
                         <td></td>
-                        <!-- <td colspan="2" class="px-6 text-right">{{ invoice.discount }} {{ getPaymentMethod }}</td> -->
+                        <td colspan="2" class="px-6 text-right">{{ invoice.discount }} {{ getPaymentMethod }}</td>
                     </tr>
                     <tr>
                         <th class="px-6 py-2">Tax</th>
                         <td></td>
                         <td></td>
                         <td></td>
-                        <!-- <td colspan="2" class="px-6 text-right">{{ invoice.tax }} {{ getPaymentMethod }}</td> -->
+                        <td colspan="2" class="px-6 text-right">{{ invoice.tax }} {{ getPaymentMethod }}</td>
                     </tr>
                     <tr>
                         <th class="px-6 py-2">Total</th>
                         <td></td>
                         <td></td>
                         <td></td>
-                        <!-- <td colspan="2" class="px-6 text-right">{{ invoice.total }} {{ getPaymentMethod }}</td> -->
+                        <td colspan="2" class="px-6 text-right">{{ invoice.total }} {{ getPaymentMethod }}</td>
                     </tr>
                 </tfoot>
             </table>
@@ -62,7 +62,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import CancelIcon from '@/components/icons/CancelIcon.vue'
-import { InvoiceSingle } from '@/types/Invoice'
+import { InvoiceSingle, Invoice, InvoiceItems } from '@/types/Invoice'
 
 export default defineComponent({
     name: 'InvoiceModal',
@@ -75,28 +75,28 @@ export default defineComponent({
     },
     data(){
         return {
-            invoice: {} as InvoiceSingle
+            invoiceItems: [] as Array<InvoiceItems>,
+            invoice: {} as Invoice
         }
     },
     watch: {
         propInvoice: function () {
-            this.invoice = this.propInvoice
+            this.invoice = this.propInvoice.invoice
+            this.invoiceItems = this.propInvoice.invoiceItems
         }
     },
     computed: {
-        // getPaymentMethod(): string {
-        //     if (this.invoice) {
-        //         switch (this.invoice.invoice.payment_method) {
-        //             case 'fiat':
-        //                 return '$'
-        //             case 'tnbc':
-        //                 return 'TNBC'
-        //             default:
-        //                 return ''
-        //         }
-        //     }
-        //     return ''
-		// }
+        getPaymentMethod(): string {
+            switch (this.invoice.payment_method) {
+                case 'fiat':
+                    return '$'
+                case 'tnbc':
+                    return 'TNBC'
+                default:
+                    return ''
+            }
+            
+		}
     }
 
 })

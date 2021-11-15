@@ -142,9 +142,8 @@ export default defineComponent({
                     console.log(err)
                 })
 		},
-		closeModal(item: any): void {
+		closeModal(): void {
 			this.isViewing = false
-			this.singleInvoice = {}
 		},
 	},
 	async mounted(): Promise<void> {
