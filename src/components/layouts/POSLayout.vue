@@ -57,15 +57,16 @@ export default defineComponent({
                 },
                 {
                     name: 'Invoices',
-                    url: '/point-of-sale/invoices-list',
-                }
+                    url: '/sales/invoices-list',
+                },
+                {
+                    name: 'Generate QR Code',
+                    url: '/point-of-sale/generated-qr-code',
+                },
             ] as any,
             menuActions: [
                 {
                     name: 'Clear Cart'
-                },
-                {
-                    name: 'Generate QR Code'
                 },
                 {
                     name: 'Log Out'

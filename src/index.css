@@ -76,6 +76,9 @@ input[type=number] {
 .selected-menu-item {
   @apply border-r-4 border-blue-900 bg-gray-100;
 }
+.selected-posmenu-item {
+  @apply border-r-4 border-blue-900 bg-gray-100 text-black;
+}
 
 /* CHECKBOX TOGGLE SWITCH */
 /* @apply rules for documentation, these do not work as inline style */
