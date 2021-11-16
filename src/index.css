@@ -40,16 +40,16 @@ input[type=number] {
 
 /* BUTTONS */
 .base-btn {
-  @apply uppercase bg-blue-800  border-2 border-gray-300 shadow-md px-12 py-6 mt-3 text-white rounded-2xl;
+  @apply uppercase bg-blue-800 hover:bg-blue-900 border-2 border-gray-300 shadow-md px-12 py-2 mt-3 text-white rounded-2xl;
 }
 .base-btn-outline {
-  @apply uppercase box-border border-2 bg-transparent border-gray-300 text-blue-900 hover:bg-blue-900 hover:text-white px-12 py-2 mt-3 rounded-xl;
+  @apply uppercase box-border border-2 bg-transparent border-gray-300 text-blue-900 hover:bg-blue-900 hover:text-white px-12 py-2 mt-3 rounded-2xl;
 }
 .base-btn-cancel {
-  @apply uppercase bg-red-800 hover:bg-red-700 hover:border-red-800 border-2 border-red-900 shadow-md px-12 py-2 mt-3 text-white rounded-md;
+  @apply uppercase bg-red-800 hover:bg-red-700 hover:border-red-800 border-2 border-red-900 shadow-md px-12 py-2 mt-3 text-white rounded-2xl;
 }
 .base-btn-cancel-outline {
-  @apply uppercase box-border border-2 bg-transparent border-red-900 text-red-900 hover:bg-red-900 hover:text-white px-12 py-2 mt-3 rounded-md;
+  @apply uppercase box-border border-2 bg-transparent border-red-900 text-red-900 hover:bg-red-900 hover:text-white px-12 py-2 mt-3 rounded-2xl;
 }
 
 /* TABLE */

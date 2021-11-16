@@ -4,6 +4,7 @@ import router from '@/router'
 import store from '@/store'
 // import axios, { AxiosStatic } from 'axios';
 import VueToast from 'vue-toast-notification';
+// import JsBarcode from 'jsbarcode';
 
 import 'vue-toast-notification/dist/theme-default.css';
 import '@/index.css'

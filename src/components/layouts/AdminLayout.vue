@@ -86,6 +86,7 @@ export default defineComponent({
                         { name: 'Categories', url: '/categories-list' },
                         { name: 'Items', url: '/items-list' },
                         { name: 'Suppliers', url: '/suppliers-list' },
+                        { name: 'Barcodes', url: '/barcode-list' },
                     ]
                 },
                 {
