@@ -1,5 +1,5 @@
 <template>
-	<div class="bg-white rounded-md px-6 py-4">
+	<div class="bg-white rounded-md shadow-xl m-4 px-4 py-4">
 		<div class="flex flex-col py-2">
 			<label class="label" for="name">Name:</label>
 			<input
