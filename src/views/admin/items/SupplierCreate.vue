@@ -61,7 +61,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import SupplierService from "@/services/SupplierService";
+import SupplierService from "@/services/items/SupplierService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({

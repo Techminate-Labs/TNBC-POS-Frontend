@@ -4,15 +4,15 @@
             <button @click="$emit('close-modal')" class="float-right hover:text-red-600">
                 <CancelIcon class="w-8 h-8" />
             </button>
-            <p class="text-2xl mb-4">Invoice</p>
-            <table class="divide-y divide-gray-200 border-collapse w-full text-left">
+            <p class="text-2xl mb-4">Invoice n° {{ invoice.invoice_number }}</p>
+            <table class="divide-y divide-gray-200 border-collapse border border-gray-200 w-full text-left shadow-md">
                 <thead>
-                    <tr>
-                        <th class="px-6 text-sm">Name</th>
-                        <th class="px-6 text-sm">Unit</th>
-                        <th class="px-6 text-sm">Unit Price</th>
-                        <th class="px-6 text-sm">QTY</th>
-                        <th class="px-6 text-sm">Amount</th>
+                    <tr class="uppercase text-sm">
+                        <th class="px-6 py-4">Name</th>
+                        <th class="px-6 py-4">Unit</th>
+                        <th class="px-6 py-4">Unit Price</th>
+                        <th class="px-6 py-4">QTY</th>
+                        <th class="px-6 py-4">Amount</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
@@ -24,33 +24,33 @@
                         <td class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">{{ item.total }}</td>
                     </tr>
                 </tbody>
-                <tfoot class="text-left bg-blue-900 text-white shadow-md">
+                <tfoot class="text-left">
                     <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <th class="px-6 py-2">Subtotal</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <td colspan="2" class="px-6 text-right">{{ invoice.subTotal }} {{ getPaymentMethod }}</td>
                     </tr>
                     <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <th class="px-6 py-2">Discount</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <td colspan="2" class="px-6 text-right">{{ invoice.discount }} {{ getPaymentMethod }}</td>
                     </tr>
                     <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <th class="px-6 py-2">Tax</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <td colspan="2" class="px-6 text-right">{{ invoice.tax }} {{ getPaymentMethod }}</td>
                     </tr>
                     <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <th class="px-6 py-2">Total</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <td colspan="2" class="px-6 text-right">{{ invoice.total }} {{ getPaymentMethod }}</td>
                     </tr>
                 </tfoot>
@@ -82,7 +82,9 @@ export default defineComponent({
     watch: {
         propInvoice: function () {
             this.invoice = this.propInvoice.invoice
+            console.log(this.invoice)
             this.invoiceItems = this.propInvoice.invoiceItems
+            console.log(this.invoiceItems)
         }
     },
     computed: {

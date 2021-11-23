@@ -35,7 +35,7 @@
 import { defineComponent } from 'vue';
 import DataTable from '@/components/tables/DataTable.vue'
 import DeleteModal from '@/components/modals/DeleteModal.vue'
-import ItemService from "@/services/ItemService";
+import ItemService from "@/services/items/ItemService";
 import { ItemObject } from '@/types/Items'
 import ResponseData from "@/types/ResponseData";
 

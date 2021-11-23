@@ -52,7 +52,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import CouponService from "@/services/CouponService";
+import CouponService from "@/services/items/CouponService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({

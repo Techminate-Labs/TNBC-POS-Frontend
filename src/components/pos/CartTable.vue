@@ -77,7 +77,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import DeleteIcon from "@/components/icons/DeleteIcon.vue"
-import CartService from '@/services/CartService';
+import CartService from '@/services/pos/CartService';
 import ResponseData from "@/types/ResponseData";
 import PlusIcon from "@/components/icons/PlusIcon.vue"
 import MinusIcon from "@/components/icons/MinusIcon.vue"

@@ -30,7 +30,7 @@
 import { defineComponent } from 'vue';
 import DataTable from '@/components/tables/DataTable.vue'
 import DeleteModal from '@/components/modals/DeleteModal.vue'
-import CouponService from "@/services/CouponService";
+import CouponService from "@/services/items/CouponService";
 import { CouponItem } from '@/types/Coupons'
 import ResponseData from "@/types/ResponseData";
 

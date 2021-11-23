@@ -42,7 +42,7 @@ import DataTable from '@/components/tables/DataTable.vue'
 import BrandModalCreate from '@/components/modals/BrandModalCreate.vue'
 import BrandModalUpdate from '@/components/modals/BrandModalUpdate.vue'
 import DeleteModal from '@/components/modals/DeleteModal.vue'
-import BrandService from "@/services/BrandService";
+import BrandService from "@/services/items/BrandService";
 import ResponseData from "@/types/ResponseData";
 import { Brand } from "@/types/Brands";
 

@@ -35,7 +35,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import DataTable from '@/components/tables/DataTable.vue';
-import RoleService from "@/services/RoleService";
+import RoleService from "@/services/users/RoleService";
 import ResponseData from "@/types/ResponseData";
 import DeleteModal from '@/components/modals/DeleteModal.vue'
 import { RoleObject } from '@/types/Roles'

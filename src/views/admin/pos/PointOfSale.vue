@@ -107,9 +107,9 @@ import Payments from "@/components/pos/Payments.vue"
 import Invoice from "@/components/pos/Invoice.vue"
 import CustomerForm from "@/components/pos/CustomerForm.vue"
 import ResponseData from "@/types/ResponseData";
-import ItemService from "@/services/ItemService";
-import CartService from "@/services/CartService";
-import CustomerService from "@/services/CustomerService";
+import ItemService from "@/services/items/ItemService";
+import CartService from "@/services/pos/CartService";
+import CustomerService from "@/services/pos/CustomerService";
 import { ItemObject } from '@/types/Items'
 import Multiselect from '@vueform/multiselect'
 

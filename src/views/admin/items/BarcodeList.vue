@@ -16,7 +16,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import JsBarcode from 'jsbarcode'
-import ItemService from '@/services/ItemService'
+import ItemService from '@/services/items/ItemService'
 
 export default defineComponent({
 	name: 'BarcodeList',

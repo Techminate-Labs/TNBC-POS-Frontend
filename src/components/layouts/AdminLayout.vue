@@ -94,16 +94,8 @@ export default defineComponent({
                     url: '/sales',
                     icon: 'https://epqrpjmozlcsvbgkxjkp.supabase.in/storage/v1/object/sign/tnbc-pos/svgs/document-text.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0bmJjLXBvcy9zdmdzL2RvY3VtZW50LXRleHQuc3ZnIiwiaWF0IjoxNjMwMDg4MzEwLCJleHAiOjE5NDU0NDgzMTB9.YMblc4CxvBKs-mjUo7-ZLofMhZo6YlQ8JSDflk6niEc',
                     submenus: [
-                        { name: 'Sales Invoices', url: '/invoices-list' }
-                    ]
-                },
-                {
-                    name: 'Sales Report',
-                    url: '/sales-report',
-                    icon: 'https://epqrpjmozlcsvbgkxjkp.supabase.in/storage/v1/object/sign/tnbc-pos/svgs/document-report.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0bmJjLXBvcy9zdmdzL2RvY3VtZW50LXJlcG9ydC5zdmciLCJpYXQiOjE2MzAwODgzMjIsImV4cCI6MTk0NTQ0ODMyMn0.f4dxQvGbpozJKdXPHPa_mxDODTLXnfya8rB0np-VgfM',
-                    submenus: [
-                        { name: 'Sales with TNBC', url: '/sales-with-tnbc' },
-                        { name: 'Sales with FIAT', url: '/sales-with-fiat' },
+                        { name: 'Sales Invoices', url: '/invoices-list' },
+                        { name: 'Sales Reports', url: '/reports-list' },
                     ]
                 },
                 {

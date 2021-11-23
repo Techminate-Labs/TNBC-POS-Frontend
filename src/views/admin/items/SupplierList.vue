@@ -33,7 +33,7 @@
 import { defineComponent } from 'vue';
 import DataTable from '@/components/tables/DataTable.vue'
 import DeleteModal from '@/components/modals/DeleteModal.vue'
-import SupplierService from "@/services/SupplierService";
+import SupplierService from "@/services/items/SupplierService";
 import { SupplierItem } from '@/types/Suppliers'
 import ResponseData from "@/types/ResponseData";
 

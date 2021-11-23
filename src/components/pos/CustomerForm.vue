@@ -47,7 +47,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import CustomerService from "@/services/CustomerService";
+import CustomerService from "@/services/pos/CustomerService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({

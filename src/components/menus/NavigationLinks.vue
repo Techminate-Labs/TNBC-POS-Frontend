@@ -15,7 +15,7 @@ import { defineComponent } from 'vue';
 import UserIcon from "@/components/icons/UserIcon.vue";
 import NotificationIcon from "@/components/icons/NotificationIcon.vue";
 import LogoutIcon from "@/components/icons/LogoutIcon.vue";
-import UserService from "@/services/UserService";
+import UserService from "@/services/users/UserService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({

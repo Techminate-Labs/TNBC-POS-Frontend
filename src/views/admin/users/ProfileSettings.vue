@@ -82,7 +82,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import ProfileService from "@/services/ProfileService";
+import ProfileService from "@/services/users/ProfileService";
 import DataService from "@/services/DataService";
 import ResponseData from "@/types/ResponseData";
 import CancelIcon from "@/components/icons/CancelIcon.vue"

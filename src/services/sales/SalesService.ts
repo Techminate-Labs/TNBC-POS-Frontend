@@ -8,4 +8,8 @@ export default {
     getById(invoice_id: any, token: any): Promise<any> {
         return http.get(`/invoiceGetById/${invoice_id}`, { headers: { "Authorization": `Bearer ${token}` } });
     },
+
+    listReports(params: any, token: any): Promise<any> {
+        return http.get(`report${params}`, { headers: { "Authorization": `Bearer ${token}` } });
+    }
 }
