@@ -1,7 +1,7 @@
 <template>
     <div class="grid grid-cols-2 gap-3">
-        <div class="bg-white rounded-md shadow-md col-span-1 p-4">
-            <div class="flex flex-col flex-nowrap w-full mb-4 rounded-2xl shadow-md">
+        <div class="bg-white rounded-md shadow-md col-span-1">
+            <div class="flex flex-col flex-nowrap w-full mb-4 rounded-2xl shadow-md p-4">
                 <Multiselect
                     v-model="itemId"
                     @select="addItemToCart()"
@@ -26,16 +26,16 @@
                         <template v-slot:option="{ option }">
                             <img class="w-1/2 h-16 object-cover rounded-xl mr-4" :src="option.img">{{ option.label }}
                         </template>
-                    </Multiselect>
+                </Multiselect>
             </div>
-            <div class="grid grid-cols-3 rounded-2xl gap-3">
+            <div class="grid grid-cols-3 rounded-2xl gap-3 p-4">
                 <div v-for="(item, index) in popularItems" :key="index">
                     <ItemCard :item="item" @click="addPopularItemToCart(item.item_id)" />
                 </div>
             </div>
         </div>
-        <div class="bg-white rounded-md shadow-md col-span-1 col-start-2 p-4">
-            <div class="flex flex-col flex-nowrap w-full mb-4 rounded-2xl shadow-md">
+        <div class="bg-white rounded-md col-span-1 col-start-2">
+            <div class="flex flex-col flex-nowrap w-full mb-4 rounded-2xl shadow-md p-4">
                 <Multiselect
                     v-model="customerId"
                     @select="addCustomerToCart()"
@@ -47,9 +47,9 @@
                     :options="async function(query, $event) {
                         return await fetchCustomers(query) // check JS block in JSFiddle for implementation
                     }"
-                    />
+                />
             </div>
-            <div class="shadow-md">
+            <div class="w-full rounded-md shadow-md p-2">
                 <ul class="flex flew-row flew-nowrap justify-evenly text-center bg-gray-200">
                     <li 
                         @click="setActive('cart')"
@@ -79,6 +79,8 @@
                         </div>
                     </li>
                 </ul>
+            </div>
+            <div class="w-full rounded-2xl shadow-md p-2">
                 <div :class="isActive('cart') ? 'block' : 'hidden'">
                     <CartTable :cart="cart" @fetchCart="fetchCartItems" />
                     <Payments 

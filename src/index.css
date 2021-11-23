@@ -40,10 +40,17 @@ input[type=number] {
 
 /* BUTTONS */
 .base-btn {
+<<<<<<< HEAD
   @apply uppercase bg-blue-800 hover:bg-blue-900 border-2 border-gray-300 shadow-md px-12 py-2 mt-3 text-white rounded-2xl;
 }
 .base-btn-outline {
   @apply uppercase box-border border-2 bg-transparent border-gray-300 text-blue-900 hover:bg-blue-900 hover:text-white px-12 py-2 mt-3 rounded-2xl;
+=======
+  @apply uppercase bg-blue-800  border-2 border-gray-300 shadow-md px-12 py-3 mt-3 text-white rounded-2xl;
+}
+.base-btn-outline {
+  @apply uppercase box-border border-2 bg-transparent border-gray-300 text-blue-900 hover:bg-blue-900 hover:text-white px-12 py-4 mt-3 rounded-xl;
+>>>>>>> aa51583dbf07bb9103819c8d04d92c4e6742a027
 }
 .base-btn-cancel {
   @apply uppercase bg-red-800 hover:bg-red-700 hover:border-red-800 border-2 border-red-900 shadow-md px-12 py-2 mt-3 text-white rounded-2xl;

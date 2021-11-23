@@ -8,7 +8,7 @@
 					src="@/assets/tnbc.png" 
 					/>
 				</button>
-			<button @click="$emit('changePaymentMethod', 'fiat')" class="shadow-md base-btn-outline flex">
+			<button @click="$emit('changePaymentMethod', 'fiat')" class="shadow-2xl base-btn-outline flex">
 		        <span class="flex-1">Pay with Cash</span>
 				<img 
 					class="absolute object-cover h-7 w-7 hover:text-white bg-white rounded-circle"
@@ -17,7 +17,7 @@
 			</button>
 			<button 
 				@click="$emit('loadExplorer')" 
-				class="shadow-md base-btn-outline">
+				class="shadow-2xl base-btn-outline">
 				Transaction Explorer
 			</button>
 		</div>
