@@ -5,7 +5,7 @@
                 <CancelIcon class="w-8 h-8" />
             </button>
             <p class="text-2xl mb-4">Invoice n° {{ invoice.invoice_number }}</p>
-            <table class="divide-y divide-gray-200 border-collapse border border-gray-200 w-full text-left shadow-md">
+            <table class="divide-y divide-gray-200 border-collapse border border-gray-200 w-full text-left shadow-md block h-96 overflow-y-scroll">
                 <thead>
                     <tr class="uppercase text-sm">
                         <th class="px-6 py-4">Name</th>

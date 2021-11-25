@@ -1,6 +1,6 @@
 <template>
     <div class="overflow-hidden">
-        <div class="absolute top-1/2 right-1/2 transform translate-x-1/2 -translate-y-1/2 w-1/2 z-40 p-10 bg-white rounded-lg shadow-lg">
+        <div class="fixed top-1/2 right-1/2 transform translate-x-1/2 -translate-y-1/2 w-1/2 z-40 p-10 bg-white rounded-lg shadow-lg">
             <button @click="$emit('close-modal')" class="float-right hover:text-red-600">
                 <CancelIcon class="w-8 h-8" />
             </button>

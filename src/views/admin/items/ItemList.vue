@@ -144,9 +144,9 @@ export default defineComponent({
 		},
 		showDeleteModal(item: any){
 			this.isDeleting = true
-			this.selectedItemId = item.id
+			this.selectedItemId = item.item_id
 		},
-		async deleteItem(item: any): Promise<void> {
+		async deleteItem(): Promise<void> {
 			let token = this.$store.state.session.bearerToken
 			let id = this.selectedItemId
 			await ItemService.delete(id, token)
@@ -154,7 +154,7 @@ export default defineComponent({
 					this.isDeleting = false
 					this.fetchItems()
 					this.$toast.open({
-						message: `${item.name} successfully deleted.`,
+						message: `Item successfully deleted.`,
 						type: "success"
 					})
 				})
