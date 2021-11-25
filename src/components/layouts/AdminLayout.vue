@@ -1,7 +1,7 @@
 <template>
     <div id="admin" class="bg-gray-100">
         <TopNavigation :links="true" @toogle-sidebar="handleSidebar" />
-        <div class="flex flex-row flex-nowrap w-full">
+        <div class="flex flex-row flex-nowrap w-full min-h-screen">
             <SideBar 
                 class="hidden w-1/12" 
                 :menu="menu"
@@ -14,7 +14,7 @@
                 @close-additional-sidebar="closeAdditionalSidebar"
                 :class="openAdditionalSideBar ? 'active' : ''" 
             />
-            <div class="w-9/12 flex-grow overflow-x-hidden m-12" @click="openAdditionalSideBar = false">
+            <div class="w-9/12 flex-grow m-12" @click="openAdditionalSideBar = false">
                 <div class="bg-red-300 text-wite w-full py-2 px-8 text-lg" v-if="!isEmailVerified">
                     <p>Your account has not been verified ! Please <button @click="requestEmailVerification" class="underline">send a verification email to your inbox.</button></p>
                 </div>
@@ -72,7 +72,6 @@ export default defineComponent({
                     icon: 'https://epqrpjmozlcsvbgkxjkp.supabase.in/storage/v1/object/sign/tnbc-pos/svgs/cash.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0bmJjLXBvcy9zdmdzL2Nhc2guc3ZnIiwiaWF0IjoxNjMwMDg4MTYzLCJleHAiOjE5NDU0NDgxNjN9.-N6SSb5frPDmWHStJ27gyjjpW8Yt597X8D8Qh8NGM0Y',
                     submenus: [
                         { name: 'Point of Sale', url: '/point-of-sale' },
-                        { name: 'Units', url: '/units-list' },
                         { name: 'Customers', url: '/customers-list' },
                         { name: 'Coupons', url: '/coupons-list' },
                     ]
@@ -85,6 +84,7 @@ export default defineComponent({
                         { name: 'Brands', url: '/brands-list' },
                         { name: 'Categories', url: '/categories-list' },
                         { name: 'Items', url: '/items-list' },
+                        { name: 'Units', url: '/units-list' },
                         { name: 'Suppliers', url: '/suppliers-list' },
                         { name: 'Barcodes', url: '/barcode-list' },
                     ]

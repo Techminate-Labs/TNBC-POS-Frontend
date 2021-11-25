@@ -41,7 +41,7 @@
 					</select>
 				</div>
 				<div class="flex flex-col py-2">
-					<label class="label" for="currency_symbl">Currency Symble:</label>
+					<label class="label" for="currency_symbl">Currency Symbol:</label>
 					<select v-model="configuration.currency_symble" class="text-input">
 						<option :value="null">-- Please select an option --</option>
 						<option value="$">$</option>
@@ -139,8 +139,7 @@
 				</div>
 			</div>
 			<div class="my-2 text-right">
-				<button class="base-btn-outline ml-2" @click="saveConfiguration">Save and create a new one</button>
-				<button class="base-btn ml-2" @click="saveConfigurationAndRedirect">Save and exit</button>
+				<button class="base-btn ml-2" @click="saveConfiguration">Save</button>
 			</div>
 		</div>
 	</div>
@@ -181,7 +180,7 @@ export default defineComponent({
 					console.log(e)
 				});
 		},
-		async saveConfigurationAndRedirect(): Promise<void> {
+		async saveConfiguration(): Promise<void> {
 			const fd = new FormData()
 			fd.append('app_name', this.configuration.app_name)
 			fd.append('store_name', this.configuration.store_name)

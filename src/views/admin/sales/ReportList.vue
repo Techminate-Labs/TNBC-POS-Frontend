@@ -93,6 +93,7 @@ export default defineComponent({
 			await SalesService.listReports(url, token)
 				.then((response: ResponseData) => {
 					let res = response.data
+					console.log(res)
 					this.reports = {
 						numberOfSales: res.sales.data.length,
 						total: res.total,
@@ -119,9 +120,7 @@ export default defineComponent({
 		},
 		async pageChange(url: string): Promise<void> {
 			let limit = this.maxItemsPerPage
-			console.log(url)
 			this.url = `${url}&limit=${limit}&payment_method=${this.paymentMethod}&duration=${this.duration}`
-			console.log(this.url)
 			await this.fetchReports()
 		},
 		async pageLimitChange(limit: string): Promise<void> {
