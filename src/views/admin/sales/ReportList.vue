@@ -55,8 +55,8 @@ export default defineComponent({
 			paymentMethod: "tnbc",
 			duration: "year",
 			reports: {},
-			url: "?payment_method=tnbc&duration=year",
-			maxItemsPerPage: '' || undefined as unknown as string,
+			url: "/report/",
+			maxItemsPerPage: '5' || undefined as unknown as string,
 			columns: [
 				{
 					attribute: 'invoice_number',
@@ -88,22 +88,30 @@ export default defineComponent({
 	methods: {
 		async fetchReports(): Promise<void> {
 			let token = this.$store.state.session.bearerToken
-			const url = this.url
+			const url = this.url + `?payment_method=tnbc&duration=year&limit=${this.maxItemsPerPage}`
 
 			await SalesService.listReports(url, token)
 				.then((response: ResponseData) => {
 					let res = response.data
-					console.log(response.data)
 					this.reports = {
-						numberOfSales: res.sales.length,
+						numberOfSales: res.sales.data.length,
 						total: res.total,
 						tax: res.tax,
 						discount: res.discount,
 					}
-					this.data = res.sales
-					this.meta = {}
-					this.prev = res.prev_page_url
-					this.next = res.next_page_url
+					this.data = res.sales.data
+					this.meta = {
+						current_page: res.sales.current_page,
+						from: res.sales.from,
+						last_page: res.sales.last_page,
+						links: res.sales.links,
+						path: res.sales.path,
+						per_page: res.sales.per_page,
+						to: res.sales.to,
+						total: res.sales.total
+					}
+					this.prev = res.sales.prev_page_url
+					this.next = res.sales.next_page_url
 				})
 				.catch((e: Error) => {
 					console.log(e);
@@ -111,20 +119,22 @@ export default defineComponent({
 		},
 		async pageChange(url: string): Promise<void> {
 			let limit = this.maxItemsPerPage
-			this.url = `${url}&limit=${limit}`
+			console.log(url)
+			this.url = `${url}&limit=${limit}&payment_method=${this.paymentMethod}&duration=${this.duration}`
+			console.log(this.url)
 			await this.fetchReports()
 		},
 		async pageLimitChange(limit: string): Promise<void> {
 			let url = this.url
 			this.maxItemsPerPage = limit
-			this.url = `${url}?limit=${limit}`
+			this.url = `/report/?payment_method=${this.paymentMethod}&duration=${this.duration}&limit=${limit}`
 			await this.fetchReports()
 		},
 		async previousPage(): Promise<void> {
 			if (this.prev !== null){
 				let url = this.prev
 				let limit = this.maxItemsPerPage
-				this.url = `${url}&limit=${limit}`
+				this.url = `${url}&payment_method=${this.paymentMethod}&duration=${this.duration}&limit=${limit}`
 				await this.fetchReports()
 			}
 		},
@@ -132,7 +142,7 @@ export default defineComponent({
 			if (this.next !== null){
 				let url = this.next
 				let limit = this.maxItemsPerPage
-				this.url = `${url}&limit=${limit}`
+				this.url = `${url}&payment_method=${this.paymentMethod}&duration=${this.duration}&limit=${limit}`
 				await this.fetchReports()
 			}
 		},
