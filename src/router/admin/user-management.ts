@@ -12,6 +12,7 @@ import ProfileCreate from '@/views/admin/users/ProfileCreate.vue'
 import ProfileUpdate from '@/views/admin/users/ProfileUpdate.vue'
 import ProfileSettings from '@/views/admin/users/ProfileSettings.vue'
 import VerifyEmailUrl from '@/views/VerifyEmailUrl.vue'
+import ActivityLog from '@/views/admin/ActivityLog.vue'
 
 const UserManagementRoutes: Array<RouteRecordRaw> = [
     {

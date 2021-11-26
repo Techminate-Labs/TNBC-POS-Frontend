@@ -5,7 +5,9 @@
             <label for="dark-mode-toggle" class="toggle-label base-toggle-label"></label>
         </div>
         <NotificationIcon class="w-7 h-7 text-gray-500 mr-5 self-center" />
-        <UserIcon @click="handleUserSettings" class="w-7 h-7 text-gray-500 mr-5 self-center cursor-pointer" />
+        <div class="self-center">
+            <UserIcon @click="$emit('toggleUserMenu')" class="w-7 h-7 text-gray-500 mr-5 cursor-pointer" />
+        </div>
         <LogoutIcon @click="logOutUser" class="w-7 h-7 text-gray-500 mr-5 self-center cursor-pointer" />
     </div>
 </template>
@@ -45,10 +47,6 @@ export default defineComponent({
                     console.log(e)
                 });
         },
-        handleUserSettings(): void {
-            let user_id = this.$store.state.user.userId
-            this.$router.push({name: 'ProfileSettings', params: {user_id: user_id}})
-        }
     }
 });
 </script>

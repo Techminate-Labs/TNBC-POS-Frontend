@@ -72,6 +72,11 @@ input[type=number] {
   @apply hover:bg-white cursor-not-allowed text-gray-200 shadow-none;
 }
 
+/* NAVIGATION */
+.nav-link {
+  @apply pb-2 hover:text-blue-900;
+}
+
 /* SIBEDAR MENU */
 .dashboard-icon {
   @apply text-gray-400 self-center h-6 w-6;

@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import store from '@/store'
 import GuestRoutes from './guest/guest'
 import DashboardRoutes from './admin/dashboard'
@@ -8,6 +8,7 @@ import PointOfSaleRoutes from './admin/point-of-sale'
 import ErrorsRoutes from './errors'
 import ConfigurationRoutes from './admin/configuration'
 import SalesRoutes from './admin/sales'
+import ActivityLogRoutes from './admin/activity-log'
 
 const routes = [
     ...GuestRoutes, 
@@ -18,6 +19,7 @@ const routes = [
     ...PointOfSaleRoutes,
     ...ConfigurationRoutes,
     ...SalesRoutes,
+    ...ActivityLogRoutes,
     ...ErrorsRoutes
 ];
 
