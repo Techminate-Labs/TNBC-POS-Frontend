@@ -12,33 +12,33 @@
 		</div>
 		<div class="grid grid-cols-1 bg-white p-4 rounded-lg shadow-md">
 			<div>
-				<div class="flex flex-col py-2">
-					<label class="label" for="name">Name:</label>
-					<input
-						class="text-input" 
-						type="text" 
-						id="name" 
-						v-model="name" 
-						placeholder="John Doe"
+					<label class="label flex flex-col py-2" for="name">
+						Name
+						<input
+							class="text-input" 
+							type="text" 
+							id="name" 
+							v-model="name" 
+							placeholder="John Doe"
 						/>
-				</div>
-				<div class="flex flex-col py-2">
-					<label class="label" for="email">Email:</label>
+					</label>
+				<label class="label flex flex-col py-2" for="email">
+					Email
 					<input
 						class="text-input" 
 						type="email" 
 						id="email" 
 						v-model="email" 
 						placeholder="mail@example.com"
-						/>
-					</div>
-				<div class="flex flex-col py-2">
-					<label class="label">Role:</label>
-					<select :value="role_id" class="text-input">
-						<option value="">-- Please select an option --</option>
-						<option v-for="(role, index) in roles" :key="index" :value="role.value">{{role.name}}</option>
-					</select>
-				</div>
+					/>
+				</label>
+					<label class="label flex flex-col py-2">
+						Role
+						<select :value="role_id" class="text-input">
+							<option value="">-- Please select an option --</option>
+							<option v-for="(role, index) in roles" :key="index" :value="role.value">{{role.name}}</option>
+						</select>
+					</label>
 				<button class="base-btn float-right" @click="updateUser">save and exit</button>
 			</div>
 		</div>

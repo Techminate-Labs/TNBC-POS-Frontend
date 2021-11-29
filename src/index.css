@@ -32,7 +32,7 @@ input[type=number] {
 }
 
 .text-input {
-  @apply p-3 rounded-md border-solid border-2 border-gray-300;
+  @apply p-3 rounded-md border-solid border-2 border-gray-200;
 }
 
 /* TITLES */
@@ -124,5 +124,5 @@ input[type=number] {
 
 /* CARDS */
 .card {
-  @apply p-4 bg-white shadow-md max-w-max rounded-md;
+  @apply p-4 bg-white shadow-md rounded-md;
 }

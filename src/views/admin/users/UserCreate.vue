@@ -13,7 +13,7 @@
 		<form class="bg-white p-4 rounded-lg shadow-md">
 
 			<label class="label flex flex-col py-2" for="name">
-				Name:
+				Name
 				<input
 					class="text-input" 
 					type="text" 
@@ -22,8 +22,8 @@
 					placeholder="John Doe"
 				/>
 			</label>
-			<div class="flex flex-col py-2">
-				<label class="label" for="email">Email:</label>
+			<label class="label flex flex-col py-2" for="email">
+				Email
 				<input
 					class="text-input" 
 					type="email" 
@@ -31,26 +31,26 @@
 					v-model="email" 
 					placeholder="mail@example.com"
 				/>
-			</div>
-			<div class="flex flex-col py-2">
-				<label class="label">Role:</label>
+			</label>
+			<label class="label flex flex-col py-2">
+				Role
 				<select v-model="role" class="text-input">
 					<option value="">-- Please select an option --</option>
 					<option v-for="(role, index) in roles" :key="index" :value="role.value">{{role.name}}</option>
 				</select>
-			</div>
-			<div class="flex flex-col py-2">
-				<label class="label" for="password">Password:</label>
-				<input
-					class="text-input" 
-					type="password" 
-					id="password" 
-					v-model="password" 
-					placeholder="*************"
-				/>
-			</div>
-			<div class="flex flex-col py-2">
-				<label class="label" for="password-confirmation">Password Confirmation:</label>
+			</label>
+				<label class="label flex flex-col py-2" for="password">
+					Password
+					<input
+						class="text-input" 
+						type="password" 
+						id="password" 
+						v-model="password" 
+						placeholder="*************"
+					/>
+				</label>
+			<label class="label flex flex-col py-2" for="password-confirmation">
+				Password Confirmation
 				<input
 					class="text-input" 
 					type="password" 
@@ -58,10 +58,10 @@
 					v-model="passwordConfirmation" 
 					placeholder="**************"
 				/>
-			</div>
+			</label>
 			<div class="my-2 text-right">
 				<button
-					class="base-btn-outline ml-2" 
+					class="base-btn-outline ml-2"
 					@click="addUser">
 					Save and Create a New User
 				</button>
@@ -150,7 +150,6 @@ export default defineComponent({
 			let url = this.url
 			await RoleService.list(url, token)
 				.then((response: ResponseData) => {
-					let role_id: number = parseInt(params.user_id as string)
 					let _data: any = []
 					response.data.data.map((role: any) => {
 						_data.push({

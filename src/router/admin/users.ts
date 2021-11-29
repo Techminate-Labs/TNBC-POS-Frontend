@@ -15,7 +15,7 @@ import VerifyEmailUrl from '@/views/VerifyEmailUrl.vue'
 
 const UserManagementRoutes: Array<RouteRecordRaw> = [
     {
-        path: '/user-management',
+        path: '/users',
         name: 'UserIndex',
         component: UserIndex,
         meta: {

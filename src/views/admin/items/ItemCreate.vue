@@ -11,122 +11,123 @@
 			</div>
 		</div>
 		<div class="flex flex-nowrap justify-between">
-			<div class="w-6/12 h-full bg-white p-4 rounded-lg shadow-md">
-				<div class="flex flex-col py-2">
-					<label class="label" for="name">Name:</label>
+			<div class="w-6/12 h-full card">
+				<label class="label flex flex-col py-2" for="name">
+					Name
 					<input
 						class="text-input" 
 						type="text" 
 						id="name" 
 						v-model="name" 
 						placeholder="Winter Jacket"
-						/>
-				</div>
-				<div class="flex flex-col py-2">
-					<label class="label" for="price">Price:</label>
+					/>
+				</label>
+				<label class="label flex flex-col py-2" for="price">
+					Price
 					<input
 						class="text-input" 
 						type="text" 
 						id="price" 
 						v-model="price" 
 						placeholder="15"
-						/>
-				</div>
-				<div class="flex flex-col py-2">
-					<label class="label" for="discount">Discount:</label>
+					/>
+				</label>
+				<label class="label flex flex-col py-2" for="discount">
+					Discount
 					<input
 						class="text-input" 
 						type="text" 
 						id="discount" 
 						v-model="discount" 
 						placeholder="13"
-						/>
-				</div>
-				<div class="flex flex-col py-2">
-					<label class="label" for="inventory">Inventory:</label>
+					/>
+				</label>
+				<label class="label flex flex-col py-2" for="inventory">
+					Inventory
 					<input
 						class="text-input" 
 						type="text" 
 						id="inventory" 
 						v-model="inventory" 
 						placeholder="3"
-						/>
-				</div>
+					/>
+				</label>
 				<button class="base-btn float-right" @click="addItem">Save</button>
 			</div>
 			<div class="w-5/12 h-full">
-				<div class="bg-white rounded-lg shadow-md p-4 mb-3">
-					<div class="flex flex-col py-2">
-						<label class="label">Select Category:</label>
+				<div class="card w-full p-4">
+					<label class="label flex flex-col py-2">
+						Select Category
 						<Multiselect
 							v-model="categoryId"
 							:options="getCategoryOptions"
 							:searchable="true"
 							placeholder="Pick a Category"
-							/>
-					</div>
-					<div class="flex flex-col py-2">
-						<label class="label">Select Brand:</label>
+						/>
+					</label>
+					<label class="label flex flex-col py-2">
+						Select Brand
 						<Multiselect
 							v-model="brandId"
 							:options="getBrandOptions"
 							:searchable="true"
 							placeholder="Pick a Brand"
-							/>
-					</div>
-					<div class="flex flex-col py-2">
-						<label class="label">Select Unit:</label>
+						/>
+					</label>
+					<label class="label flex flex-col py-2">
+						Select Unit
 						<Multiselect
 							v-model="unitId"
 							:options="getUnitOptions"
 							:searchable="true"
 							placeholder="Pick a Unit"
-							/>
-					</div>
-					<div class="flex flex-col py-2">
-						<label class="label">Select Supplier:</label>
+						/>
+					</label>
+					<label class="label flex flex-col py-2">
+						Select Supplier
 						<Multiselect
 							v-model="supplierId"
 							:options="getSupplierOptions"
 							:searchable="true"
 							placeholder="Pick a Supplier"
 						/>
-					</div>
+					</label>
+				</div>
+				<div class="card w-full my-2">
+					<label class="label flex flex-col py-2">
+						Available to Purchase
+						<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+							<input 
+								v-model="available" 
+								type="checkbox" 
+								id="availability-toggle toggle"
+								class="toggle-checkbox base-toggle-input"
+							/>
+							<label for="availability-toggle" class="toggle-label base-toggle-label"></label>
+						</div>
+					</label>
 				</div>
 				<div class="bg-white rounded-lg shadow-md p-4 mb-3">
-					<h3 class="text-lg mb-3">Available to purchase</h3>
-					<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
-						<input 
-							v-model="available" 
-							type="checkbox" 
-							id="availability-toggle toggle"
-							class="toggle-checkbox base-toggle-input"
-						/>
-						<label for="availability-toggle" class="toggle-label base-toggle-label"></label>
-					</div>
-				</div>
-				<div class="bg-white rounded-lg shadow-md p-4 mb-3">
-					<div class="flex flex-col py-2">
-						<label class="label">Image</label>
+					<label class="label flex flex-col py-2">
+						Image
 						<input 
 							type="file"
 							accept="image/*"
 							@change="handleFileChange($event)"
 							id="image"
 							class="text-input"
-							/>
-					</div>
+						/>
+					</label>
 				</div>
 				<div class="bg-white rounded-lg shadow-md p-4">
-					<h3 class="text-lg mb-3">Expire Date</h3>
-					<div class="flex flex-col py-2">
-						<label class="label">Select Supplier:</label>
+					<label class="label flex flex-col py-2">
+						Expire Date
 						<input 
 							type="date"
 							@change="handleDateChange($event)"
 							class="text-input"
 							/>
-					</div>
+					</label>
 				</div>
 			</div>
 		</div>
