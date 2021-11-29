@@ -1,7 +1,7 @@
 <template>
     <div class="grid grid-cols-2 gap-3">
         <div class="bg-white rounded-md shadow-md col-span-1">
-            <div class="flex flex-col flex-nowrap w-full mb-4 rounded-2xl shadow-md p-4">
+            <div class="flex flex-col flex-nowrap w-full mb-4 p-4">
                 <Multiselect
                     v-model="itemId"
                     @select="addItemToCart()"
@@ -16,7 +16,7 @@
                     >
                         <template v-slot:singleLabel="{ value }">
                             <div class="multiselect-single-label">
-                            <img class="w-1/2 h-32 object-cover mr-4" :src="value.img">
+                            <img class="w-24 h-32 object-cover mr-4" :src="value.img">
                             <span class="text-xl">
                                 {{ value.label }}
                             </span>
@@ -24,18 +24,18 @@
                         </template>
 
                         <template v-slot:option="{ option }">
-                            <img class="w-1/2 h-16 object-cover rounded-xl mr-4" :src="option.img">{{ option.label }}
+                            <img class="w-24 h-16 object-cover rounded-xl mr-4" :src="option.img">{{ option.label }}
                         </template>
                 </Multiselect>
             </div>
-            <div class="grid grid-cols-3 rounded-2xl gap-3 p-4">
+            <div class="grid grid-cols-3 rounded-xl gap-3 p-4">
                 <div v-for="(item, index) in popularItems" :key="index">
                     <ItemCard :item="item" @click="addPopularItemToCart(item.item_id)" />
                 </div>
             </div>
         </div>
         <div class="bg-white rounded-md col-span-1 col-start-2">
-            <div class="flex flex-col flex-nowrap w-full mb-4 rounded-2xl shadow-md p-4">
+            <div class="flex flex-col flex-nowrap w-full mb-4 p-4">
                 <Multiselect
                     v-model="customerId"
                     @select="addCustomerToCart()"
@@ -49,7 +49,7 @@
                     }"
                 />
             </div>
-            <div class="w-full rounded-md shadow-md p-2">
+            <div class="w-full rounded-md px-2">
                 <ul class="flex flew-row flew-nowrap justify-evenly text-center bg-gray-200">
                     <li 
                         @click="setActive('cart')"
@@ -80,7 +80,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="w-full rounded-2xl shadow-md p-2">
+            <div class="w-full rounded-xl shadow-md px-2 pt-1">
                 <div :class="isActive('cart') ? 'block' : 'hidden'">
                     <CartTable :cart="cart" @fetchCart="fetchCartItems" />
                     <Payments 
@@ -107,9 +107,9 @@ import Payments from "@/components/pos/Payments.vue"
 import Invoice from "@/components/pos/Invoice.vue"
 import CustomerForm from "@/components/pos/CustomerForm.vue"
 import ResponseData from "@/types/ResponseData";
-import ItemService from "@/services/ItemService";
-import CartService from "@/services/CartService";
-import CustomerService from "@/services/CustomerService";
+import ItemService from "@/services/items/ItemService";
+import CartService from "@/services/pos/CartService";
+import CustomerService from "@/services/pos/CustomerService";
 import { ItemObject } from '@/types/Items'
 import Multiselect from '@vueform/multiselect'
 

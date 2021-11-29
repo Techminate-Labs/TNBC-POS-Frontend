@@ -80,7 +80,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import ItemService from "@/services/ItemService";
+import ItemService from "@/services/items/ItemService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({

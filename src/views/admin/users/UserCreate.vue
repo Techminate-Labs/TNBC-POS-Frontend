@@ -76,8 +76,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import UserService from "@/services/UserService";
-import RoleService from "@/services/RoleService";
+import UserService from "@/services/users/UserService";
+import RoleService from "@/services/users/RoleService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({

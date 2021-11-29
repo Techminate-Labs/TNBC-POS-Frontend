@@ -30,7 +30,7 @@
 import { defineComponent } from 'vue';
 import DataTable from '@/components/tables/DataTable.vue'
 import InvoiceModal from '@/components/modals/InvoiceModal.vue'
-import SalesService from "@/services/SalesService";
+import SalesService from "@/services/sales/SalesService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({

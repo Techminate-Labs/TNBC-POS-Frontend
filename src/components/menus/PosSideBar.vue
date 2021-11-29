@@ -7,7 +7,7 @@
                     :key="index"
                     class="cursor-pointer bg-blue-900 text-white">
                     <div 
-                        :class="selectedMenu === item ? 'selected-menu-item' : ''"
+                        :class="selectedMenu === item ? 'selected-posmenu-item' : ''"
                         @click="handleSubmenuSidebar(item)">
                         <router-link :to="item.url">
                             <div class="px-1 py-6 md:px-2 flex flex-col flex-nowrap" aria-label="home icon">
@@ -24,7 +24,7 @@
                     :key="index"
                     class="cursor-pointer bg-blue-900 text-white">
                     <div 
-                        :class="selectedMenu === item ? 'selected-menu-item' : ''"
+                        :class="selectedMenu === item ? 'selected-posmenu-item' : ''"
                         @click="handleSubmenuSidebar(item)">
                         <div class="px-1 py-6 md:px-2 flex flex-col flex-nowrap" aria-label="home icon">
                             <h2 class="text-sm">{{item.name}}</h2>

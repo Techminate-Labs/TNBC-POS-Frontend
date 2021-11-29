@@ -38,7 +38,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import CategoryService from "@/services/CategoryService";
+import CategoryService from "@/services/items/CategoryService";
 import DataTable from '@/components/tables/DataTable.vue';
 import CategoryModalCreate from '@/components/modals/CategoryModalCreate.vue';
 import CategoryModalUpdate from '@/components/modals/CategoryModalUpdate.vue';

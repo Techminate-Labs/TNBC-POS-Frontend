@@ -25,7 +25,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import CheckboxTable from '@/components/tables/CheckboxTable.vue'
-import RoleService from "@/services/RoleService";
+import RoleService from "@/services/users/RoleService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({

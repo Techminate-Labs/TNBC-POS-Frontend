@@ -40,7 +40,7 @@ import DataTable from '@/components/tables/DataTable.vue'
 import UnitModalCreate from '@/components/modals/UnitModalCreate.vue'
 import UnitModalUpdate from '@/components/modals/UnitModalUpdate.vue'
 import DeleteModal from '@/components/modals/DeleteModal.vue'
-import UnitService from "@/services/UnitService";
+import UnitService from "@/services/items/UnitService";
 import ResponseData from "@/types/ResponseData";
 import { Unit } from "@/types/Units";
 

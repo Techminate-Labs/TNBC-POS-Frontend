@@ -35,7 +35,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import UserService from "@/services/UserService";
+import UserService from "@/services/users/UserService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({

@@ -1,7 +1,8 @@
 <template>
     <div id="admin" class="bg-gray-100">
-        <TopNavigation :links="true" @toogle-sidebar="handleSidebar" />
-        <div class="flex flex-row flex-nowrap w-full">
+        <TopNavigation :links="true" @toogle-sidebar="handleSidebar" @toggle-menu="openUserMenu = !openUserMenu" />
+        <ProfileMenu v-show="openUserMenu" />
+        <div class="flex flex-row flex-nowrap w-full min-h-screen">
             <SideBar 
                 class="hidden w-1/12" 
                 :menu="menu"
@@ -14,7 +15,7 @@
                 @close-additional-sidebar="closeAdditionalSidebar"
                 :class="openAdditionalSideBar ? 'active' : ''" 
             />
-            <div class="w-9/12 flex-grow overflow-x-hidden m-12" @click="openAdditionalSideBar = false">
+            <div class="w-9/12 flex-grow m-12" @click="handleCloseMenus">
                 <div class="bg-red-300 text-wite w-full py-2 px-8 text-lg" v-if="!isEmailVerified">
                     <p>Your account has not been verified ! Please <button @click="requestEmailVerification" class="underline">send a verification email to your inbox.</button></p>
                 </div>
@@ -31,6 +32,7 @@ import { defineComponent } from 'vue';
 import { MenuItem } from '@/types/SideBar'
 import SideBar from '@/components/menus/SideBar.vue'
 import TopNavigation from '@/components/menus/TopNavigation.vue'
+import ProfileMenu from "@/components/menus/ProfileMenu.vue"
 import Footer from '@/components/footer/Footer.vue'
 import AdditionalSideBar from '@/components/menus/AdditionalSideBar.vue'
 import Breadcrumb from "@/components/Breadcrumb.vue"
@@ -44,12 +46,14 @@ export default defineComponent({
         TopNavigation,
         AdditionalSideBar,
         Footer,
-        Breadcrumb
+        Breadcrumb,
+        ProfileMenu
     },
     data() {
         return {
             toogleSideBar: true as boolean,
             openAdditionalSideBar: false as boolean,
+            openUserMenu: false as boolean,
             singleMenu: null || {},
             menu: [
                 {
@@ -72,7 +76,6 @@ export default defineComponent({
                     icon: 'https://epqrpjmozlcsvbgkxjkp.supabase.in/storage/v1/object/sign/tnbc-pos/svgs/cash.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0bmJjLXBvcy9zdmdzL2Nhc2guc3ZnIiwiaWF0IjoxNjMwMDg4MTYzLCJleHAiOjE5NDU0NDgxNjN9.-N6SSb5frPDmWHStJ27gyjjpW8Yt597X8D8Qh8NGM0Y',
                     submenus: [
                         { name: 'Point of Sale', url: '/point-of-sale' },
-                        { name: 'Units', url: '/units-list' },
                         { name: 'Customers', url: '/customers-list' },
                         { name: 'Coupons', url: '/coupons-list' },
                     ]
@@ -85,7 +88,9 @@ export default defineComponent({
                         { name: 'Brands', url: '/brands-list' },
                         { name: 'Categories', url: '/categories-list' },
                         { name: 'Items', url: '/items-list' },
+                        { name: 'Units', url: '/units-list' },
                         { name: 'Suppliers', url: '/suppliers-list' },
+                        { name: 'Barcodes', url: '/barcode-list' },
                     ]
                 },
                 {
@@ -93,16 +98,8 @@ export default defineComponent({
                     url: '/sales',
                     icon: 'https://epqrpjmozlcsvbgkxjkp.supabase.in/storage/v1/object/sign/tnbc-pos/svgs/document-text.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0bmJjLXBvcy9zdmdzL2RvY3VtZW50LXRleHQuc3ZnIiwiaWF0IjoxNjMwMDg4MzEwLCJleHAiOjE5NDU0NDgzMTB9.YMblc4CxvBKs-mjUo7-ZLofMhZo6YlQ8JSDflk6niEc',
                     submenus: [
-                        { name: 'Sales Invoices', url: '/invoices-list' }
-                    ]
-                },
-                {
-                    name: 'Sales Report',
-                    url: '/sales-report',
-                    icon: 'https://epqrpjmozlcsvbgkxjkp.supabase.in/storage/v1/object/sign/tnbc-pos/svgs/document-report.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0bmJjLXBvcy9zdmdzL2RvY3VtZW50LXJlcG9ydC5zdmciLCJpYXQiOjE2MzAwODgzMjIsImV4cCI6MTk0NTQ0ODMyMn0.f4dxQvGbpozJKdXPHPa_mxDODTLXnfya8rB0np-VgfM',
-                    submenus: [
-                        { name: 'Sales with TNBC', url: '/sales-with-tnbc' },
-                        { name: 'Sales with FIAT', url: '/sales-with-fiat' },
+                        { name: 'Sales Invoices', url: '/invoices-list' },
+                        { name: 'Sales Reports', url: '/reports-list' },
                     ]
                 },
                 {
@@ -115,19 +112,23 @@ export default defineComponent({
         }
     },
     methods: {
-        handleSubMenus(item: MenuItem){
+        handleSubMenus(item: MenuItem): void {
             this.openAdditionalSideBar = true
             let _singleMenu: MenuItem = item
             this.singleMenu = _singleMenu
         },
-        handleSidebar(){
+        handleCloseMenus(): void {
+            this.openUserMenu = false
+            this.openAdditionalSideBar = false
+        },
+        handleSidebar(): void {
             this.toogleSideBar = !this.toogleSideBar
             this.openAdditionalSideBar = false
         },
-        closeAdditionalSidebar(){
+        closeAdditionalSidebar(): void {
             this.openAdditionalSideBar = false
         },
-        requestEmailVerification():void {
+        requestEmailVerification(): void {
             let token = this.$store.state.session.bearerToken
             let data: any = []
             DataService.requestEmailVerification(data, token)
@@ -155,7 +156,7 @@ export default defineComponent({
         }
     },
     computed: {
-        isEmailVerified() {
+        isEmailVerified(): boolean {
             return this.$store.state.user.isEmailVerified
         }
     }

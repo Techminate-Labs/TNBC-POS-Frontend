@@ -9,6 +9,7 @@ import ItemList from '@/views/admin/items/ItemList.vue'
 import ItemUpdate from '@/views/admin/items/ItemUpdate.vue'
 import ItemCreate from '@/views/admin/items/ItemCreate.vue'
 import ItemDetails from '@/views/admin/items/ItemDetails.vue'
+import BarcodeList from '@/views/admin/items/BarcodeList.vue'
 
 const ItemsRoutes = [
     {
@@ -69,6 +70,11 @@ const ItemsRoutes = [
                 path: 'items-details/:id',
                 name: 'ItemDetails',
                 component: ItemDetails,
+            },
+            {
+                path: 'barcode-list',
+                name: 'BarcodeList',
+                component: BarcodeList,
             }
         ]
     }

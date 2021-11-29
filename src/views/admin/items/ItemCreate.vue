@@ -136,12 +136,12 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import ItemService from "@/services/ItemService";
+import ItemService from "@/services/items/ItemService";
 import ResponseData from "@/types/ResponseData";
-import CategoryService from '@/services/CategoryService';
-import BrandService from '@/services/BrandService';
-import UnitService from '@/services/UnitService';
-import SupplierService from '@/services/SupplierService';
+import CategoryService from '@/services/items/CategoryService';
+import BrandService from '@/services/items/BrandService';
+import UnitService from '@/services/items/UnitService';
+import SupplierService from '@/services/items/SupplierService';
 import Multiselect from '@vueform/multiselect'
 
 export default defineComponent({

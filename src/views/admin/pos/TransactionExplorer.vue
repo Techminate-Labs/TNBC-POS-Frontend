@@ -23,7 +23,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import TransactionService from '@/services/TransactionService'
+import TransactionService from '@/services/pos/TransactionService'
 import TransactionTable from "@/components/tables/TransactionTable.vue"
 
 export default defineComponent({

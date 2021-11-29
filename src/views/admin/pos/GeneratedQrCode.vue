@@ -33,7 +33,7 @@
 import { defineComponent } from 'vue';
 import QrcodeVue from 'qrcode.vue'
 import ConfigurationService from "@/services/ConfigurationService"
-import CartService from "@/services/CartService"
+import CartService from "@/services/pos/CartService"
 
 export default defineComponent({
 	name: 'GeneratedQrCode',

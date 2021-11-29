@@ -40,16 +40,22 @@ input[type=number] {
 
 /* BUTTONS */
 .base-btn {
-  @apply uppercase bg-blue-800  border-2 border-gray-300 shadow-md px-12 py-3 mt-3 text-white rounded-2xl;
+  @apply uppercase bg-blue-800 hover:bg-blue-900 border-2 border-gray-300 shadow-md px-12 py-2 text-white rounded-lg cursor-pointer;
 }
 .base-btn-outline {
-  @apply uppercase box-border border-2 bg-transparent border-gray-300 text-blue-900 hover:bg-blue-900 hover:text-white px-12 py-4 mt-3 rounded-xl;
+  @apply uppercase box-border border-2 bg-transparent border-gray-300 text-blue-900 hover:bg-blue-900 hover:text-white px-12 py-2 rounded-lg cursor-pointer;
 }
 .base-btn-cancel {
-  @apply uppercase bg-red-800 hover:bg-red-700 hover:border-red-800 border-2 border-red-900 shadow-md px-12 py-2 mt-3 text-white rounded-md;
+  @apply uppercase bg-red-800 hover:bg-red-700 hover:border-red-800 border-2 border-red-900 shadow-md px-12 py-2 text-white rounded-lg cursor-pointer;
 }
 .base-btn-cancel-outline {
-  @apply uppercase box-border border-2 bg-transparent border-red-900 text-red-900 hover:bg-red-900 hover:text-white px-12 py-2 mt-3 rounded-md;
+  @apply uppercase box-border border-2 bg-transparent border-red-900 text-red-900 hover:bg-red-900 hover:text-white px-12 py-2 rounded-lg cursor-pointer;
+}
+.btn-payment {
+  @apply uppercase text-blue-900 hover:text-white hover:bg-blue-900 border-2 border-gray-300 shadow-md px-12 py-2 rounded-lg cursor-pointer;
+}
+.btn-print-payment {
+  @apply uppercase bg-blue-800 hover:bg-blue-900 border-2 border-gray-300 shadow-md px-12 py-12 text-white rounded-lg cursor-pointer;
 }
 
 /* TABLE */
@@ -66,6 +72,11 @@ input[type=number] {
   @apply hover:bg-white cursor-not-allowed text-gray-200 shadow-none;
 }
 
+/* NAVIGATION */
+.nav-link {
+  @apply pb-2 hover:text-blue-900;
+}
+
 /* SIBEDAR MENU */
 .dashboard-icon {
   @apply text-gray-400 self-center h-6 w-6;
@@ -75,6 +86,9 @@ input[type=number] {
 }
 .selected-menu-item {
   @apply border-r-4 border-blue-900 bg-gray-100;
+}
+.selected-posmenu-item {
+  @apply border-r-4 border-blue-900 bg-gray-100 text-black;
 }
 
 /* CHECKBOX TOGGLE SWITCH */
@@ -98,4 +112,10 @@ input[type=number] {
 /* MULTISELECT */
 .multiselect-search {
   height: 100%;
+}
+
+/* CARDS */
+
+.card {
+  @apply p-4 bg-white shadow-md max-w-max rounded-md;
 }

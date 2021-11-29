@@ -1,12 +1,12 @@
 <template>
     <div class="overflow-hidden">
-        <div class="absolute top-1/2 right-1/2 transform translate-x-1/2 -translate-y-1/2 z-40 p-8 bg-white rounded-lg shadow-lg">
+        <div class="fixed top-1/2 right-1/2 transform translate-x-1/2 -translate-y-1/2 z-40 p-8 bg-white rounded-lg shadow-lg">
             <button @click="$emit('close-modal')" class="float-right hover:text-red-600">
                 <CancelIcon class="w-8 h-8" />
             </button>
             <h2 class="text-2xl mb-4">Warning!</h2>
-            <p>Are you sure ? That action cannot be reversed.</p>
-            <div class="flex justify-between">
+            <p class="text-lg my-6">Are you sure ? That action cannot be reversed.</p>
+            <div class="flex justify-between mt-4">
                 <button 
                     @click="$emit('close-modal')" 
                     class="base-btn-outline">

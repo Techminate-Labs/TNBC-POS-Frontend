@@ -83,29 +83,29 @@
                             Items
                         </div>
                         <nav class="relative z-0 inline-flex" aria-label="Pagination">
-                            <a
+                            <button
                                 @click="changeToPreviousPage"
                                 href="#"
                                 :class="prev === null ? 'disabled' : ''"
                                 class="relative inline-flex items-center mr-2 px-2 py-2 rounded-full bg-white text-sm font-medium text-gray-500 shadow-md hover:shadow-sm">
                                 <ChevronLeftIcon class="h-4 w-4" />
-                            </a>
+                            </button>
                             <!-- Temporarily disabling this part of pagination until links is fixed-->
-                            <a 
+                            <button 
                                 @click="handlePageChange(item.url)"
                                 v-for="(item, index) in displayPagination" 
-                                :key="index" href="#" 
+                                :key="index" href="javascript:void(0)" 
                                 :class="item.active === true ? 'current' : ''"
                                 class="table-number-button">
                                 {{ item.label }}
-                            </a>
-                            <a
+                            </button>
+                            <button
                                 @click="changeToNextPage"
                                 href="#"
                                 :class="next === null ? 'disabled' : ''"
                                 class="relative inline-flex items-center ml-2 px-2 py-2 rounded-full bg-white text-sm font-medium text-gray-500 shadow-md hover:shadow-sm">
                                  <ChevronRightIcon class="h-4 w-4" />
-                            </a>
+                            </button>
                         </nav>
                     </div>
                 </div>
