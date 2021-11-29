@@ -17,7 +17,7 @@
 			@handleSaveAndRedirect="updateRoleAndRedirect"
 			:columns="columns" 
 			:items="items" 
-			:name="roleName" 
+			:id="roleName" 
 		/>
 	</div>
 </template>

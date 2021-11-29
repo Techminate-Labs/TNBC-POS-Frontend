@@ -14,7 +14,7 @@
 					<label class="label" for="current_password">Current Password</label>
 					<input 
 						type="password"
-						name="current_password"
+						id="current_password"
 						class="text-input"
 						placeholder="**********"
 						v-model="user.current_password"
@@ -24,7 +24,7 @@
 					<label class="label" for="new_password">New Password</label>
 					<input 
 						type="password"
-						name="new_password"
+						id="new_password"
 						class="text-input"
 						placeholder="**********"
 						v-model="user.new_password"
@@ -34,7 +34,7 @@
 					<label class="label" for="repeat_new_password">Repeat New Password</label>
 					<input 
 						type="password"
-						name="repeat_new_password"
+						id="repeat_new_password"
 						class="text-input"
 						placeholder="**********"
 						v-model="user.repeat_new_password"

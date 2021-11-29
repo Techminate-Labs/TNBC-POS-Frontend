@@ -28,7 +28,7 @@
 			<BrandModalCreate @handleSave="createBrand" @close-modal="isCreating = false" />
 		</div>
 		<div class="hidden" :class="isEditing ? 'active' : ''">
-			<BrandModalUpdate :name="selectedBrand.name" @handleSave="editBrand" @close-modal="isEditing = false" />
+			<BrandModalUpdate :id="selectedBrand.name" @handleSave="editBrand" @close-modal="isEditing = false" />
 		</div>
 		<div class="hidden" :class="isDeleting ? 'active' : ''">
 			<DeleteModal @handleConfirmDelete="deleteBrand" @close-modal="isDeleting = false" />

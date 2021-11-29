@@ -17,7 +17,7 @@
 					<input
 						class="text-input" 
 						type="text" 
-						name="name" 
+						id="name" 
 						v-model="name" 
 						placeholder="John Doe"
 						/>
@@ -27,7 +27,7 @@
 					<input
 						class="text-input" 
 						type="email" 
-						name="email" 
+						id="email" 
 						v-model="email" 
 						placeholder="mail@example.com"
 						/>

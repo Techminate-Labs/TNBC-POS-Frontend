@@ -17,7 +17,7 @@
 					<input
 						class="text-input" 
 						type="text" 
-						name="name" 
+						id="name" 
 						v-model="item.name" 
 						placeholder="Winter Jacket"
 						/>
@@ -27,7 +27,7 @@
 					<input
 						class="text-input" 
 						type="text" 
-						name="price" 
+						id="price" 
 						v-model="item.price" 
 						placeholder="15"
 						/>
@@ -37,7 +37,7 @@
 					<input
 						class="text-input" 
 						type="text" 
-						name="discount" 
+						id="discount" 
 						v-model="item.discount" 
 						placeholder="13"
 						/>
@@ -47,7 +47,7 @@
 					<input
 						class="text-input" 
 						type="text" 
-						name="inventory" 
+						id="inventory" 
 						v-model="item.inventory" 
 						placeholder="3"
 						/>
@@ -90,7 +90,7 @@
 							:options="getSupplierOptions"
 							:searchable="true"
 							placeholder="Pick a Supplier"
-							/>
+						/>
 					</div>
 				</div>
 				<div class="bg-white rounded-lg shadow-md p-4 mb-3">
@@ -99,10 +99,9 @@
 						<input 
 							v-model="item.available" 
 							type="checkbox" 
-							name="availability-toggle" 
-							id="toggle" 
+							id="availability-toggle toggle"
 							class="toggle-checkbox base-toggle-input"
-							/>
+						/>
 						<label for="availability-toggle" class="toggle-label base-toggle-label"></label>
 					</div>
 				</div>

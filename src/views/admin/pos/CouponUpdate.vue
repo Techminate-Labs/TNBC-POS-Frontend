@@ -9,7 +9,7 @@
 				<input
 					class="text-input" 
 					type="number" 
-					name="discount" 
+					id="discount" 
 					v-model="discount" 
 					placeholder="John Doe" 
 					/>
@@ -36,8 +36,7 @@
 					<input 
 						v-model="active" 
 						type="checkbox" 
-						name="active" 
-						id="toggle" 
+						id="active toggle"
 						class="toggle-checkbox base-toggle-input"
 						/>
 					<label for="active" class="toggle-label base-toggle-labelblock overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>

@@ -16,7 +16,7 @@
 				<label class="label" for="first_name">First Name</label>
 				<input 
 					type="text"
-					name="first_name"
+					id="first_name"
 					class="text-input"
 					placeholder="John"
 					v-model="user.first_name"
@@ -26,7 +26,7 @@
 				<label class="label" for="last_name">Last Name</label>
 				<input 
 					type="text"
-					name="last_name"
+					id="last_name"
 					class="text-input"
 					placeholder="Doe"
 					v-model="user.last_name"
@@ -36,7 +36,7 @@
 				<label class="label" for="mobile">Mobile</label>
 				<input 
 					type="text"
-					name="mobile"
+					id="mobile"
 					class="text-input"
 					placeholder="02 45 84 55 65"
 					v-model="user.mobile"
@@ -46,7 +46,7 @@
 				<label class="label" for="identity_number">ID Number</label>
 				<input 
 					type="number"
-					name="identity_number"
+					id="identity_number"
 					class="text-input"
 					placeholder="45685318"
 					v-model="user.identity_number"
@@ -55,7 +55,7 @@
 				<div class="flex flex-col flex-nowrap py-2 grid-span-1 mb-2">
 				<label class="label" for="present_address">Present Address</label>
 				<textarea
-					name="present_address"
+					id="present_address"
 					cols="40"
 					rows="2"
 					class="text-input"
@@ -65,7 +65,7 @@
 				<div class="flex flex-col flex-nowrap py-2 grid-span-1 mb-2">
 				<label class="label" for="permanent_address">Permanent Address</label>
 				<textarea
-					name="permanent_address"
+					id="permanent_address"
 					cols="40"
 					rows="2"
 					class="text-input"
@@ -76,7 +76,7 @@
 				<label class="label" for="city">City</label>
 				<input 
 					type="text"
-					name="city"
+					id="city"
 					class="text-input"
 					placeholder="New York"
 					v-model="user.city"
@@ -86,7 +86,7 @@
 				<label class="label" for="zip">Zip Code</label>
 				<input 
 					type="text"
-					name="zip"
+					id="zip"
 					class="text-input"
 					placeholder="456 21"
 					v-model="user.zip"

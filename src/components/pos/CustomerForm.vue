@@ -5,7 +5,7 @@
 			<input
 				class="text-input" 
 				type="text" 
-				name="name" 
+				id="name" 
 				v-model="name" 
 				placeholder="John Doe"
 				/>
@@ -15,7 +15,7 @@
 			<input
 				class="text-input" 
 				type="email" 
-				name="email" 
+				id="email" 
 				v-model="email" 
 				placeholder="mail@example.com"
 			/>
@@ -25,7 +25,7 @@
 			<input
 				class="text-input" 
 				type="tel" 
-				name="phone" 
+				id="phone" 
 				v-model="phone" 
 				placeholder="+33 6 7856 218"
 			/>
@@ -35,7 +35,7 @@
 			<input
 				class="text-input" 
 				type="text" 
-				name="address" 
+				id="address" 
 				v-model="address" 
 				placeholder="15 Lonely Road"
 			/>

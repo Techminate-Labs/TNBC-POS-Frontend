@@ -1,5 +1,5 @@
 <template>
-	<div >
+	<div>
 		<div class="flex flex-nowrap justify-between mb-2">
 			<h1 class="display-h1">Add User</h1>
 			<div class="text-right pt-4">
@@ -10,23 +10,24 @@
 				</button>
 			</div>
 		</div>
-		<div class="bg-white p-4 rounded-lg shadow-md">
-			<div class="flex flex-col py-2">
-				<label class="label" for="name">Name:</label>
+		<form class="bg-white p-4 rounded-lg shadow-md">
+
+			<label class="label flex flex-col py-2" for="name">
+				Name:
 				<input
 					class="text-input" 
 					type="text" 
-					name="name" 
+					id="name" 
 					v-model="name" 
 					placeholder="John Doe"
 				/>
-			</div>
+			</label>
 			<div class="flex flex-col py-2">
 				<label class="label" for="email">Email:</label>
 				<input
 					class="text-input" 
 					type="email" 
-					name="email" 
+					id="email" 
 					v-model="email" 
 					placeholder="mail@example.com"
 				/>
@@ -34,7 +35,7 @@
 			<div class="flex flex-col py-2">
 				<label class="label">Role:</label>
 				<select v-model="role" class="text-input">
-					<option :value="null">-- Please select an option --</option>
+					<option value="">-- Please select an option --</option>
 					<option v-for="(role, index) in roles" :key="index" :value="role.value">{{role.name}}</option>
 				</select>
 			</div>
@@ -43,7 +44,7 @@
 				<input
 					class="text-input" 
 					type="password" 
-					name="password" 
+					id="password" 
 					v-model="password" 
 					placeholder="*************"
 				/>
@@ -53,7 +54,7 @@
 				<input
 					class="text-input" 
 					type="password" 
-					name="password-confirmation" 
+					id="password-confirmation" 
 					v-model="passwordConfirmation" 
 					placeholder="**************"
 				/>
@@ -70,7 +71,7 @@
 					save and exit
 				</button>
 			</div>
-		</div>
+		</form>
 	</div>
 </template>
 

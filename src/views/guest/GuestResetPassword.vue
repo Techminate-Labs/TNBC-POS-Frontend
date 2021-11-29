@@ -9,7 +9,7 @@
             <input 
                 class="text-input" 
                 type="password" 
-                name="new-email" 
+                id="new-email" 
                 v-model="password" 
                 placeholder="*******************">
         </div>
@@ -18,7 +18,7 @@
             <input 
                 class="text-input" 
                 type="password" 
-                name="new-password" 
+                id="new-password" 
                 v-model="repeatPassword" 
                 placeholder="*******************">
         </div>

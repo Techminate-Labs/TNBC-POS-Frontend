@@ -8,7 +8,7 @@
             <input 
                 class="text-input" 
                 type="text" 
-                name="email" 
+                id="email" 
                 v-model="email" 
                 placeholder="mail@example.com"
             />
@@ -18,7 +18,7 @@
             <input 
                 class="text-input" 
                 type="password" 
-                name="password" 
+                id="password" 
                 v-model="password" 
                 placeholder="*******************"
             />

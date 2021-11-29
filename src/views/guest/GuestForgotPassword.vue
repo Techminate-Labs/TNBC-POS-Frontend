@@ -12,7 +12,7 @@
             <input 
                 class="text-input" 
                 type="text" 
-                name="email"
+                id="email"
                 v-model="email" placeholder="mail@example.com">
         </div>
         <button class="base-btn" @click="sendRecoverLink">

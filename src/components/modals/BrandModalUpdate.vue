@@ -10,7 +10,7 @@
                 <input
                     class="text-input" 
                     type="text" 
-                    name="name" 
+                    id="name" 
                     v-model="brandName" 
                     placeholder="Winter Clothes"
                     />

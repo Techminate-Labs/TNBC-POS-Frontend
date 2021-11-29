@@ -26,10 +26,10 @@
 			<UnitModalCreate @handleSave="createUnit" @close-modal="isCreating = false" />
 		</div>
 		<div class="hidden" :class="isEditing ? 'active' : ''">
-			<UnitModalUpdate :name="selectedUnit.name" @handleSave="editUnit" @close-modal="isEditing = false" />
+			<UnitModalUpdate :id="selectedUnit.name" @handleSave="editUnit" @close-modal="isEditing = false" />
 		</div>
 		<div class="hidden" :class="isDeleting ? 'active' : ''">
-			<DeleteModal :name="selectedUnit.name" @handleConfirmDelete="deleteUnit" @close-modal="isDeleting = false" />
+			<DeleteModal :id="selectedUnit.name" @handleConfirmDelete="deleteUnit" @close-modal="isDeleting = false" />
 		</div>
 	</div>
 </template>

@@ -31,7 +31,7 @@
 				<p>Discount Coupon</p>
 				<input 
 					type="text"
-					name="first_name"
+					id="first_name"
 					class="text-input self-center w-40"
 					placeholder="154951"
 					v-model="discount"
