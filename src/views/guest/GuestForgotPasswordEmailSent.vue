@@ -1,8 +1,7 @@
 <template>
     <div class="home">
         <div class="flex flex-row flew-nowrap my-4">
-            <img class="pr-4" src="@/assets/TNB_POS_LOGO.png" />
-            <h1 class="self-center text-4xl">TNB POS</h1>
+            <LogoIcon class="h-24" />
         </div>
         <h2 class="text-xl">Recover your password</h2>
         <div class="my-4 text-gray-600">
@@ -12,9 +11,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent } from 'vue'
+import LogoIcon from '@/components/icons/LogoIcon.vue'
 
 export default defineComponent({
-    name: 'GuestForgotPasswordEmailSent'
+    name: 'GuestForgotPasswordEmailSent',
+    components: { LogoIcon }
 });
 </script>

@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="flex flex-nowrap justify-between mb-2 pt-4">
-			<p class="text-2xl mb-4">Edit item</p>
+			<h1 class="display-h1">Edit item</h1>
 			<div class="text-right">
 				<button
 					class="base-btn-outline mb-2" 
@@ -150,7 +150,7 @@ import CategoryService from "@/services/items/ItemService";
 import SupplierService from "@/services/items/ItemService";
 import UnitService from "@/services/items/ItemService";
 import ResponseData from "@/types/ResponseData";
-import { SingleItem } from "@/types/Items"
+import { SingleItem } from "@/types/items/Items"
 import Multiselect from '@vueform/multiselect'
 
 export default defineComponent({

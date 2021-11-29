@@ -1,7 +1,7 @@
 <template>
 	<div >
 		<div class="flex flex-nowrap justify-between mb-2">
-			<p class="text-2xl mb-4 pt-4">Add User</p>
+			<h1 class="display-h1">Add User</h1>
 			<div class="text-right pt-4">
 				<button
 					class="base-btn-outline" 
@@ -19,7 +19,7 @@
 					name="name" 
 					v-model="name" 
 					placeholder="John Doe"
-					/>
+				/>
 			</div>
 			<div class="flex flex-col py-2">
 				<label class="label" for="email">Email:</label>
@@ -29,7 +29,7 @@
 					name="email" 
 					v-model="email" 
 					placeholder="mail@example.com"
-					/>
+				/>
 			</div>
 			<div class="flex flex-col py-2">
 				<label class="label">Role:</label>
@@ -46,7 +46,7 @@
 					name="password" 
 					v-model="password" 
 					placeholder="*************"
-					/>
+				/>
 			</div>
 			<div class="flex flex-col py-2">
 				<label class="label" for="password-confirmation">Password Confirmation:</label>
@@ -56,7 +56,7 @@
 					name="password-confirmation" 
 					v-model="passwordConfirmation" 
 					placeholder="**************"
-					/>
+				/>
 			</div>
 			<div class="my-2 text-right">
 				<button

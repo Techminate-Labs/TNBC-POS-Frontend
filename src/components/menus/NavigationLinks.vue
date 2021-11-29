@@ -28,16 +28,16 @@ export default defineComponent({
             let token = this.$store.state.session.bearerToken
             await UserService.logout(token)
                 .then((response: ResponseData) => {
-                    this.$store.commit('setPermissions', [])
-                    this.$store.commit('setBearerToken', '')
-                    this.$store.commit('setAuthentication', false)
-                    this.$store.commit('setUserEmail', null)
-                    this.$store.commit('setUserId', null)
-                    this.$router.push('/')
                     this.$toast.open({
                         message: `You've been successfully logged out. Bye!`,
                         type: "info"
                     })
+                    this.$router.push('/')
+                    // this.$store.commit('setPermissions', [])
+                    // this.$store.commit('setBearerToken', '')
+                    // this.$store.commit('setUserEmail', null)
+                    // this.$store.commit('setUserId', null)
+                    this.$store.commit('setAuthentication', false)
                 })
                 .catch((e: Error) => {
                     this.$toast.open({

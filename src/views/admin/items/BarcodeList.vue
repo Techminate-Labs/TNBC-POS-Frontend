@@ -1,7 +1,7 @@
 <template>
 	<div class="mt-6">
 		<div class="flex flex-nowrap justify-between pt-4">
-			<p class="text-2xl mb-4">Barcodes</p>
+			<h1 class="display-h1">Barcodes</h1>
 			<button
 				class="base-btn mb-2">
 				Print

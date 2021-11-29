@@ -1,8 +1,7 @@
 <template>
   <div>
-    
-    <div class="flex flex-nowrap justify-between ">
-      <p class="text-2xl pt-4 mb-4">User Roles</p>
+    <div class="flex flex-nowrap justify-between">
+      <h1 class="display-h1">User Roles</h1>
       <router-link
         v-show="canUserCreate"
         :to="{ name: 'RoleCreate' }">
@@ -38,7 +37,7 @@ import DataTable from '@/components/tables/DataTable.vue';
 import RoleService from "@/services/users/RoleService";
 import ResponseData from "@/types/ResponseData";
 import DeleteModal from '@/components/modals/DeleteModal.vue'
-import { RoleObject } from '@/types/Roles'
+import { RoleObject } from '@/types/users/Roles'
 
 export default defineComponent({
 	name: 'RoleList',

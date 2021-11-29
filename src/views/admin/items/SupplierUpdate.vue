@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="flex flex-nowrap justify-between mb-2 pt-4">
-			<p class="text-2xl mb-4">Update Supplier</p>
+			<h1 class="display-h1">Update Supplier</h1>
 			<div class="text-right">
 				<button
 					class="base-btn-outline mb-2" 

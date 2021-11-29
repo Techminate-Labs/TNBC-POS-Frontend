@@ -10,7 +10,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { ItemObject } from '@/types/Items'
+import { ItemObject } from '@/types/items/Items'
 
 export default defineComponent({
 	name: 'ProductCard',

@@ -110,7 +110,7 @@ import ResponseData from "@/types/ResponseData";
 import ItemService from "@/services/items/ItemService";
 import CartService from "@/services/pos/CartService";
 import CustomerService from "@/services/pos/CustomerService";
-import { ItemObject } from '@/types/Items'
+import { ItemObject } from '@/types/items/Items'
 import Multiselect from '@vueform/multiselect'
 
 export default defineComponent({

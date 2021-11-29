@@ -4,7 +4,7 @@
             <button @click="$emit('close-modal')" class="float-right hover:text-red-600">
                 <CancelIcon class="w-8 h-8" />
             </button>
-            <p class="text-2xl mb-4">Category List</p>
+            <h2 class="display-h2">Create a new category</h2>
             <div class="flex flex-col py-2">
                 <label class="label" for="name">Name:</label>
                 <input

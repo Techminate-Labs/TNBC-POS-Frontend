@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-row flew-nowrap text-lg">
+    <div class="flex flex-row flew-nowrap text-lg mb-4">
         <router-link :to="{ name: 'Dashboard' }" class="self-center">
             <HomeIcon class="w-4 h-4 text-gray-700 hover:text-gray-400 cursor-pointer" />
         </router-link>

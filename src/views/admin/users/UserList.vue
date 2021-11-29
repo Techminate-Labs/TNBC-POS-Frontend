@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="flex flex-nowrap justify-between">
-      <p class="text-2xl pt-4 mb-4">User List</p>
+      <h1 class="display-h1">User List</h1>
       <router-link 
         v-show="canUserCreate"
         :to="{ name: 'UserCreate' }">
@@ -36,7 +36,7 @@ import UserService from "@/services/users/UserService";
 import ResponseData from "@/types/ResponseData";
 import DataTable from '@/components/tables/DataTable.vue'
 import DeleteModal from '@/components/modals/DeleteModal.vue'
-import { User } from '@/types/Users'
+import { User } from '@/types/users/Users'
 
 export default defineComponent({
 	name: 'UserList',

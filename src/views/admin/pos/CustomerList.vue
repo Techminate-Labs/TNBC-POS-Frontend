@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="flex flex-nowrap justify-between">
-			<p class="text-2xl mb-4">Customer List</p>
+			<h1 class="display-h1">Customer List</h1>
 			<router-link :to="{ name: 'CustomerCreate' }"><button class="base-btn">Create Customer</button></router-link>
 		</div>
 		<DataTable
@@ -32,7 +32,7 @@ import { defineComponent } from 'vue';
 import DataTable from '@/components/tables/DataTable.vue'
 import DeleteModal from '@/components/modals/DeleteModal.vue'
 import CustomerService from "@/services/pos/CustomerService";
-import { CustomerItem } from '@/types/Customers'
+import { CustomerItem } from '@/types/pos/Customers'
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({

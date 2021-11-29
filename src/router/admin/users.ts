@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import store from '@/store'
-import UserManagement from '@/views/admin/users/UserManagement.vue'
+import UserIndex from '@/views/admin/users/index.vue'
 import RoleList from '@/views/admin/users/RoleList.vue'
 import RoleCreate from '@/views/admin/users/RoleCreate.vue'
 import RoleUpdate from '@/views/admin/users/RoleUpdate.vue'
@@ -12,13 +12,12 @@ import ProfileCreate from '@/views/admin/users/ProfileCreate.vue'
 import ProfileUpdate from '@/views/admin/users/ProfileUpdate.vue'
 import ProfileSettings from '@/views/admin/users/ProfileSettings.vue'
 import VerifyEmailUrl from '@/views/VerifyEmailUrl.vue'
-import ActivityLog from '@/views/admin/ActivityLog.vue'
 
 const UserManagementRoutes: Array<RouteRecordRaw> = [
     {
         path: '/user-management',
-        name: 'UserManagement',
-        component: UserManagement,
+        name: 'UserIndex',
+        component: UserIndex,
         meta: {
             layout: 'AdminLayout',
             auth: true

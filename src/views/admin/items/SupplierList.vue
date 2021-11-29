@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="flex flex-nowrap justify-between pt-4">
-			<p class="text-2xl mb-4">Supplier List</p>
+			<h1 class="display-h1">Supplier List</h1>
 			<router-link :to="{ name: 'SupplierCreate' }">
 				<button class="base-btn mb-2">Create Supplier</button>
 			</router-link>
@@ -34,7 +34,7 @@ import { defineComponent } from 'vue';
 import DataTable from '@/components/tables/DataTable.vue'
 import DeleteModal from '@/components/modals/DeleteModal.vue'
 import SupplierService from "@/services/items/SupplierService";
-import { SupplierItem } from '@/types/Suppliers'
+import { SupplierItem } from '@/types/items/Suppliers'
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({

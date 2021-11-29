@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="flex flex-nowrap justify-between mb-2">
-			<p class="text-2xl mb-4">Configuration</p>
+			<h1 class="display-h1">Configuration</h1>
 			<div class="text-right">
 				<button
 				class="base-btn-outline" 

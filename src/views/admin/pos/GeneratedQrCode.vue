@@ -2,7 +2,7 @@
 	<div class="rounded-md bg-white">
 		<div class="px-6 py-4 shadow text-center">
 			<div class="max-w-xl mx-auto">
-				<h1 class="text-3xl mb-4">We Accept TNBC</h1>
+				<h1 class="display-h1">We Accept TNBC</h1>
 				<qrcode-vue :value="publicKeyObject" :size="size" level="H" class="mx-auto mb-4" />
 				<p class="mb-4">Public key: {{ publicKey }}</p>
 				<p class="mb-4">To Pay: {{ total }}</p>

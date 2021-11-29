@@ -57,7 +57,7 @@ export default defineComponent({
                 },
                 {
                     name: 'Invoices',
-                    url: '/sales/invoices-list',
+                    url: '/point-of-sale/invoices-list',
                 },
                 {
                     name: 'Generate QR Code',
