@@ -1,20 +1,22 @@
 <template>
 	<div class="flex flex-nowrap py-2">
-		<div class="flex flex-col flex-nowrap w-1/2 pr-4">
-			<button @click="$emit('changePaymentMethod', 'tnbc')" class="shadow-sm btn-payment flex mb-2">
-				<span class="flex-1">Pay with TNBC</span>
-				<img 
-					class="absolute object-cover h-7 w-7"
-					src="@/assets/tnbc.png" 
-					/>
+		<div class="flex flex-col flex-nowrap w-1/2 mr-2">
+			<div class="flex">
+				<button @click="$emit('changePaymentMethod', 'tnbc')" class="text-left w-full shadow-sm btn-payment flex mb-2 mr-2">
+					<p class="flex-1">Pay with TNBC</p>
+					<img 
+						class="object-cover h-7 w-7"
+						src="@/assets/tnbc.png" 
+						/>
+					</button>
+				<button @click="$emit('changePaymentMethod', 'fiat')" class="text-left w-full shadow-sm btn-payment flex mb-2">
+					<p class="flex-1">Pay with Cash</p>
+					<img 
+						class="object-cover h-7 w-7 hover:text-white rounded-circle"
+						src="@/assets/doller.png" 
+						/>
 				</button>
-			<button @click="$emit('changePaymentMethod', 'fiat')" class="shadow-sm btn-payment flex mb-2">
-		        <span class="flex-1">Pay with Cash</span>
-				<img 
-					class="absolute object-cover h-7 w-7 hover:text-white rounded-circle"
-					src="@/assets/doller.png" 
-					/>
-			</button>
+			</div>
 			<button 
 				@click="$emit('loadExplorer')" 
 				class="shadow-sm btn-payment">
@@ -23,9 +25,14 @@
 		</div>
 		<div class="flex-grow flex flex-col flex-nowrap">
 			<button 
-				@click="$emit('prepareInvoice')"
+				@click="$emit('generateQrCode')"
+				class="text-2xl btn-print-payment w-full mb-2">
+				Generate QRCode
+			</button>
+			<button 
+				@click="$emit('generateInvoice')"
 				class="text-2xl btn-print-payment w-full">
-				Print Receipt
+				Generate Invoice
 			</button>
 			<label class="py-2 mt-4 capitalize" for="first_name">
 				<p>Discount Coupon</p>

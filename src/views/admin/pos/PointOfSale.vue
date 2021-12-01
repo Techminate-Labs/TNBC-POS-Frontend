@@ -85,9 +85,10 @@
                     <CartTable :cart="cart" @fetchCart="fetchCartItems" />
                     <Payments 
                         @discountChange="setDiscount" 
-                        @prepareInvoice="prepareInvoice"
+                        @generateInvoice="generateInvoice"
                         @loadExplorer="$router.push({name: 'TransactionExplorer'})"
-                        @changePaymentMethod="updateCartMethod" />
+                        @changePaymentMethod="updateCartMethod" 
+                        @generateQrCode="generateQrCode"/>
                 </div>
                 <div :class="isActive('invoice') ? 'block' : 'hidden'">
                     <Invoice :invoice="cart "/>
@@ -161,10 +162,14 @@ export default defineComponent({
             await CartService.listItems(params, token)
                 .then((response: ResponseData) => {
                     let res = response.data
+
+                    if (this.cart.length === 0) {
+                        this.$store.commit('setInvoiceNumber', res.invoice_number)
+                    }
+                    this.$store.commit('setPaymentMethod', res.payment_method)
+                    
                     this.cart = res
                     this.paymentMethod = res.payment_method
-                    this.$store.commit('setPaymentMethod', res.payment_method)
-                    this.$store.commit('setInvoiceNumber', res.invoice_number)
                 })
                 .catch((e: Error) => {
                     console.log(e);
@@ -205,19 +210,18 @@ export default defineComponent({
                 return results
             }
         },
-        async prepareInvoice(): Promise<void> {
+        async generateInvoice(): Promise<void> {
             let token = this.$store.state.session.bearerToken
             let cart = this.$store.state.cart
             let params = `?invoice_number=${cart.invoiceNumber}&coupon=${this.discountCode}&payment_method=${this.paymentMethod}`
-            console.log('test')
-            await CartService.prepareInvoice(params, token)
-                .then((response: ResponseData) => {
+            await CartService.generateInvoice(params, token)
+                .then((res: ResponseData) => {
                     this.$toast.open({
-                        message: `The invoice has been prepared.`,
+                        message: res.data.done,
                         type: "success"
                     })
-                    this.fetchInvoice()
                     this.activeItem = 'invoice'
+                    this.cart = []
                 })
                 .catch((e: Error) => {
                     console.log(e);
@@ -227,11 +231,14 @@ export default defineComponent({
 			const token = this.$store.state.session.bearerToken
 			const cart = this.$store.state.cart
 			const params = `?invoice_number=${cart.invoiceNumber}&coupon=${cart.coupon}&payment_method=${cart.paymentMethod}`
-			await CartService.prepareInvoice(params, token)
+			await CartService.generateInvoice(params, token)
 				.then((response: ResponseData) => {
                     let res = response.data
 					console.log('fetchInvoice response', res)
-                    this.invoice = res
+                     this.$toast.open({
+                        message: res.done,
+                        type: "success"
+                    })
                 })
                 .catch((e: Error) => {
                     console.log(e);
@@ -274,7 +281,7 @@ export default defineComponent({
 
             let fd = new FormData()
             fd.append('item_id', item)
-            console.log(fd)
+            
             await CartService.addItem(fd, token)
                 .then((response) => {
                     this.$toast.open({
@@ -305,6 +312,10 @@ export default defineComponent({
                     console.log(error)
                 })
         },
+        generateQrCode(): void {
+            let routeData = this.$router.resolve({name: 'GeneratedQrCode', });
+            window.open(routeData.href, '_blank');
+        }
     },
     mounted() {
         this.fetchPopularItems()

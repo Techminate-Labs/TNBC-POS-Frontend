@@ -10,7 +10,7 @@
 			<p class="text-center font-semibold text-lg mb-2">Cash Invoice</p>
 			<div class="flex flex-nowrap justify-between">
 				<p>Date: {{ invoice.date }}</p>
-				<p>{{ invoice.invoice_number }}</p>
+				<p>{{ getInvoiceNumber }}</p>
 			</div>
 		</div>
 		<InvoiceTable :invoice="invoice" />
@@ -26,6 +26,11 @@ export default defineComponent({
 	props: {
 		invoice: {
 			required: true
+		}
+	},
+	computed: {
+		getInvoiceNumber(): string {
+			return this.$store.state.cart.invoiceNumber
 		}
 	}
 })

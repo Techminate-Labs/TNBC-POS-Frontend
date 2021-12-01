@@ -59,15 +59,8 @@ export default defineComponent({
                     name: 'Invoices',
                     url: '/point-of-sale/invoices-list',
                 },
-                {
-                    name: 'Generate QR Code',
-                    url: '/point-of-sale/generated-qr-code',
-                },
             ] as any,
             menuActions: [
-                {
-                    name: 'Clear Cart'
-                },
                 {
                     name: 'Log Out'
                 },
@@ -107,7 +100,7 @@ export default defineComponent({
                 })
                 .catch((e: Error) => {
                     this.$toast.open({
-                        message: `There was an iossue sending that email.`,
+                        message: `There was an issue sending that email.`,
                         type: "success"
                     })
                     console.log(e)
