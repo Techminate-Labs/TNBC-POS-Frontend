@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="flex flex-nowrap justify-between pt-4">
-			<p class="text-2xl mb-4">Items List</p>
+			<h1 class="display-h1">Items List</h1>
 			<router-link :to="{ name: 'ItemCreate' }">
 				<button
 					class="base-btn mb-2">
@@ -36,7 +36,7 @@ import { defineComponent } from 'vue';
 import DataTable from '@/components/tables/DataTable.vue'
 import DeleteModal from '@/components/modals/DeleteModal.vue'
 import ItemService from "@/services/items/ItemService";
-import { ItemObject } from '@/types/Items'
+import { ItemObject } from '@/types/items/Items'
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({

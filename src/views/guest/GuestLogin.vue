@@ -1,15 +1,14 @@
 <template>
     <div class="home">
         <div class="flex flex-row flew-nowrap my-4">
-            <img class="pr-4" src="@/assets/TNB_POS_LOGO.png" />
-            <h1 class="self-center text-4xl">TNB POS</h1>
+            <LogoIcon class="h-24" />
         </div>
         <div class="flex flex-col py-2">
             <label class="label" for="email">Email:</label>
             <input 
                 class="text-input" 
                 type="text" 
-                name="email" 
+                id="email" 
                 v-model="email" 
                 placeholder="mail@example.com"
             />
@@ -19,7 +18,7 @@
             <input 
                 class="text-input" 
                 type="password" 
-                name="password" 
+                id="password" 
                 v-model="password" 
                 placeholder="*******************"
             />
@@ -34,12 +33,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import UserService from "@/services/users/UserService";
-import ResponseData from "@/types/ResponseData";
+import { defineComponent } from 'vue'
+import UserService from "@/services/users/UserService"
+import ResponseData from "@/types/ResponseData"
+import LogoIcon from '@/components/icons/LogoIcon.vue'
 
 export default defineComponent({
     name: 'GuestLogin',
+    components: { LogoIcon },
     data() {
         return {
             email: '',

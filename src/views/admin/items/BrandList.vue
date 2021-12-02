@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="flex flex-nowrap justify-between pt-4">
-			<p class="text-2xl mb-4">Brand List</p>
+			<h1 class="display-h1">Brand List</h1>
 			<button
 				@click="showBrandCreateModal"
 				class="base-btn mb-2">
@@ -28,7 +28,7 @@
 			<BrandModalCreate @handleSave="createBrand" @close-modal="isCreating = false" />
 		</div>
 		<div class="hidden" :class="isEditing ? 'active' : ''">
-			<BrandModalUpdate :name="selectedBrand.name" @handleSave="editBrand" @close-modal="isEditing = false" />
+			<BrandModalUpdate :id="selectedBrand.name" @handleSave="editBrand" @close-modal="isEditing = false" />
 		</div>
 		<div class="hidden" :class="isDeleting ? 'active' : ''">
 			<DeleteModal @handleConfirmDelete="deleteBrand" @close-modal="isDeleting = false" />
@@ -44,7 +44,7 @@ import BrandModalUpdate from '@/components/modals/BrandModalUpdate.vue'
 import DeleteModal from '@/components/modals/DeleteModal.vue'
 import BrandService from "@/services/items/BrandService";
 import ResponseData from "@/types/ResponseData";
-import { Brand } from "@/types/Brands";
+import { Brand } from "@/types/items/Brands";
 
 export default defineComponent({
 	name: 'BrandList',

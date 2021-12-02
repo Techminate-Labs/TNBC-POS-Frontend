@@ -15,7 +15,7 @@
                 @close-additional-sidebar="closeAdditionalSidebar"
                 :class="openAdditionalSideBar ? 'active' : ''" 
             />
-            <div class="w-9/12 flex-grow m-12" @click="handleCloseMenus">
+            <div class="w-9/12 flex-grow p-12" @click="handleCloseMenus">
                 <div class="bg-red-300 text-wite w-full py-2 px-8 text-lg" v-if="!isEmailVerified">
                     <p>Your account has not been verified ! Please <button @click="requestEmailVerification" class="underline">send a verification email to your inbox.</button></p>
                 </div>
@@ -62,8 +62,8 @@ export default defineComponent({
                     icon: 'https://epqrpjmozlcsvbgkxjkp.supabase.in/storage/v1/object/sign/tnbc-pos/svgs/template.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0bmJjLXBvcy9zdmdzL3RlbXBsYXRlLnN2ZyIsImlhdCI6MTYzMDA4ODE0OCwiZXhwIjoxOTQ1NDQ4MTQ4fQ.ckxC-UTfEFea7cgTGwgWuLKqBdegqrfvMMrZonZFAD4'
                 },
                 {
-                    name: 'User Management',
-                    url: '/user-management',
+                    name: 'Users',
+                    url: '/users',
                     icon: 'https://epqrpjmozlcsvbgkxjkp.supabase.in/storage/v1/object/sign/tnbc-pos/svgs/user-group.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0bmJjLXBvcy9zdmdzL3VzZXItZ3JvdXAuc3ZnIiwiaWF0IjoxNjMwMDg4MTQ4LCJleHAiOjE5NDU0NDgxNDh9.fWSpfP7uIO-dDyP8ILCfNtgCLRmBLfPSEbUxHAysVfA',
                     submenus: [
                         { name: 'User List', url: '/user-list' },
@@ -76,6 +76,7 @@ export default defineComponent({
                     icon: 'https://epqrpjmozlcsvbgkxjkp.supabase.in/storage/v1/object/sign/tnbc-pos/svgs/cash.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0bmJjLXBvcy9zdmdzL2Nhc2guc3ZnIiwiaWF0IjoxNjMwMDg4MTYzLCJleHAiOjE5NDU0NDgxNjN9.-N6SSb5frPDmWHStJ27gyjjpW8Yt597X8D8Qh8NGM0Y',
                     submenus: [
                         { name: 'Point of Sale', url: '/point-of-sale' },
+                        { name: 'Invoices List', url: '/invoices-list' },
                         { name: 'Customers', url: '/customers-list' },
                         { name: 'Coupons', url: '/coupons-list' },
                     ]
@@ -98,7 +99,6 @@ export default defineComponent({
                     url: '/sales',
                     icon: 'https://epqrpjmozlcsvbgkxjkp.supabase.in/storage/v1/object/sign/tnbc-pos/svgs/document-text.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0bmJjLXBvcy9zdmdzL2RvY3VtZW50LXRleHQuc3ZnIiwiaWF0IjoxNjMwMDg4MzEwLCJleHAiOjE5NDU0NDgzMTB9.YMblc4CxvBKs-mjUo7-ZLofMhZo6YlQ8JSDflk6niEc',
                     submenus: [
-                        { name: 'Sales Invoices', url: '/invoices-list' },
                         { name: 'Sales Reports', url: '/reports-list' },
                     ]
                 },

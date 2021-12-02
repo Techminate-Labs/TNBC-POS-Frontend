@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="flex flex-nowrap justify-between mb-2">
-			<p class="text-2xl mb-4">Configuration</p>
+			<h1 class="display-h1">Configuration</h1>
 			<div class="text-right">
 				<button
 				class="base-btn-outline" 
@@ -17,7 +17,7 @@
 					<input
 					class="text-input" 
 					type="text" 
-					name="app_name" 
+					id="app_name" 
 					v-model="configuration.app_name" 
 					placeholder="Point Of Sale"
 					>
@@ -27,7 +27,7 @@
 					<input
 					class="text-input" 
 					type="text" 
-					name="store_name" 
+					id="store_name" 
 					v-model="configuration.store_name" 
 					placeholder="ACME Inc."
 					>
@@ -53,7 +53,7 @@
 					<input
 					class="text-input" 
 					type="number" 
-					name="tax_rate" 
+					id="tax_rate" 
 					v-model="configuration.tax_rate" 
 					placeholder="25"
 					>
@@ -63,7 +63,7 @@
 					<input
 					class="text-input" 
 					type="number" 
-					name="tnbc_rate" 
+					id="tnbc_rate" 
 					v-model="configuration.tnbc_rate" 
 					placeholder="0.02"
 					>
@@ -75,7 +75,7 @@
 					<input
 					class="text-input" 
 					type="text" 
-					name="tnbc_pk" 
+					id="tnbc_pk" 
 					v-model="configuration.tnbc_pk" 
 					placeholder="a5dbcded3501291743e0cb4c6a186afa2c87a54f4a876c620dbd68385cba80d0"
 					>

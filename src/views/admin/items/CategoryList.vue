@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="flex flex-nowrap justify-between pt-4">
-			<p class="text-2xl mb-4">Category List</p>
+			<h1 class="display-h1">Category List</h1>
 			<button
 				@click="showCategoryCreateModal"
 				class="base-btn mb-2">
@@ -28,7 +28,7 @@
 			<CategoryModalCreate @handleSave="createCategory" @close-modal="isCreating = false" />
 		</div>
 		<div class="hidden" :class="isEditing ? 'active' : ''">
-			<CategoryModalUpdate :name="selectedCategory.name" @handleSave="editCategory" @close-modal="isEditing = false" />
+			<CategoryModalUpdate :id="selectedCategory.name" @handleSave="editCategory" @close-modal="isEditing = false" />
 		</div>
 		<div class="hidden" :class="isDeleting ? 'active' : ''">
 			<DeleteModal @handleConfirmDelete="deleteCategory" @close-modal="isDeleting = false" />
@@ -44,7 +44,7 @@ import CategoryModalCreate from '@/components/modals/CategoryModalCreate.vue';
 import CategoryModalUpdate from '@/components/modals/CategoryModalUpdate.vue';
 import DeleteModal from '@/components/modals/DeleteModal.vue';
 import ResponseData from "@/types/ResponseData";
-import { Category } from "@/types/Categories";
+import { Category } from "@/types/items/Categories";
 
 export default defineComponent({
 	name: 'CategoryList',

@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<div >
-			<p class="text-2xl pt-4">Role Permission</p>
+		<div>
+			<h1 class="display-h1">Role Permission</h1>
 			<div class="text-right flex flex-nowrap justify-between mb-2">
 				<p class="pt-4">Updating <span class="capitalize font-bold">{{ roleName }}</span></p>
 				<button
@@ -17,8 +17,8 @@
 			@handleSaveAndRedirect="updateRoleAndRedirect"
 			:columns="columns" 
 			:items="items" 
-			:name="roleName" 
-			/>
+			:id="roleName" 
+		/>
 	</div>
 </template>
 

@@ -7,7 +7,7 @@ export default {
     },
 
     addItem(data: any, token: any): Promise<any> {
-        return http.post(`/cartItemCreate/`, data, { headers: { "Authorization": `Bearer ${token}`, "Accept": "application/json" } });
+        return http.post(`/cartItemCreate/`, data, { headers: { "Authorization": `Bearer ${token}`, "Accept": "application/json", "content-type": "multipart/form-data" } });
     },
     
     listItems(params: any, token: any): Promise<any> {
@@ -22,7 +22,7 @@ export default {
         return http.post(`/cartItemUpdate/${item_id}`, body, { headers: { "Authorization": `Bearer ${token}`, "Accept": "application/json" } });
     },
 
-    prepareInvoice(params: any, token: any): Promise<any> {
+    generateInvoice(params: any, token: any): Promise<any> {
         return http.get(`/invoice/${params}`, { headers: { "Authorization": `Bearer ${token}`, "Accept": "application/json" } });
     },
 

@@ -6,7 +6,7 @@
                     <input
                         @input="$emit('handleSearch', $event)"
                         class="p-3 rounded-md border-solid border-2 border-gray-200"
-                        name="role-name"
+                        id="role-name"
                         type="text"
                         placeholder="Search anything..." />
                 </div>

@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="flex flex-nowrap justify-between">
-			<p class="text-2xl mb-4">Update Coupon</p>
+			<h1 class="display-h1">Update Coupon</h1>
 		</div>
 		<div class="bg-white p-4 rounded-lg shadow-md">
 			<div class="flex flex-col py-2">
@@ -9,7 +9,7 @@
 				<input
 					class="text-input" 
 					type="number" 
-					name="discount" 
+					id="discount" 
 					v-model="discount" 
 					placeholder="John Doe" 
 					/>
@@ -36,8 +36,7 @@
 					<input 
 						v-model="active" 
 						type="checkbox" 
-						name="active" 
-						id="toggle" 
+						id="active toggle"
 						class="toggle-checkbox base-toggle-input"
 						/>
 					<label for="active" class="toggle-label base-toggle-labelblock overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>

@@ -1,21 +1,14 @@
 <template>
 	<div>
 		<div class="flex flex-nowrap justify-between pt-6">
-			<p class="text-2xl mb-6">Reports for <span class="uppercase font-bold">{{paymentMethod}}</span> transactions</p>
+			<h1 class="display-h1">
+				Reports for <span class="uppercase font-bold">{{paymentMethod}}</span> transactions
+			</h1>
 		</div>
 		<div class="flex flew-wrap mb-6">
-			<div class="card mr-2">
-				<h2 class="font-semibold uppercase text-sm">Number of sales</h2>
-				<p class="font-bold text-xl mt-2 text-blue-900">{{ reports.numberOfSales }}</p>
-			</div>
-			<div class="card mr-2">
-				<h2 class="font-semibold uppercase text-sm">Total of sales</h2>
-				<p class="font-bold text-xl mt-2 text-blue-900">{{ reports.total }}</p>
-			</div>
-			<div class="card mr-2">
-				<h2 class="font-semibold uppercase text-sm">Total of tax</h2>
-				<p class="font-bold text-xl mt-2 text-blue-900">{{ reports.tax }}</p>
-			</div>
+			<ReportCard :title="'Number of sales'" :data="reports.numberOfSales" />
+			<ReportCard :title="'Total of sales'" :data="reports.total" />
+			<ReportCard :title="'Total of tax'" :data="reports.tax" />
 		</div>
 		<p class="text-2xl mb-2">Sales for this period</p>
 		<DataTable
@@ -37,13 +30,15 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import DataTable from '@/components/tables/DataTable.vue'
-import SalesService from "@/services/sales/SalesService";
-import ResponseData from "@/types/ResponseData";
+import ReportCard from '@/components/cards/ReportCard.vue'
+import SalesService from "@/services/sales/SalesService"
+import ResponseData from "@/types/ResponseData"
 
 export default defineComponent({
 	name: 'InvoiceList',
 	components: {
-		DataTable
+		DataTable,
+		ReportCard
 	},
 	data() {
 		return {

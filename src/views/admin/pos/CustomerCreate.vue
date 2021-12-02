@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="flex flex-nowrap justify-between mb-2">
-		<p class="text-2xl mb-4">Add Customer</p>
+		<h1 class="display-h1">Add Customer</h1>
 		<div class="text-right">
 			<button
 				class="base-btn-outline" 
@@ -16,7 +16,7 @@
 				<input
 					class="text-input" 
 					type="text" 
-					name="name" 
+					id="name" 
 					v-model="name" 
 					placeholder="John Doe"
 					/>
@@ -26,7 +26,7 @@
 				<input
 					class="text-input" 
 					type="email" 
-					name="email" 
+					id="email" 
 					v-model="email" 
 					placeholder="mail@example.com"
 					/>
@@ -36,7 +36,7 @@
 				<input
 					class="text-input" 
 					type="phone" 
-					name="phone" 
+					id="phone" 
 					v-model="phone" 
 					placeholder="+33 6 7856 218"
 					/>
@@ -46,7 +46,7 @@
 				<input
 					class="text-input" 
 					type="text" 
-					name="address" 
+					id="address" 
 					v-model="address" 
 					placeholder="15 Lonely Road"
 					/>

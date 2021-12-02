@@ -1,7 +1,7 @@
 <template>
 	<div>  
 		<div class="flex flex-nowrap justify-between">
-			<p class="text-2xl mb-4">Coupon List</p>
+			<h1 class="display-h1">Coupon List</h1>
 			<router-link :to="{ name: 'CouponCreate' }"><button class="base-btn">Create Coupon</button></router-link>
 		</div>
 		<DataTable
@@ -31,7 +31,7 @@ import { defineComponent } from 'vue';
 import DataTable from '@/components/tables/DataTable.vue'
 import DeleteModal from '@/components/modals/DeleteModal.vue'
 import CouponService from "@/services/items/CouponService";
-import { CouponItem } from '@/types/Coupons'
+import { CouponItem } from '@/types/items/Coupons'
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({

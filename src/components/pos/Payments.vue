@@ -1,46 +1,51 @@
 <template>
-	<div class="flex flex-nowrap pt-4">
-		<div class="flex flex-col flex-nowrap w-1/2 pr-4">
-			<button @click="$emit('changePaymentMethod', 'tnbc')" class="shadow-sm btn-payment flex">
-				<span class="flex-1">Pay with TNBC</span>
-				<img 
-					class="absolute object-cover h-7 w-7"
-					src="@/assets/tnbc.png" 
-					/>
+	<div class="flex flex-nowrap py-2">
+		<div class="flex flex-col flex-nowrap w-1/2 mr-2">
+			<div class="flex">
+				<button @click="$emit('changePaymentMethod', 'tnbc')" class="text-left w-full shadow-sm btn-payment flex mb-2 mr-2">
+					<p class="flex-1">Pay with TNBC</p>
+					<img 
+						class="object-cover h-7 w-7"
+						src="@/assets/tnbc.png" 
+						/>
+					</button>
+				<button @click="$emit('changePaymentMethod', 'fiat')" class="text-left w-full shadow-sm btn-payment flex mb-2">
+					<p class="flex-1">Pay with Cash</p>
+					<img 
+						class="object-cover h-7 w-7 hover:text-white rounded-circle"
+						src="@/assets/doller.png" 
+						/>
 				</button>
-			<button @click="$emit('changePaymentMethod', 'fiat')" class="shadow-sm btn-payment flex">
-		        <span class="flex-1">Pay with Cash</span>
-				<img 
-					class="absolute object-cover h-7 w-7 hover:text-white rounded-circle"
-					src="@/assets/doller.png" 
-					/>
-			</button>
+			</div>
 			<button 
 				@click="$emit('loadExplorer')" 
 				class="shadow-sm btn-payment">
 				Transaction Explorer
 			</button>
-			<div class="flex flex-col flex-nowrap py-2 grid-span-1 mb-2">
-				<label class="capitalize mb-2" for="first_name">Discount Coupon</label>
-				<div class="flex flex-nowrap">
-					<input 
-						type="text"
-						name="first_name"
-						class="text-input self-center w-32"
-						placeholder="154951"
-						v-model="discount"
-						@input="$emit('discountChange', $event)"
-						/>
-					<input class="base-btn-outline self-center h-full mt-0" type="submit" value="Apply" />
-				</div>
-			</div>
 		</div>
-		<div class="flex-grow flex flex-col flex-nowrap pl-4">
+		<div class="flex-grow flex flex-col flex-nowrap">
 			<button 
-				@click="$emit('prepareInvoice')"
-				class="text-2xl btn-print-payment flex-grow">
-				Print Receipt
+				@click="$emit('generateQrCode')"
+				class="text-2xl btn-print-payment w-full mb-2">
+				Generate QRCode
 			</button>
+			<button 
+				@click="$emit('generateInvoice')"
+				class="text-2xl btn-print-payment w-full">
+				Generate Invoice
+			</button>
+			<label class="py-2 mt-4 capitalize" for="first_name">
+				<p>Discount Coupon</p>
+				<input 
+					type="text"
+					id="first_name"
+					class="text-input self-center w-40"
+					placeholder="154951"
+					v-model="discount"
+					@input="$emit('discountChange', $event)"
+				/>
+				<input class="self-center inline-block bg-blue-900 base-btn ml-2" type="submit" value="Apply" />
+			</label>
 		</div>
 	</div>
 </template>

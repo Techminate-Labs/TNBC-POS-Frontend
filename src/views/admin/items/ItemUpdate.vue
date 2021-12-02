@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="flex flex-nowrap justify-between mb-2 pt-4">
-			<p class="text-2xl mb-4">Edit item</p>
+			<h1 class="display-h1">Edit item</h1>
 			<div class="text-right">
 				<button
 					class="base-btn-outline mb-2" 
@@ -11,100 +11,101 @@
 			</div>
 		</div>
 		<div class="flex flex-nowrap justify-between">
-			<div class="w-6/12 h-full bg-white p-4 rounded-lg shadow-md">
-				<div class="flex flex-col py-2">
-					<label class="label" for="name">Name</label>
+			<div class="w-6/12 h-full card">
+				<label class="label flex flex-col py-2" for="name">
+					Name
 					<input
 						class="text-input" 
 						type="text" 
-						name="name" 
+						id="name" 
 						v-model="item.name" 
 						placeholder="Winter Jacket"
-						/>
-				</div>
-				<div class="flex flex-col py-2">
-					<label class="label" for="price">Price</label>
+					/>
+				</label>
+				<label class="label flex flex-col py-2" for="price">
+					Price
 					<input
 						class="text-input" 
 						type="text" 
-						name="price" 
+						id="price" 
 						v-model="item.price" 
 						placeholder="15"
-						/>
-				</div>
-				<div class="flex flex-col py-2">
-					<label class="label" for="discount">Discount</label>
+					/>
+				</label>
+				<label class="label flex flex-col py-2" for="discount">
+					Discount
 					<input
 						class="text-input" 
 						type="text" 
-						name="discount" 
+						id="discount" 
 						v-model="item.discount" 
 						placeholder="13"
+					/>
+				</label>
+					<label class="label flex flex-col py-2" for="inventory">
+						Inventory
+						<input
+							class="text-input" 
+							type="text" 
+							id="inventory" 
+							v-model="item.inventory" 
+							placeholder="3"
 						/>
-				</div>
-				<div class="flex flex-col py-2">
-					<label class="label" for="inventory">Inventory</label>
-					<input
-						class="text-input" 
-						type="text" 
-						name="inventory" 
-						v-model="item.inventory" 
-						placeholder="3"
-						/>
-				</div>
+					</label>
 				<button class="base-btn float-right" @click="updateSupplier">Save and exit</button>
 			</div>
 			<div class="w-5/12 h-full">
-				<div class="bg-white rounded-lg shadow-md p-4 mb-3">
-					<div class="flex flex-col py-2">
-						<label class="label">Select Category</label>
+				<div class="card mb-3">
+					<label class="label flex flex-col py-2">
+						Select Category
 						<Multiselect
 							v-model="item.category_id"
 							:options="getCategoryOptions"
 							:searchable="true"
 							placeholder="Pick a Category"
-							/>
-					</div>
-					<div class="flex flex-col py-2">
-						<label class="label">Select Brand</label>
+						/>
+					</label>
+					<label class="label flex flex-col py-2">
+						Select Brand
 						<Multiselect
 							v-model="item.brand_id"
 							:options="getBrandOptions"
 							:searchable="true"
 							placeholder="Pick a Brand"
-							/>
-					</div>
-					<div class="flex flex-col py-2">
-						<label class="label">Select Unit</label>
+						/>
+					</label>
+					<label class="label flex flex-col py-2">
+						Select Unit
 						<Multiselect
 							v-model="item.unit_id"
 							:options="getUnitOptions"
 							:searchable="true"
 							placeholder="Pick a Unit"
-							/>
-					</div>
-					<div class="flex flex-col py-2">
-						<label class="label">Select Supplier</label>
+						/>
+					</label>
+					<label class="label flex flex-col py-2">
+						Select Supplier
 						<Multiselect
 							v-model="item.unit_id"
 							:options="getSupplierOptions"
 							:searchable="true"
 							placeholder="Pick a Supplier"
-							/>
-					</div>
+						/>
+					</label>
 				</div>
-				<div class="bg-white rounded-lg shadow-md p-4 mb-3">
-					<h3 class="label">Available to purchase</h3>
-					<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
-						<input 
-							v-model="item.available" 
-							type="checkbox" 
-							name="availability-toggle" 
-							id="toggle" 
-							class="toggle-checkbox base-toggle-input"
+				<div class="card mb-3">
+					<label class="label flex flex-col py-2">
+						Available to purchase
+						<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+							<input 
+								v-model="item.available" 
+								type="checkbox" 
+								id="availability-toggle toggle"
+								class="toggle-checkbox base-toggle-input"
 							/>
-						<label for="availability-toggle" class="toggle-label base-toggle-label"></label>
-					</div>
+							<label for="availability-toggle" class="toggle-label base-toggle-label"></label>
+						</div>
+					</label>
 				</div>
 				<div class="bg-white rounded-lg shadow-md p-4 mb-3">
 					<div class="flex flex-row justify-between">
@@ -117,10 +118,8 @@
 							<input @change="handleFileChange($event)" type='file' accept="image/*" class="hidden" />
 						</label>
 					</div>
-					<div class="">
-						<div class="w-48">
+					<div class="w-48">
 						<img :src="item.image" />
-						</div>
 					</div>
 					<div v-show="newImagePreview.length">
 						<p class="uppercase text-sm font-light">Preview</p>
@@ -128,14 +127,14 @@
 					</div>
 				</div>
 				<div class="bg-white rounded-lg shadow-md p-4">
-					<div class="flex flex-col py-2">
-						<label class="label">Select Expire Date</label>
+					<label class="label flex flex-col py-2">
+						Select Expire Date
 						<input 
 							type="date"
 							v-model="item.expire_date"
 							class="text-input"
-							/>
-					</div>
+						/>
+					</label>
 				</div>
 			</div>
 		</div>
@@ -150,7 +149,7 @@ import CategoryService from "@/services/items/ItemService";
 import SupplierService from "@/services/items/ItemService";
 import UnitService from "@/services/items/ItemService";
 import ResponseData from "@/types/ResponseData";
-import { SingleItem } from "@/types/Items"
+import { SingleItem } from "@/types/items/Items"
 import Multiselect from '@vueform/multiselect'
 
 export default defineComponent({

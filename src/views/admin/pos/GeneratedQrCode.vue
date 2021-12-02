@@ -2,11 +2,11 @@
 	<div class="rounded-md bg-white">
 		<div class="px-6 py-4 shadow text-center">
 			<div class="max-w-xl mx-auto">
-				<h1 class="text-3xl mb-4">We Accept TNBC</h1>
-				<qrcode-vue :value="publicKeyObject" :size="size" level="H" class="mx-auto mb-4" />
+				<h1 class="display-h1">We Accept TNBC</h1>
+				<qrcode-vue :value="publicKeyObject" level="H" class="mx-auto mb-4" />
 				<p class="mb-4">Public key: {{ publicKey }}</p>
 				<p class="mb-4">To Pay: {{ total }}</p>
-				<p class="mb-4">Memo: {{ memo }}</p>
+				<p class="mb-4">Memo: {{ getInvoiceNumber }}</p>
 			</div>
 		</div>  
 		<div class="w-full bg-gray-200">
@@ -18,7 +18,7 @@
 
 				<p class="mb-2 text-lg font-semibold">
 					<span class="text-xl font-bold">2 -</span>
-					Use the TNBC Mobile Wallet
+					Scan the QR Code
 				</p>
 				<p class="mb-2 text-lg font-semibold">
 					<span class="text-xl font-bold">3 -</span>
@@ -69,7 +69,6 @@ export default defineComponent({
 				await CartService.listItems(params, token)
 					.then((res) => {
 						this.total = res.data.total
-						this.memo = res.data.invoice_number
 						const publicKey = { 
 							"address": this.publicKey, 
 							"amount": res.data.total.toString(),
@@ -82,6 +81,11 @@ export default defineComponent({
 					})
 			}
         },
+	},
+	computed: {
+		getInvoiceNumber(): string {
+			return this.$store.state.cart.invoiceNumber
+		}
 	},
 	mounted(){
 		this.fetchConfigurations()

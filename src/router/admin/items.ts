@@ -1,4 +1,4 @@
-import ItemsIndex from '@/views/admin/items/ItemsIndex.vue'
+import ItemsIndex from '@/views/admin/items/index.vue'
 import SupplierList from '@/views/admin/items/SupplierList.vue'
 import SupplierCreate from '@/views/admin/items/SupplierCreate.vue'
 import SupplierUpdate from '@/views/admin/items/SupplierUpdate.vue'

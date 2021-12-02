@@ -7,7 +7,7 @@
                     <input
                         @change="$emit('handleNameChange', $event)"
                         class="p-3 rounded-md border-solid border-2 border-gray-200"
-                        name="role-name"
+                        id="role-name"
                         type="text"
                         placeholder="Cashier"
                         v-model="roleName" 
@@ -92,7 +92,7 @@ export default defineComponent({
     },
     watch: {
         name: function () {
-            this.roleName= this.name
+            this.roleName = this.name
         }
     },
     computed: {

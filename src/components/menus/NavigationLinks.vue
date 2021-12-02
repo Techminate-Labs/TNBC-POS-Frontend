@@ -1,7 +1,8 @@
 <template>
     <div class="relative flex flex-row">
+        <span class="self-center mr-4">debug: {{ getInvoiceNumber }}</span>
         <div class="relative inline-block w-10 mr-5 align-middle select-none transition duration-200 ease-in self-center">
-            <input type="checkbox" name="dark-mode-toggle" id="toggle" class="toggle-checkbox base-toggle-input"/>
+            <input type="checkbox" id="dark-mode-toggle toggle" class="toggle-checkbox base-toggle-input"/>
             <label for="dark-mode-toggle" class="toggle-label base-toggle-label"></label>
         </div>
         <NotificationIcon class="w-7 h-7 text-gray-500 mr-5 self-center" />
@@ -28,16 +29,12 @@ export default defineComponent({
             let token = this.$store.state.session.bearerToken
             await UserService.logout(token)
                 .then((response: ResponseData) => {
-                    this.$store.commit('setPermissions', [])
-                    this.$store.commit('setBearerToken', '')
-                    this.$store.commit('setAuthentication', false)
-                    this.$store.commit('setUserEmail', null)
-                    this.$store.commit('setUserId', null)
-                    this.$router.push('/')
                     this.$toast.open({
                         message: `You've been successfully logged out. Bye!`,
                         type: "info"
                     })
+                    this.$router.push('/')
+                    this.$store.commit('setAuthentication', false)
                 })
                 .catch((e: Error) => {
                     this.$toast.open({
@@ -47,6 +44,11 @@ export default defineComponent({
                     console.log(e)
                 });
         },
-    }
+    },
+    computed: {
+		getInvoiceNumber(): string {
+			return this.$store.state.cart.invoiceNumber
+		}
+	},
 });
 </script>

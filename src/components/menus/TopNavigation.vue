@@ -2,10 +2,11 @@
     <nav class="h-16 flex px-8 shadow-md relative z-30 bg-white">
         <div v-show="links" class="self-center flex flex-nowrap justify-between w-full">
             <!-- Menu Icon -->
-            <div @click="$emit('toogleSidebar')" class="cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
+            <div class="flex">
+                <MenuIcon @click="$emit('toogleSidebar')" class="cursor-pointer w-8 h-8 self-center" />
+                <router-link :to="{ name: 'Dashboard' }">
+                    <LogoIcon class="w-20 h-20 ml-4" />
+                </router-link>
             </div>
             <NavigationLinks @toggle-user-menu="$emit('toggleMenu')" />
         </div>
@@ -15,11 +16,15 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import NavigationLinks from '@/components/menus/NavigationLinks.vue'
+import LogoIcon from '@/components/icons/LogoIcon.vue'
+import MenuIcon from '@/components/icons/MenuIcon.vue'
 
 export default defineComponent({
     name: 'AdminLayout',
     components: {
-        NavigationLinks
+        NavigationLinks,
+        LogoIcon,
+        MenuIcon
     },
     props: {
         links: {

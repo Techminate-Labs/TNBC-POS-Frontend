@@ -1,7 +1,7 @@
 <template>
-	<div >
+	<div>
 		<div class="flex flex-nowrap justify-between mb-2">
-			<p class="text-2xl mb-4 pt-4">Add User</p>
+			<h1 class="display-h1">Add User</h1>
 			<div class="text-right pt-4">
 				<button
 					class="base-btn-outline" 
@@ -10,57 +10,58 @@
 				</button>
 			</div>
 		</div>
-		<div class="bg-white p-4 rounded-lg shadow-md">
-			<div class="flex flex-col py-2">
-				<label class="label" for="name">Name:</label>
+		<form class="bg-white p-4 rounded-lg shadow-md">
+
+			<label class="label flex flex-col py-2" for="name">
+				Name
 				<input
 					class="text-input" 
 					type="text" 
-					name="name" 
+					id="name" 
 					v-model="name" 
 					placeholder="John Doe"
-					/>
-			</div>
-			<div class="flex flex-col py-2">
-				<label class="label" for="email">Email:</label>
+				/>
+			</label>
+			<label class="label flex flex-col py-2" for="email">
+				Email
 				<input
 					class="text-input" 
 					type="email" 
-					name="email" 
+					id="email" 
 					v-model="email" 
 					placeholder="mail@example.com"
-					/>
-			</div>
-			<div class="flex flex-col py-2">
-				<label class="label">Role:</label>
+				/>
+			</label>
+			<label class="label flex flex-col py-2">
+				Role
 				<select v-model="role" class="text-input">
-					<option :value="null">-- Please select an option --</option>
+					<option value="">-- Please select an option --</option>
 					<option v-for="(role, index) in roles" :key="index" :value="role.value">{{role.name}}</option>
 				</select>
-			</div>
-			<div class="flex flex-col py-2">
-				<label class="label" for="password">Password:</label>
-				<input
-					class="text-input" 
-					type="password" 
-					name="password" 
-					v-model="password" 
-					placeholder="*************"
+			</label>
+				<label class="label flex flex-col py-2" for="password">
+					Password
+					<input
+						class="text-input" 
+						type="password" 
+						id="password" 
+						v-model="password" 
+						placeholder="*************"
 					/>
-			</div>
-			<div class="flex flex-col py-2">
-				<label class="label" for="password-confirmation">Password Confirmation:</label>
+				</label>
+			<label class="label flex flex-col py-2" for="password-confirmation">
+				Password Confirmation
 				<input
 					class="text-input" 
 					type="password" 
-					name="password-confirmation" 
+					id="password-confirmation" 
 					v-model="passwordConfirmation" 
 					placeholder="**************"
-					/>
-			</div>
+				/>
+			</label>
 			<div class="my-2 text-right">
 				<button
-					class="base-btn-outline ml-2" 
+					class="base-btn-outline ml-2"
 					@click="addUser">
 					Save and Create a New User
 				</button>
@@ -70,7 +71,7 @@
 					save and exit
 				</button>
 			</div>
-		</div>
+		</form>
 	</div>
 </template>
 
@@ -149,7 +150,6 @@ export default defineComponent({
 			let url = this.url
 			await RoleService.list(url, token)
 				.then((response: ResponseData) => {
-					let role_id: number = parseInt(params.user_id as string)
 					let _data: any = []
 					response.data.data.map((role: any) => {
 						_data.push({

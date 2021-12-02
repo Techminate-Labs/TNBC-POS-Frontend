@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="flex flex-nowrap justify-between pt-4">
-			<p class="text-2xl mb-4">Unit List</p>
+			<h1 class="display-h1">Unit List</h1>
 			<button @click="showUnitCreateModal" class="base-btn mb-2">
 				Create Unit
 			</button>
@@ -26,10 +26,10 @@
 			<UnitModalCreate @handleSave="createUnit" @close-modal="isCreating = false" />
 		</div>
 		<div class="hidden" :class="isEditing ? 'active' : ''">
-			<UnitModalUpdate :name="selectedUnit.name" @handleSave="editUnit" @close-modal="isEditing = false" />
+			<UnitModalUpdate :id="selectedUnit.name" @handleSave="editUnit" @close-modal="isEditing = false" />
 		</div>
 		<div class="hidden" :class="isDeleting ? 'active' : ''">
-			<DeleteModal :name="selectedUnit.name" @handleConfirmDelete="deleteUnit" @close-modal="isDeleting = false" />
+			<DeleteModal :id="selectedUnit.name" @handleConfirmDelete="deleteUnit" @close-modal="isDeleting = false" />
 		</div>
 	</div>
 </template>
@@ -42,7 +42,7 @@ import UnitModalUpdate from '@/components/modals/UnitModalUpdate.vue'
 import DeleteModal from '@/components/modals/DeleteModal.vue'
 import UnitService from "@/services/items/UnitService";
 import ResponseData from "@/types/ResponseData";
-import { Unit } from "@/types/Units";
+import { Unit } from "@/types/items/Units";
 
 export default defineComponent({
 	name: 'UnitList',

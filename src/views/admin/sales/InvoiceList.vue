@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="flex flex-nowrap justify-between pt-4">
-			<p class="text-2xl mb-4">Invoices List</p>
+			<h1 class="display-h1">Invoices List</h1>
 		</div>
 		<DataTable
 			:columns="columns"
