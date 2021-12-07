@@ -122,7 +122,7 @@ export default defineComponent({
             popularItems: [] as Array<ItemObject>,
             activeItem: 'cart',
             cart: [],
-            invoice: {},
+            invoice: null as null | Object,
             itemId: '',
             customerId: '',
             discountCode: '',
@@ -210,27 +210,26 @@ export default defineComponent({
             }
         },
         async printInvoice(): Promise<void> {
-            this.activeItem = 'invoice'
             this.invoice = this.cart
-            this.cart = []
-           
-        },
-        async fetchInvoice(): Promise<void> {
-			const token = this.$store.state.session.bearerToken
+            
+            const token = this.$store.state.session.bearerToken
 			const cart = this.$store.state.cart
 			const params = `?invoice_number=${cart.invoiceNumber}&coupon=${cart.coupon}&payment_method=${cart.paymentMethod}`
-			await CartService.generateInvoice(params, token)
+			await CartService.printInvoice(params, token)
 				.then((response: ResponseData) => {
                     let res = response.data
-                     this.$toast.open({
+                    this.$toast.open({
                          message: res.done,
                         type: "success"
                     })
+                    this.activeItem = 'invoice'
+                    this.cart = []
                 })
                 .catch((e: Error) => {
                     console.log(e);
                 });
-		},
+           
+        },
         async addCoupon(discount: any): Promise<void> {
             this.discountCode = discount.toString()
             this.$store.commit('setCoupon', discount.toString())

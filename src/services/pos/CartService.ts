@@ -22,7 +22,7 @@ export default {
         return http.post(`/cartItemUpdate/${item_id}`, body, { headers: { "Authorization": `Bearer ${token}`, "Accept": "application/json" } });
     },
 
-    generateInvoice(params: any, token: any): Promise<any> {
+    printInvoice(params: any, token: any): Promise<any> {
         return http.get(`/invoice/${params}`, { headers: { "Authorization": `Bearer ${token}`, "Accept": "application/json" } });
     },
 
