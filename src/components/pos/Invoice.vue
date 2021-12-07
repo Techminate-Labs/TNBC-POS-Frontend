@@ -1,5 +1,5 @@
 <template>
-	<div class="bg-white shadow-md rounded-md hover:shadow-lg max-w-min my-4 mx-auto py-2 px-8 text-left">
+	<div name="invoice" id="invoice-to-print" class="bg-white shadow-md rounded-md hover:shadow-lg max-w-min my-4 mx-auto py-2 px-8 text-left">
 		<div class="my-4">
 			<p class="text-center font-semibold text-lg mb-2">SHOP'S NAME</p>
 			<p>SHOP'S ADDRESS</p>

@@ -58,15 +58,15 @@ export default defineComponent({
 				},
 				{
 					attribute: 'discount',
-					name: 'value'
+					name: 'value (%)'
 				},
 				{
 					attribute: 'start_date',
-					name: 'starts'
+					name: 'start'
 				},
 				{
 					attribute: 'end_date',
-					name: 'ends'
+					name: 'end'
 				},
 				{
 					attribute: 'active',

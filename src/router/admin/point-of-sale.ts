@@ -64,6 +64,10 @@ const PointOfSaleRoutes = [
                 path: 'generated-qr-code',
                 name: 'GeneratedQrCode',
                 component: GeneratedQrCode,
+                meta: {
+                    layout: 'MinimalLayout',
+                    auth: true
+                },
             },
             {
                 path: 'transaction-explorer',
