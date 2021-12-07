@@ -10,6 +10,15 @@ import InvoiceList from '@/views/admin/sales/InvoiceList.vue'
 import GeneratedQrCode from '@/views/admin/pos/GeneratedQrCode.vue'
 import TransactionExplorer from '@/views/admin/pos/TransactionExplorer.vue'
 
+function selectLayout(to: any, from: any, next: any) {
+    const fromLayout = from.meta.layout
+
+    if (to.meta) { 
+        to.meta.layout = fromLayout
+        next()
+    }
+}
+
 const PointOfSaleRoutes = [
     {
         path: '/point-of-sale',
@@ -59,6 +68,10 @@ const PointOfSaleRoutes = [
                 path: 'invoices-list',
                 name: 'InvoiceList',
                 component: InvoiceList,
+                meta: {
+                    auth: true
+                },
+                beforeEnter: [selectLayout]
             },
             {
                 path: 'generated-qr-code',

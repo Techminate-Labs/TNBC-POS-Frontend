@@ -28,9 +28,9 @@ const UserManagementRoutes: Array<RouteRecordRaw> = [
                 name: 'UserList',
                 component: UserList,
                 beforeEnter: (to, from, next) => {
-                let canListUsers: boolean = store.state.user.permissions.Users.list
-                if (!canListUsers) next('/403')
-                else next()
+                    let canListUsers: boolean = store.state.user.permissions.Users.list
+                    if (!canListUsers) next('/403')
+                    else next()
                 }
             },
             {

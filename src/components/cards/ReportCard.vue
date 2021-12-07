@@ -15,7 +15,6 @@ export default defineComponent({
 			required: true
 		},
 		data: {
-			type: String,
 			required: true
 		}
 	}

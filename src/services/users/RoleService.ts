@@ -5,7 +5,7 @@ export default {
         return http.get(`${url}`, { headers: { "Authorization": `Bearer ${token}` } });
     },
     
-    getPermissions(id: any, token: any): Promise<any> {
+    getById(id: any, token: any): Promise<any> {
         return http.get(`roleGetById/${id}`, { headers: { "Authorization": `Bearer ${token}` } });
     },
 
