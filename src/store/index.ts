@@ -7,6 +7,7 @@ export default createStore({
             isAuthenticated: false,
             userEmail: '',
             userId: null,
+            roleId: null,
             isEmailVerified: false,
             permissions: undefined as any
         },
@@ -34,6 +35,9 @@ export default createStore({
         },
         setUserId(state, user_id) {
             state.user.userId = user_id
+        },
+        setRoleId(state, role_id) {
+            state.user.roleId = role_id
         },
         setEmailVerification(state, verification) {
             state.user.isEmailVerified = verification

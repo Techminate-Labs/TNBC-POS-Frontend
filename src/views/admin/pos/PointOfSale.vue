@@ -84,14 +84,14 @@
                 <div :class="isActive('cart') ? 'block' : 'hidden'">
                     <CartTable :cart="cart" @fetchCart="fetchCartItems" />
                     <Payments 
-                        @discountChange="setDiscount" 
-                        @generateInvoice="generateInvoice"
+                        @discountChange="addCoupon" 
+                        @printInvoice="printInvoice"
                         @loadExplorer="$router.push({name: 'TransactionExplorer'})"
                         @changePaymentMethod="updateCartMethod" 
                         @generateQrCode="generateQrCode"/>
                 </div>
                 <div :class="isActive('invoice') ? 'block' : 'hidden'">
-                    <Invoice :invoice="cart "/>
+                    <Invoice :invoice="invoice" />
                 </div>
                 <div :class="isActive('customer') ? 'block' : 'hidden'">
                     <CustomerForm />
@@ -122,7 +122,7 @@ export default defineComponent({
             popularItems: [] as Array<ItemObject>,
             activeItem: 'cart',
             cart: [],
-            invoice: {},
+            invoice: null as null | Object,
             itemId: '',
             customerId: '',
             discountCode: '',
@@ -206,18 +206,20 @@ export default defineComponent({
                     .catch((e: Error) => {
                         console.log(e);
                     });
-                console.log(results)
                 return results
             }
         },
-        async generateInvoice(): Promise<void> {
-            let token = this.$store.state.session.bearerToken
-            let cart = this.$store.state.cart
-            let params = `?invoice_number=${cart.invoiceNumber}&coupon=${this.discountCode}&payment_method=${this.paymentMethod}`
-            await CartService.generateInvoice(params, token)
-                .then((res: ResponseData) => {
+        async printInvoice(): Promise<void> {
+            this.invoice = this.cart
+            
+            const token = this.$store.state.session.bearerToken
+			const cart = this.$store.state.cart
+			const params = `?invoice_number=${cart.invoiceNumber}&coupon=${cart.coupon}&payment_method=${cart.paymentMethod}`
+			await CartService.printInvoice(params, token)
+				.then((response: ResponseData) => {
+                    let res = response.data
                     this.$toast.open({
-                        message: res.data.done,
+                         message: res.done,
                         type: "success"
                     })
                     this.activeItem = 'invoice'
@@ -226,27 +228,23 @@ export default defineComponent({
                 .catch((e: Error) => {
                     console.log(e);
                 });
+           
         },
-        async fetchInvoice(): Promise<void> {
-			const token = this.$store.state.session.bearerToken
-			const cart = this.$store.state.cart
-			const params = `?invoice_number=${cart.invoiceNumber}&coupon=${cart.coupon}&payment_method=${cart.paymentMethod}`
-			await CartService.generateInvoice(params, token)
-				.then((response: ResponseData) => {
+        async addCoupon(discount: any): Promise<void> {
+            this.discountCode = discount.toString()
+            this.$store.commit('setCoupon', discount.toString())
+            const token = this.$store.state.session.bearerToken
+            const cart = this.$store.state.cart
+            const params = `?invoice_number=${cart.invoiceNumber}&coupon=${this.discountCode}&payment_method=${cart.paymentMethod}`
+
+            await CartService.listItems(params, token)
+                .then(response => {
                     let res = response.data
-					console.log('fetchInvoice response', res)
-                     this.$toast.open({
-                        message: res.done,
-                        type: "success"
-                    })
+                    this.cart = res
                 })
-                .catch((e: Error) => {
-                    console.log(e);
-                });
-		},
-        setDiscount(e: any): void {
-            this.discountCode = e.target.value.toString()
-            this.$store.commit('setCoupon', e.target.value.toString())
+                .catch(err => {
+                    console.log(err)
+                })
         },
         setActive(tabItem: string): void {
             this.activeItem = tabItem
@@ -284,6 +282,7 @@ export default defineComponent({
             
             await CartService.addItem(fd, token)
                 .then((response) => {
+                    console.log(response)
                     this.$toast.open({
                         message: `Item has been added to the cart!`,
                         type: "success"
@@ -299,13 +298,19 @@ export default defineComponent({
 
             let fd = new FormData()
             fd.append('item_id', id.toString())
-            console.log(fd)
             await CartService.addItem(fd, token)
                 .then((response) => {
-                    this.$toast.open({
-                        message: `Item has been added to the cart!`,
-                        type: "success"
-                    })
+                    if (response.data.failed) {
+                        this.$toast.open({
+                            message: response.data.failed,
+                            type: "error"
+                        })
+                    } else if (response.data.done) {
+                        this.$toast.open({
+                            message: response.data.done,
+                            type: "success"
+                        })
+                    }
                     this.fetchCartItems()
                 })
                 .catch((error) => {

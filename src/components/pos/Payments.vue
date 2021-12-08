@@ -22,18 +22,6 @@
 				class="shadow-sm btn-payment">
 				Transaction Explorer
 			</button>
-		</div>
-		<div class="flex-grow flex flex-col flex-nowrap">
-			<button 
-				@click="$emit('generateQrCode')"
-				class="text-2xl btn-print-payment w-full mb-2">
-				Generate QRCode
-			</button>
-			<button 
-				@click="$emit('generateInvoice')"
-				class="text-2xl btn-print-payment w-full">
-				Generate Invoice
-			</button>
 			<label class="py-2 mt-4 capitalize" for="first_name">
 				<p>Discount Coupon</p>
 				<input 
@@ -42,10 +30,24 @@
 					class="text-input self-center w-40"
 					placeholder="154951"
 					v-model="discount"
-					@input="$emit('discountChange', $event)"
 				/>
-				<input class="self-center inline-block bg-blue-900 base-btn ml-2" type="submit" value="Apply" />
+				<button
+					class="self-center inline-block bg-blue-900 base-btn ml-2" 
+					@click="$emit('discountChange', discount)"
+				>Apply</button>
 			</label>
+		</div>
+		<div class="flex-grow flex flex-col flex-nowrap">
+			<button 
+				@click="$emit('generateQrCode')"
+				class="text-2xl btn-print-payment w-full mb-2">
+				Generate QRCode
+			</button>
+			<button 
+				@click="$emit('printInvoice')"
+				class="text-2xl btn-print-payment w-full">
+				Print Invoice<br /><span class="text-sm font-medium">(and clear cart)</span>
+			</button>
 		</div>
 	</div>
 </template>

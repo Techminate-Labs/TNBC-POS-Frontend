@@ -56,7 +56,6 @@ export default defineComponent({
 	},
 		computed: {
 		getPaymentMethod(): string {
-			console.log(this.invoice.payment_method)
 			switch (this.invoice.payment_method) {
 				case 'fiat':
 					return '$'

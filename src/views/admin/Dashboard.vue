@@ -28,7 +28,7 @@ export default defineComponent({
 			const token = this.$store.state.session.bearerToken
 			DashboardService.listTotal(token)
 				.then((res) => {
-					console.log(res)
+					// console.log(res)
 					this.analytics = res.data
 				})
 				.catch(err => {

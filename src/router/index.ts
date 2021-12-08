@@ -29,8 +29,9 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    let isAuthenticated = store.state.user.isAuthenticated
-    let hasToken = store.state.session.bearerToken.length
+    const isAuthenticated = store.state.user.isAuthenticated
+    const hasToken = store.state.session.bearerToken.length
+
     if (to.meta.auth && !isAuthenticated) {
   	  next('/')
     } else if (to.name === "GuestLogin" && isAuthenticated && hasToken) {

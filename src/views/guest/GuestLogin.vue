@@ -35,6 +35,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import UserService from "@/services/users/UserService"
+import RoleService from "@/services/users/RoleService"
 import ResponseData from "@/types/ResponseData"
 import LogoIcon from '@/components/icons/LogoIcon.vue'
 
@@ -57,13 +58,13 @@ export default defineComponent({
             await UserService.login(data)
                 .then((response: ResponseData) => {
                     this.user = response.data.user
-                    let permissions = this.user.role.permissions
-                    this.$store.commit('setPermissions', permissions)
-                    this.$store.commit('setBearerToken', response.data.token)
+                    const res = response.data
+                    
+                    this.$store.commit('setBearerToken', res.token)
                     this.$store.commit('setAuthentication', true)
                     this.$store.commit('setUserEmail', this.email)
-                    this.$store.commit('setUserId', response.data.user.id)
-
+                    this.$store.commit('setUserId', res.user.id)
+                    this.checkPermissions(res.token, res.user.role_id)
                     this.checkIfUserhasVerifiedEmail()
 
                     this.$router.push('/dashboard')
@@ -80,7 +81,16 @@ export default defineComponent({
                     console.log(e)
                 });
         },
-        checkIfUserhasVerifiedEmail():void {
+        async checkPermissions(token: string, userId: number): Promise<void> {
+            RoleService.getById(userId, token)
+                .then(response => {
+                    const res = response.data
+                    console.log(res)
+                    this.$store.commit('setRoleId', res.id)
+                    this.$store.commit('setPermissions', res.permissions)
+                })
+        },
+        checkIfUserhasVerifiedEmail(): void {
             let user = this.user
             
             let isVerified = user.email_verified_at

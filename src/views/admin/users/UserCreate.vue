@@ -10,7 +10,7 @@
 				</button>
 			</div>
 		</div>
-		<form class="bg-white p-4 rounded-lg shadow-md">
+		<div class="bg-white p-4 rounded-lg shadow-md" @submit.prevent="addUserAndRedirect">
 
 			<label class="label flex flex-col py-2" for="name">
 				Name
@@ -61,17 +61,17 @@
 			</label>
 			<div class="my-2 text-right">
 				<button
-					class="base-btn-outline ml-2"
+					class="base-btn ml-2"
 					@click="addUser">
-					Save and Create a New User
+					save &amp; create
 				</button>
 				<button
-					class="base-btn ml-2" 
+					class="base-btn ml-2"
 					@click="addUserAndRedirect">
-					save and exit
+					save &amp; exit
 				</button>
 			</div>
-		</form>
+		</div>
 	</div>
 </template>
 
@@ -96,18 +96,18 @@ export default defineComponent({
 	},
 	methods: {
 		async addUser(): Promise<void> {
-			let data = {
-				name: this.name,
-				email: this.email,
-				password: this.password,
-				password_confirmation: this.passwordConfirmation,
-				role_id: Number(this.role),
+			let body = {
+				'name': this.name.toString(),
+				'email': this.email.toString(),
+				'password': this.password.toString(),
+				'password_confirmation': this.passwordConfirmation.toString(),
+				'role_id': this.role.toString(),
 			}
 			let token = this.$store.state.session.bearerToken
-			await UserService.create(data, token)
+			await UserService.create(body, token)
 				.then((response: ResponseData) => {
 					this.$toast.open({
-						message: `${this.name} successfully added to database!`,
+						message: `User successfully added to database!`,
 						type: "success"
 					})
 				})
@@ -120,18 +120,19 @@ export default defineComponent({
 				});
 		},
 		async addUserAndRedirect(): Promise<void> {
-			let data = {
-				name: this.name,
-				email: this.email,
-				password: this.password,
-				password_confirmation: this.passwordConfirmation,
-				role_id: Number(this.role),
+			let body = {
+				'name': this.name.toString(),
+				'email': this.email.toString(),
+				'password': this.password.toString(),
+				'password_confirmation': this.passwordConfirmation.toString(),
+				'role_id': this.role.toString(),
 			}
 			let token = this.$store.state.session.bearerToken
-			await UserService.create(data, token)
+			await UserService.create(body, token)
 				.then((response: ResponseData) => {
+					console.log(response)
 					this.$toast.open({
-						message: `${this.name} successfully added to database!`,
+						message: `User successfully added to database!`,
 						type: "success"
 					})
 					this.$router.push({name:'UserList'})
