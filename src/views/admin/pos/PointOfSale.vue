@@ -144,7 +144,7 @@ export default defineComponent({
         },
         async updateCartMethod(method: string): Promise<void> {
             let token = this.$store.state.session.bearerToken
-            let params = `?discount=${this.discountCode}&payment_method=${method}`
+            let params = `?coupon=${this.discountCode}&payment_method=${method}`
             await CartService.listItems(params, token)
                 .then((response: ResponseData) => {
                     let res = response.data
@@ -158,7 +158,7 @@ export default defineComponent({
         },
         async fetchCartItems(): Promise<void> {
             let token = this.$store.state.session.bearerToken
-            let params = `?discount=${this.discountCode}&payment_method=${this.paymentMethod}`
+            let params = `?coupon=${this.discountCode}&payment_method=${this.paymentMethod}`
             await CartService.listItems(params, token)
                 .then((response: ResponseData) => {
                     let res = response.data
