@@ -11,36 +11,36 @@
 			</thead>
 			<tbody class="divide-y divide-gray-200">
 				<tr v-for="(item) in invoice.cartItems" :key="item.id">
-					<td class="w-full lg:w-auto py-4 whitespace-nowrap">{{ item.item_name }}</td>
-					<td class="w-full lg:w-auto py-4 whitespace-nowrap">{{ item.unit_price }}</td>
-					<td class="w-full lg:w-auto py-4 whitespace-nowrap">{{ item.qty }}</td>
-					<td class="w-full lg:w-auto py-4 whitespace-nowrap">{{ item.total }}</td>
+					<td class="w-full lg:w-auto py-4 whitespace-nowrap text-sm">{{ item.item_name }}</td>
+					<td class="w-full lg:w-auto py-4 whitespace-nowrap text-sm">{{ item.unit_price }}</td>
+					<td class="w-full lg:w-auto py-4 whitespace-nowrap text-sm">{{ item.qty }}</td>
+					<td class="w-full lg:w-auto py-4 whitespace-nowrap text-sm">{{ item.total }}</td>
 				</tr>
 			</tbody>
 			<tfoot class="text-left">
 				<tr>
-					<th class="pb-1 pt-4">Subtotal</th>
+					<th class="pb-1 pt-4 text-sm">Subtotal</th>
 					<td></td>
-					<td colspan="2" class="text-right pt-4">{{ invoice.subTotal }} {{ getPaymentMethod }}</td>
+					<td colspan="2" class="text-right pt-4 text-sm">{{ invoice.subTotal }} {{ getPaymentMethod }}</td>
 				</tr>
 				<tr>
-					<th class="py-1">Discount</th>
+					<th class="py-1 text-sm">Discount</th>
 					<td></td>
-					<td colspan="2" class="text-right">{{ invoice.discount }} {{ getPaymentMethod }}</td>
+					<td colspan="2" class="text-right text-sm">{{ invoice.discount }} {{ getPaymentMethod }}</td>
 				</tr>
 				<tr>
-					<th class="py-1">Total</th>
+					<th class="py-1 text-sm">Tax</th>
 					<td></td>
-					<td colspan="2" class="text-right">{{ invoice.total }} {{ getPaymentMethod }}</td>
+					<td colspan="2" class="text-right text-sm">{{ invoice.tax }} {{ getPaymentMethod }}</td>
 				</tr>
 				<tr>
-					<th class="py-1">Tax</th>
+					<th class="py-1 text-sm">Total</th>
 					<td></td>
-					<td colspan="2" class="text-right">{{ invoice.tax }} {{ getPaymentMethod }}</td>
+					<td colspan="2" class="text-right text-sm">{{ invoice.total }} {{ getPaymentMethod }}</td>
 				</tr>
 			</tfoot>
 		</table>
-		<p class="text-right italic">Paid with {{ invoice.payment_method }}</p>
+		<p class="text-center italic text-sm">Thank You</p>
 	</div>
 </template>
 <script lang="ts">

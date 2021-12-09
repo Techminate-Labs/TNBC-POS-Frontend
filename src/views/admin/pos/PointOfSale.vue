@@ -224,6 +224,7 @@ export default defineComponent({
                     })
                     this.activeItem = 'invoice'
                     this.cart = []
+                    this.discountCode = '';
                 })
                 .catch((e: Error) => {
                     console.log(e);

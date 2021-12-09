@@ -23,12 +23,11 @@
 				Transaction Explorer
 			</button>
 			<label class="py-2 mt-4 capitalize" for="first_name">
-				<p>Discount Coupon</p>
 				<input 
 					type="text"
 					id="first_name"
 					class="text-input self-center w-40"
-					placeholder="154951"
+					placeholder="Coupon Code"
 					v-model="discount"
 				/>
 				<button
@@ -46,7 +45,7 @@
 			<button 
 				@click="$emit('printInvoice')"
 				class="text-2xl btn-print-payment w-full">
-				Print Invoice<br /><span class="text-sm font-medium">(and clear cart)</span>
+				Save Invoice<br /><span class="text-sm font-medium"></span>
 			</button>
 		</div>
 	</div>
