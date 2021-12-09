@@ -45,7 +45,7 @@
 			<button 
 				@click="$emit('printInvoice')"
 				class="text-2xl btn-print-payment w-full">
-				Save Invoice<br /><span class="text-sm font-medium"></span>
+				Print Invoice<br /><span class="text-sm font-medium"></span>
 			</button>
 		</div>
 	</div>
