@@ -91,7 +91,7 @@
                         @generateQrCode="generateQrCode"/>
                 </div>
                 <div :class="isActive('invoice') ? 'block' : 'hidden'">
-                    <Invoice :invoice="invoice" />
+                    <Invoice :invoice="invoice" :cart="cart" />
                 </div>
                 <div :class="isActive('customer') ? 'block' : 'hidden'">
                     <CustomerForm />
@@ -121,9 +121,9 @@ export default defineComponent({
         return {
             popularItems: [] as Array<ItemObject>,
             activeItem: 'cart',
-            cart: [],
-            invoice: null as null | Object,
+            invoice: {} as Object,
             itemId: '',
+            cart: {} as Object,
             customerId: '',
             discountCode: '',
             paymentMethod: 'fiat'
@@ -162,8 +162,9 @@ export default defineComponent({
             await CartService.listItems(params, token)
                 .then((response: ResponseData) => {
                     let res = response.data
+                    console.log(res)
 
-                    if (this.cart.length === 0) {
+                    if (this.cart) {
                         this.$store.commit('setInvoiceNumber', res.invoice_number)
                     }
                     this.$store.commit('setPaymentMethod', res.payment_method)
@@ -211,10 +212,11 @@ export default defineComponent({
         },
         async printInvoice(): Promise<void> {
             this.invoice = this.cart
+            console.log(this.invoice)
             
             const token = this.$store.state.session.bearerToken
 			const cart = this.$store.state.cart
-			const params = `?invoice_number=${cart.invoiceNumber}&coupon=${cart.coupon}&payment_method=${cart.paymentMethod}`
+			const params = `?invoice_number=${cart.invoiceNumber}&payment_method=${cart.paymentMethod}`
 			await CartService.printInvoice(params, token)
 				.then((response: ResponseData) => {
                     let res = response.data
@@ -224,7 +226,11 @@ export default defineComponent({
                     })
                     this.activeItem = 'invoice'
                     this.cart = []
-                    this.discountCode = '';
+                    this.discountCode = ''
+
+                    this.$store.commit('setInvoiceNumber', '')
+                    this.$store.commit('setPaymentMethod', 'fiat')
+                    this.$store.commit('setCoupon', '')
                 })
                 .catch((e: Error) => {
                     console.log(e);
@@ -253,9 +259,6 @@ export default defineComponent({
         isActive(tabItem: string): boolean {
             return this.activeItem === tabItem
         },
-        customLabel ({ title, desc }: any) {
-            return `${title} – ${desc}`
-        },
         async addCustomerToCart(): Promise<void>{
             let item = this.customerId as string
             let token = this.$store.state.session.bearerToken
@@ -268,7 +271,7 @@ export default defineComponent({
                         message: `A customer has been linked to the cart!`,
                         type: "success"
                     })
-                    console.log(response)
+                    this.customerId = ''
                 })
                 .catch((error) => {
                     console.log(error)
@@ -283,11 +286,12 @@ export default defineComponent({
             
             await CartService.addItem(fd, token)
                 .then((response) => {
-                    console.log(response)
                     this.$toast.open({
                         message: `Item has been added to the cart!`,
                         type: "success"
                     })
+
+                    this.itemId = ''
                     this.fetchCartItems()
                 })
                 .catch((error) => {
@@ -319,8 +323,8 @@ export default defineComponent({
                 })
         },
         generateQrCode(): void {
-            let routeData = this.$router.resolve({name: 'GeneratedQrCode', });
-            window.open(routeData.href, '_blank');
+            const routeData = this.$router.resolve({ name: 'GeneratedQrCode' })
+            window.open(routeData.href, '_blank')
         }
     },
     mounted() {

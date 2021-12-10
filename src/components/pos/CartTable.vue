@@ -87,8 +87,8 @@ export default defineComponent({
 	components: { DeleteIcon, PlusIcon, MinusIcon },
 	props: {
 		cart: {
-            type: Object,
-            required: true
+			required: false,
+			type: Object
         },
 	},
 	methods: {
@@ -144,14 +144,17 @@ export default defineComponent({
 	},
 	computed: {
 		getPaymentMethod(): string {
-			console.log(this.cart.payment_method)
-			switch (this.cart.payment_method) {
-				case 'fiat':
-					return '$'
-				case 'tnbc':
-					return 'TNBC'
-				default:
-					return ''
+			if (this.cart){
+				switch (this.cart.payment_method) {
+					case 'fiat':
+						return '$'
+					case 'tnbc':
+						return 'TNBC'
+					default:
+						return ''
+				}
+			} else {
+				return ''
 			}
 		}
 	}

@@ -60,14 +60,14 @@ export default defineComponent({
                 })
         },
 		async fetchTotal(): Promise<any> {
-			console.log('fetching total')
 			const cart = this.$store.state.cart
 			if (cart.paymentMethod != 'fiat'){
 				const token = this.$store.state.session.bearerToken
 				const coupon = cart.coupon ? cart.coupon : ''
-				let params = `?coupon=${coupon}&payment_method=${cart.paymentMethod}`
+				let params = `?coupon=${coupon}&payment_method=tnbc`
 				await CartService.listItems(params, token)
 					.then((res) => {
+						console.log(res)
 						this.total = res.data.total
 						const publicKey = { 
 							"address": this.publicKey, 
