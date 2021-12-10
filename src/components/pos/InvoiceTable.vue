@@ -21,22 +21,22 @@
 				<tr>
 					<th class="pb-1 pt-4 text-sm">Subtotal</th>
 					<td></td>
-					<td colspan="2" class="text-right pt-4 text-sm">{{ getSubtotal }} {{ getPaymentMethod }}</td>
+					<td colspan="2" class="text-right pt-4 text-sm">{{ getMeta.subTotal }} {{ getPaymentMethod }}</td>
 				</tr>
 				<tr>
 					<th class="py-1 text-sm">Discount</th>
 					<td></td>
-					<td colspan="2" class="text-right text-sm">{{ getDiscount }} {{ getPaymentMethod }}</td>
+					<td colspan="2" class="text-right text-sm">{{ getMeta.discount }} {{ getPaymentMethod }}</td>
 				</tr>
 				<tr>
 					<th class="py-1 text-sm">Tax</th>
 					<td></td>
-					<td colspan="2" class="text-right text-sm">{{ getTax }} {{ getPaymentMethod }}</td>
+					<td colspan="2" class="text-right text-sm">{{ getMeta.tax }} {{ getPaymentMethod }}</td>
 				</tr>
 				<tr>
 					<th class="py-1 text-sm">Total</th>
 					<td></td>
-					<td colspan="2" class="text-right text-sm">{{ getTotal }} {{ getPaymentMethod }}</td>
+					<td colspan="2" class="text-right text-sm">{{ getMeta.total }} {{ getPaymentMethod }}</td>
 				</tr>
 			</tfoot>
 		</table>
@@ -88,44 +88,25 @@ export default defineComponent({
 				}
 			}
 		},
-		getSubtotal(): number {
+		getMeta(): Object {
 			if (!EmptyCheck(this.cart)){
-				console.log(this.cart)
-				return this.cart.subTotal
+				return {
+					subTotal: this.cart.subTotal,
+					discount: this.cart.discount,
+					tax: this.cart.tax,
+					total: this.cart.total,
+				}
 			} else if (!EmptyCheck(this.invoice)){
-				console.log(this.invoice)
-				return this.invoice.subTotal
+				return {
+					subTotal: this.invoice.subTotal,
+					discount: this.invoice.discount,
+					tax: this.invoice.tax,
+					total: this.invoice.total,
+				}
 			} else {
-				return 0
+				return {}
 			}
-		},
-		getDiscount(): number {
-			if (!EmptyCheck(this.cart)){
-				return this.cart.discount
-			} else if (!EmptyCheck(this.invoice)){
-				return this.invoice.discount
-			} else {
-				return 0
-			}
-		},
-		getTax(): number {
-			if (!EmptyCheck(this.cart)){
-				return this.cart.tax
-			} else if (!EmptyCheck(this.invoice)){
-				return this.invoice.tax
-			} else {
-				return 0
-			}
-		},
-		getTotal(): number {
-			if (!EmptyCheck(this.cart)){
-				return this.cart.total
-			} else if (!EmptyCheck(this.invoice)){
-				return this.invoice.total
-			} else {
-				return 0
-			}
-		},
+		}
 	}
 })
 </script>

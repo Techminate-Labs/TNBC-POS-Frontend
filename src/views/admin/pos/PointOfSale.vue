@@ -101,7 +101,7 @@
     </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import ItemCard from "@/components/pos/ItemCard.vue"
 import CartTable from "@/components/pos/CartTable.vue"
 import Payments from "@/components/pos/Payments.vue"
@@ -112,6 +112,7 @@ import ItemService from "@/services/items/ItemService";
 import CartService from "@/services/pos/CartService";
 import CustomerService from "@/services/pos/CustomerService";
 import { ItemObject } from '@/types/items/Items'
+import { Cart } from '@/types/pos/Cart'
 import Multiselect from '@vueform/multiselect'
 
 export default defineComponent({
@@ -121,9 +122,9 @@ export default defineComponent({
         return {
             popularItems: [] as Array<ItemObject>,
             activeItem: 'cart',
-            invoice: {} as Object,
             itemId: '',
-            cart: {} as Object,
+            cart: {} as Cart,
+            invoice: {} as Cart,
             customerId: '',
             discountCode: '',
             paymentMethod: 'fiat'
@@ -150,6 +151,7 @@ export default defineComponent({
                     let res = response.data
                     this.cart = res
                     this.paymentMethod = res.payment_method
+                    this.$store.commit('setInvoiceNumber', res.invoice_number)
                     this.$store.commit('setPaymentMethod', res.payment_method)
                 })
                 .catch((e: Error) => {
@@ -211,19 +213,22 @@ export default defineComponent({
         },
         async printInvoice(): Promise<void> {
             this.invoice = this.cart
+            console.log(this.cart.invoice_number)
             
             const token = this.$store.state.session.bearerToken
 			const cart = this.$store.state.cart
+            console.log(cart)
 			const params = `?invoice_number=${cart.invoiceNumber}&payment_method=${cart.paymentMethod}`
 			await CartService.printInvoice(params, token)
 				.then((response: ResponseData) => {
                     let res = response.data
+                    console.log(res)
                     this.$toast.open({
                          message: res.done,
                         type: "success"
                     })
                     this.activeItem = 'invoice'
-                    this.cart = {}
+                    this.cart = {} as Cart
                     this.discountCode = ''
 
                     this.$store.commit('setInvoiceNumber', '')
