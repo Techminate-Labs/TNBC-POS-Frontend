@@ -23,52 +23,56 @@
 	</div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, PropType } from 'vue'
 import InvoiceTable from "@/components/pos/InvoiceTable.vue"
+import { Cart } from '@/types/pos/Cart'
+import EmptyCheck from '@/mixins/EmptyCheck'
 
 export default defineComponent({
 	name: 'Invoice',
 	components: { InvoiceTable },
 	props: {
 		invoice: {
-			type: Object
+			type: Object as PropType<Cart>,
+			required: true
 		},
 		cart: {
-			type: Object
+			type: Object as PropType<Cart>,
+			required: true
 		}
 	},
 	computed: {
 		getDate(): string {
-			if (this.cart){
+			if (!EmptyCheck(this.cart)){
 				return this.cart.date
-			} else if (this.invoice){
+			} else if (!EmptyCheck(this.invoice)){
 				return this.invoice.date
 			} else {
 				return ''
 			}
 		},
 		getInvoiceNumber(): string {
-			if (this.cart){
+			if (!EmptyCheck(this.cart)){
 				return this.cart.invoice_number
-			} else if (this.invoice){
+			} else if (!EmptyCheck(this.invoice)){
 				return this.invoice.invoice_number
 			} else {
 				return ''
 			}
 		},
 		getPaymentMethod(): string {
-			if (this.cart){
+			if (!EmptyCheck(this.cart)){
 				return this.cart.payment_method
-			} else if (this.invoice){
+			} else if (!EmptyCheck(this.invoice)){
 				return this.invoice.payment_method
 			} else {
 				return ''
 			}
 		},
 		getCashier(): string {
-			if (this.cart){
+			if (!EmptyCheck(this.cart)){
 				return this.cart.cashier
-			} else if (this.invoice){
+			} else if (!EmptyCheck(this.invoice)){
 				return this.invoice.cashier
 			} else {
 				return ''

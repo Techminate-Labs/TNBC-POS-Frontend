@@ -162,7 +162,6 @@ export default defineComponent({
             await CartService.listItems(params, token)
                 .then((response: ResponseData) => {
                     let res = response.data
-                    console.log(res)
 
                     if (this.cart) {
                         this.$store.commit('setInvoiceNumber', res.invoice_number)
@@ -212,7 +211,6 @@ export default defineComponent({
         },
         async printInvoice(): Promise<void> {
             this.invoice = this.cart
-            console.log(this.invoice)
             
             const token = this.$store.state.session.bearerToken
 			const cart = this.$store.state.cart
@@ -225,7 +223,7 @@ export default defineComponent({
                         type: "success"
                     })
                     this.activeItem = 'invoice'
-                    this.cart = []
+                    this.cart = {}
                     this.discountCode = ''
 
                     this.$store.commit('setInvoiceNumber', '')
