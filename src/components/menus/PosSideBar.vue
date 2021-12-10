@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white z-20 relative shadow-lg">
+    <div id="pos-sidebar" class="bg-white z-20 relative shadow-lg">
         <nav class="block pt-10 mt-10 relative mx-auto justify-between text-gray-700 z-20" aria-label="Side Bar Navigation">
             <ul class="flex flex-wrap pt-10 md:flex-col md:flex-nowrap justify-evenly lg:grid lg:grid-cols-1 md:divide-x-0 md:divide-y-4 divide-gray-200 text-center text-lg">
                 <li 

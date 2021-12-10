@@ -67,9 +67,8 @@ export default defineComponent({
 			await RoleService.list(url, token)
 				.then((response: ResponseData) => {
 					const roles = response.data.data
-					// we copy a permission
+					// we copy a permission from the first role
 					let emptyPermissions = roles[0].permissions
-
 					// we set all permissions types to false
 					for (var section in emptyPermissions) {
 						for (var type in emptyPermissions[section]) {

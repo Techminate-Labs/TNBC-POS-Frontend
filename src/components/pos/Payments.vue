@@ -2,14 +2,20 @@
 	<div class="flex flex-nowrap py-2">
 		<div class="flex flex-col flex-nowrap w-1/2 mr-2">
 			<div class="flex">
-				<button @click="$emit('changePaymentMethod', 'tnbc')" class="text-left w-full shadow-sm btn-payment flex mb-2 mr-2">
+				<button 
+					@click="$emit('changePaymentMethod', 'tnbc')" 
+					:class="isTNBCSelected ? 'payment-selected' : ''"
+					class="text-left w-full shadow-sm btn-payment flex mb-2 mr-2">
 					<p class="flex-1">Pay with TNBC</p>
 					<img 
 						class="object-cover h-7 w-7"
 						src="@/assets/tnbc.png" 
 						/>
 					</button>
-				<button @click="$emit('changePaymentMethod', 'fiat')" class="text-left w-full shadow-sm btn-payment flex mb-2">
+				<button 
+					@click="$emit('changePaymentMethod', 'fiat')"
+					:class="!isTNBCSelected ? 'payment-selected' : ''"
+					class="text-left w-full shadow-sm btn-payment flex mb-2">
 					<p class="flex-1">Pay with Cash</p>
 					<img 
 						class="object-cover h-7 w-7 hover:text-white rounded-circle"
@@ -39,7 +45,9 @@
 		<div class="flex-grow flex flex-col flex-nowrap">
 			<button 
 				@click="$emit('generateQrCode')"
-				class="text-2xl btn-print-payment w-full mb-2">
+				class="text-2xl btn-print-payment w-full mb-2"
+				:class="isTNBCSelected ? '' : 'disabled'"
+				:disabled="isTNBCSelected ? false : true">
 				Generate QRCode
 			</button>
 			<button 
@@ -58,6 +66,15 @@ export default defineComponent({
 	data() {
 		return {
 			discount: ''
+		}
+	},
+	computed: {
+		isTNBCSelected(): boolean {
+			const method = this.$store.state.cart.paymentMethod
+			if (method === 'tnbc'){
+				return true
+			}
+			return false
 		}
 	}
 })

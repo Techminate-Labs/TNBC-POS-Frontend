@@ -10,7 +10,7 @@
 				</tr>
 			</thead>
 			<tbody class="divide-y divide-gray-200">
-				<tr v-for="(item) in invoice.cartItems" :key="item.id">
+				<tr v-for="(item) in getItem" :key="item.id">
 					<td class="w-full lg:w-auto py-4 whitespace-nowrap text-sm">{{ item.item_name }}</td>
 					<td class="w-full lg:w-auto py-4 whitespace-nowrap text-sm">{{ item.unit_price }}</td>
 					<td class="w-full lg:w-auto py-4 whitespace-nowrap text-sm">{{ item.qty }}</td>
@@ -53,8 +53,21 @@ export default defineComponent({
             type: Object,
             required: true
         },
+		cart: {
+            type: Object,
+            required: true
+        },
 	},
-		computed: {
+	computed: {
+		getItem(): any {
+			if (this.cart){
+				return this.cart.cartItems
+			} else if (this.invoice){
+				return this.invoice.cartItems
+			} else {
+				return []
+			}
+		},
 		getPaymentMethod(): string {
 			switch (this.invoice.payment_method) {
 				case 'fiat':
