@@ -10,10 +10,10 @@
 				<p class="font-semibold text-sm text-center">Techminate</p>
 				<p class="font-semibold text-sm text-center">Dhaka, Bangladesh</p>
 				<p class="font-semibold text-sm text-center mb-2">01680800810</p>
-				<p class="text-sm">Date : {{ getDate }}</p>
-				<p class="text-sm">Memo : {{ getInvoiceNumber }}</p>
-				<p class="text-sm">Paid with : {{ getPaymentMethod }}</p>
-				<p class="text-sm">Cashier : {{ getCashier }}</p>
+				<p class="text-sm">Date : {{ getMeta.date }}</p>
+				<p class="text-sm">Memo : {{ getMeta.invoice_number }}</p>
+				<p class="text-sm">Paid with : {{ getMeta.payment_method }}</p>
+				<p class="text-sm">Cashier : {{ getMeta.cashier }}</p>
 			</div>
 			<InvoiceTable :invoice="invoice" :cart="cart" />
 		</div>
@@ -23,57 +23,46 @@
 	</div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, PropType } from 'vue'
 import InvoiceTable from "@/components/pos/InvoiceTable.vue"
+import { Cart } from '@/types/pos/Cart'
+import EmptyCheck from '@/mixins/EmptyCheck'
+import moment from 'moment'
 
 export default defineComponent({
 	name: 'Invoice',
 	components: { InvoiceTable },
 	props: {
 		invoice: {
-			type: Object
+			type: Object as PropType<Cart>,
+			required: true
 		},
 		cart: {
-			type: Object
+			type: Object as PropType<Cart>,
+			required: true
 		}
 	},
 	computed: {
-		getDate(): string {
-			if (this.cart){
-				return this.cart.date
-			} else if (this.invoice){
-				return this.invoice.date
+		getMeta(): Object {
+			if (!EmptyCheck(this.cart)){
+				return {
+					date: moment(this.cart.date),
+					invoice_number: this.cart.invoice_number,
+					payment_method: this.cart.payment_method,
+					cashier: this.cart.cashier,
+				}
+			} else if (!EmptyCheck(this.invoice)){
+				return {
+					date: moment(this.invoice.date),
+					invoice_number: this.invoice.invoice_number,
+					payment_method: this.invoice.payment_method,
+					cashier: this.invoice.cashier,
+				}
+				
 			} else {
-				return ''
+				return {}
 			}
-		},
-		getInvoiceNumber(): string {
-			if (this.cart){
-				return this.cart.invoice_number
-			} else if (this.invoice){
-				return this.invoice.invoice_number
-			} else {
-				return ''
-			}
-		},
-		getPaymentMethod(): string {
-			if (this.cart){
-				return this.cart.payment_method
-			} else if (this.invoice){
-				return this.invoice.payment_method
-			} else {
-				return ''
-			}
-		},
-		getCashier(): string {
-			if (this.cart){
-				return this.cart.cashier
-			} else if (this.invoice){
-				return this.invoice.cashier
-			} else {
-				return ''
-			}
-		},
+		}
 	}
 })
 </script>

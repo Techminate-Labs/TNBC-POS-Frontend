@@ -21,22 +21,22 @@
 				<tr>
 					<th class="pb-1 pt-4 text-sm">Subtotal</th>
 					<td></td>
-					<td colspan="2" class="text-right pt-4 text-sm">{{ invoice.subTotal }} {{ getPaymentMethod }}</td>
+					<td colspan="2" class="text-right pt-4 text-sm">{{ getMeta.subTotal }} {{ getPaymentMethod }}</td>
 				</tr>
 				<tr>
 					<th class="py-1 text-sm">Discount</th>
 					<td></td>
-					<td colspan="2" class="text-right text-sm">{{ invoice.discount }} {{ getPaymentMethod }}</td>
+					<td colspan="2" class="text-right text-sm">{{ getMeta.discount }} {{ getPaymentMethod }}</td>
 				</tr>
 				<tr>
 					<th class="py-1 text-sm">Tax</th>
 					<td></td>
-					<td colspan="2" class="text-right text-sm">{{ invoice.tax }} {{ getPaymentMethod }}</td>
+					<td colspan="2" class="text-right text-sm">{{ getMeta.tax }} {{ getPaymentMethod }}</td>
 				</tr>
 				<tr>
 					<th class="py-1 text-sm">Total</th>
 					<td></td>
-					<td colspan="2" class="text-right text-sm">{{ invoice.total }} {{ getPaymentMethod }}</td>
+					<td colspan="2" class="text-right text-sm">{{ getMeta.total }} {{ getPaymentMethod }}</td>
 				</tr>
 			</tfoot>
 		</table>
@@ -44,38 +44,67 @@
 	</div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue'
+import { Cart } from '@/types/pos/Cart'
+import EmptyCheck from '@/mixins/EmptyCheck'
 
 export default defineComponent({
 	name: 'InvoiceTable',
 	props: {
 		invoice: {
-            type: Object,
+            type: Object as PropType<Cart>,
             required: true
         },
 		cart: {
-            type: Object,
+            type: Object as PropType<Cart>,
             required: true
         },
 	},
 	computed: {
 		getItem(): any {
-			if (this.cart){
+			if (!EmptyCheck(this.cart)){
 				return this.cart.cartItems
-			} else if (this.invoice){
+			} else if (!EmptyCheck(this.invoice)){
 				return this.invoice.cartItems
 			} else {
 				return []
 			}
 		},
-		getPaymentMethod(): string {
-			switch (this.invoice.payment_method) {
-				case 'fiat':
-					return '$'
-				case 'tnbc':
-					return 'TNBC'
-				default:
-					return ''
+		getPaymentMethod(): any {
+			let data: Cart | null = null
+			if (!EmptyCheck(this.cart)){
+				data = this.cart
+			} else if (!EmptyCheck(this.invoice)){
+				data = this.invoice
+			}
+			if (data && !EmptyCheck(data as Cart)){
+				switch (data.payment_method) {
+					case 'fiat':
+						return '$'
+					case 'tnbc':
+						return 'TNBC'
+					default:
+						return ''
+				}
+			}
+		},
+		getMeta(): Object {
+			if (!EmptyCheck(this.cart)){
+				return {
+					subTotal: this.cart.subTotal,
+					discount: this.cart.discount,
+					tax: this.cart.tax,
+					total: this.cart.total,
+				}
+			} else if (!EmptyCheck(this.invoice)){
+				return {
+					subTotal: this.invoice.subTotal,
+					discount: this.invoice.discount,
+					tax: this.invoice.tax,
+					total: this.invoice.total,
+				}
+			} else {
+				return {}
 			}
 		}
 	}

@@ -33,7 +33,7 @@
     "tests/**/*.ts",
     "tests/**/*.tsx",
     "src/store/index.js"
-  ],
+, "src/mixins/EmptyCheck.js"  ],
   "exclude": [
     "node_modules"
   ]
