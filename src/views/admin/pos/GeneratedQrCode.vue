@@ -72,7 +72,7 @@ export default defineComponent({
 						const publicKey = { 
 							"address": this.publicKey, 
 							"amount": res.data.total.toString(),
-							"memo": res.data.invoice_number
+							"memo": this.$store.state.cart.invoiceNumber
 						}
 						this.publicKeyObject = JSON.stringify(publicKey) 
 					})
