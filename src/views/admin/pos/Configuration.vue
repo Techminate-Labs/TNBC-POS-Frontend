@@ -38,6 +38,8 @@
 						<option :value="null">-- Please select an option --</option>
 						<option value="USD">Dollar</option>
 						<option value="EUR">Euro</option>
+						<option value="INR">Indian Rupee</option>
+						<option value="PHP">philippine peso</option>
 					</select>
 				</div>
 				<div class="flex flex-col py-2">
@@ -46,6 +48,8 @@
 						<option :value="null">-- Please select an option --</option>
 						<option value="$">$</option>
 						<option value="€">€</option>
+						<option value="€">₹</option>
+						<option value="€">₱</option>
 					</select>
 				</div>
 				<div class="flex flex-col py-2">
@@ -68,6 +72,23 @@
 					placeholder="0.02"
 					>
 				</div>
+				<div class="flex flex-col py-2">
+					<label class="label" for="protocol">Bank Protocol:</label>
+					<select v-model="configuration.protocol" class="text-input">
+						<option :value="null">-- Please select an option --</option>
+						<option value="http">http</option>
+						<option value="https">https</option>
+					</select>
+				</div>
+				<div class="flex flex-col py-2">
+					<label class="label" for="bank">Bank:</label>
+					<select v-model="configuration.bank" class="text-input">
+						<option :value="null">-- Please select an option --</option>
+						<option value="20.98.98.0">Testnet</option>
+						<option value="54.183.16.194">The New Boston</option>
+						<option value="45.56.92.194">Keysign</option>
+					</select>
+				</div>
 			</div>
 			<div class="">
 				<div class="flex flex-col py-2">
@@ -86,9 +107,15 @@
 					<label class="label" for="time_zone">Time Zone:</label>
 					<select v-model="configuration.time_zone" class="text-input">
 						<option :value="null">-- Please select an option --</option>
-						<option value="GMT+6">GMT+6</option>
+						<option value="GMT+2">GMT+6</option>
+						<option value="GMT+2">GMT+5</option>
+						<option value="GMT+6">GMT+4</option>
+						<option value="GMT+2">GMT+3</option>
 						<option value="GMT+2">GMT+2</option>
-						<option value="GMT-3">GMT-3</option>
+						<option value="GMT+2">GMT+1</option>
+						<option value="GMT+2">GMT+0</option>
+						<option value="GMT-3">GMT-1</option>
+						<option value="GMT-3">GMT-2</option>
 					</select>
 				</div>
 			</div>
@@ -189,6 +216,8 @@ export default defineComponent({
 			fd.append('tnbc_pk', this.configuration.tnbc_pk)
 			fd.append('tnbc_rate', this.configuration.tnbc_rate)
 			fd.append('tax_rate', this.configuration.tax_rate)
+			fd.append('protocol', this.configuration.protocol)
+			fd.append('bank', this.configuration.bank)
 			fd.append('time_zone', this.configuration.time_zone)
 			fd.append('app_logo', this.newAppLogo)
 			fd.append('store_logo', this.newStoreLogo)

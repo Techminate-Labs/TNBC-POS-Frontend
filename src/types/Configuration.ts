@@ -6,6 +6,8 @@ export interface Configuration {
 	tnbc_pk: string,
 	tnbc_rate: string,
 	tax_rate: string,
+	protocol: string,
+	bank: string,
 	time_zone: string,
 	app_logo: any,
 	store_logo: any,
