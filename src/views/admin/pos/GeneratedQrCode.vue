@@ -10,19 +10,18 @@
 			</div>
 		</div>  
 		<div class="w-full bg-gray-200">
-			<div class="text-left max-w-xl mx-auto py-4">
+			<div class="text-center max-w-xl mx-auto py-4">
 				<p class="mb-2 text-lg font-semibold">
-					<span class="text-xl font-bold">1 -</span>
-					Use the TNBC Mobile Wallet
+					<span class="text-xl font-bold">Step 1 :</span>
+					Use TNBC Wallet
 				</p>
-
 				<p class="mb-2 text-lg font-semibold">
-					<span class="text-xl font-bold">2 -</span>
+					<span class="text-xl font-bold">Step 2 :</span>
 					Scan the QR Code
 				</p>
 				<p class="mb-2 text-lg font-semibold">
-					<span class="text-xl font-bold">3 -</span>
-					Complete the Payment
+					<span class="text-xl font-bold">Step 3 :</span>
+					Complete Payment
 				</p>
 			</div>
 		</div>
