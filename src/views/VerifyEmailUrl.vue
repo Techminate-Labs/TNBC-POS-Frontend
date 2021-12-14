@@ -23,7 +23,7 @@ export default defineComponent({
                             message: `Your email has been successfully verified!`,
                             type: "info"
                         })
-                        this.$store.commit('setEmailVerification', true)
+                        this.$store.dispatch('setEmailVerification', true)
                         this.$router.push('/dashboard')
                     })
                     .catch((e: Error) => {

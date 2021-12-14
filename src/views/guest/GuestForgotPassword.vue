@@ -53,7 +53,7 @@ export default defineComponent({
                         message: `Great! The email has been sent to your mailbox. Go open it!`,
                         type: "success"
                     })
-                    this.$store.commit('setUserEmail', this.email)
+                    this.$store.dispatch('setUserEmail', this.email)
                     this.$router.push('/password-reset-sent')
                 })
                 .catch((e: Error) => {

@@ -78,14 +78,7 @@ export default defineComponent({
 				data = this.invoice
 			}
 			if (data && !EmptyCheck(data as Cart)){
-				switch (data.payment_method) {
-					case 'fiat':
-						return '$'
-					case 'tnbc':
-						return 'TNBC'
-					default:
-						return ''
-				}
+				return this.$store.getters.cartCurrency(data.payment_method)
 			}
 		},
 		getMeta(): Object {
