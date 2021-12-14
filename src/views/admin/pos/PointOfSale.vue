@@ -101,7 +101,7 @@
     </div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineComponent } from 'vue';
 import ItemCard from "@/components/pos/ItemCard.vue"
 import CartTable from "@/components/pos/CartTable.vue"
 import Payments from "@/components/pos/Payments.vue"
@@ -127,7 +127,7 @@ export default defineComponent({
             invoice: {} as Cart,
             customerId: '',
             discountCode: '',
-            paymentMethod: 'fiat'
+            paymentMethod: this.$store.state.cart.paymentMethod
         }
     },
     methods: {
@@ -144,6 +144,7 @@ export default defineComponent({
                 });
         },
         async updateCartMethod(method: string): Promise<void> {
+            console.log('changePaymentMethod emit')
             let token = this.$store.state.session.bearerToken
             let params = `?coupon=${this.discountCode}&payment_method=${method}`
             await CartService.listItems(params, token)
@@ -332,7 +333,7 @@ export default defineComponent({
     },
     mounted() {
         this.fetchPopularItems()
-        this.fetchCartItems()
+        // this.fetchCartItems()
     }
 });
 </script>
