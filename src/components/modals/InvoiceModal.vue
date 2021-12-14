@@ -30,28 +30,28 @@
                         <td></td>
                         <td></td>
                         <th class="px-6 py-2">Subtotal</th>
-                        <td colspan="2" class="px-6 text-right">{{ invoice.subTotal }} {{ getPaymentMethod }}</td>
+                        <td colspan="2" class="px-6 text-right">{{ invoice.subTotal }} {{ $store.getters.cartCurrency(invoice.payment_method) }}</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td></td>
                         <td></td>
                         <th class="px-6 py-2">Discount</th>
-                        <td colspan="2" class="px-6 text-right">{{ invoice.discount }} {{ getPaymentMethod }}</td>
+                        <td colspan="2" class="px-6 text-right">{{ invoice.discount }} {{ $store.getters.cartCurrency(invoice.payment_method) }}</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td></td>
                         <td></td>
                         <th class="px-6 py-2">Tax</th>
-                        <td colspan="2" class="px-6 text-right">{{ invoice.tax }} {{ getPaymentMethod }}</td>
+                        <td colspan="2" class="px-6 text-right">{{ invoice.tax }} {{ $store.getters.cartCurrency(invoice.payment_method) }}</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td></td>
                         <td></td>
                         <th class="px-6 py-2">Total</th>
-                        <td colspan="2" class="px-6 text-right">{{ invoice.total }} {{ getPaymentMethod }}</td>
+                        <td colspan="2" class="px-6 text-right">{{ invoice.total }} {{ $store.getters.cartCurrency(invoice.payment_method) }}</td>
                     </tr>
                 </tfoot>
             </table>
@@ -86,19 +86,6 @@ export default defineComponent({
             this.invoiceItems = this.propInvoice.invoiceItems
             console.log(this.invoiceItems)
         }
-    },
-    computed: {
-        getPaymentMethod(): string {
-            switch (this.invoice.payment_method) {
-                case 'fiat':
-                    return '$'
-                case 'tnbc':
-                    return 'TNBC'
-                default:
-                    return ''
-            }
-            
-		}
     }
 
 })

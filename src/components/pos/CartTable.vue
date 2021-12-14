@@ -42,28 +42,28 @@
 						<td></td>
 						<td></td>
 						<td></td>
-						<td colspan="2" class="px-6 text-right">{{ cart.subTotal }} {{ getPaymentMethod }}</td>
+						<td colspan="2" class="px-6 text-right">{{ cart.subTotal }} {{ $store.getters.cartCurrency(cart.payment_method) }}</td>
 					</tr>
 					<tr>
 						<th class="px-6 py-2">Discount</th>
 						<td></td>
 						<td></td>
 						<td></td>
-						<td colspan="2" class="px-6 text-right">{{ cart.discount }} {{ getPaymentMethod }}</td>
+						<td colspan="2" class="px-6 text-right">{{ cart.discount }} {{ $store.getters.cartCurrency(cart.payment_method) }}</td>
 					</tr>
 					<tr>
 						<th class="px-6 py-2">Tax</th>
 						<td></td>
 						<td></td>
 						<td></td>
-						<td colspan="2" class="px-6 text-right">{{ cart.tax }} {{ getPaymentMethod }}</td>
+						<td colspan="2" class="px-6 text-right">{{ cart.tax }} {{ $store.getters.cartCurrency(cart.payment_method) }}</td>
 					</tr>
 					<tr>
 						<th class="px-6 py-2">Total</th>
 						<td></td>
 						<td></td>
 						<td></td>
-						<td colspan="2" class="px-6 text-right">{{ cart.total }} {{ getPaymentMethod }}</td>
+						<td colspan="2" class="px-6 text-right">{{ cart.total }} {{ $store.getters.cartCurrency(cart.payment_method) }}</td>
 					</tr>
 				</tfoot>
 			</table>
@@ -140,22 +140,6 @@ export default defineComponent({
 			
 			}
 			
-		}
-	},
-	computed: {
-		getPaymentMethod(): string {
-			if (this.cart){
-				switch (this.cart.payment_method) {
-					case 'fiat':
-						return '$'
-					case 'tnbc':
-						return 'TNBC'
-					default:
-						return ''
-				}
-			} else {
-				return ''
-			}
 		}
 	}
 })

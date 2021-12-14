@@ -18,6 +18,10 @@ export default createStore({
             invoiceNumber: '',
             paymentMethod: 'fiat',
             coupon: '',
+        },
+        settings: {
+            currency: '',
+            currencySign: ''
         }
     },
     mutations: {
@@ -52,6 +56,12 @@ export default createStore({
         },
         UPDATE_COUPON(state, payload){
             state.cart.coupon = payload
+        },
+        UPDATE_CURRENCY(state, payload){
+            state.settings.currency = payload
+        },
+        UPDATE_CURRENCY_SIGN(state, payload){
+            state.settings.currencySign = payload
         }
     },
     actions: {
@@ -84,11 +94,25 @@ export default createStore({
         },
         setCoupon(context, payload){
             context.commit('UPDATE_COUPON', payload)
+        },
+        setCurrency(context, payload){
+            context.commit('UPDATE_CURRENCY', payload.currency)
+            context.commit('UPDATE_CURRENCY_SIGN', payload.currencySign)
+        }
+    },
+    getters: {
+        currency: (state): string => {
+            return `${state.settings.currencySign}${state.settings.currency}`
+        },
+        cartCurrency: (state) => (payment_method: string): string => {
+            if (payment_method !== 'tnbc'){
+                return state.settings.currency
+            } else return payment_method.toUpperCase()
         }
     },
     modules: {
     },
     plugins: [createPersistedState({
-        paths: ['user', 'session', 'cart'],
+        paths: ['user', 'session', 'cart', 'settings'],
     })]
 })
