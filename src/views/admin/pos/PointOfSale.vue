@@ -151,8 +151,8 @@ export default defineComponent({
                     let res = response.data
                     this.cart = res
                     this.paymentMethod = res.payment_method
-                    this.$store.commit('setInvoiceNumber', res.invoice_number)
-                    this.$store.commit('setPaymentMethod', res.payment_method)
+                    this.$store.dispatch('setInvoiceNumber', res.invoice_number)
+                    this.$store.dispatch('setPaymentMethod', res.payment_method)
                 })
                 .catch((e: Error) => {
                     console.log(e);
@@ -166,9 +166,9 @@ export default defineComponent({
                     let res = response.data
 
                     if (this.cart) {
-                        this.$store.commit('setInvoiceNumber', res.invoice_number)
+                        this.$store.dispatch('setInvoiceNumber', res.invoice_number)
                     }
-                    this.$store.commit('setPaymentMethod', res.payment_method)
+                    this.$store.dispatch('setPaymentMethod', res.payment_method)
                     
                     this.cart = res
                     this.paymentMethod = res.payment_method
@@ -231,9 +231,9 @@ export default defineComponent({
                     this.cart = {} as Cart
                     this.discountCode = ''
 
-                    this.$store.commit('setInvoiceNumber', '')
-                    this.$store.commit('setPaymentMethod', 'fiat')
-                    this.$store.commit('setCoupon', '')
+                    this.$store.dispatch('setInvoiceNumber', '')
+                    this.$store.dispatch('setPaymentMethod', 'fiat')
+                    this.$store.dispatch('setCoupon', '')
                 })
                 .catch((e: Error) => {
                     console.log(e);
@@ -242,7 +242,7 @@ export default defineComponent({
         },
         async addCoupon(discount: any): Promise<void> {
             this.discountCode = discount.toString()
-            this.$store.commit('setCoupon', discount.toString())
+            this.$store.dispatch('setCoupon', discount.toString())
             const token = this.$store.state.session.bearerToken
             const cart = this.$store.state.cart
             const params = `?invoice_number=${cart.invoiceNumber}&coupon=${this.discountCode}&payment_method=${cart.paymentMethod}`

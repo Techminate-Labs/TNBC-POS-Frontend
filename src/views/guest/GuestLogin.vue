@@ -60,10 +60,10 @@ export default defineComponent({
                     this.user = response.data.user
                     const res = response.data
                     
-                    this.$store.commit('setBearerToken', res.token)
-                    this.$store.commit('setAuthentication', true)
-                    this.$store.commit('setUserEmail', this.email)
-                    this.$store.commit('setUserId', res.user.id)
+                    this.$store.dispatch('setBearerToken', res.token)
+                    this.$store.dispatch('setAuthentication', true)
+                    this.$store.dispatch('setUserEmail', this.email)
+                    this.$store.dispatch('setUserId', res.user.id)
                     this.checkPermissions(res.token, res.user.role_id)
                     this.checkIfUserhasVerifiedEmail()
 
@@ -86,8 +86,8 @@ export default defineComponent({
                 .then(response => {
                     const res = response.data
                     console.log(res)
-                    this.$store.commit('setRoleId', res.id)
-                    this.$store.commit('setPermissions', res.permissions)
+                    this.$store.dispatch('setRoleId', res.id)
+                    this.$store.dispatch('setPermissions', res.permissions)
                 })
         },
         checkIfUserhasVerifiedEmail(): void {
@@ -95,7 +95,7 @@ export default defineComponent({
             
             let isVerified = user.email_verified_at
             if (isVerified !== undefined){
-                this.$store.commit('setEmailVerification', true)
+                this.$store.dispatch('setEmailVerification', true)
             }
 
         }

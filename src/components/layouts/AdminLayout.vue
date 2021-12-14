@@ -134,7 +134,7 @@ export default defineComponent({
             DataService.requestEmailVerification(data, token)
                 .then((response: ResponseData) => {
                     if (response.data.message === "Already Verified"){
-                        this.$store.commit('setEmailVerification', true)
+                        this.$store.dispatch('setEmailVerification', true)
                         this.$toast.open({
                             message: `Your email has already been verified!`,
                             type: "info"

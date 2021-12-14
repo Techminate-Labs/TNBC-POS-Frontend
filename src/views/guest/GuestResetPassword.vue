@@ -67,10 +67,11 @@ export default defineComponent({
                         })
                         UserService.login(data)
                             .then((response: ResponseData) => {
-                                    this.$store.commit('setBearerToken', response.data.token)
-                                    this.$store.commit('setAuthentication', true)
-                                    this.$router.push('/dashboard')
-                                    this.$toast.open({
+                                const res = response.data
+                                this.$store.dispatch('setBearerToken', res.token)
+                                this.$store.dispatch('setAuthentication', true)
+                                this.$router.push('/dashboard')
+                                this.$toast.open({
                                     message: `You are now successfully connected.`,
                                     type: "info"
                                 })

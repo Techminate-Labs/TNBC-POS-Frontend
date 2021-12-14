@@ -75,7 +75,7 @@
 	</div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineComponent } from 'vue';
 import DeleteIcon from "@/components/icons/DeleteIcon.vue"
 import CartService from '@/services/pos/CartService';
 import ResponseData from "@/types/ResponseData";

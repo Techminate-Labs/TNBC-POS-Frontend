@@ -19,43 +19,72 @@ export default createStore({
             paymentMethod: 'fiat',
             coupon: '',
         }
-        // setup permissions for components
     },
     mutations: {
         initializeStore(state) {
         },
-        setBearerToken(state, bearerToken) {
-            state.session.bearerToken = bearerToken
+        UPDATE_BEARER_TOKEN(state, payload) {
+            state.session.bearerToken = payload
         },
-        setAuthentication(state, authentication) {
-            state.user.isAuthenticated = authentication
+        UPDATE_AUTHENTICATION(state, payload) {
+            state.user.isAuthenticated = payload
         },
-        setUserEmail(state, email) {
-            state.user.userEmail = email
+        UPDATE_USER_EMAIL(state, payload) {
+            state.user.userEmail = payload
         },
-        setUserId(state, user_id) {
-            state.user.userId = user_id
+        UPDATE_USER_ID(state, payload) {
+            state.user.userId = payload
         },
-        setRoleId(state, role_id) {
-            state.user.roleId = role_id
+        UPDATE_ROLE_ID(state, payload) {
+            state.user.roleId = payload
         },
-        setEmailVerification(state, verification) {
-            state.user.isEmailVerified = verification
+        UPDATE_PERMISSIONS(state, payload) {
+            state.user.permissions = payload
         },
-        setPermissions(state, permissions) {
-            state.user.permissions = permissions
+        UPDATE_EMAIL_VERIFICATION(state, payload) {
+            state.user.isEmailVerified = payload
         },
-        setInvoiceNumber(state, invoiceNumber){
-            state.cart.invoiceNumber = invoiceNumber
+        UPDATE_INVOICE_NUMBER(state, payload){
+            state.cart.invoiceNumber = payload
         },
-        setPaymentMethod(state, method){
-            state.cart.paymentMethod = method
+        UPDATE_PAYMENT_METHOD(state, payload){
+            state.cart.paymentMethod = payload
         },
-        setCoupon(state, coupon){
-            state.cart.coupon = coupon
+        UPDATE_COUPON(state, payload){
+            state.cart.coupon = payload
         }
     },
     actions: {
+        setBearerToken(context, payload){
+            context.commit('UPDATE_BEARER_TOKEN', payload)
+        },
+        setAuthentication(context, payload) {
+            context.commit('UPDATE_AUTHENTICATION', payload)
+        },
+        setUserEmail(context, payload) {
+            context.commit('UPDATE_USER_EMAIL', payload)
+        },
+        setUserId(context, payload) {
+            context.commit('UPDATE_USER_ID', payload)
+        },
+        setRoleId(context, payload) {
+            context.commit('UPDATE_ROLE_ID', payload)
+        },
+        setPermissions(context, payload) {
+            context.commit('UPDATE_PERMISSIONS', payload)
+        },
+        setEmailVerification(context, payload) {
+            context.commit('UPDATE_EMAIL_VERIFICATION', payload)
+        },
+        setInvoiceNumber(context, payload){
+            context.commit('UPDATE_INVOICE_NUMBER', payload)
+        },
+        setPaymentMethod(context, payload){
+            context.commit('UPDATE_PAYMENT_METHOD', payload)
+        },
+        setCoupon(context, payload){
+            context.commit('UPDATE_COUPON', payload)
+        }
     },
     modules: {
     },

@@ -33,7 +33,7 @@ export default defineComponent({
                         type: "info"
                     })
                     this.$router.push('/')
-                    this.$store.commit('setAuthentication', false)
+                    this.$store.dispatch('setAuthentication', false)
                 })
                 .catch((e: Error) => {
                     this.$toast.open({
