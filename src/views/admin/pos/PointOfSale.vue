@@ -124,10 +124,10 @@ export default defineComponent({
             activeItem: 'cart',
             itemId: '',
             cart: {} as Cart,
-            invoice: {} as Cart,
+            invoice: this.$store.state.pos.cart,
             customerId: '',
             discountCode: '',
-            paymentMethod: this.$store.state.cart.paymentMethod
+            paymentMethod: this.$store.state.pos.cart.payment_method ? this.$store.state.pos.cart.payment_method : 'fiat'
         }
     },
     methods: {
@@ -144,7 +144,6 @@ export default defineComponent({
                 });
         },
         async updateCartMethod(method: string): Promise<void> {
-            console.log('changePaymentMethod emit')
             let token = this.$store.state.session.bearerToken
             let params = `?coupon=${this.discountCode}&payment_method=${method}`
             await CartService.listItems(params, token)
@@ -152,8 +151,10 @@ export default defineComponent({
                     let res = response.data
                     this.cart = res
                     this.paymentMethod = res.payment_method
-                    this.$store.dispatch('setInvoiceNumber', res.invoice_number)
-                    this.$store.dispatch('setPaymentMethod', res.payment_method)
+
+                    this.$store.dispatch('setCart', res)
+                    // this.$store.dispatch('setInvoiceNumber', { invoice_number: res.invoice_number })
+                    // this.$store.dispatch('setPaymentMethod', { payment_method: res.payment_method })
                 })
                 .catch((e: Error) => {
                     console.log(e);
@@ -166,13 +167,18 @@ export default defineComponent({
                 .then((response: ResponseData) => {
                     let res = response.data
 
-                    if (this.cart) {
-                        this.$store.dispatch('setInvoiceNumber', res.invoice_number)
+                    if (!this.$store.getters.isProccessingPayment){
+                        this.cart = res
+                        this.$store.dispatch('setCart', res)
+                        this.paymentMethod = res.payment_method
+                    } else {
+                        this.$toast.open({
+                            message: 'Payment is on process',
+                            type: "info"
+                        })
+                        console.log('Payment is on process')
                     }
-                    this.$store.dispatch('setPaymentMethod', res.payment_method)
                     
-                    this.cart = res
-                    this.paymentMethod = res.payment_method
                 })
                 .catch((e: Error) => {
                     console.log(e);
@@ -213,27 +219,25 @@ export default defineComponent({
             }
         },
         async printInvoice(): Promise<void> {
-            this.invoice = this.cart
-            console.log(this.cart.invoice_number)
-            
+            this.$store.dispatch('setIsProcessingPayment', true)
+
             const token = this.$store.state.session.bearerToken
-			const cart = this.$store.state.cart
-            console.log(cart)
+			const cart = this.$store.state.pos.cart
 			const params = `?invoice_number=${cart.invoiceNumber}&payment_method=${cart.paymentMethod}`
+
 			await CartService.printInvoice(params, token)
 				.then((response: ResponseData) => {
                     let res = response.data
                     console.log(res)
                     this.$toast.open({
-                         message: res.done,
+                        message: res.done,
                         type: "success"
                     })
                     this.activeItem = 'invoice'
                     this.cart = {} as Cart
                     this.discountCode = ''
 
-                    this.$store.dispatch('setInvoiceNumber', '')
-                    this.$store.dispatch('setPaymentMethod', 'fiat')
+                    this.$store.dispatch('setCart', this.cart)
                     this.$store.dispatch('setCoupon', '')
                 })
                 .catch((e: Error) => {
@@ -282,6 +286,9 @@ export default defineComponent({
                 })
         },
         async addItemToCart(): Promise<void>{
+
+            this.$store.dispatch('setIsProcessingPayment', false)
+
             let item = this.itemId as string
             let token = this.$store.state.session.bearerToken
 
@@ -327,13 +334,16 @@ export default defineComponent({
                 })
         },
         generateQrCode(): void {
+            this.$store.dispatch('setIsProcessingPayment', true)
             const routeData = this.$router.resolve({ name: 'GeneratedQrCode' })
             window.open(routeData.href, '_blank')
         }
     },
-    mounted() {
+    created() {
         this.fetchPopularItems()
-        // this.fetchCartItems()
+        console.log('isProcessingPayment', this.$store.getters.isProcessingPayment)
+        if (!this.$store.getters.isProcessingPayment) this.fetchCartItems()
+        if (this.$store.getters.isProcessingPayment) this.cart = this.$store.state.pos.cart
     }
 });
 </script>

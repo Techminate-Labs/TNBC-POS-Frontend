@@ -14,10 +14,10 @@ export default createStore({
         session: {
             bearerToken: '',
         },
-        cart: {
-            invoiceNumber: '',
-            paymentMethod: 'fiat',
+        pos: {
+            cart: {},
             coupon: '',
+            isProcessingPayment: false
         },
         settings: {
             currency: '',
@@ -48,14 +48,20 @@ export default createStore({
         UPDATE_EMAIL_VERIFICATION(state, payload) {
             state.user.isEmailVerified = payload
         },
+        UPDATE_CART(state, payload){
+            state.pos.cart = payload
+        },
         UPDATE_INVOICE_NUMBER(state, payload){
-            state.cart.invoiceNumber = payload
+            state.pos.cart = {...state.pos.cart, ...payload}
         },
         UPDATE_PAYMENT_METHOD(state, payload){
-            state.cart.paymentMethod = payload
+            state.pos.cart = {...state.pos.cart, ...payload}
         },
         UPDATE_COUPON(state, payload){
-            state.cart.coupon = payload
+            state.pos.coupon = payload
+        },
+        UPDATE_IS_PROCESSING_PAYMENT(state, payload){
+            state.pos.isProcessingPayment = payload
         },
         UPDATE_CURRENCY(state, payload){
             state.settings.currency = payload
@@ -86,6 +92,9 @@ export default createStore({
         setEmailVerification(context, payload) {
             context.commit('UPDATE_EMAIL_VERIFICATION', payload)
         },
+        setCart(context, payload){
+            context.commit('UPDATE_CART', payload)
+        },
         setInvoiceNumber(context, payload){
             context.commit('UPDATE_INVOICE_NUMBER', payload)
         },
@@ -94,6 +103,9 @@ export default createStore({
         },
         setCoupon(context, payload){
             context.commit('UPDATE_COUPON', payload)
+        },
+        setIsProcessingPayment(context, payload){
+            context.commit('UPDATE_IS_PROCESSING_PAYMENT', payload)
         },
         setCurrency(context, payload){
             context.commit('UPDATE_CURRENCY', payload.currency)
@@ -108,11 +120,15 @@ export default createStore({
             if (payment_method !== 'tnbc'){
                 return state.settings.currency
             } else return payment_method.toUpperCase()
+        },
+        isProcessingPayment: (state): boolean => {
+            console.log(state.pos.isProcessingPayment)
+            return state.pos.isProcessingPayment
         }
     },
     modules: {
     },
     plugins: [createPersistedState({
-        paths: ['user', 'session', 'cart', 'settings'],
+        paths: ['user', 'session', 'pos', 'settings'],
     })]
 })

@@ -59,10 +59,11 @@ export default defineComponent({
                 })
         },
 		async fetchTotal(): Promise<any> {
-			const cart = this.$store.state.cart
+			const cart = this.$store.state.pos.cart
+			const _coupon = this.$store.state.pos.coupon
 			if (cart.paymentMethod != 'fiat'){
 				const token = this.$store.state.session.bearerToken
-				const coupon = cart.coupon ? cart.coupon : ''
+				const coupon = _coupon ? _coupon : ''
 				let params = `?coupon=${coupon}&payment_method=tnbc`
 				await CartService.listItems(params, token)
 					.then((res) => {
@@ -71,7 +72,7 @@ export default defineComponent({
 						const publicKey = { 
 							"address": this.publicKey, 
 							"amount": res.data.total.toString(),
-							"memo": this.$store.state.cart.invoiceNumber
+							"memo": this.$store.state.pos.cart.invoice_number
 						}
 						this.publicKeyObject = JSON.stringify(publicKey) 
 					})
@@ -83,7 +84,7 @@ export default defineComponent({
 	},
 	computed: {
 		getInvoiceNumber(): string {
-			return this.$store.state.cart.invoiceNumber
+			return this.$store.state.pos.cart.invoice_number
 		}
 	},
 	mounted(){
