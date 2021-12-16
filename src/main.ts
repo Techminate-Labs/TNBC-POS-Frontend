@@ -3,11 +3,12 @@ import App from '@/App.vue'
 import router from '@/router'
 import store from '@/store'
 import VueToast from 'vue-toast-notification'
+import HighchartsVue from 'highcharts-vue'
+import Highcharts from 'highcharts'
 
 import 'vue-toast-notification/dist/theme-default.css';
 import '@/index.css'
 
-// axios.defaults.baseURL = 'http://192.168.1.225:8088';
 
 let toastOptions = {
   position: 'top-right',
@@ -15,4 +16,4 @@ let toastOptions = {
   dismissible: true
 }
 
-createApp(App).use(store).use(router).use(VueToast, toastOptions).mount('#app')
+createApp(App).use(store).use(router).use(VueToast, toastOptions).use(HighchartsVue as any).mount('#app')

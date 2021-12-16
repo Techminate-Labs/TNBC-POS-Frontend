@@ -12,6 +12,8 @@
         "axios": "^0.21.1",
         "core-js": "^3.6.5",
         "express": "^4.17.1",
+        "highcharts": "^9.3.2",
+        "highcharts-vue": "^1.4.0",
         "jsbarcode": "^3.11.5",
         "moment": "^2.29.1",
         "qrcode.vue": "^3.3.3",
