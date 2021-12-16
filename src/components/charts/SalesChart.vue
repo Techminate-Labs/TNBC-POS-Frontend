@@ -1,6 +1,5 @@
 <template>
 	<div>
-		{{ getGraphData }}
 		<highcharts 
 			v-if="graphData.length"
 			:options="chartOptions"
