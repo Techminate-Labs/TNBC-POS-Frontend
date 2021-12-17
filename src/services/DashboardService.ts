@@ -15,7 +15,7 @@ export default {
     },
 
     salesByMonth(token: any, paymentMethod: string): Promise<any> {
-        return http.get(`/monthSalesChart?payment_method=${paymentMethod}`, { headers: { "Authorization": `Bearer ${token}` } });
+        return http.get(`/monthViewChart?payment_method=${paymentMethod}`, { headers: { "Authorization": `Bearer ${token}` } });
     },
 
 }

@@ -5,6 +5,7 @@ import store from '@/store'
 import VueToast from 'vue-toast-notification'
 import Highcharts from 'highcharts'
 import HighchartsVue from 'highcharts-vue'
+import stockInit from "highcharts/modules/stock";
 
 import 'vue-toast-notification/dist/theme-default.css';
 import '@/index.css'
@@ -25,7 +26,7 @@ const options = {
   scrollbar: {
     enabled: true
   },
-  navigator: { enabled: true },
+  navigator: { enabled: false },
   rangeSelector: {
     enabled: false
   },
@@ -47,6 +48,7 @@ let toastOptions = {
   dismissible: true
 }
 
+stockInit(Highcharts);
 Highcharts.setOptions({
   ...options
 })
