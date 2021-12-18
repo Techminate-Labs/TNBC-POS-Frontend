@@ -6,6 +6,7 @@
 			<ReportCard :title="'Total of items'" :data="analytics.totalItems" />
 			<ReportCard :title="'Total of categories'" :data="analytics.totalCategories" />
 		</div>
+		<SalesChart />
 	</div>
 </template>
 
@@ -14,10 +15,11 @@ import { defineComponent } from 'vue'
 import DashboardService from '@/services/DashboardService'
 import { Analytics } from '@/types/Dashboard'
 import ReportCard from '@/components/cards/ReportCard.vue'
+import SalesChart from '@/components/charts/SalesChart.vue'
 
 export default defineComponent({
 	name: 'Dashboard',
-	components: { ReportCard },
+	components: { ReportCard, SalesChart },
 	data() {
 		return {
 			analytics: {} as Analytics

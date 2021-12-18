@@ -3,11 +3,44 @@ import App from '@/App.vue'
 import router from '@/router'
 import store from '@/store'
 import VueToast from 'vue-toast-notification'
+import Highcharts from 'highcharts'
+import HighchartsVue from 'highcharts-vue'
+import stockInit from "highcharts/modules/stock";
 
 import 'vue-toast-notification/dist/theme-default.css';
 import '@/index.css'
 
-// axios.defaults.baseURL = 'http://192.168.1.225:8088';
+const options = {
+  legend: { enabled: true },
+  credits: { enabled: false },
+  exporting: { enabled: false },
+  chart: {
+    style: {
+      fontFamily: '"Roboto", sans-serif'
+    },
+    backgroundColor: 'transparent'
+  },
+  boost: {
+    enabled: false
+  },
+  scrollbar: {
+    enabled: true
+  },
+  navigator: { enabled: false },
+  rangeSelector: {
+    enabled: false
+  },
+  plotOptions: {
+    series: {
+      allowPointSelect: true,
+      marker: {
+        enabled: true,
+        radius: 3,
+        fillColor: '#ff1145'
+      }
+    },
+  },
+}
 
 let toastOptions = {
   position: 'top-right',
@@ -15,4 +48,14 @@ let toastOptions = {
   dismissible: true
 }
 
-createApp(App).use(store).use(router).use(VueToast, toastOptions).mount('#app')
+stockInit(Highcharts);
+Highcharts.setOptions({
+  ...options
+})
+
+createApp(App)
+  .use(store)
+  .use(router)
+  .use(VueToast, toastOptions)
+  .use(HighchartsVue as any)
+  .mount('#app')
