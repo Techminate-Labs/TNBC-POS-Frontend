@@ -7,14 +7,16 @@
 				<option value="fiat">FIAT</option>
 			</select>
 		</label>
-		<label class="pr-8">
+		<!-- <label class="pr-8">
 			Select a period		
 			<select @change="changeSalesPeriod">
+				<option value='testData1'>Test Data 1</option>
 				<option value='dateViewChart'>Date</option>
 				<option value='dayViewChart'>by day</option>
 				<option value='monthViewChart'>by month</option>
 			</select>
-		</label>
+		</label> -->
+		{{ formatedData }}
 		<highcharts 
 			v-if="formatedData.length"
 			:options="chartOptions"
@@ -25,7 +27,6 @@
 <script lang="ts">
 import DashboardService from '@/services/DashboardService'
 import { defineComponent } from 'vue'
-import moment from 'moment'
 
 export default defineComponent({
 	name: 'SalesChart',
@@ -34,7 +35,7 @@ export default defineComponent({
 			salesType: 'fiat',
 			unformatedData: [] as Array<any>,
 			selected: 'date',
-			selectedRoute: 'dateViewChart'
+			selectedRoute: 'testData1'
 		}
 	},
 	methods: {
@@ -64,7 +65,8 @@ export default defineComponent({
 	computed: {
 		formatedData(): Array<any> {
 			return this.unformatedData.map((item: any) => {
-				return [ moment(item[0]).valueOf(), item[1] ]
+				// return [ moment(item[0]).valueOf(), item[1] ]
+				return [ item[0], item[1] ]
 			})
 		},
 		chartOptions(): Object {
@@ -88,6 +90,19 @@ export default defineComponent({
 				series: [{
 				  	name: 'Sales',
 				  	data: this.formatedData,
+					dataGrouping: {
+					  approximation: 'average',
+					  enabled: true,
+					  groupAll: true,
+					  forced: true,
+					  start: this.formatedData[0][0],
+					  last: this.formatedData[this.formatedData.length - 1][0],
+					  anchor: false,
+					  units: [[
+					    'day', // unit name
+					    [1] // allowed multiples
+					  ]]
+					},
 				  	color: '#6fcd98'
 				}]
 			}
