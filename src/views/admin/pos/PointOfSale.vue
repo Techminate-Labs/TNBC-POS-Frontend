@@ -223,7 +223,7 @@ export default defineComponent({
 
             const token = this.$store.state.session.bearerToken
 			const cart = this.$store.state.pos.cart
-			const params = `?invoice_number=${cart.invoiceNumber}&payment_method=${cart.paymentMethod}`
+			const params = `?invoice_number=${cart.invoice_number}&payment_method=${cart.payment_method}`
 
 			await CartService.printInvoice(params, token)
 				.then((response: ResponseData) => {
