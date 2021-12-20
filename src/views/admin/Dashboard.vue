@@ -6,7 +6,14 @@
 			<ReportCard :title="'Total of items'" :data="analytics.totalItems" />
 			<ReportCard :title="'Total of categories'" :data="analytics.totalCategories" />
 		</div>
-		<SalesChart />
+		<div class="grid gap-6 grid-cols-1 md:grid-cols-2">
+			<SalesChart 
+				class="grid-span-1"
+				:paymentMethod="'fiat'" />
+			<SalesChart
+				class=""
+				:paymentMethod="'tnbc'" />
+		</div>
 	</div>
 </template>
 
