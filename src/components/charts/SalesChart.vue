@@ -1,22 +1,14 @@
 <template>
 	<div class="card">
-		<label class="pr-8">
-			Select the payment method type		
-			<select @change="changeSalesType" v-model="salesType">
-				<option value="tnbc">TNBC</option>
-				<option value="fiat">FIAT</option>
-			</select>
-		</label>
-		<label class="pr-8">
-			Select a period		
-			<select @change="changeSalesPeriod">
-				<option value='dateViewChart'>Date</option>
-				<option value='dayViewChart'>by day</option>
-				<option value='monthViewChart'>by month</option>
-			</select>
-		</label>
+		<select 
+			v-model="salesType" 
+			@change="salesTypeChange"
+			class="px-4 py-2 bg-gray-100 text-sm font-bold">
+			<option value="fiat">FIAT</option>
+			<option vaule="tnbc">TNBC</option>
+		</select>
 		<highcharts 
-			v-if="formatedData.length"
+			v-if="values.length"
 			:options="chartOptions"
 			></highcharts>
 		<p v-else>No data</p>
@@ -25,46 +17,49 @@
 <script lang="ts">
 import DashboardService from '@/services/DashboardService'
 import { defineComponent } from 'vue'
-import moment from 'moment'
 
 export default defineComponent({
 	name: 'SalesChart',
+	props: {
+		paymentMethod: {
+			required: true,
+			type: String
+		},
+		route: {
+			required: true,
+			type: String
+		}
+	},
 	data(){
 		return {
-			salesType: 'fiat',
 			unformatedData: [] as Array<any>,
-			selected: 'date',
-			selectedRoute: 'dateViewChart'
+			dates: [] as Array<any>,
+			values: [] as Array<any>,
+			salesType: this.paymentMethod
 		}
 	},
 	methods: {
 		async fetchBy(_route: string | null): Promise<void> {
+			console.log('fetched', _route)
 			const token = this.$store.state.session.bearerToken
-			const route = _route ? _route : this.selectedRoute
 			
-			await DashboardService.salesBy(token, route, this.salesType)
+			await DashboardService.salesBy(token, this.route, this.salesType)
 				.then((res: any) => {
-					let array: Array<any> = []
 					for (let x = 0; x < res.data.label.length; x++){
-						array.push([res.data.label[x], res.data.total[x]])
+						this.dates.push(res.data.label[x])
+						this.values.push(res.data.total[x])
 					}
-					this.unformatedData = array
 				})
 				.catch(err => console.log(err))
 		},
-		changeSalesType(e: any): void {
-			this.salesType = e.target.value
-			this.fetchBy(null)
-		},
-		changeSalesPeriod(e: any): void {
-			this.selectedRoute = e.target.value
+		salesTypeChange(e: any): void {
 			this.fetchBy(e.target.value)
 		}
 	},
 	computed: {
 		formatedData(): Array<any> {
 			return this.unformatedData.map((item: any) => {
-				return [ moment(item[0]).valueOf(), item[1] ]
+				return [ item[0], item[1] ]
 			})
 		},
 		chartOptions(): Object {
@@ -75,7 +70,6 @@ export default defineComponent({
 				plotOptions: {
 					column: {
 						pointWidth: 20,
-						borderWidth: 5,
 						borderColor: 'transparent'
 					}
 				},
@@ -83,11 +77,12 @@ export default defineComponent({
 				  text: `${this.salesType.toUpperCase()} Sales`
 				},
 				xAxis: {
-					type: 'datetime'
+					categories: this.dates,
+					crosshair: true
 				},
 				series: [{
 				  	name: 'Sales',
-				  	data: this.formatedData,
+				  	data: this.values,
 				  	color: '#6fcd98'
 				}]
 			}
@@ -95,7 +90,9 @@ export default defineComponent({
 		}
 	},
 	created() {
-		this.fetchBy(null)
+		if (this.route){
+			this.fetchBy(null)
+		}
 	}
 
 })

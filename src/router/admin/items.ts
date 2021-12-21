@@ -72,7 +72,7 @@ const ItemsRoutes = [
                 component: ItemDetails,
             },
             {
-                path: 'barcode-list',
+                path: 'barcode-list/:item_id/:inventory/:sku',
                 name: 'BarcodeList',
                 component: BarcodeList,
             }

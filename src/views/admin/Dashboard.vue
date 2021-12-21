@@ -1,12 +1,35 @@
 <template>
 	<div>
-		<div class="flex flew-wrap mb-6">
+		<div class="flex flew-wrap mb-8">
 			<ReportCard :title="'Number of sales TNBC'" :data="analytics.salesTnbc" />
 			<ReportCard :title="'Number of sales FIAT'" :data="analytics.salesFiat" />
 			<ReportCard :title="'Total of items'" :data="analytics.totalItems" />
 			<ReportCard :title="'Total of categories'" :data="analytics.totalCategories" />
+			<ReportCard :title="'Total of categories'" :data="analytics.totalUsers" />
+			<ReportCard :title="'Total of categories'" :data="analytics.totalRoles" />
 		</div>
-		<SalesChart />
+		<div class="grid gap-6 grid-cols-1 md:grid-cols-2 mb-8 mt-4">
+			<div>
+				<h2 class="display-h2">Current Month's Sales</h2>
+				<SalesChart 
+					class="grid-span-1"
+					:paymentMethod="'fiat'"
+					:route="'dateViewChart'" />
+			</div>
+			<div>
+				<h2 class="display-h2">Current Week's Sales</h2>
+					<SalesChart 
+						class="grid-span-1"
+						:paymentMethod="'fiat'"
+						:route="'dayViewChart'" />
+
+			</div>
+		</div>
+		<h2 class="display-h2">Current Year's Sales</h2>
+		<SalesChart 
+			class="grid-span-1"
+			:paymentMethod="'fiat'"
+			:route="'monthViewChart'" />
 	</div>
 </template>
 
@@ -30,7 +53,6 @@ export default defineComponent({
 			const token = this.$store.state.session.bearerToken
 			DashboardService.listTotal(token)
 				.then((res) => {
-					// console.log(res)
 					this.analytics = res.data
 				})
 				.catch(err => {
@@ -38,7 +60,7 @@ export default defineComponent({
 				})
 		}
 	},
-	async mounted() {
+	async created() {
 	 	await this.fetchTotal()
 	}
 });

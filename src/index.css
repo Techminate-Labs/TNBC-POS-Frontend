@@ -130,15 +130,3 @@ input[type=number] {
 .card {
   @apply p-4 bg-white shadow-md rounded-md;
 }
-
-@media print {
-
-  #app {
-    display: none;
-  }
-
-  body #app #invoice-to-print {
-    display: block !important;
-  }
-
-}
