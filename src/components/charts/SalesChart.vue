@@ -1,7 +1,14 @@
 <template>
 	<div class="card">
+		<select 
+			v-model="salesType" 
+			@change="salesTypeChange"
+			class="px-4 py-2 bg-gray-100 text-sm font-bold">
+			<option value="fiat">FIAT</option>
+			<option vaule="tnbc">TNBC</option>
+		</select>
 		<highcharts 
-			v-if="formatedData.length"
+			v-if="values.length"
 			:options="chartOptions"
 			></highcharts>
 		<p v-else>No data</p>
@@ -17,32 +24,41 @@ export default defineComponent({
 		paymentMethod: {
 			required: true,
 			type: String
+		},
+		route: {
+			required: true,
+			type: String
 		}
 	},
 	data(){
 		return {
-			unformatedData: [] as Array<any>
+			unformatedData: [] as Array<any>,
+			dates: [] as Array<any>,
+			values: [] as Array<any>,
+			salesType: this.paymentMethod
 		}
 	},
 	methods: {
 		async fetchBy(_route: string | null): Promise<void> {
+			console.log('fetched', _route)
 			const token = this.$store.state.session.bearerToken
 			
-			await DashboardService.salesBy(token, 'dateViewChart', this.paymentMethod)
+			await DashboardService.salesBy(token, this.route, this.salesType)
 				.then((res: any) => {
-					let array: Array<any> = []
 					for (let x = 0; x < res.data.label.length; x++){
-						array.push([res.data.label[x], res.data.total[x]])
+						this.dates.push(res.data.label[x])
+						this.values.push(res.data.total[x])
 					}
-					this.unformatedData = array
 				})
 				.catch(err => console.log(err))
+		},
+		salesTypeChange(e: any): void {
+			this.fetchBy(e.target.value)
 		}
 	},
 	computed: {
 		formatedData(): Array<any> {
 			return this.unformatedData.map((item: any) => {
-				// return [ moment(item[0]).valueOf(), item[1] ]
 				return [ item[0], item[1] ]
 			})
 		},
@@ -54,35 +70,19 @@ export default defineComponent({
 				plotOptions: {
 					column: {
 						pointWidth: 20,
-						borderWidth: 5,
 						borderColor: 'transparent'
-					},
-					series: {
-						pointStart: 2021
 					}
 				},
 				title: {
-				  text: `${this.paymentMethod.toUpperCase()} Sales`
+				  text: `${this.salesType.toUpperCase()} Sales`
 				},
 				xAxis: {
-					// type: 'datetime'
+					categories: this.dates,
+					crosshair: true
 				},
 				series: [{
 				  	name: 'Sales',
-				  	data: this.formatedData,
-					// dataGrouping: {
-					//   approximation: 'average',
-					//   enabled: true,
-					//   groupAll: true,
-					//   forced: true,
-					//   start: this.formatedData[0][0],
-					//   last: this.formatedData[this.formatedData.length - 1][0],
-					//   anchor: false,
-					//   units: [[
-					//     'day', // unit name
-					//     [1] // allowed multiples
-					//   ]]
-					// },
+				  	data: this.values,
 				  	color: '#6fcd98'
 				}]
 			}
@@ -90,7 +90,9 @@ export default defineComponent({
 		}
 	},
 	created() {
-		this.fetchBy(null)
+		if (this.route){
+			this.fetchBy(null)
+		}
 	}
 
 })
