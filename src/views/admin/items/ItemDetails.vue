@@ -87,7 +87,7 @@ export default defineComponent({
   name: 'ItemCreate',
   data() {
     return {
-      item: {}
+      item: {} as any
     }
   },
   methods: {
@@ -103,7 +103,15 @@ export default defineComponent({
         });
     },
     generateBarcode(): void {
-      console.log('Generate barcode')
+		console.log(this.item)
+      	this.$router.push({ 
+			name: 'BarcodeList', 
+			params: { 
+				item_id: this.item.item_id, 
+				inventory: this.item.inventory,
+				sku: this.item.sku,
+			} 
+		})
     }
   },
   async mounted() {

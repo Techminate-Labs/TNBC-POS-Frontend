@@ -7,46 +7,50 @@
 				Print
 			</button>
 		</div>
+		<h2 class="display-h2">Inventory: {{ iteration }}</h2>
+		<h2 class="display-h2">Product: {{ item.name }}</h2>
 		<ul class="flex flex-wrap my-2">
-			<img v-for="item in items" :key="item.item_id" :id="'barcode-' + item.item_id" />
+			<li v-for="(index) in iteration" :key="index">
+				<Barcode />
+			</li>
 		</ul>
 	</div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import JsBarcode from 'jsbarcode'
+import { defineComponent } from 'vue'
+import Barcode from '@/components/Barcode.vue'
 import ItemService from '@/services/items/ItemService'
+import JsBarcode from 'jsbarcode'
 
 export default defineComponent({
 	name: 'BarcodeList',
+	components: { Barcode },
 	data (){
 		return {
-			items: []
+			iteration: Number(this.$route.params.inventory),
+			item: {}
 		}
 	},
 	methods: {
-		async fetchItems(): Promise<any> {
-			const token = this.$store.state.session.bearerToken
-			await ItemService.list('itemList', token)
-				.then(res => {
-					this.items = res.data.data
-				})
-				.catch(err => {
-					console.log(err)
-				})
-		},
 		getBarcodes(): void {
-			this.items.map((item: any) => JsBarcode(`#barcode-${item.item_id}`, item.sku, {background: 'transparent'})) as any
+			const params = this.$route.params
+			let array = []
+
+			for (let x = 0; x < Number(params.inventory); x++){
+				array.push(JsBarcode(`#barcode-${params.item_id}`, params.sku.toString(), {background: 'transparent'})) as any
+			}
+		},
+		async getItem(): Promise<void> {
+			const token = this.$store.state.session.bearerToken
+			await ItemService.getById(Number(this.$route.params.item_id), token)
+			.then(res => this.item = res.data)
+			.catch(err => console.log(err))
 		}
 	},
-	computed: {
-	},
 	async mounted(){
-		await this.fetchItems()
-	},
-	updated() {
-		this.getBarcodes()
+		await this.getBarcodes()
+		await this.getItem()
 	}
 })
 </script>
