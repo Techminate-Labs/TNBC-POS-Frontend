@@ -14,14 +14,14 @@
 				<SalesChart 
 					class="grid-span-1"
 					:paymentMethod="'fiat'"
-					:route="'dateViewChart'" />
+					:route="'currentMonthSalesChart'" />
 			</div>
 			<div>
 				<h2 class="display-h2">Current Week's Sales</h2>
 					<SalesChart 
 						class="grid-span-1"
 						:paymentMethod="'fiat'"
-						:route="'dayViewChart'" />
+						:route="'currentWeekSalesChart'" />
 
 			</div>
 		</div>
@@ -29,7 +29,7 @@
 		<SalesChart 
 			class="grid-span-1"
 			:paymentMethod="'fiat'"
-			:route="'monthViewChart'" />
+			:route="'currentYearSalesChart'" />
 	</div>
 </template>
 
