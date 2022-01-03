@@ -59,7 +59,7 @@
 					placeholder="**************"
 				/>
 			</label>
-			<div class="my-2 text-right">
+			<div v-show="$store.getters.userCan('create', 'Users')" class="my-2 text-right">
 				<button
 					class="base-btn ml-2"
 					@click="addUser">

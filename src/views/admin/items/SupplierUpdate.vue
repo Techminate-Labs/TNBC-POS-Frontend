@@ -52,7 +52,12 @@
 					/>
 			</div>
 		</div>
-		<button class="base-btn float-right" @click="updateSupplier">Save</button>
+		<button 
+			class="base-btn float-right"
+			v-show="!$store.getters.userCan('edit', 'Items')"
+			@click="updateSupplier">
+			Save
+		</button>
 	</div>
 </template>
 

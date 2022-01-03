@@ -4,6 +4,7 @@
 			<h1 class="display-h1">Category List</h1>
 			<button
 				@click="showCategoryCreateModal"
+				v-show="!$store.getters.userCan('create', 'Items')"
 				class="base-btn mb-2">
 				Create Category
 			</button>

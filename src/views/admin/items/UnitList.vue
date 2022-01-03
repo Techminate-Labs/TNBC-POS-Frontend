@@ -2,7 +2,10 @@
 	<div>
 		<div class="flex flex-nowrap justify-between pt-4">
 			<h1 class="display-h1">Unit List</h1>
-			<button @click="showUnitCreateModal" class="base-btn mb-2">
+			<button 
+				@click="showUnitCreateModal"
+				v-show="!$store.getters.userCan('create', 'Items')" 
+				class="base-btn mb-2">
 				Create Unit
 			</button>
 		</div>

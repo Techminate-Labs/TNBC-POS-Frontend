@@ -51,7 +51,7 @@
 					placeholder="ACME Inc."
 					/>
 			</div>
-			<div class="my-2 text-right">
+			<div class="my-2 text-right" v-show="!$store.getters.userCan('create', 'Items')">
 				<button class="base-btn-outline ml-2" @click="addSupplier">Save and create a new one</button>
 				<button class="base-btn ml-2" @click="addSupplierAndRedirect">Save and exit</button>
 			</div>

@@ -39,7 +39,12 @@
 							<option v-for="(role, index) in roles" :key="index" :value="role.value">{{role.name}}</option>
 						</select>
 					</label>
-				<button class="base-btn float-right" @click="updateUser">save and exit</button>
+				<button
+					class="base-btn float-right" 
+					v-show="$store.getters.userCan('edit', 'Users')"
+					@click="updateUser">
+					save and exit
+				</button>
 			</div>
 		</div>
 	</div>
