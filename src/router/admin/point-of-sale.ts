@@ -1,3 +1,5 @@
+import { NavigationGuardNext, RouteRecordRaw } from 'vue-router'
+import store from '@/store'
 import POSIndex from '@/views/admin/pos/index.vue'
 import CustomerList from '@/views/admin/pos/CustomerList.vue'
 import CustomerCreate from '@/views/admin/pos/CustomerCreate.vue'
@@ -19,7 +21,12 @@ function selectLayout(to: any, from: any, next: any) {
     }
 }
 
-const PointOfSaleRoutes = [
+function safeGuard(to: any, from: any, next: any) {
+    if (!store.getters.userCan(to.meta.action, to.meta.type)) next('/403')
+    else next()
+}
+
+const PointOfSaleRoutes: Array<RouteRecordRaw> = [
     {
         path: '/point-of-sale',
         name: 'POSIndex',
@@ -33,45 +40,81 @@ const PointOfSaleRoutes = [
                 path: 'customers-list',
                 name: 'CustomerList',
                 component: CustomerList,
+                meta: {
+                    action: 'list',
+                    type: 'POS'
+                },
+                beforeEnter: [safeGuard]
             },
             {
                 path: 'customers-create',
                 name: 'CustomerCreate',
                 component: CustomerCreate,
+                meta: {
+                    action: 'create',
+                    type: 'POS'
+                },
+                beforeEnter: [safeGuard]
             },
             {
                 path: 'customers-update/:id',
                 name: 'CustomerUpdate',
                 component: CustomerUpdate,
+                meta: {
+                    action: 'edit',
+                    type: 'POS'
+                },
+                beforeEnter: [safeGuard]
             },
             {
                 path: 'coupons-list',
                 name: 'CouponList',
                 component: CouponList,
+                meta: {
+                    action: 'list',
+                    type: 'POS'
+                },
+                beforeEnter: [safeGuard]
             },
             {
                 path: 'coupons-create',
                 name: 'CouponCreate',
                 component: CouponCreate,
+                meta: {
+                    action: 'create',
+                    type: 'POS'
+                },
+                beforeEnter: [safeGuard]
             },
             {
                 path: 'coupons-update/:id',
                 name: 'CouponUpdate',
                 component: CouponUpdate,
+                meta: {
+                    action: 'edit',
+                    type: 'POS'
+                },
+                beforeEnter: [safeGuard]
             },
             {
                 path: 'point-of-sale',
                 name: 'PointOfSale',
                 component: PointOfSale,
+                meta: {
+                    action: 'list',
+                    type: 'POS'
+                },
+                beforeEnter: [safeGuard]
             },
             {
                 path: 'invoices-list',
                 name: 'InvoiceList',
                 component: InvoiceList,
                 meta: {
-                    auth: true
+                    action: 'list',
+                    type: 'POS'
                 },
-                beforeEnter: [selectLayout]
+                beforeEnter: [safeGuard, selectLayout]
             },
             {
                 path: 'generated-qr-code',
@@ -79,13 +122,20 @@ const PointOfSaleRoutes = [
                 component: GeneratedQrCode,
                 meta: {
                     layout: 'MinimalLayout',
-                    auth: true
+                    action: 'list',
+                    type: 'POS'
                 },
+                beforeEnter: [safeGuard]
             },
             {
                 path: 'transaction-explorer',
                 name: 'TransactionExplorer',
                 component: TransactionExplorer,
+                meta: {
+                    action: 'list',
+                    type: 'POS'
+                },
+                beforeEnter: [safeGuard]
             },
         ]
     },

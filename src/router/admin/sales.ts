@@ -1,7 +1,14 @@
+import { RouteRecordRaw } from 'vue-router'
+import store from '@/store'
 import SalesIndex from '@/views/admin/sales/index.vue'
 import ReportList from '@/views/admin/sales/ReportList.vue'
 
-const SalesRoutes = [
+function safeGuard(to: any, from: any, next: any) {
+    if (!store.getters.userCan(to.meta.action, to.meta.type)) next('/403')
+    else next()
+}
+
+const SalesRoutes: Array<RouteRecordRaw> = [
     {
         path: '/sales',
         name: 'SalesIndex',
@@ -15,6 +22,11 @@ const SalesRoutes = [
                 path: 'reports-list',
                 name: 'ReportList',
                 component: ReportList,
+                meta: {
+                    action: 'list',
+                    type: 'Sales'
+                },
+                beforeEnter: [safeGuard]
             },
 		]
     }
