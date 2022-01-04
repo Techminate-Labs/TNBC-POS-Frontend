@@ -5,8 +5,8 @@
 			<ReportCard :title="'Number of sales FIAT'" :data="analytics.salesFiat" />
 			<ReportCard :title="'Total of items'" :data="analytics.totalItems" />
 			<ReportCard :title="'Total of categories'" :data="analytics.totalCategories" />
-			<ReportCard :title="'Total of categories'" :data="analytics.totalUsers" />
-			<ReportCard :title="'Total of categories'" :data="analytics.totalRoles" />
+			<ReportCard :title="'Total of Users'" :data="analytics.totalUsers" />
+			<ReportCard :title="'Total of Roles'" :data="analytics.totalRoles" />
 		</div>
 		<div class="grid gap-6 grid-cols-1 md:grid-cols-2 mb-8 mt-4">
 			<div>
@@ -14,14 +14,14 @@
 				<SalesChart 
 					class="grid-span-1"
 					:paymentMethod="'fiat'"
-					:route="'dateViewChart'" />
+					:route="'currentMonthSalesChart'" />
 			</div>
 			<div>
 				<h2 class="display-h2">Current Week's Sales</h2>
 					<SalesChart 
 						class="grid-span-1"
 						:paymentMethod="'fiat'"
-						:route="'dayViewChart'" />
+						:route="'currentWeekSalesChart'" />
 
 			</div>
 		</div>
@@ -29,7 +29,7 @@
 		<SalesChart 
 			class="grid-span-1"
 			:paymentMethod="'fiat'"
-			:route="'monthViewChart'" />
+			:route="'currentYearSalesChart'" />
 	</div>
 </template>
 

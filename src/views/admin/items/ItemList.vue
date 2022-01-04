@@ -4,6 +4,7 @@
 			<h1 class="display-h1">Items List</h1>
 			<router-link :to="{ name: 'ItemCreate' }">
 				<button
+					v-show="!$store.getters.userCan('create', 'Items')"
 					class="base-btn mb-2">
 					Create Item
 				</button>

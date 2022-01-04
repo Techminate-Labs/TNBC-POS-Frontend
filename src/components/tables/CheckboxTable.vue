@@ -49,7 +49,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="mt-2 text-right">
+                <div class="mt-2 text-right" v-show="$store.getters.userCan('edit', 'Roles')">
                     <button
                         v-show="(this.$route.name) !== 'RoleUpdate'"
                         class="base-btn-outline ml-2" 

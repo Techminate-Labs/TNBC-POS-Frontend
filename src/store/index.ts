@@ -122,8 +122,14 @@ export default createStore({
             } else return payment_method.toUpperCase()
         },
         isProcessingPayment: (state): boolean => {
-            console.log(state.pos.isProcessingPayment)
             return state.pos.isProcessingPayment
+        },
+        userCan: (state) => (action: string, type: string): boolean => {
+            if (state.user.permissions[type][action]) {
+                return state.user.permissions[type][action]
+            } else {
+                return false
+            }
         }
     },
     modules: {

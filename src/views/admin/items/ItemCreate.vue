@@ -52,7 +52,12 @@
 						placeholder="3"
 					/>
 				</label>
-				<button class="base-btn float-right" @click="addItem">Save</button>
+				<button 
+					class="base-btn float-right"
+					v-show="!$store.getters.userCan('create', 'Items')"
+					@click="addItem">
+					Save
+				</button>
 			</div>
 			<div class="w-5/12 h-full">
 				<div class="card w-full p-4">

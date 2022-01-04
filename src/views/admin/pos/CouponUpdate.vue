@@ -43,7 +43,12 @@
 				</div>
 			</div>
 			<div class="my-2 text-right">
-				<button class="base-btn" @click="updateCoupon">Save and Exit</button>
+				<button 
+					class="base-btn" 
+					v-show="!$store.getters.userCan('edit', 'Coupon')"
+					@click="updateCoupon">
+					Save and Exit
+				</button>
 			</div>
 		</div>
 	</div>

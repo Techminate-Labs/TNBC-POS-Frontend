@@ -2,7 +2,13 @@
 	<div>  
 		<div class="flex flex-nowrap justify-between">
 			<h1 class="display-h1">Coupon List</h1>
-			<router-link :to="{ name: 'CouponCreate' }"><button class="base-btn">Create Coupon</button></router-link>
+			<router-link :to="{ name: 'CouponCreate' }">
+				<button 
+					v-show="!$store.getters.userCan('create', 'Coupon')"
+					class="base-btn">
+					Create Coupon
+				</button>
+			</router-link>
 		</div>
 		<DataTable
 			:columns="columns"

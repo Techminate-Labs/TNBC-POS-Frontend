@@ -3,7 +3,7 @@
     <div class="flex flex-nowrap justify-between">
       <h1 class="display-h1">User Roles</h1>
       <router-link
-        v-show="canUserCreate"
+        v-show="$store.getters.userCan('create', 'Roles')"
         :to="{ name: 'RoleCreate' }">
         <button class="base-btn">
           Create Role
@@ -183,11 +183,6 @@ export default defineComponent({
 					})
 					console.log(e)
 				});
-		}
-	},
-	computed: {
-		canUserCreate():boolean {
-			return this.$store.state.user.permissions.Roles.create
 		}
 	},
 	async mounted() {

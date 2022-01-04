@@ -52,7 +52,12 @@
 							placeholder="3"
 						/>
 					</label>
-				<button class="base-btn float-right" @click="updateSupplier">Save and exit</button>
+				<button 
+					class="base-btn float-right"
+					v-show="!$store.getters.userCan('edit', 'Items')" 
+					@click="updateSupplier">
+					Save and exit
+				</button>
 			</div>
 			<div class="w-5/12 h-full">
 				<div class="card mb-3">

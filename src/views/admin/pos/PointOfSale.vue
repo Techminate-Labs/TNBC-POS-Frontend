@@ -228,7 +228,6 @@ export default defineComponent({
 			await CartService.printInvoice(params, token)
 				.then((response: ResponseData) => {
                     let res = response.data
-                    console.log(res)
                     this.$toast.open({
                         message: res.done,
                         type: "success"

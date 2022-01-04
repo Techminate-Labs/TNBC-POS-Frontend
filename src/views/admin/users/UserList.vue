@@ -5,7 +5,11 @@
       <router-link 
         v-show="canUserCreate"
         :to="{ name: 'UserCreate' }">
-        <button class="base-btn">Create User</button>
+        <button 
+			v-show="$store.getters.userCan('create', 'Users')"
+			class="base-btn">
+			Create User
+		</button>
       </router-link>
     </div>
     <DataTable
