@@ -72,7 +72,7 @@
 					<div class="place-self-end self-end">
 						<button class="base-btn float-right" 
 							@click="generateBarcode"
-							v-show="!$store.getters.userCan('list', 'Items')">
+							v-show="$store.getters.userCan('list', 'Items')">
 							Generate Barcode
 						</button>
 					</div>

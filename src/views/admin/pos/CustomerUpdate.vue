@@ -47,7 +47,7 @@
 		</div>
 		<button 
 			class="base-btn float-right" 
-			v-show="!$store.getters.userCan('edit', 'POS')"
+			v-show="$store.getters.userCan('edit', 'POS')"
 			@click="updateCustomer">
 			Save and Exit
 		</button>

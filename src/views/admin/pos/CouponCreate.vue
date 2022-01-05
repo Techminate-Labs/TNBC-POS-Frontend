@@ -47,7 +47,7 @@
 					<label for="active" class="toggle-label base-toggle-label"></label>
 				</div>
 			</div>
-			<div class="my-2 text-right" v-show="!$store.getters.userCan('create', 'Items')">
+			<div class="my-2 text-right" v-show="$store.getters.userCan('create', 'Items')">
 				<button class="base-btn-outline ml-2" @click="addCoupon">Save and create a new one</button>
 				<button class="base-btn ml-2" @click="addCouponAndRedirect">Save and exit</button>
 			</div>

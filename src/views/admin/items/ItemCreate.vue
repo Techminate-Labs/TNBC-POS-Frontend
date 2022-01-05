@@ -54,7 +54,7 @@
 				</label>
 				<button 
 					class="base-btn float-right"
-					v-show="!$store.getters.userCan('create', 'Items')"
+					v-show="$store.getters.userCan('create', 'Items')"
 					@click="addItem">
 					Save
 				</button>

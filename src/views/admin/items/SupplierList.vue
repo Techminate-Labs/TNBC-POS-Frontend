@@ -3,7 +3,7 @@
 		<div class="flex flex-nowrap justify-between pt-4">
 			<h1 class="display-h1">Supplier List</h1>
 			<router-link :to="{ name: 'SupplierCreate' }">
-				<button v-show="!$store.getters.userCan('create', 'Items')" class="base-btn mb-2">Create Supplier</button>
+				<button v-show="$store.getters.userCan('create', 'Items')" class="base-btn mb-2">Create Supplier</button>
 			</router-link>
 		</div>
 		<DataTable
