@@ -4,7 +4,7 @@
 			<h1 class="display-h1">Unit List</h1>
 			<button 
 				@click="showUnitCreateModal"
-				v-show="!$store.getters.userCan('create', 'Items')" 
+				v-show="$store.getters.userCan('create', 'Items')" 
 				class="base-btn mb-2">
 				Create Unit
 			</button>

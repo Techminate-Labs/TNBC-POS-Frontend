@@ -44,7 +44,7 @@ const PointOfSaleRoutes: Array<RouteRecordRaw> = [
                     action: 'list',
                     type: 'POS'
                 },
-                beforeEnter: [safeGuard]
+                beforeEnter: [safeGuard, selectLayout]
             },
             {
                 path: 'customers-create',
@@ -74,7 +74,7 @@ const PointOfSaleRoutes: Array<RouteRecordRaw> = [
                     action: 'list',
                     type: 'POS'
                 },
-                beforeEnter: [safeGuard]
+                beforeEnter: [safeGuard, selectLayout]
             },
             {
                 path: 'coupons-create',

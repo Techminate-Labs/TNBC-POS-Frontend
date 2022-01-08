@@ -5,7 +5,7 @@
 			@change="salesTypeChange"
 			class="px-4 py-2 bg-gray-100 text-sm font-bold">
 			<option value="fiat">FIAT</option>
-			<option vaule="tnbc">TNBC</option>
+			<option value="tnbc">TNBC</option>
 		</select>
 		<highcharts 
 			v-if="values.length"
@@ -45,6 +45,9 @@ export default defineComponent({
 			
 			await DashboardService.salesBy(token, this.route, this.salesType)
 				.then((res: any) => {
+					this.dates = []
+					this.values = []
+					
 					for (let x = 0; x < res.data.label.length; x++){
 						this.dates.push(res.data.label[x])
 						this.values.push(res.data.total[x])

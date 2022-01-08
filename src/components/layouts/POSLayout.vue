@@ -44,16 +44,16 @@ export default defineComponent({
             singleMenu: null || {},
             menuPOS: [
                 {
-                    name: 'Home',
-                    url: '/dashboard',
-                },
-                {
                     name: 'Point of Sale',
                     url: '/point-of-sale/point-of-sale',
                 },
                 {
                     name: 'Customers',
                     url: '/point-of-sale/customers-list',
+                },
+                {
+                    name: 'Coupons',
+                    url: '/point-of-sale/coupons-list',
                 },
                 {
                     name: 'Invoices',

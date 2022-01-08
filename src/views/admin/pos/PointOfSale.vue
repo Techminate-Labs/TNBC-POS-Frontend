@@ -127,7 +127,8 @@ export default defineComponent({
             invoice: this.$store.state.pos.cart,
             customerId: '',
             discountCode: '',
-            paymentMethod: this.$store.state.pos.cart.payment_method ? this.$store.state.pos.cart.payment_method : 'fiat'
+            paymentMethod: this.$store.state.pos.cart.payment_method ? this.$store.state.pos.cart.payment_method : 'fiat',
+            isGeneratingInvoice: false
         }
     },
     methods: {
@@ -150,11 +151,8 @@ export default defineComponent({
                 .then((response: ResponseData) => {
                     let res = response.data
                     this.cart = res
-                    this.paymentMethod = res.payment_method
-
                     this.$store.dispatch('setCart', res)
-                    // this.$store.dispatch('setInvoiceNumber', { invoice_number: res.invoice_number })
-                    // this.$store.dispatch('setPaymentMethod', { payment_method: res.payment_method })
+                    this.paymentMethod = res.payment_method
                 })
                 .catch((e: Error) => {
                     console.log(e);
@@ -219,10 +217,20 @@ export default defineComponent({
             }
         },
         async printInvoice(): Promise<void> {
+            if (this.isGeneratingInvoice === true){
+                this.$toast.open({
+                    message: 'An invoice is already being generated.',
+                    type: "info"
+                })
+                return
+            }
+            
+            this.isGeneratingInvoice = true
             this.$store.dispatch('setIsProcessingPayment', true)
 
             const token = this.$store.state.session.bearerToken
 			const cart = this.$store.state.pos.cart
+            this.invoice = cart
 			const params = `?invoice_number=${cart.invoice_number}&payment_method=${cart.payment_method}`
 
 			await CartService.printInvoice(params, token)
@@ -238,6 +246,8 @@ export default defineComponent({
 
                     this.$store.dispatch('setCart', this.cart)
                     this.$store.dispatch('setCoupon', '')
+                    
+                    this.isGeneratingInvoice = false
                 })
                 .catch((e: Error) => {
                     console.log(e);
@@ -248,13 +258,15 @@ export default defineComponent({
             this.discountCode = discount.toString()
             this.$store.dispatch('setCoupon', discount.toString())
             const token = this.$store.state.session.bearerToken
-            const cart = this.$store.state.cart
-            const params = `?invoice_number=${cart.invoiceNumber}&coupon=${this.discountCode}&payment_method=${cart.paymentMethod}`
+            const cart = this.$store.state.pos.cart
+            const params = `?invoice_number=${cart.invoice_number}&coupon=${this.discountCode}&payment_method=${cart.payment_method}`
 
             await CartService.listItems(params, token)
                 .then(response => {
                     let res = response.data
+                    console.log(res)
                     this.cart = res
+                    this.$store.dispatch('setCart', this.cart)
                 })
                 .catch(err => {
                     console.log(err)
@@ -285,7 +297,6 @@ export default defineComponent({
                 })
         },
         async addItemToCart(): Promise<void>{
-
             this.$store.dispatch('setIsProcessingPayment', false)
 
             let item = this.itemId as string
