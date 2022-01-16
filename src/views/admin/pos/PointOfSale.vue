@@ -230,8 +230,9 @@ export default defineComponent({
 
             const token = this.$store.state.session.bearerToken
 			const cart = this.$store.state.pos.cart
+            const coupon = this.$store.state.pos.coupon
             this.invoice = cart
-			const params = `?invoice_number=${cart.invoice_number}&payment_method=${cart.payment_method}`
+			const params = `?invoice_number=${cart.invoice_number}&payment_method=${cart.payment_method}&coupon=${coupon}`
 
 			await CartService.printInvoice(params, token)
 				.then((response: ResponseData) => {
