@@ -60,7 +60,7 @@ export default defineComponent({
                 .then((response: ResponseData) => {
                     this.user = response.data.user
                     const res = response.data
-                    
+
                     this.$store.dispatch('setBearerToken', res.token)
                     this.$store.dispatch('setAuthentication', true)
                     this.$store.dispatch('setUserEmail', this.email)
