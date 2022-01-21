@@ -16,7 +16,7 @@ export default {
     POSLayout,
     MinimalLayout
   },
-    beforeCreate () {
+  beforeCreate () {
     this.$store.commit('initializeStore')
   },
   data() {

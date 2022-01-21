@@ -4,11 +4,12 @@ import router from '@/router';
 process.env.NODE_ENV
 
 const apiClient: AxiosInstance = axios.create({
-  // baseURL: process.env.NODE_ENV === 'development' ? "https://tnbpos.tk/api" : "https://tnbpos.tk/api",
-  baseURL: process.env.NODE_ENV === 'development' ? "http://127.0.0.1:8000/api" : "https://tnbpos.tk/api",
-  withCredentials: true,
+  baseURL: process.env.NODE_ENV === 'development' ? "https://tnbpos.tk/api" : "https://tnbpos.tk/api",
+  // baseURL: process.env.NODE_ENV === 'development' ? "http://127.0.0.1:8000/api" : "https://tnbpos.tk/api",
+  // withCredentials: true,
   headers: {
-    "Content-type": "application/json"
+    "Content-type": "application/json",
+    "Accept": "application/json",
   },
 });
 

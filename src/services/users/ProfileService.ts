@@ -14,7 +14,7 @@ export default {
     },
     
     update(data: any, user_id: number, token: any): Promise<any> {
-        return http.post(`/userProfileUpdate/${user_id}`, data, { headers: { "Authorization": `Bearer ${token}`, "content-type": "multipart/form-data" } });
+        return http.post(`/userProfileUpdate/${user_id}`, data, { headers: { "Authorization": `Bearer ${token}`, "Content-Type": "multipart/form-data" } });
     },
 
     updatePassword(data: any, token: any): Promise<any> {

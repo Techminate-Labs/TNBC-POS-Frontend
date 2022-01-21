@@ -160,7 +160,10 @@ export default defineComponent({
         },
         async fetchCartItems(): Promise<void> {
             let token = this.$store.state.session.bearerToken
-            let params = `?coupon=${this.discountCode}&payment_method=${this.paymentMethod}`
+            let params = new URLSearchParams({
+                coupon: this.discountCode,
+                payment_method: this.paymentMethod
+            })
             await CartService.listItems(params, token)
                 .then((response: ResponseData) => {
                     let res = response.data
@@ -300,13 +303,15 @@ export default defineComponent({
         async addItemToCart(): Promise<void>{
             this.$store.dispatch('setIsProcessingPayment', false)
 
-            let item = this.itemId as string
             let token = this.$store.state.session.bearerToken
 
-            let fd = new FormData()
-            fd.append('item_id', item)
+            let data = new FormData()
+            data.append('item_id', this.itemId)
+            // const data = new URLSearchParams({
+            //     item_id: this.itemId
+            // })
             
-            await CartService.addItem(fd, token)
+            await CartService.addItem(data, token)
                 .then((response) => {
                     this.$toast.open({
                         message: `Item has been added to the cart!`,
