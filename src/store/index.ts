@@ -8,6 +8,7 @@ export default createStore({
             userEmail: '',
             userId: null,
             roleId: null,
+            isAdmin: false,
             isEmailVerified: false,
             permissions: undefined as any
         },
@@ -38,6 +39,9 @@ export default createStore({
         },
         UPDATE_USER_ID(state, payload) {
             state.user.userId = payload
+        },
+        SET_IS_ADMIN(state) {
+            state.user.isAdmin = true
         },
         UPDATE_ROLE_ID(state, payload) {
             state.user.roleId = payload
@@ -85,6 +89,9 @@ export default createStore({
         },
         setRoleId(context, payload) {
             context.commit('UPDATE_ROLE_ID', payload)
+        },
+        setIsAdmin(context) {
+            context.commit('SET_IS_ADMIN')
         },
         setPermissions(context, payload) {
             context.commit('UPDATE_PERMISSIONS', payload)

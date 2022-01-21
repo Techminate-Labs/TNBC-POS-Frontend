@@ -3,17 +3,18 @@
         <div class="flex flex-row flew-nowrap my-4">
             <LogoIcon class="h-24" />
         </div>
-        <div class="flex flex-col py-2">
-            <label class="label" for="email">Email:</label>
+        <form class="flex flex-col py-2" @submit.prevent="logInUser">
+            <label class="label" for="email">
+                <span>Email:</span>
+            </label>
             <input 
                 class="text-input" 
                 type="text" 
                 id="email" 
                 v-model="email" 
                 placeholder="mail@example.com"
-            />
-        </div>
-        <div class="flex flex-col py-2">
+                required
+                />
             <label class="label" for="password">Password:</label>
             <input 
                 class="text-input" 
@@ -21,13 +22,12 @@
                 id="password" 
                 v-model="password" 
                 placeholder="*******************"
-            />
-        </div>
-        <button class="base-btn" @click="logInUser">
-            Log In
-        </button>
+                required
+                />
+            <button class="base-btn max-w-max">Log In</button>
+        </form>
         <div class="pt-4">
-            <router-link :to="{ name: 'GuestForgotPassword' }" class="text-blue-500">Reset your password here .</router-link>
+            <router-link :to="{ name: 'GuestForgotPassword' }" class="text-blue-500">Reset your password</router-link>
         </div>
     </div>
 </template>
@@ -60,7 +60,7 @@ export default defineComponent({
                 .then((response: ResponseData) => {
                     this.user = response.data.user
                     const res = response.data
-                    
+
                     this.$store.dispatch('setBearerToken', res.token)
                     this.$store.dispatch('setAuthentication', true)
                     this.$store.dispatch('setUserEmail', this.email)

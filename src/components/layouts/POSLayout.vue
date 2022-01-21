@@ -21,12 +21,19 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { MenuItem } from '@/types/SideBar'
+
+// components
 import PosSideBar from '@/components/menus/PosSideBar.vue'
 import TopNavigation from '@/components/menus/TopNavigation.vue'
 import Footer from '@/components/footer/Footer.vue'
+import LogoIcon from '@/components/icons/LogoIcon.vue'
 import Breadcrumb from "@/components/Breadcrumb.vue"
+
+// services
 import DataService from "@/services/DataService";
+
+// type
+import { MenuItem } from '@/types/SideBar'
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
@@ -34,6 +41,7 @@ export default defineComponent({
     components: {
         PosSideBar,
         TopNavigation,
+        LogoIcon,
         Footer,
         Breadcrumb
     },
