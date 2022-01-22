@@ -1,16 +1,27 @@
 <template>
 	<div>
-		<div class="flex flex-nowrap justify-between pt-6">
+		<div class="flex flex-nowrap space-x-4 pt-6">
 			<h1 class="display-h1">
-				Reports for <span class="uppercase font-bold">{{paymentMethod}}</span> transactions
+				Reports for
+				<select v-model="paymentMethod" @change="fetchReports">
+					<option v-for="option in paymentsOptions" :key="option.key" :value="option.key">{{ option.value }}</option>
+				</select>
+				transactions
 			</h1>
 		</div>
+		
 		<div class="flex flew-wrap mb-6">
 			<ReportCard :title="'Number of sales'" :data="reports.numberOfSales" />
 			<ReportCard :title="'Total of sales'" :data="reports.total" />
 			<ReportCard :title="'Total of tax'" :data="reports.tax" />
 		</div>
-		<p class="text-2xl mb-2">Sales for this period</p>
+		<div class="flex flex-nowrap space-x-4">
+			<p class="text-2xl mb-2">Sales for
+				<select v-model="duration" @change="fetchReports">
+					<option v-for="option in durationOptions" :key="option.key" :value="option.key">{{ option.value }}</option>
+				</select>
+			</p>
+		</div>
 		<DataTable
 			:columns="columns"
 			:next="next"
@@ -46,11 +57,11 @@ export default defineComponent({
 			prev: '',
 			meta: {},
 			data: [] as Array<any>,
-			type: "Users",
-			paymentMethod: "tnbc",
-			duration: "year",
+			type: 'Users',
+			paymentMethod: 'tnbc',
+			duration: 'year',
 			reports: {},
-			url: "/report/",
+			url: '/report/',
 			maxItemsPerPage: '5' || undefined as unknown as string,
 			columns: [
 				{
@@ -77,18 +88,31 @@ export default defineComponent({
 					attribute: 'payment_method',
 					name: 'payment type'
 				}
-			]
+			] as Array<Object>,
+			durationOptions: [
+				{ key: 'today', value: 'Today' }, 
+				{ key: 'yesterday', value: 'Yesterday' },
+				{ key: 'week', value: 'Week' },
+				{ key: 'lastWeek', value: 'Last Week' },
+				{ key: 'month', value: 'Month' }, 
+				{ key: 'lastMonth', value: 'Last Month' }, 
+				{ key: 'year', value: 'Year' },
+				{ key: 'lastYear', value: 'Last Year'} 
+			] as Array<Object>,
+			paymentsOptions: [
+				{ key: 'tnbc', value: 'TNBC' }, 
+				{ key: 'fiat', value: 'FIAT' }
+			] as Array<Object>,
 		}
 	},
 	methods: {
 		async fetchReports(): Promise<void> {
 			let token = this.$store.state.session.bearerToken
-			const url = this.url + `?payment_method=tnbc&duration=year&limit=${this.maxItemsPerPage}`
+			const url = this.url + `?payment_method=${this.paymentMethod}&duration=${this.duration}&limit=${this.maxItemsPerPage}`
 
 			await SalesService.listReports(url, token)
 				.then((response: ResponseData) => {
 					let res = response.data
-					console.log(res)
 					this.reports = {
 						numberOfSales: res.sales.data.length,
 						total: res.total,
@@ -111,6 +135,10 @@ export default defineComponent({
 				})
 				.catch((e: Error) => {
 					console.log(e);
+					this.$toast.open({
+						message: `There was an error fetching the reports`,
+						type: "error"
+					})
 				});
 		},
 		async pageChange(url: string): Promise<void> {
