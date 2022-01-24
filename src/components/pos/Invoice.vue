@@ -46,14 +46,14 @@ export default defineComponent({
 		getMeta(): Object {
 			if (!EmptyCheck(this.cart)){
 				return {
-					date: moment(this.cart.date),
+					date: moment(this.cart.date).format('Do MMM YYYY h:mm a'),
 					invoice_number: this.cart.invoice_number,
 					payment_method: this.cart.payment_method,
 					cashier: this.cart.cashier,
 				}
 			} else if (!EmptyCheck(this.invoice)){
 				return {
-					date: moment(this.invoice.date),
+					date: moment(this.invoice.date).format('Do MMM YYYY h:mm a'),
 					invoice_number: this.invoice.invoice_number,
 					payment_method: this.invoice.payment_method,
 					cashier: this.invoice.cashier,
