@@ -176,10 +176,15 @@ export default defineComponent({
 							message: response.data.message,
 							type: "error"
 						})
-					}else{
+					}else if(response.status === 200){
 						this.$toast.open({
 							message: response.data.message,
 							type: "success"
+						})
+					}else{
+						this.$toast.open({
+							message: response.data.message,
+							type: "error"
 						})
 					}
 				})
