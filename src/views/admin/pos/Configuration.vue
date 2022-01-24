@@ -55,7 +55,7 @@
 				<div class="flex flex-col py-2">
 					<label class="label" for="tax_rate">Tax Rate (in %):</label>
 					<input
-					class="text-input" 
+					class="text-input"
 					type="number" 
 					id="tax_rate" 
 					v-model="configuration.tax_rate" 
@@ -107,15 +107,33 @@
 					<label class="label" for="time_zone">Time Zone:</label>
 					<select v-model="configuration.time_zone" class="text-input">
 						<option :value="null">-- Please select an option --</option>
-						<option value="GMT+2">GMT+6</option>
-						<option value="GMT+2">GMT+5</option>
-						<option value="GMT+6">GMT+4</option>
-						<option value="GMT+2">GMT+3</option>
-						<option value="GMT+2">GMT+2</option>
-						<option value="GMT+2">GMT+1</option>
-						<option value="GMT+2">GMT+0</option>
-						<option value="GMT-3">GMT-1</option>
-						<option value="GMT-3">GMT-2</option>
+						<option value="UTC+14">UTC+14</option>
+						<option value="UTC+13">UTC+13</option>
+						<option value="UTC+12">UTC+12</option>
+						<option value="UTC+11">UTC+11</option>
+						<option value="UTC+10">UTC+10</option>
+						<option value="UTC+9">UTC+9</option>
+						<option value="UTC+8">UTC+8</option>
+						<option value="UTC+7">UTC+7</option>
+						<option value="UTC+6">UTC+6</option>
+						<option value="UTC+5">UTC+5</option>
+						<option value="UTC+4">UTC+4</option>
+						<option value="UTC+3">UTC+3</option>
+						<option value="UTC+2">UTC+2</option>
+						<option value="UTC+1">UTC+1</option>
+						<option value="UTC+0">UTC+0</option>
+						<option value="UTC-1">UTC-1</option>
+						<option value="UTC-2">UTC-2</option>
+						<option value="UTC-3">UTC-3</option>
+						<option value="UTC-4">UTC-4</option>
+						<option value="UTC-5">UTC-5</option>
+						<option value="UTC-6">UTC-6</option>
+						<option value="UTC-7">UTC-7</option>
+						<option value="UTC-8">UTC-8</option>
+						<option value="UTC-9">UTC-9</option>
+						<option value="UTC-10">UTC-10</option>
+						<option value="UTC-11">UTC-11</option>
+						<option value="UTC-12">UTC-12</option>
 					</select>
 				</div>
 			</div>

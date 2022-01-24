@@ -91,7 +91,6 @@ export default defineComponent({
                         { name: 'Items', url: '/items-list' },
                         { name: 'Units', url: '/units-list' },
                         { name: 'Suppliers', url: '/suppliers-list' },
-                        { name: 'Barcodes', url: '/barcode-list' },
                     ]
                 },
                 {
