@@ -37,7 +37,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import UserService from "@/services/users/UserService";
-import ResponseData from "@/types/ResponseData";
+
 import DataTable from '@/components/tables/DataTable.vue'
 import DeleteModal from '@/components/modals/DeleteModal.vue'
 import { User } from '@/types/users/Users'
@@ -92,7 +92,7 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			let url = this.url
 			await UserService.list(url, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					let res = response.data
 					this.data = res.data.map((user: User) => ({
 						...user, 
@@ -154,7 +154,7 @@ export default defineComponent({
 				if (value.length > 2)
 					url = `/userList/?q=${value}`
 				await UserService.list(url, token)
-					.then((response: ResponseData) => {
+					.then((response) => {
 						let res = response.data
 						this.data = res.data.map((user: User) => ({
 							...user, 
@@ -198,7 +198,7 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			let id = this.selectedUserId
 			await UserService.delete(id, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.isDeleting = false
 					this.fetchUsers()
 					this.$toast.open({

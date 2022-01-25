@@ -38,7 +38,7 @@ import DataTable from '@/components/tables/DataTable.vue'
 import DeleteModal from '@/components/modals/DeleteModal.vue'
 import CouponService from "@/services/items/CouponService";
 import { CouponItem } from '@/types/items/Coupons'
-import ResponseData from "@/types/ResponseData";
+
 
 export default defineComponent({
 	name: 'CouponList',
@@ -86,7 +86,7 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			let url = this.url
 			await CouponService.list(url, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					let res = response.data
 					console.log(res)
 					this.data = res.data
@@ -151,7 +151,7 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			let id = this.selectedCouponId
 			await CouponService.delete(id, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.isDeleting = false
 					this.fetchCoupons()
 					this.$toast.open({
@@ -174,7 +174,7 @@ export default defineComponent({
 			
 			if (value.length > 2 || value.length === 0){
 				await CouponService.list(url, token)
-					.then((response: ResponseData) => {
+					.then((response) => {
 						let res = response.data
 						this.data = res.data
 						this.meta = {

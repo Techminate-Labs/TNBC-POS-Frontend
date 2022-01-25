@@ -57,7 +57,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import CustomerService from "@/services/pos/CustomerService";
-import ResponseData from "@/types/ResponseData";
+
 
 export default defineComponent({
 	name: 'CustomerCreate',
@@ -75,7 +75,7 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			let customer_id = this.$route.params.id
 			await CustomerService.getById(customer_id, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					let res = response.data
 					this.name  = res.name
 					this.email = res.email
@@ -97,7 +97,7 @@ export default defineComponent({
 			let id = parseInt(this.id)
 			let token = this.$store.state.session.bearerToken
 			await CustomerService.update(data, id, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.$toast.open({
 						message: `${this.name} successfully updated!`,
 						type: "success"

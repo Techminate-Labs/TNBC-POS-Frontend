@@ -111,7 +111,7 @@ export default defineComponent({
 			const url = this.url + `?payment_method=${this.paymentMethod}&duration=${this.duration}&limit=${this.maxItemsPerPage}`
 
 			await SalesService.listReports(url, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					let res = response.data
 					this.reports = {
 						numberOfSales: res.sales.data.length,

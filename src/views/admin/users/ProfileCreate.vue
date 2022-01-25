@@ -117,7 +117,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import ProfileService from "@/services/users/ProfileService";
-import ResponseData from "@/types/ResponseData";
+
 
 export default defineComponent({
   name: 'ProfileCreate',
@@ -156,7 +156,7 @@ export default defineComponent({
       console.log('form data', fd)
 
       await ProfileService.create(fd, token)
-        .then((response: ResponseData) => {
+        .then((response) => {
           this.$toast.open({
             message: `Profile has been successfully added to the database!`,
             type: "success"

@@ -38,14 +38,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import CategoryService from "@/services/items/CategoryService";
-import DataTable from '@/components/tables/DataTable.vue';
-import CategoryModalCreate from '@/components/modals/CategoryModalCreate.vue';
-import CategoryModalUpdate from '@/components/modals/CategoryModalUpdate.vue';
-import DeleteModal from '@/components/modals/DeleteModal.vue';
-import ResponseData from "@/types/ResponseData";
-import { Category } from "@/types/items/Categories";
+import { defineComponent } from 'vue'
+import CategoryService from "@/services/items/CategoryService"
+import DataTable from '@/components/tables/DataTable.vue'
+import CategoryModalCreate from '@/components/modals/CategoryModalCreate.vue'
+import CategoryModalUpdate from '@/components/modals/CategoryModalUpdate.vue'
+import DeleteModal from '@/components/modals/DeleteModal.vue'
+import { Category } from "@/types/items/Categories"
 
 export default defineComponent({
 	name: 'CategoryList',
@@ -90,7 +89,7 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			let url = this.url
 			await CategoryService.list(url, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					let res = response.data
 					this.data = res.data
 					this.meta = {
@@ -123,7 +122,7 @@ export default defineComponent({
 			let data = { name: categoryName }
 			let categoryId = this.selectedCategory.id
 			await CategoryService.edit(data, categoryId, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.$toast.open({
 						message: `Category ${categoryName} has been successfully updated!`,
 						type: "success"
@@ -147,7 +146,7 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			let categoryId = this.selectedCategoryId
 			await CategoryService.delete(categoryId, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.$toast.open({
 						message: `Category has been successfully deleted.`,
 						type: "success"
@@ -172,7 +171,7 @@ export default defineComponent({
 				if (value.length > 2)
 					url = `/categoryList/?q=${value}`
 				await CategoryService.list(url, token)
-					.then((response: ResponseData) => {
+					.then((response) => {
 						let res = response.data
 						this.data = res.data
 						this.meta = {
@@ -224,7 +223,7 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			let data = { name: name }
 			await CategoryService.create(data, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.isCreating = false
 					this.fetchCategories()
 					this.$toast.open({

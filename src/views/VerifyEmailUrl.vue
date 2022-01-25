@@ -6,9 +6,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import DataService from "@/services/DataService";
-import ResponseData from "@/types/ResponseData";
+import { defineComponent } from 'vue'
+import DataService from "@/services/DataService"
 
 export default defineComponent({
     name: 'Error404',
@@ -18,7 +17,7 @@ export default defineComponent({
                 let query = this.$route.query
                 let url: any = query.verify_url + '' + query.expires + '' + query.signature
                 DataService.verifyEmail(url)
-                    .then((res: ResponseData) => {
+                    .then((res) => {
                         this.$toast.open({
                             message: `Your email has been successfully verified!`,
                             type: "info"

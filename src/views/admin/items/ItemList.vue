@@ -36,9 +36,8 @@
 import { defineComponent } from 'vue';
 import DataTable from '@/components/tables/DataTable.vue'
 import DeleteModal from '@/components/modals/DeleteModal.vue'
-import ItemService from "@/services/items/ItemService";
+import ItemService from "@/services/items/ItemService"
 import { ItemObject } from '@/types/items/Items'
-import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
 	name: 'ItemList',
@@ -90,7 +89,7 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			let url = this.url
 			await ItemService.list(url, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					let res = response.data
 					this.data = res.data
 					this.meta = {
@@ -151,7 +150,7 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			let id = this.selectedItemId
 			await ItemService.delete(id, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.isDeleting = false
 					this.fetchItems()
 					this.$toast.open({
@@ -176,7 +175,7 @@ export default defineComponent({
 				if (value.length > 2)
 					url = `/itemList/?q=${value}`
 				await ItemService.list(url, token)
-					.then((response: ResponseData) => {
+					.then((response) => {
 						let res = response.data
 						this.data = res.data
 						this.meta = {

@@ -23,7 +23,6 @@
 import { defineComponent } from 'vue'
 import DataTable from '@/components/tables/DataTable.vue'
 import ActivityService from "@/services/ActivityService"
-import ResponseData from "@/types/ResponseData"
 
 export default defineComponent({
 	name: 'ActivityLogList',
@@ -72,7 +71,7 @@ export default defineComponent({
 			const url = this.url + `?limit=${this.maxItemsPerPage}`
 
 			await ActivityService.list(url, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					let res = response.data
 					this.data = res.data
 					this.meta = {

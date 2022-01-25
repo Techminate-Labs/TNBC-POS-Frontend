@@ -83,9 +83,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import ItemService from "@/services/items/ItemService";
-import ResponseData from "@/types/ResponseData";
+import { defineComponent } from 'vue'
+import ItemService from "@/services/items/ItemService"
 
 export default defineComponent({
   name: 'ItemCreate',
@@ -99,7 +98,7 @@ export default defineComponent({
       let token = this.$store.state.session.bearerToken
       let id = this.$route.params.id
       await ItemService.getById(id, token)
-        .then((response: ResponseData) => {
+        .then((response) => {
             this.item = response.data
           })
         .catch((e: Error) => {

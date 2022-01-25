@@ -192,7 +192,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import ResponseData from "@/types/ResponseData";
+
 import ConfigurationService from '@/services/ConfigurationService';
 import { Configuration } from '@/types/Configuration'
 import CancelIcon from '@/components/icons/CancelIcon.vue'
@@ -213,7 +213,7 @@ export default defineComponent({
 		async fetchConfiguration(): Promise<void> {
 			let token = this.$store.state.session.bearerToken
 			await ConfigurationService.list(token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					console.log(response)
 					this.configuration = response.data
 				})
@@ -243,7 +243,7 @@ export default defineComponent({
 
 			let token = this.$store.state.session.bearerToken
 			await ConfigurationService.update(fd, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.$toast.open({
 						message: `Your configuration has been updated.`,
 						type: "success"

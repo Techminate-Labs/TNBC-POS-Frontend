@@ -78,7 +78,6 @@
 import { defineComponent } from 'vue';
 import DeleteIcon from "@/components/icons/DeleteIcon.vue"
 import CartService from '@/services/pos/CartService';
-import ResponseData from "@/types/ResponseData";
 import PlusIcon from "@/components/icons/PlusIcon.vue"
 import MinusIcon from "@/components/icons/MinusIcon.vue"
 
@@ -95,7 +94,7 @@ export default defineComponent({
 		async deleteItem(id: number): Promise<any> {
 			let token = this.$store.state.session.bearerToken
 			await CartService.deleteItem(id, token)
-				.then((res: ResponseData) => {
+				.then((res) => {
 					this.$emit('fetchCart')
 				})
 				.catch((e: Error) => {
@@ -111,7 +110,7 @@ export default defineComponent({
 					'_method': 'PUT'
 				}
 				await CartService.updateItem(body, id, token)
-					.then((res: ResponseData) => {
+					.then((res) => {
 						this.$emit('fetchCart')
 					})
 					.catch((e: Error) => {
@@ -131,7 +130,7 @@ export default defineComponent({
 					'_method': 'PUT'
 				}
 				await CartService.updateItem(body, id, token)
-					.then((res: ResponseData) => {
+					.then((res) => {
 						this.$emit('fetchCart')
 					})
 					.catch((e: Error) => {

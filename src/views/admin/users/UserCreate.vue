@@ -79,7 +79,7 @@
 import { defineComponent } from 'vue';
 import UserService from "@/services/users/UserService";
 import RoleService from "@/services/users/RoleService";
-import ResponseData from "@/types/ResponseData";
+
 
 export default defineComponent({
 	name: 'UserCreate',
@@ -105,7 +105,7 @@ export default defineComponent({
 			}
 			let token = this.$store.state.session.bearerToken
 			await UserService.create(body, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.$toast.open({
 						message: `User successfully added to database!`,
 						type: "success"
@@ -129,7 +129,7 @@ export default defineComponent({
 			}
 			let token = this.$store.state.session.bearerToken
 			await UserService.create(body, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					console.log(response)
 					this.$toast.open({
 						message: `User successfully added to database!`,
@@ -150,7 +150,7 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			let url = this.url
 			await RoleService.list(url, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					let _data: any = []
 					response.data.data.map((role: any) => {
 						_data.push({

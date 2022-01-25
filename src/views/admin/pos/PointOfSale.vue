@@ -107,7 +107,7 @@ import CartTable from "@/components/pos/CartTable.vue"
 import Payments from "@/components/pos/Payments.vue"
 import Invoice from "@/components/pos/Invoice.vue"
 import CustomerForm from "@/components/pos/CustomerForm.vue"
-import ResponseData from "@/types/ResponseData";
+
 import ItemService from "@/services/items/ItemService";
 import CartService from "@/services/pos/CartService";
 import CustomerService from "@/services/pos/CustomerService";
@@ -136,7 +136,7 @@ export default defineComponent({
             let token = this.$store.state.session.bearerToken
             let url = `/itemList?limit=0`
             await ItemService.list(url, token)
-                .then((response: ResponseData) => {
+                .then((response) => {
                     let res = response.data
                     this.popularItems = res.data
                 })
@@ -148,7 +148,7 @@ export default defineComponent({
             let token = this.$store.state.session.bearerToken
             let params = `?coupon=${this.discountCode}&payment_method=${method}`
             await CartService.listItems(params, token)
-                .then((response: ResponseData) => {
+                .then((response) => {
                     let res = response.data
                     this.cart = res
                     this.$store.dispatch('setCart', res)
@@ -165,7 +165,7 @@ export default defineComponent({
                 payment_method: this.paymentMethod
             })
             await CartService.listItems(params, token)
-                .then((response: ResponseData) => {
+                .then((response) => {
                     let res = response.data
 
                     if (!this.$store.getters.isProccessingPayment){
@@ -190,7 +190,7 @@ export default defineComponent({
                 let token = this.$store.state.session.bearerToken
                 let url = `/itemList?q=${query}`
                 let results = await ItemService.list(url, token)
-                    .then((response: ResponseData) => {
+                    .then((response) => {
                         let res = response.data
                         return res.data.map((item: any) => {
                             return { value: item.item_id, label: item.name, img: item.image }
@@ -207,7 +207,7 @@ export default defineComponent({
                 let token = this.$store.state.session.bearerToken
                 let url = `/customerList?q=${query}`
                 let results = await CustomerService.list(url, token)
-                    .then((response: ResponseData) => {
+                    .then((response) => {
                         let res = response.data
                         return res.data.map((item: any) => {
                             return { value: item.id, label: item.name }
@@ -238,7 +238,7 @@ export default defineComponent({
 			const params = `?invoice_number=${cart.invoice_number}&payment_method=${cart.payment_method}&coupon=${coupon}`
 
 			await CartService.printInvoice(params, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
                     let res = response.data
                     this.$toast.open({
                         message: res.done,

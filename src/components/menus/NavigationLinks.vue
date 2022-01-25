@@ -20,7 +20,6 @@ import LogoutIcon from "@/components/icons/LogoutIcon.vue";
 
 // types & services
 import UserService from "@/services/users/UserService";
-import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
     name: 'NavigationLinks',
@@ -29,7 +28,7 @@ export default defineComponent({
         async logOutUser(): Promise<void> {
             let token = this.$store.state.session.bearerToken
             await UserService.logout(token)
-                .then((response: ResponseData) => {
+                .then((response) => {
                     this.$toast.open({
                         message: `You've been successfully logged out. Bye!`,
                         type: "info"

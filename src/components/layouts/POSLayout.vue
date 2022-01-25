@@ -34,7 +34,6 @@ import DataService from "@/services/DataService";
 
 // type
 import { MenuItem } from '@/types/SideBar'
-import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
     name: 'POSLayout',
@@ -92,7 +91,7 @@ export default defineComponent({
             let token = this.$store.state.session.bearerToken
             let data: any = []
             DataService.requestEmailVerification(data, token)
-                .then((response: ResponseData) => {
+                .then((response) => {
                     if (response.data.message === "Already Verified"){
                         this.$store.dispatch('setEmailVerification', true)
                         this.$toast.open({

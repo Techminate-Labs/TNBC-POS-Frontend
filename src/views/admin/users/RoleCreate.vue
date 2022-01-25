@@ -24,7 +24,7 @@
 import { defineComponent } from 'vue';
 import CheckboxTable from '@/components/tables/CheckboxTable.vue'
 import RoleService from "@/services/users/RoleService";
-import ResponseData from "@/types/ResponseData";
+
 
 export default defineComponent({
 	name: 'RoleCreate',
@@ -65,7 +65,7 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			let url = this.url
 			await RoleService.list(url, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					const roles = response.data.data
 					// we copy a permission from the first role
 					let emptyPermissions = roles[0].permissions
@@ -88,7 +88,7 @@ export default defineComponent({
 				permissions: items
 			}
 			RoleService.create(data, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.$toast.open({
 						message: `${this.roleName} has been successfully created!`,
 						type: "success"
@@ -109,7 +109,7 @@ export default defineComponent({
 				permissions: items
 			}
 			RoleService.create(data, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.$toast.open({
 						message: `${this.roleName} has been successfully created!`,
 						type: "success"

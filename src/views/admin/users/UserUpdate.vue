@@ -54,7 +54,7 @@
 import { defineComponent } from 'vue';
 import UserService from "@/services/users/UserService";
 import RoleService from "@/services/users/RoleService";
-import ResponseData from "@/types/ResponseData";
+
 
 export default defineComponent({
 	name: 'UserUpdate',
@@ -75,7 +75,7 @@ export default defineComponent({
 			let params = this.$route.params
 			let id = parseInt(params.user_id as string)
 			await UserService.getById(id, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					let res = response.data
 					this.name  = res.name
 					this.email = res.email
@@ -91,7 +91,7 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			let url = 'roleList'
 			RoleService.list(`${url}?limit=0`, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					let _data: any = []
 					response.data.data.map((role: any) => {
 						_data.push({
@@ -115,7 +115,7 @@ export default defineComponent({
 			}
 			let token = this.$store.state.session.bearerToken
 			await UserService.update(data, user_id, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.$toast.open({
 						message: `${this.name} successfully updated!`,
 						type: "success"

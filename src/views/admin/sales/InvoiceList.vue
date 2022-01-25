@@ -31,7 +31,7 @@ import { defineComponent } from 'vue';
 import DataTable from '@/components/tables/DataTable.vue'
 import InvoiceModal from '@/components/modals/InvoiceModal.vue'
 import SalesService from "@/services/sales/SalesService";
-import ResponseData from "@/types/ResponseData";
+
 
 export default defineComponent({
 	name: 'InvoiceList',
@@ -83,7 +83,7 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			let url = this.url
 			await SalesService.list(url, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					let res = response.data
 					this.data = res.data
 					this.meta = {

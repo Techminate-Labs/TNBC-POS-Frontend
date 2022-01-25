@@ -30,12 +30,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent } from 'vue'
 import DataTable from '@/components/tables/DataTable.vue'
 import DeleteModal from '@/components/modals/DeleteModal.vue'
-import SupplierService from "@/services/items/SupplierService";
+import SupplierService from "@/services/items/SupplierService"
 import { SupplierItem } from '@/types/items/Suppliers'
-import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
 	name: 'SupplierList',
@@ -83,7 +82,7 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			let url = this.url
 			await SupplierService.list(url, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					let res = response.data
 					this.data = res.data
 					this.meta = {
@@ -147,7 +146,7 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			let id = this.selectedSupplierId
 			await SupplierService.delete(id, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.isDeleting = false
 					this.fetchSuppliers()
 					this.$toast.open({
@@ -172,7 +171,7 @@ export default defineComponent({
 				if (value.length > 2)
 					url = `/supplierList/?q=${value}`
 				await SupplierService.list(url, token)
-					.then((response: ResponseData) => {
+					.then((response) => {
 						let res = response.data
 						this.data = res.data
 						this.meta = {

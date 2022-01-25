@@ -140,13 +140,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import ItemService from "@/services/items/ItemService";
-import ResponseData from "@/types/ResponseData";
-import CategoryService from '@/services/items/CategoryService';
-import BrandService from '@/services/items/BrandService';
-import UnitService from '@/services/items/UnitService';
-import SupplierService from '@/services/items/SupplierService';
+import { defineComponent } from 'vue'
+import ItemService from "@/services/items/ItemService"
+import CategoryService from '@/services/items/CategoryService'
+import BrandService from '@/services/items/BrandService'
+import UnitService from '@/services/items/UnitService'
+import SupplierService from '@/services/items/SupplierService'
 import Multiselect from '@vueform/multiselect'
 
 export default defineComponent({
@@ -196,7 +195,7 @@ export default defineComponent({
 			fd.append('available', available)
 			fd.append('image', this.image, this.image.name)
 			await ItemService.create(fd, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.$toast.open({
 						message: `${this.name} has been successfully added to the database!`,
 						type: "success"
@@ -220,7 +219,7 @@ export default defineComponent({
 			let url = 'categoryList'
 			let token = this.$store.state.session.bearerToken
 			await CategoryService.list(`${url}/?limit=0`, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.categories = response.data.data
 				})
 				.catch((e: Error) => {
@@ -231,7 +230,7 @@ export default defineComponent({
 			let url = 'brandList'
 			let token = this.$store.state.session.bearerToken
 			await BrandService.list(`${url}/?limit=0`, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.brands = response.data.data
 				})
 				.catch((e: Error) => {
@@ -242,7 +241,7 @@ export default defineComponent({
 			let url = 'unitList'
 			let token = this.$store.state.session.bearerToken
 			await UnitService.list(`${url}/?limit=0`, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.units = response.data.data
 				})
 				.catch((e: Error) => {
@@ -253,7 +252,7 @@ export default defineComponent({
 			let url = 'supplierList'
 			let token = this.$store.state.session.bearerToken
 			await SupplierService.list(`${url}/?limit=0`, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.suppliers = response.data.data
 				})
 				.catch((e: Error) => {
