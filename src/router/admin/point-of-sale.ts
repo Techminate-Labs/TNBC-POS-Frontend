@@ -54,7 +54,7 @@ const PointOfSaleRoutes: Array<RouteRecordRaw> = [
                     action: 'create',
                     type: 'POS'
                 },
-                beforeEnter: [safeGuard]
+                beforeEnter: [safeGuard, selectLayout]
             },
             {
                 path: 'customers-update/:id',
@@ -64,7 +64,7 @@ const PointOfSaleRoutes: Array<RouteRecordRaw> = [
                     action: 'edit',
                     type: 'POS'
                 },
-                beforeEnter: [safeGuard]
+                beforeEnter: [safeGuard, selectLayout]
             },
             {
                 path: 'coupons-list',
@@ -84,7 +84,7 @@ const PointOfSaleRoutes: Array<RouteRecordRaw> = [
                     action: 'create',
                     type: 'POS'
                 },
-                beforeEnter: [safeGuard]
+                beforeEnter: [safeGuard, selectLayout]
             },
             {
                 path: 'coupons-update/:id',
@@ -94,7 +94,7 @@ const PointOfSaleRoutes: Array<RouteRecordRaw> = [
                     action: 'edit',
                     type: 'POS'
                 },
-                beforeEnter: [safeGuard]
+                beforeEnter: [safeGuard, selectLayout]
             },
             {
                 path: 'point-of-sale',
@@ -104,7 +104,7 @@ const PointOfSaleRoutes: Array<RouteRecordRaw> = [
                     action: 'list',
                     type: 'POS'
                 },
-                beforeEnter: [safeGuard]
+                beforeEnter: [safeGuard, selectLayout]
             },
             {
                 path: 'invoices-list',
@@ -125,7 +125,7 @@ const PointOfSaleRoutes: Array<RouteRecordRaw> = [
                     action: 'list',
                     type: 'POS'
                 },
-                beforeEnter: [safeGuard]
+                beforeEnter: [safeGuard, selectLayout]
             },
             {
                 path: 'transaction-explorer',
@@ -135,7 +135,7 @@ const PointOfSaleRoutes: Array<RouteRecordRaw> = [
                     action: 'list',
                     type: 'POS'
                 },
-                beforeEnter: [safeGuard]
+                beforeEnter: [safeGuard, selectLayout]
             },
         ]
     },

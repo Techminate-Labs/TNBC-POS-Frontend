@@ -29,15 +29,27 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { MenuItem } from '@/types/SideBar'
+
+// components
 import SideBar from '@/components/menus/SideBar.vue'
 import TopNavigation from '@/components/menus/TopNavigation.vue'
 import ProfileMenu from "@/components/menus/ProfileMenu.vue"
 import Footer from '@/components/footer/Footer.vue'
 import AdditionalSideBar from '@/components/menus/AdditionalSideBar.vue'
 import Breadcrumb from "@/components/Breadcrumb.vue"
-import DataService from "@/services/DataService";
-import ResponseData from "@/types/ResponseData";
+
+// types & services
+import { MenuItem } from '@/types/SideBar'
+import ResponseData from "@/types/ResponseData"
+import DataService from "@/services/DataService"
+
+// images
+const dashboardIcon = require('../../assets/svgs/home.svg')
+const usersIcon = require('../../assets/svgs/user.svg')
+const shopIcon = require('../../assets/svgs/shop-alt.svg')
+const itemIcon = require('../../assets/svgs/item.svg')
+const statsUpIcon = require('../../assets/svgs/stats-up.svg')
+const settingsIcon = require('../../assets/svgs/settings.svg')
 
 export default defineComponent({
     name: 'AdminLayout',
@@ -59,12 +71,12 @@ export default defineComponent({
                 {
                     name: 'Dashboard',
                     url: '/dashboard',
-                    icon: 'https://epqrpjmozlcsvbgkxjkp.supabase.in/storage/v1/object/sign/tnbc-pos/svgs/template.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0bmJjLXBvcy9zdmdzL3RlbXBsYXRlLnN2ZyIsImlhdCI6MTYzMDA4ODE0OCwiZXhwIjoxOTQ1NDQ4MTQ4fQ.ckxC-UTfEFea7cgTGwgWuLKqBdegqrfvMMrZonZFAD4'
+                    icon: dashboardIcon
                 },
                 {
                     name: 'Users',
                     url: '/users',
-                    icon: 'https://epqrpjmozlcsvbgkxjkp.supabase.in/storage/v1/object/sign/tnbc-pos/svgs/user-group.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0bmJjLXBvcy9zdmdzL3VzZXItZ3JvdXAuc3ZnIiwiaWF0IjoxNjMwMDg4MTQ4LCJleHAiOjE5NDU0NDgxNDh9.fWSpfP7uIO-dDyP8ILCfNtgCLRmBLfPSEbUxHAysVfA',
+                    icon: usersIcon,
                     submenus: [
                         { name: 'User List', url: '/user-list' },
                         { name: 'User Roles', url: '/roles-list' }
@@ -73,7 +85,7 @@ export default defineComponent({
                 {
                     name: 'Point Of Sale',
                     url: '/point-of-sale',
-                    icon: 'https://epqrpjmozlcsvbgkxjkp.supabase.in/storage/v1/object/sign/tnbc-pos/svgs/cash.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0bmJjLXBvcy9zdmdzL2Nhc2guc3ZnIiwiaWF0IjoxNjMwMDg4MTYzLCJleHAiOjE5NDU0NDgxNjN9.-N6SSb5frPDmWHStJ27gyjjpW8Yt597X8D8Qh8NGM0Y',
+                    icon: shopIcon,
                     submenus: [
                         { name: 'Point of Sale', url: '/point-of-sale' },
                         { name: 'Invoices List', url: '/invoices-list' },
@@ -84,7 +96,7 @@ export default defineComponent({
                 {
                     name: 'Items',
                     url: '/items',
-                    icon: 'https://epqrpjmozlcsvbgkxjkp.supabase.in/storage/v1/object/sign/tnbc-pos/svgs/cube.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0bmJjLXBvcy9zdmdzL2N1YmUuc3ZnIiwiaWF0IjoxNjMwMDg4MTgwLCJleHAiOjE5NDU0NDgxODB9.JRZOQzJubHaMcKDm5Gg2lZQkwdamuI729l11pGJEUP8',
+                    icon: itemIcon,
                     submenus: [
                         { name: 'Brands', url: '/brands-list' },
                         { name: 'Categories', url: '/categories-list' },
@@ -96,7 +108,7 @@ export default defineComponent({
                 {
                     name: 'Sales',
                     url: '/sales',
-                    icon: 'https://epqrpjmozlcsvbgkxjkp.supabase.in/storage/v1/object/sign/tnbc-pos/svgs/document-text.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0bmJjLXBvcy9zdmdzL2RvY3VtZW50LXRleHQuc3ZnIiwiaWF0IjoxNjMwMDg4MzEwLCJleHAiOjE5NDU0NDgzMTB9.YMblc4CxvBKs-mjUo7-ZLofMhZo6YlQ8JSDflk6niEc',
+                    icon: statsUpIcon,
                     submenus: [
                         { name: 'Sales Reports', url: '/reports-list' },
                     ]
@@ -104,7 +116,7 @@ export default defineComponent({
                 {
                     name: 'Configuration',
                     url: '/configuration',
-                    icon: 'https://epqrpjmozlcsvbgkxjkp.supabase.in/storage/v1/object/sign/tnbc-pos/svgs/adjustments.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0bmJjLXBvcy9zdmdzL2FkanVzdG1lbnRzLnN2ZyIsImlhdCI6MTYzMDA4ODM0NiwiZXhwIjoxOTQ1NDQ4MzQ2fQ.z4IZrOKkDsVWQAicUSg3ytrqSaOaJFuwPSn7cIRQtsg',
+                    icon: settingsIcon,
                 },
             // ] as unknown as PropType<Array<MenuItem>>
             ] as any

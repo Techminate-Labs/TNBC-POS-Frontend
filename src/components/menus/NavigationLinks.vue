@@ -1,9 +1,6 @@
 <template>
     <div class="relative flex flex-row">
-        <div class="relative inline-block w-10 mr-5 align-middle select-none transition duration-200 ease-in self-center">
-            <input type="checkbox" id="dark-mode-toggle toggle" class="toggle-checkbox base-toggle-input"/>
-            <label for="dark-mode-toggle" class="toggle-label base-toggle-label"></label>
-        </div>
+        <Switch class="self-center"/>
         <NotificationIcon class="w-7 h-7 text-gray-500 mr-5 self-center" />
         <div class="self-center">
             <UserIcon @click="$emit('toggleUserMenu')" class="w-7 h-7 text-gray-500 mr-5 cursor-pointer" />
@@ -14,15 +11,20 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+
+// components
+import Switch from '@/components/fields/Switch.vue';
 import UserIcon from "@/components/icons/UserIcon.vue";
 import NotificationIcon from "@/components/icons/NotificationIcon.vue";
 import LogoutIcon from "@/components/icons/LogoutIcon.vue";
+
+// types & services
 import UserService from "@/services/users/UserService";
 import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
     name: 'NavigationLinks',
-    components: { UserIcon, NotificationIcon, LogoutIcon },
+    components: { UserIcon, NotificationIcon, LogoutIcon, Switch },
     methods: {
         async logOutUser(): Promise<void> {
             let token = this.$store.state.session.bearerToken
