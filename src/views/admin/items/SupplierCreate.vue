@@ -60,9 +60,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import SupplierService from "@/services/items/SupplierService";
-import ResponseData from "@/types/ResponseData";
+import { defineComponent } from 'vue'
+import SupplierService from "@/services/items/SupplierService"
 
 export default defineComponent({
 	name: 'SupplierCreate',
@@ -84,7 +83,7 @@ export default defineComponent({
 			}
 			let token = this.$store.state.session.bearerToken
 			await SupplierService.create(data, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.$toast.open({
 						message: `${this.name} successfully added to database!`,
 						type: "success"
@@ -107,7 +106,7 @@ export default defineComponent({
 			}
 			let token = this.$store.state.session.bearerToken
 			await SupplierService.create(data, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.$toast.open({
 						message: `${this.name} successfully added to database!`,
 						type: "success"

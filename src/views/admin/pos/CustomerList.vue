@@ -39,7 +39,7 @@ import DataTable from '@/components/tables/DataTable.vue'
 import DeleteModal from '@/components/modals/DeleteModal.vue'
 import CustomerService from "@/services/pos/CustomerService";
 import { CustomerItem } from '@/types/pos/Customers'
-import ResponseData from "@/types/ResponseData";
+
 
 export default defineComponent({
 	name: 'CustomerList',
@@ -87,7 +87,7 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			let url = this.url
 			await CustomerService.list(url, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					let res = response.data
 					this.data = res.data
 					this.meta = {
@@ -151,7 +151,7 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			let id = this.selectedCustomerId
 			await CustomerService.delete(id, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.isDeleting = false
 					this.fetchCustomers()
 					this.$toast.open({
@@ -173,7 +173,7 @@ export default defineComponent({
 			let url = `/customerList/?q=${value}`
 			if (value.length > 2 || value.length === 0){
 				await CustomerService.list(url, token)
-					.then((response: ResponseData) => {
+					.then((response) => {
 						let res = response.data
 						this.data = res.data
 						this.meta = {

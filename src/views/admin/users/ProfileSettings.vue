@@ -84,7 +84,7 @@
 import { defineComponent } from 'vue';
 import ProfileService from "@/services/users/ProfileService";
 import DataService from "@/services/DataService";
-import ResponseData from "@/types/ResponseData";
+
 import CancelIcon from "@/components/icons/CancelIcon.vue"
 
 export default defineComponent({
@@ -107,7 +107,7 @@ export default defineComponent({
 			let user_id = parseInt(this.$route.params.user_id as string)
 			let token = this.$store.state.session.bearerToken
 			await ProfileService.getById(user_id, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					console.log(response)
 					this.user.image = response.data.image
 				})
@@ -120,7 +120,7 @@ export default defineComponent({
 			}
 			let token = this.$store.state.session.bearerToken
 			await ProfileService.updatePassword(data, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.$toast.open({
 						message: `Your password has been successfully updated!`,
 						type: "success"
@@ -146,7 +146,7 @@ export default defineComponent({
 			fd.append('image', this.user.image)
 			
 			await ProfileService.updatePhoto(fd, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.$toast.open({
 						message: `Your profile picture has been successfully updated!`,
 						type: "success"
@@ -166,7 +166,7 @@ export default defineComponent({
 			let data: any = []
 			console.log('Clicked on verify, request is pending...')
 			await DataService.requestEmailVerification(data, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.$toast.open({
 						message: `An email has been sent to your inbox.`,
 						type: "success"

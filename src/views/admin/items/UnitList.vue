@@ -44,7 +44,7 @@ import UnitModalCreate from '@/components/modals/UnitModalCreate.vue'
 import UnitModalUpdate from '@/components/modals/UnitModalUpdate.vue'
 import DeleteModal from '@/components/modals/DeleteModal.vue'
 import UnitService from "@/services/items/UnitService";
-import ResponseData from "@/types/ResponseData";
+
 import { Unit } from "@/types/items/Units";
 
 export default defineComponent({
@@ -98,7 +98,7 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			let url = this.url
 			await UnitService.list(url, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					let res = response.data
 					this.data = res.data
 					this.meta = {
@@ -131,7 +131,7 @@ export default defineComponent({
 			let data = { name: UnitName }
 			let UnitId = this.selectedUnit.id
 			await UnitService.edit(data, UnitId, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.$toast.open({
 						message: `Unit ${UnitName} has been successfully updated!`,
 						type: "success"
@@ -155,7 +155,7 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			let UnitId = this.selectedUnitId
 			await UnitService.delete(UnitId, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.$toast.open({
 						message: `Unit has been successfully deleted.`,
 						type: "success"
@@ -180,7 +180,7 @@ export default defineComponent({
 				if (value.length > 2)
 					url = `/unitList/?q=${value}`
 				await UnitService.list(url, token)
-					.then((response: ResponseData) => {
+					.then((response) => {
 						let res = response.data
 						this.data = res.data
 						this.meta = {
@@ -232,7 +232,7 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			let data = { name: name }
 			await UnitService.create(data, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.isCreating = false
 					this.fetchUnits()
 					this.$toast.open({

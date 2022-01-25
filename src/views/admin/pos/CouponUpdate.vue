@@ -57,7 +57,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import CouponService from "@/services/items/CouponService";
-import ResponseData from "@/types/ResponseData";
+
 
 export default defineComponent({
 	name: 'CouponCreate',
@@ -74,7 +74,7 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			let Coupon_id = this.$route.params.id
 			await CouponService.getById(Coupon_id, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					let res = response.data
 					this.discount = res.discount
 					this.start_date = res.start_date
@@ -95,7 +95,7 @@ export default defineComponent({
 			let id = this.$route.params.id
 			let token = this.$store.state.session.bearerToken
 			await CouponService.update(data, id, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.$toast.open({
 						message: `Coupon successfully updated!`,
 						type: "success"

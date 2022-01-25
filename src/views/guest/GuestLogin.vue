@@ -57,7 +57,7 @@ export default defineComponent({
                 password: this.password,
             }
             await UserService.login(data)
-                .then((response: ResponseData) => {
+                .then((response) => {
                     this.user = response.data.user
                     const res = response.data
 

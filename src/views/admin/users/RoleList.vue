@@ -32,12 +32,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import DataTable from '@/components/tables/DataTable.vue';
-import RoleService from "@/services/users/RoleService";
-import ResponseData from "@/types/ResponseData";
+import { defineComponent } from 'vue'
+
+// components
+import DataTable from '@/components/tables/DataTable.vue'
 import DeleteModal from '@/components/modals/DeleteModal.vue'
+
+// types & services
 import { RoleObject } from '@/types/users/Roles'
+import RoleService from "@/services/users/RoleService"
 
 export default defineComponent({
 	name: 'RoleList',
@@ -77,8 +80,9 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			let url = this.url
 			await RoleService.list(url, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					let res = response.data
+					console.log(res)
 					this.data = res.data
 					this.meta = {
 						current_page: res.current_page,
@@ -133,8 +137,9 @@ export default defineComponent({
 				if (value.length > 2)
 				url = `/roleList/?q=${value}`
 				await RoleService.list(url, token)
-					.then((response: ResponseData) => {
+					.then((response) => {
 						let res = response.data
+						console.log(res)
 						this.data = res.data
 						this.meta = {
 							current_page: res.current_page,
@@ -168,7 +173,7 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			let id = this.selectedRoleId
 			await RoleService.delete(id, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.isDeleting = false
 					this.fetchRoles()
 					if(response.status === 202){
@@ -176,7 +181,7 @@ export default defineComponent({
 							message: response.data.message,
 							type: "error"
 						})
-					}else if(response.status === 200){
+					} else if(response.status === 200){
 						this.$toast.open({
 							message: response.data.message,
 							type: "success"

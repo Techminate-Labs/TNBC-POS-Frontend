@@ -26,7 +26,7 @@
 import { defineComponent } from 'vue';
 import CheckboxTable from '@/components/tables/CheckboxTable.vue'
 import RoleService from "@/services/users/RoleService";
-import ResponseData from "@/types/ResponseData";
+
 
 export default defineComponent({
 	name: 'RoleUpdate',
@@ -68,7 +68,7 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			let url = this.url
 			await RoleService.list(url, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					let role_id: number = parseInt(params.id as string)
 					const filteredRoles = response.data.data.filter((role: any) => role.id === role_id)
 					this.roleName = filteredRoles[0].name
@@ -87,7 +87,7 @@ export default defineComponent({
 				permissions: items
 			}
 			await RoleService.update(data as any, role_id as number, token as any)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.$toast.open({
 					message: `${this.roleName} has been successfully updated!`,
 					type: "success"
@@ -109,7 +109,7 @@ export default defineComponent({
 				permissions: items
 			}
 			await RoleService.update(data as any, role_id as number, token as any)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.$toast.open({
 						message: `${this.roleName} has been successfully updated!`,
 						type: "success"

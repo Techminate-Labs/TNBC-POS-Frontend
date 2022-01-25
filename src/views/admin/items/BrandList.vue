@@ -43,9 +43,8 @@ import DataTable from '@/components/tables/DataTable.vue'
 import BrandModalCreate from '@/components/modals/BrandModalCreate.vue'
 import BrandModalUpdate from '@/components/modals/BrandModalUpdate.vue'
 import DeleteModal from '@/components/modals/DeleteModal.vue'
-import BrandService from "@/services/items/BrandService";
-import ResponseData from "@/types/ResponseData";
-import { Brand } from "@/types/items/Brands";
+import BrandService from "@/services/items/BrandService"
+import { Brand } from "@/types/items/Brands"
 
 export default defineComponent({
 	name: 'BrandList',
@@ -91,7 +90,7 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			let url = this.url
 			await BrandService.list(url, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					let res = response.data
 					this.data = res.data
 					this.meta = {
@@ -124,7 +123,7 @@ export default defineComponent({
 			let data = { name: brandName }
 			let brandId = this.selectedBrand.id
 			await BrandService.edit(data, brandId, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.$toast.open({
 						message: `Brand ${brandName} has been successfully updated!`,
 						type: "success"
@@ -148,7 +147,7 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			let brandId = this.selectedBrandId
 			await BrandService.delete(brandId, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.$toast.open({
 						message: `Brand has been successfully deleted.`,
 						type: "success"
@@ -173,7 +172,7 @@ export default defineComponent({
 				if (value.length > 2)
 					url = `/brandList/?q=${value}`
 				await BrandService.list(url, token)
-					.then((response: ResponseData) => {
+					.then((response) => {
 						let res = response.data
 						this.data = res.data
 						this.meta = {
@@ -225,7 +224,7 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			let data = { name: name }
 			await BrandService.create(data, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.isCreating = false
 					this.fetchBrands()
 					this.$toast.open({

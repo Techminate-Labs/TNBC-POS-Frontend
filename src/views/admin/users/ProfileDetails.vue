@@ -83,7 +83,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import ProfileService from "@/services/users/ProfileService";
-import ResponseData from "@/types/ResponseData";
+
 
 export default defineComponent({
 	name: 'ProfileDetails',
@@ -98,7 +98,7 @@ export default defineComponent({
 			let user_id = parseInt(params.user_id as string)
 			let token = this.$store.state.session.bearerToken
 			await ProfileService.list(user_id, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.profile  = response.data
 					console.log(this.profile)
 				})

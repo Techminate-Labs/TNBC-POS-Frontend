@@ -48,7 +48,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import CustomerService from "@/services/pos/CustomerService";
-import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
 	name: 'CustomerForm',
@@ -71,7 +70,7 @@ export default defineComponent({
 			}
 			let token = this.$store.state.session.bearerToken
 			await CustomerService.create(data, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.$toast.open({
 						message: `${this.name} successfully added to database!`,
 						type: "success"

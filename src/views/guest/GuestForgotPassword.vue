@@ -48,7 +48,7 @@ export default defineComponent({
                 email: this.email
             }
             await UserService.forgotPassword(data)
-                .then((response: ResponseData) => {
+                .then((response) => {
                     this.$toast.open({
                         message: `Great! The email has been sent to your mailbox. Go open it!`,
                         type: "success"

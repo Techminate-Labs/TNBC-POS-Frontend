@@ -125,7 +125,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import ProfileService from "@/services/users/ProfileService";
-import ResponseData from "@/types/ResponseData";
+
 import { UserSingle } from "@/types/users/Users"
 import CancelIcon from "@/components/icons/CancelIcon.vue"
 
@@ -144,7 +144,7 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			let user_id = parseInt(this.$route.params.user_id as string)
 			await ProfileService.list(user_id, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.user = response.data
 				})
 				.catch((e: Error) => {
@@ -172,7 +172,7 @@ export default defineComponent({
 			fd.append('_method', 'PUT')
 
 			await ProfileService.update(fd, user_id, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.$toast.open({
 						message: `${this.user.first_name} ${this.user.last_name} has been successfully updated!`,
 						type: "success"

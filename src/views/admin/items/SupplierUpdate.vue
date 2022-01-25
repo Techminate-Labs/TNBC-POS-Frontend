@@ -64,7 +64,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import SupplierService from "@/services/items/SupplierService";
-import ResponseData from "@/types/ResponseData";
 
 export default defineComponent({
 	name: 'SupplierCreate',
@@ -83,7 +82,7 @@ export default defineComponent({
 		let params = this.$route.params
 		let url = '/supplierList'
 		await SupplierService.list(url, token)
-			.then((response: ResponseData) => {
+			.then((response) => {
 				let id: number = parseInt(params.id as string)
 				const filteredUser = response.data.data.filter((supplier: any) => supplier.id === id)
 				this.name  = filteredUser[0].name
@@ -106,7 +105,7 @@ export default defineComponent({
 			let id = parseInt(this.id)
 			let token = this.$store.state.session.bearerToken
 			await SupplierService.update(data, id, token)
-				.then((response: ResponseData) => {
+				.then((response) => {
 					this.$toast.open({
 						message: `${this.name} successfully updated!`,
 						type: "success"

@@ -66,7 +66,7 @@ export default defineComponent({
                             type: "success"
                         })
                         UserService.login(data)
-                            .then((response: ResponseData) => {
+                            .then((response) => {
                                 const res = response.data
                                 this.$store.dispatch('setBearerToken', res.token)
                                 this.$store.dispatch('setAuthentication', true)
