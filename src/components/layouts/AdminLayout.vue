@@ -102,7 +102,7 @@ export default defineComponent({
                         { name: 'Categories', url: '/categories-list' },
                         { name: 'Items', url: '/items-list' },
                         { name: 'Units', url: '/units-list' },
-                        { name: 'Suppliers', url: '/suppliers-list' }
+                        { name: 'Suppliers', url: '/suppliers-list' },
                     ]
                 },
                 {

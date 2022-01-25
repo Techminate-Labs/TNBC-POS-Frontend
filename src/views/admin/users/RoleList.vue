@@ -171,10 +171,22 @@ export default defineComponent({
 				.then((response: ResponseData) => {
 					this.isDeleting = false
 					this.fetchRoles()
-					this.$toast.open({
-						message: `This role has been successfully deleted.`,
-						type: "success"
-					})
+					if(response.status === 202){
+						this.$toast.open({
+							message: response.data.message,
+							type: "error"
+						})
+					}else if(response.status === 200){
+						this.$toast.open({
+							message: response.data.message,
+							type: "success"
+						})
+					}else{
+						this.$toast.open({
+							message: response.data.message,
+							type: "error"
+						})
+					}
 				})
 				.catch((e: Error) => {
 					this.$toast.open({
