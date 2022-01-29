@@ -34,7 +34,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import UserService from "@/services/users/UserService"
-import ResponseData from "@/types/ResponseData"
 import LogoIcon from '@/components/icons/LogoIcon.vue'
 
 export default defineComponent({
@@ -60,7 +59,7 @@ export default defineComponent({
                     password_confirmation: this.repeatPassword,
                 }
                 await UserService.resetPassword(data)
-                    .then((res: ResponseData) => {
+                    .then((res) => {
                         this.$toast.open({
                             message: `Your password has been changed.`,
                             type: "success"

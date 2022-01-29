@@ -7,7 +7,8 @@
                 class="hidden w-1/12" 
                 :menu="menu"
                 :class="toogleSideBar ? 'active' : ''" 
-                @open-additional-sidebar="handleSubMenus"
+                @open-additional-sidebar="openSubMenu"
+                @close-additional-sidebar="closeSubMenu"
             />
             <AdditionalSideBar
                 class="hidden w-2/12"
@@ -122,8 +123,13 @@ export default defineComponent({
         }
     },
     methods: {
-        handleSubMenus(item: MenuItem): void {
+        openSubMenu(item: MenuItem): void {
             this.openAdditionalSideBar = true
+            let _singleMenu: MenuItem = item
+            this.singleMenu = _singleMenu
+        },
+        closeSubMenu(item: MenuItem): void {
+            this.openAdditionalSideBar = false
             let _singleMenu: MenuItem = item
             this.singleMenu = _singleMenu
         },

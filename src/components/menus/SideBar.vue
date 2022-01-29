@@ -54,6 +54,7 @@ export default defineComponent({
             this.selectedMenu = item
         },
         handleSidebar(item: MenuItem): void {
+            this.$emit('closeAdditionalSidebar', item)
             this.selectedMenu = item
         }
     }

@@ -10,7 +10,7 @@
 			</h1>
 		</div>
 		
-		<div class="flex flew-wrap mb-6">
+		<div class="flex flew-wrap mb-6 space-x-2">
 			<ReportCard :title="'Number of sales'" :data="reports.numberOfSales" />
 			<ReportCard :title="'Total of sales'" :data="reports.total" />
 			<ReportCard :title="'Total of tax'" :data="reports.tax" />
@@ -43,7 +43,6 @@ import { defineComponent } from 'vue';
 import DataTable from '@/components/tables/DataTable.vue'
 import ReportCard from '@/components/cards/ReportCard.vue'
 import SalesService from "@/services/sales/SalesService"
-import ResponseData from "@/types/ResponseData"
 
 export default defineComponent({
 	name: 'InvoiceList',

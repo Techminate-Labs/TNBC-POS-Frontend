@@ -18,21 +18,25 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+@layer base {
+  /* FORMS */
+  label {
+    @apply capitalize font-semibold text-lg text-gray-900;
+  }
+  input[type=text], input[type=password], input[type=email], input[type=phone], select {
+    @apply p-3 rounded-md border-solid border-2 border-gray-200 mb-2;
+  }
+  button {
+    @apply mt-3;
+  }
+}
+
 .active {
   @apply block;
 }
 
-/* FORMS */
-.label {
-  @apply capitalize font-semibold text-lg mb-1 text-gray-900;
-}
-
 .field-display {
   @apply text-base text-gray-700;
-}
-
-.text-input {
-  @apply p-3 rounded-md border-solid border-2 border-gray-200;
 }
 
 /* TITLES */

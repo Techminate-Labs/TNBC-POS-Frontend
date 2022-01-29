@@ -27,7 +27,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import UserService from "@/services/users/UserService"
-import ResponseData from "@/types/ResponseData"
 import LogoIcon from '@/components/icons/LogoIcon.vue'
 
 export default defineComponent({

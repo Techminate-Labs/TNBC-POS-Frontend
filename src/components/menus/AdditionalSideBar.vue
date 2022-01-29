@@ -1,6 +1,6 @@
 <template>
-    <div class="h-screen bg-white overflow-hidden z-10 relative shadow-lg">
-        <div class="m-4">
+    <div class="bg-white overflow-hidden z-10 relative shadow-lg hidden w-2/12">
+        <nav class="m-4 relative z-10">
             <div class="text-lg text-gray-500 pb-6">{{ singleMenu.name }}</div>
             <div v-for="(item, index) in singleMenu.submenus" :key="index" class="pb-3">
                 <router-link :to="singleMenu.url + item.url" class="cursor-pointer text-gray-600 font-light" @click="$emit('closeAdditionalSidebar')">
@@ -10,7 +10,8 @@
                     </div>
                 </router-link>
             </div>
-        </div>
+        </nav>
+        <div class="hidden md:block md:absolute w-full h-full top-0 z-0 bg-white shadow-lg"></div>
     </div>
 </template>
 <script lang="ts">

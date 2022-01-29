@@ -4,20 +4,18 @@
             <LogoIcon class="h-24" />
         </div>
         <form class="flex flex-col py-2" @submit.prevent="logInUser">
-            <label class="label" for="email">
+            <label for="email">
                 <span>Email:</span>
             </label>
             <input 
-                class="text-input" 
                 type="text" 
                 id="email" 
                 v-model="email" 
                 placeholder="mail@example.com"
                 required
                 />
-            <label class="label" for="password">Password:</label>
+            <label for="password">Password:</label>
             <input 
-                class="text-input" 
                 type="password" 
                 id="password" 
                 v-model="password" 
@@ -37,7 +35,6 @@ import { defineComponent } from 'vue'
 import UserService from "@/services/users/UserService"
 import RoleService from "@/services/users/RoleService"
 import ConfigurationService from "@/services/ConfigurationService"
-import ResponseData from "@/types/ResponseData"
 import LogoIcon from '@/components/icons/LogoIcon.vue'
 
 export default defineComponent({
