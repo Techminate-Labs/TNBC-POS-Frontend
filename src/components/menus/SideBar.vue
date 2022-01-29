@@ -17,7 +17,7 @@
                     </div>
                     <div v-else
                         :class="selectedMenu === item ? 'selected-menu-item' : ''"
-                        @click="handleSidebar(item)">
+                        @click="closeSidebar(item)">
                         <router-link :to="item.url">
                             <div class="px-1 py-6 md:px-2 flex flex-col flex-nowrap" aria-label="home icon" >
                                 <img class="dashboard-icon" :src="item.icon" />
@@ -50,10 +50,10 @@ export default defineComponent({
     },
     methods:{
         handleSubmenuSidebar(item: MenuItem): void {
-            this.$emit('openAdditionalSidebar', item)
+            this.$emit('handleAdditionalSidebar', item)
             this.selectedMenu = item
         },
-        handleSidebar(item: MenuItem): void {
+        closeSidebar(item: MenuItem): void {
             this.$emit('closeAdditionalSidebar', item)
             this.selectedMenu = item
         }

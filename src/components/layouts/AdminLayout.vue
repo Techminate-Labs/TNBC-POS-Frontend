@@ -7,7 +7,7 @@
                 class="hidden w-1/12" 
                 :menu="menu"
                 :class="toogleSideBar ? 'active' : ''" 
-                @open-additional-sidebar="openSubMenu"
+                @handle-additional-sidebar="handleSubMenu"
                 @close-additional-sidebar="closeSubMenu"
             />
             <AdditionalSideBar
@@ -66,7 +66,7 @@ export default defineComponent({
             toogleSideBar: true as boolean,
             openAdditionalSideBar: false as boolean,
             openUserMenu: false as boolean,
-            singleMenu: null || {},
+            singleMenu: {} || null,
             menu: [
                 {
                     name: 'Dashboard',
@@ -123,26 +123,32 @@ export default defineComponent({
         }
     },
     methods: {
-        openSubMenu(item: MenuItem): void {
-            this.openAdditionalSideBar = true
-            let _singleMenu: MenuItem = item
-            this.singleMenu = _singleMenu
+        handleSubMenu(item: MenuItem): void {
+            if (item === this.singleMenu){
+                this.openAdditionalSideBar = false
+                this.singleMenu = {}
+            } else {
+                this.openAdditionalSideBar = true
+                let _singleMenu: MenuItem = item
+                this.singleMenu = _singleMenu
+            }
         },
         closeSubMenu(item: MenuItem): void {
             this.openAdditionalSideBar = false
-            let _singleMenu: MenuItem = item
-            this.singleMenu = _singleMenu
-        },
+            this.singleMenu = {}        },
         handleCloseMenus(): void {
             this.openUserMenu = false
             this.openAdditionalSideBar = false
+            this.singleMenu = {}
         },
         handleSidebar(): void {
             this.toogleSideBar = !this.toogleSideBar
             this.openAdditionalSideBar = false
+            this.singleMenu = {}
         },
         closeAdditionalSidebar(): void {
             this.openAdditionalSideBar = false
+            this.singleMenu = {}
         },
         requestEmailVerification(): void {
             let token = this.$store.state.session.bearerToken
