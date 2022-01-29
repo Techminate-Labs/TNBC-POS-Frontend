@@ -76,7 +76,7 @@ export default defineComponent({
 				},
 				{
 					attribute: 'active',
-					name: 'is_active'
+					name: 'is active'
 				}
 			]
 		}
@@ -88,7 +88,6 @@ export default defineComponent({
 			await CouponService.list(url, token)
 				.then((response) => {
 					let res = response.data
-					console.log(res)
 					this.data = res.data
 					this.meta = {
 						current_page: res.current_page,

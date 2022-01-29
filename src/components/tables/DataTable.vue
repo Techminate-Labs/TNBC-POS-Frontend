@@ -42,6 +42,10 @@
                                 <div v-if="textColumn.attribute === 'image'" class="flex-shrink-0">
                                     <img :src="item.image" class="w-12" />
                                 </div>
+                                <div v-else-if="textColumn.attribute === 'active'" class="flex-shrink-0">
+                                    <span v-if="item[textColumn.attribute]">active</span>
+                                    <span v-else>unactive</span>
+                                </div>
                                 <div v-else class="flex-shrink-0">
                                     {{ item[textColumn.attribute] }}
                                 </div>
