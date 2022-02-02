@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white overflow-hidden z-10 relative shadow-lg hidden w-2/12">
+    <div class="bg-white overflow-hidden z-10 relative shadow-md hidden w-2/12">
         <nav class="m-4 relative z-10">
             <div class="text-lg text-gray-500 pb-6">{{ singleMenu.name }}</div>
             <div v-for="(item, index) in singleMenu.submenus" :key="index" class="pb-3">

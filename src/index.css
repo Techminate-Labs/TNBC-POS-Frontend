@@ -101,10 +101,10 @@ input[type=number] {
   @apply text-gray-400 self-center h-4 w-4;
 }
 .selected-menu-item {
-  @apply border-r-4 border-blue-900 bg-gray-100;
+  @apply border-2 lg:border-0 lg:border-r-4 border-blue-900 bg-gray-100;
 }
 .selected-posmenu-item {
-  @apply border-r-4 border-blue-900 bg-gray-100 text-black;
+  @apply border-2 lg:border-0 lg:border-r-4 border-blue-900 bg-gray-100 text-black;
 }
 
 /* CHECKBOX TOGGLE SWITCH */

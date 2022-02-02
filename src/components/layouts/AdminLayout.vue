@@ -2,21 +2,21 @@
     <div id="admin" class="bg-gray-100">
         <TopNavigation :links="true" @toogle-sidebar="handleSidebar" @toggle-menu="openUserMenu = !openUserMenu" />
         <ProfileMenu v-show="openUserMenu" />
-        <div class="flex flex-row flex-nowrap w-full min-h-screen">
+        <div class="flex flex-col lg:flex-row flex-nowrap w-full min-h-screen">
             <SideBar 
-                class="hidden w-1/12" 
+                class="hidden w-full lg:w-1/12" 
                 :menu="menu"
                 :class="toogleSideBar ? 'active' : ''" 
                 @handle-additional-sidebar="handleSubMenu"
                 @close-additional-sidebar="closeSubMenu"
             />
             <AdditionalSideBar
-                class="hidden w-2/12"
+                class="hidden w-full lg:w-2/12"
                 :singleMenu="singleMenu"
                 @close-additional-sidebar="closeAdditionalSidebar"
                 :class="openAdditionalSideBar ? 'active' : ''" 
             />
-            <div class="w-9/12 flex-grow p-12" @click="handleCloseMenus">
+            <div class="lg:w-9/12 flex-grow p-12" @click="handleCloseMenus">
                 <div class="bg-red-300 text-wite w-full py-2 px-8 text-lg" v-if="!isEmailVerified">
                     <p>Your account has not been verified ! Please <button @click="requestEmailVerification" class="underline">send a verification email to your inbox.</button></p>
                 </div>
