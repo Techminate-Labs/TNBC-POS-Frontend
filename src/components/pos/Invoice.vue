@@ -20,6 +20,7 @@
 		<div v-else class="my-4 mx-auto py-16 px-8 text-center">
 			The invoice is not available at the moment.
 		</div>
+		<button class="base-btn" @click="printInvoice">Print invoice</button>
 	</div>
 </template>
 <script lang="ts">
@@ -42,6 +43,11 @@ export default defineComponent({
 			required: true
 		}
 	},
+	data() {
+		return {
+			toPrint: {} as Object
+		}
+	},
 	computed: {
 		getMeta(): Object {
 			if (!EmptyCheck(this.cart)){
@@ -62,6 +68,25 @@ export default defineComponent({
 			} else {
 				return {}
 			}
+		},
+		printInvoice(): void {
+			const win: any = window.open('','','left=0,top=0,width=552,height=477,toolbar=0,scrollbars=0,status=0')
+			const handler = () => {
+				win.print()
+				win.close()
+			}
+			if(win.addEventListener)
+				win.addEventListener('load', handler, false)
+			else if(win.attachEvent)
+				win.attachEvent('onload', handler, false)
+
+			let content: any = "<html>"
+			content += this.$el.innerHTML
+			content += "</body>"
+			content += "</html>"
+			win.document.write(content)
+			win.print()
+			win.document.close()
 		}
 	}
 })

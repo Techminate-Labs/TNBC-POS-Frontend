@@ -134,3 +134,20 @@ input[type=number] {
 .card {
   @apply p-4 bg-white shadow-md rounded-md;
 }
+
+@media print {
+  body {
+    visibility: hidden;
+    margin: 0; 
+    padding: 0;
+  }
+
+  #invoice-to-print {
+    visibility: visible;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+} 
