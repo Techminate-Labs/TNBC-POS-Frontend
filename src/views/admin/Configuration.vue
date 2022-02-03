@@ -39,7 +39,7 @@
 								v-model="configuration.currency"
 								:options="getCurrenciesOptions"
 								:searchable="true"
-								placeholder="USD - $"
+								placeholder="US Dollar"
 							/>
 					</label>
 				</div>
@@ -50,7 +50,7 @@
 								v-model="configuration.currency_symble"
 								:options="getCurrenciesSymbolsOptions"
 								:searchable="true"
-								placeholder="USD - $"
+								placeholder="$ - (US Dollar)"
 							/>
 					</label>
 				</div>
@@ -221,7 +221,6 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			await ConfigurationService.list(token)
 				.then((response) => {
-					console.log(response)
 					this.configuration = response.data
 				})
 				.catch((e: Error) => {
@@ -250,18 +249,19 @@ export default defineComponent({
 
 			let token = this.$store.state.session.bearerToken
 			await ConfigurationService.update(fd, token)
-				.then((response) => {
+				.then((json) => {
+					console.log('json', json)
 					this.$toast.open({
 						message: `Your configuration has been updated.`,
 						type: "success"
 					})
 				})
-				.catch((e: Error) => {
+				.catch(({ response }) => {
 					this.$toast.open({
-						message: `There was an error adding that coupon to the database.`,
+						message: `${response.data.message}`,
 						type: "error"
 					})
-					console.log(e)
+					console.log(response)
 				});
 		},
 		handleAppLogoFile(e: any): void {
@@ -297,7 +297,7 @@ export default defineComponent({
 			currencies.map(function(currency: any) {
 				_.push({
 					value: currency.symbol,
-					label: currency.symbol
+					label: `${currency.symbol} - (${currency.name})`
 				})
 			})
 			return _
