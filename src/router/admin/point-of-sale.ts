@@ -14,9 +14,10 @@ import TransactionExplorer from '@/views/admin/pos/TransactionExplorer.vue'
 
 function selectLayout(to: any, from: any, next: any) {
     const fromLayout = from.meta.layout
-
-    if (to.meta) { 
+    if (to.meta && fromLayout) { 
         to.meta.layout = fromLayout
+        next()
+    } else {
         next()
     }
 }

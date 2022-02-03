@@ -1,6 +1,6 @@
 <template>
-    <div class="grid grid-cols-2 gap-3">
-        <div class="bg-white rounded-md shadow-md col-span-1">
+    <div class="grid grid-cols-1 lg:grid-cols-6 gap-3">
+        <div class="bg-white rounded-md shadow-md col-span-1 lg:col-span-2 xl:col-span-3">
             <div class="flex flex-col flex-nowrap w-full mb-4 p-4">
                 <Multiselect
                     v-model="itemId"
@@ -28,13 +28,13 @@
                         </template>
                 </Multiselect>
             </div>
-            <div class="grid grid-cols-3 rounded-xl gap-3 p-4">
+            <div class="grid grid-cols-3 lg:grid-cols-1 xl:grid-cols-3 rounded-xl gap-3 p-4">
                 <div v-for="(item, index) in popularItems" :key="index">
                     <ItemCard :item="item" @click="addPopularItemToCart(item.item_id)" />
                 </div>
             </div>
         </div>
-        <div class="bg-white rounded-md col-span-1 col-start-2">
+        <div class="bg-white rounded-md col-span-1 lg:col-span-4 lg:col-start-3 xl:col-span-3 xl:col-start-4">
             <div class="flex flex-col flex-nowrap w-full mb-4 p-4">
                 <Multiselect
                     v-model="customerId"
@@ -84,10 +84,10 @@
                 <div :class="isActive('cart') ? 'block' : 'hidden'">
                     <CartTable :cart="cart" @fetchCart="fetchCartItems" />
                     <Payments 
-                        @discountChange="addCoupon" 
+                        @discountChange="addCoupon"
                         @printInvoice="printInvoice"
                         @loadExplorer="$router.push({name: 'TransactionExplorer'})"
-                        @changePaymentMethod="updateCartMethod" 
+                        @changePaymentMethod="updateCartMethod"
                         @generateQrCode="generateQrCode"/>
                 </div>
                 <div :class="isActive('invoice') ? 'block' : 'hidden'">

@@ -18,21 +18,25 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+@layer base {
+  /* FORMS */
+  label {
+    @apply capitalize font-semibold text-lg text-gray-900;
+  }
+  input[type=text], input[type=password], input[type=email], input[type=phone], select {
+    @apply p-3 rounded-md border-solid border-2 border-gray-200 mb-2;
+  }
+  button {
+    @apply mt-3;
+  }
+}
+
 .active {
   @apply block;
 }
 
-/* FORMS */
-.label {
-  @apply capitalize font-semibold text-lg mb-1 text-gray-900;
-}
-
 .field-display {
   @apply text-base text-gray-700;
-}
-
-.text-input {
-  @apply p-3 rounded-md border-solid border-2 border-gray-200;
 }
 
 /* TITLES */
@@ -97,10 +101,10 @@ input[type=number] {
   @apply text-gray-400 self-center h-4 w-4;
 }
 .selected-menu-item {
-  @apply border-r-4 border-blue-900 bg-gray-100;
+  @apply border-2 lg:border-0 lg:border-r-4 border-blue-900 bg-gray-100;
 }
 .selected-posmenu-item {
-  @apply border-r-4 border-blue-900 bg-gray-100 text-black;
+  @apply border-2 lg:border-0 lg:border-r-4 border-blue-900 bg-gray-100 text-black;
 }
 
 /* CHECKBOX TOGGLE SWITCH */
@@ -130,3 +134,20 @@ input[type=number] {
 .card {
   @apply p-4 bg-white shadow-md rounded-md;
 }
+
+@media print {
+  body {
+    visibility: hidden;
+    margin: 0; 
+    padding: 0;
+  }
+
+  #invoice-to-print {
+    visibility: visible;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+} 

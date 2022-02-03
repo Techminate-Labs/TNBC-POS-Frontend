@@ -2,7 +2,7 @@
     <div id="guest" class="flex flex-col flex-nowrap h-screen">
         <TopNavigation :links="false" />
         <div class="flex flex-col md:flex-row flex-nowrap w-full flex-grow">
-            <div class="md:w-1/3 lg:w-1/5">
+            <div class="hidden md:block md:w-1/3 lg:w-1/5">
                 <GuestSideBar />
             </div>
             <div class="relative flex md:mx-auto md:w-2/3">
