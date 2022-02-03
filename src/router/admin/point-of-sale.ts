@@ -105,7 +105,7 @@ const PointOfSaleRoutes: Array<RouteRecordRaw> = [
                     action: 'list',
                     type: 'POS'
                 },
-                beforeEnter: [safeGuard, selectLayout]
+                beforeEnter: [safeGuard]
             },
             {
                 path: 'invoices-list',

@@ -23,7 +23,7 @@ input[type=number] {
   label {
     @apply capitalize font-semibold text-lg text-gray-900;
   }
-  input[type=text], input[type=password], input[type=email], input[type=phone], select {
+  input[type=text], input[type=password], input[type=email], input[type=phone], input[type=number], select {
     @apply p-3 rounded-md border-solid border-2 border-gray-200 mb-2;
   }
   button {
