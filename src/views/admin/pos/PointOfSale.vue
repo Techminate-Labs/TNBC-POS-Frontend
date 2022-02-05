@@ -140,8 +140,11 @@ export default defineComponent({
                     let res = response.data
                     this.popularItems = res.data
                 })
-                .catch((e: Error) => {
-                    console.log(e);
+                .catch(({response}) => {
+                    this.$toast.open({
+						message: `${response.data.message}`,
+						type: "error"
+					})
                 });
         },
         async updateCartMethod(method: string): Promise<void> {
@@ -154,8 +157,11 @@ export default defineComponent({
                     this.$store.dispatch('setCart', res)
                     this.paymentMethod = res.payment_method
                 })
-                .catch((e: Error) => {
-                    console.log(e);
+                .catch(({response}) => {
+                    this.$toast.open({
+						message: `${response.data.message}`,
+						type: "error"
+					})
                 });
         },
         async fetchCartItems(): Promise<void> {
@@ -181,8 +187,11 @@ export default defineComponent({
                     }
                     
                 })
-                .catch((e: Error) => {
-                    console.log(e);
+                .catch(({response}) => {
+                    this.$toast.open({
+						message: `${response.data.message}`,
+						type: "error"
+					})
                 });
         },
         async fetchItems(query: any): Promise<void> {
@@ -196,8 +205,11 @@ export default defineComponent({
                             return { value: item.item_id, label: item.name, img: item.image }
                         })
                     })
-                    .catch((e: Error) => {
-                        console.log(e);
+                    .catch(({response}) => {
+                        this.$toast.open({
+						    message: `${response.data.message}`,
+						    type: "error"
+					    })
                     });
                 return results
             }
@@ -213,8 +225,11 @@ export default defineComponent({
                             return { value: item.id, label: item.name }
                         })
                     })
-                    .catch((e: Error) => {
-                        console.log(e);
+                    .catch(({response}) => {
+                        this.$toast.open({
+                            message: `${response.data.message}`,
+                            type: "error"
+                        })
                     });
                 return results
             }
@@ -253,8 +268,11 @@ export default defineComponent({
                     
                     this.isGeneratingInvoice = false
                 })
-                .catch((e: Error) => {
-                    console.log(e);
+                .catch(({response}) => {
+                    this.$toast.open({
+						message: `${response.data.message}`,
+						type: "error"
+					})
                 });
            
         },
@@ -272,8 +290,11 @@ export default defineComponent({
                     this.cart = res
                     this.$store.dispatch('setCart', this.cart)
                 })
-                .catch(err => {
-                    console.log(err)
+                .catch(({response}) => {
+                    this.$toast.open({
+						message: `${response.data.message}`,
+						type: "error"
+					})
                 })
         },
         setActive(tabItem: string): void {
@@ -296,8 +317,11 @@ export default defineComponent({
                     })
                     this.customerId = ''
                 })
-                .catch((error) => {
-                    console.log(error)
+                .catch(({response}) => {
+                    this.$toast.open({
+						message: `${response.data.message}`,
+						type: "error"
+					})
                 })
         },
         async addItemToCart(): Promise<void>{
@@ -321,8 +345,11 @@ export default defineComponent({
                     this.itemId = ''
                     this.fetchCartItems()
                 })
-                .catch((error) => {
-                    console.log(error)
+                .catch(({response}) => {
+                    this.$toast.open({
+						message: `${response.data.message}`,
+						type: "error"
+					})
                 })
         },
         async addPopularItemToCart(id: number): Promise<void>{
@@ -345,8 +372,11 @@ export default defineComponent({
                     }
                     this.fetchCartItems()
                 })
-                .catch((error) => {
-                    console.log(error)
+                .catch(({response}) => {
+                    this.$toast.open({
+						message: `${response.data.message}`,
+						type: "error"
+					})
                 })
         },
         generateQrCode(): void {
