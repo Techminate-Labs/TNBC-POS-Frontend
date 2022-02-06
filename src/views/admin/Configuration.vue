@@ -33,24 +33,26 @@
 					>
 				</div>
 				<div class="flex flex-col py-2">
-					<label class="label" for="currency">Currency:</label>
-					<select v-model="configuration.currency" class="text-input">
-						<option :value="null">-- Please select an option --</option>
-						<option value="USD">Dollar</option>
-						<option value="EUR">Euro</option>
-						<option value="INR">Indian Rupee</option>
-						<option value="PHP">philippine peso</option>
-					</select>
+					<label class="label" for="currency">
+						Currency
+						<Multiselect
+								v-model="configuration.currency"
+								:options="getCurrenciesOptions"
+								:searchable="true"
+								placeholder="US Dollar"
+							/>
+					</label>
 				</div>
 				<div class="flex flex-col py-2">
-					<label class="label" for="currency_symbl">Currency Symbol:</label>
-					<select v-model="configuration.currency_symble" class="text-input">
-						<option :value="null">-- Please select an option --</option>
-						<option value="$">$</option>
-						<option value="€">€</option>
-						<option value="€">₹</option>
-						<option value="€">₱</option>
-					</select>
+					<label class="label" for="currency_symbl">
+						Currency Symbol
+						<Multiselect
+								v-model="configuration.currency_symble"
+								:options="getCurrenciesSymbolsOptions"
+								:searchable="true"
+								placeholder="$ - (US Dollar)"
+							/>
+					</label>
 				</div>
 				<div class="flex flex-col py-2">
 					<label class="label" for="tax_rate">Tax Rate (in %):</label>
@@ -191,22 +193,27 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent } from 'vue'
+import { currencies } from 'currencies.json'
+import Multiselect from '@vueform/multiselect'
 
-import ConfigurationService from '@/services/ConfigurationService';
-import { Configuration } from '@/types/Configuration'
+// components
 import CancelIcon from '@/components/icons/CancelIcon.vue'
+
+// types and services
+import { Configuration } from '@/types/Configuration'
+import ConfigurationService from '@/services/ConfigurationService'
 
 export default defineComponent({
 	name: 'Configuration',
-	components: { CancelIcon },
+	components: { CancelIcon, Multiselect },
 	data() {
 		return {
 			configuration: {} as Configuration,
 			newStoreLogo: null as any,
 			newStoreLogoPreview: '' as any,
 			newAppLogo: null as any,
-			newAppLogoPreview: '' as any,
+			newAppLogoPreview: '' as any
 		}
 	},
 	methods: {
@@ -214,7 +221,6 @@ export default defineComponent({
 			let token = this.$store.state.session.bearerToken
 			await ConfigurationService.list(token)
 				.then((response) => {
-					console.log(response)
 					this.configuration = response.data
 				})
 				.catch((e: Error) => {
@@ -243,18 +249,19 @@ export default defineComponent({
 
 			let token = this.$store.state.session.bearerToken
 			await ConfigurationService.update(fd, token)
-				.then((response) => {
+				.then((json) => {
+					console.log('json', json)
 					this.$toast.open({
 						message: `Your configuration has been updated.`,
 						type: "success"
 					})
 				})
-				.catch((e: Error) => {
+				.catch(({ response }) => {
 					this.$toast.open({
-						message: `There was an error adding that coupon to the database.`,
+						message: `${response.data.message}`,
 						type: "error"
 					})
-					console.log(e)
+					console.log(response)
 				});
 		},
 		handleAppLogoFile(e: any): void {
@@ -272,7 +279,29 @@ export default defineComponent({
 		cancelStoreLogoUpload(): void {
 			this.newStoreLogo = null
 			this.newStoreLogoPreview = ''
+		}
+	},
+	computed: {
+		getCurrenciesOptions(){
+			let _: Array<any> = []
+			currencies.map(function(currency: any) {
+				_.push({
+					value: currency.code,
+					label: currency.name
+				})
+			})
+			return _
 		},
+		getCurrenciesSymbolsOptions(){
+			let _: Array<any> = []
+			currencies.map(function(currency: any) {
+				_.push({
+					value: currency.symbol,
+					label: `${currency.symbol} - (${currency.name})`
+				})
+			})
+			return _
+		}
 	},
 	mounted() {
 		this.fetchConfiguration()

@@ -31,11 +31,16 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     const isAuthenticated = store.state.user.isAuthenticated
     const hasToken = store.state.session.bearerToken.length
+    const userId = store.state.user.userId
 
     if (to.meta.auth && !isAuthenticated) {
   	  next('/')
-    } else if (to.name === "GuestLogin" && isAuthenticated && hasToken) {
-        next('/dashboard')
+    } else if (to.name === "GuestLogin" && isAuthenticated && hasToken && userId !== 2) {
+        next({ name:'Dashboard' })
+    } else if (to.name === "GuestLogin" && isAuthenticated && hasToken && userId == 2) {
+        next({ name: 'PointOfSale' } )
+    } else if (to.name === "Dashboard" && isAuthenticated && hasToken && userId == 2) {
+        next({ name: 'PointOfSale' } )
     } else {
 	    next()
     }

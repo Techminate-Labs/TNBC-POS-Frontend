@@ -4,7 +4,7 @@
             <!-- Menu Icon -->
             <div class="flex">
                 <MenuIcon @click="$emit('toogleSidebar')" class="cursor-pointer w-8 h-8 self-center" />
-                <router-link :to="{ name: 'Dashboard' }">
+                <router-link :to="{ name: 'Dashboard' }" v-show="this.$store.state.user.userId === 1">
                     <LogoIcon class="w-20 h-20 ml-4" />
                 </router-link>
             </div>

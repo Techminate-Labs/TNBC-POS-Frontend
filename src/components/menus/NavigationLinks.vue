@@ -36,12 +36,17 @@ export default defineComponent({
                     this.$router.push('/')
                     this.$store.dispatch('setAuthentication', false)
                 })
-                .catch((e: Error) => {
+                .catch(({response}) => {
+                    if (response.status === 401){
+                        this.$router.push('/')
+                        this.$store.dispatch('setAuthentication', false)
+                        return
+                    }
                     this.$toast.open({
                         message: `There was an error logging you out.`,
                         type: "error"
                     })
-                    console.log(e)
+                    console.log(response)
                 });
         },
     }

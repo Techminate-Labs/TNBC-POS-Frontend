@@ -132,10 +132,9 @@ export default defineComponent({
 					this.prev = res.sales.prev_page_url
 					this.next = res.sales.next_page_url
 				})
-				.catch((e: Error) => {
-					console.log(e);
+				.catch(({response}) => {
 					this.$toast.open({
-						message: `There was an error fetching the reports`,
+						message: `${response.data.message}`,
 						type: "error"
 					})
 				});
