@@ -11,7 +11,7 @@
 			</div>
 		</div>
 		<div class="bg-white p-4 rounded-lg shadow-md">
-			<div class="grid grid-cols-2 gap-4">
+			<div class="grid grid-col-1 md:grid-cols-2 gap-4">
 				<div class="flex flex-col py-2">
 					<label class="label" for="app_name">App Name:</label>
 					<input
@@ -37,10 +37,11 @@
 						Currency
 						<Multiselect
 								v-model="configuration.currency"
+								@select="handleCurrencySelection"
 								:options="getCurrenciesOptions"
 								:searchable="true"
 								placeholder="US Dollar"
-							/>
+						/>
 					</label>
 				</div>
 				<div class="flex flex-col py-2">
@@ -139,7 +140,7 @@
 					</select>
 				</div>
 			</div>
-			<div class="grid grid-cols-2 gap-4">
+			<div class="grid grid-col-1 md:grid-cols-2 gap-4">
 				<div class="bg-gray-100">
 					<div class="border-2 border-gray-200 rounded-md p-4">
 						<div class="flex flex-row justify-between">
@@ -213,7 +214,8 @@ export default defineComponent({
 			newStoreLogo: null as any,
 			newStoreLogoPreview: '' as any,
 			newAppLogo: null as any,
-			newAppLogoPreview: '' as any
+			newAppLogoPreview: '' as any,
+			currencyValue: { code: '', symbol: '' } as Object
 		}
 	},
 	methods: {
@@ -279,6 +281,13 @@ export default defineComponent({
 		cancelStoreLogoUpload(): void {
 			this.newStoreLogo = null
 			this.newStoreLogoPreview = ''
+		},
+		handleCurrencySelection(option: string): void {
+			const symbol = currencies.filter((currency) => currency.code === option)[0].symbol
+			this.configuration.currency_symble = symbol
+		},
+		codeWithSymbol({ code, symbol }: any) {
+			return `${code} - [${symbol}]`
 		}
 	},
 	computed: {
