@@ -83,10 +83,7 @@ export default defineComponent({
 					attribute: 'total',
 					name: 'amount'
 				},
-				{
-					attribute: 'payment_method',
-					name: 'payment type'
-				}
+				
 			] as Array<Object>,
 			durationOptions: [
 				{ key: 'today', value: 'Today' }, 
@@ -100,7 +97,7 @@ export default defineComponent({
 			] as Array<Object>,
 			paymentsOptions: [
 				{ key: 'tnbc', value: 'TNBC' }, 
-				{ key: 'fiat', value: 'FIAT' }
+				{ key: 'fiat', value: 'CASH' }
 			] as Array<Object>,
 		}
 	},

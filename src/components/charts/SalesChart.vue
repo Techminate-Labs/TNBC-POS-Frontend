@@ -4,7 +4,7 @@
 			v-model="salesType" 
 			@change="salesTypeChange"
 			class="px-4 py-2 bg-gray-100 text-sm font-bold">
-			<option value="fiat">FIAT</option>
+			<option value="fiat">CASH</option>
 			<option value="tnbc">TNBC</option>
 		</select>
 		<highcharts 
@@ -77,7 +77,8 @@ export default defineComponent({
 					}
 				},
 				title: {
-				  text: `${this.salesType.toUpperCase()} Sales`
+				//   text: `${this.salesType.toUpperCase()} Sales`
+				  text: `Sales`
 				},
 				xAxis: {
 					categories: this.dates,

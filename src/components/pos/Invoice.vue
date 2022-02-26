@@ -7,12 +7,17 @@
 			class="bg-white shadow-md rounded-md hover:shadow-lg max-w-min my-4 mx-auto py-2 px-8 text-left">
 
 			<div class="my-4">
-				<p class="font-semibold text-sm text-center">Techminate</p>
-				<p class="font-semibold text-sm text-center">Dhaka, Bangladesh</p>
-				<p class="font-semibold text-sm text-center mb-2">01680800810</p>
+				<p class="font-semibold text-sm text-left">TNB POS</p>
+				<p class="font-semibold text-sm text-left">Dhaka, Bangladesh</p>
+				<p class="font-semibold text-sm text-left mb-2">01680800810</p>
 				<p class="text-sm">Date : {{ getMeta.date }}</p>
 				<p class="text-sm">Memo : {{ getMeta.invoice_number }}</p>
-				<p class="text-sm">Paid with : {{ getMeta.payment_method }}</p>
+				<span v-if="getMeta.payment_method == 'fiat'">
+					<p class="text-sm">Paid with : Cash</p>
+				</span>
+				<span v-else>
+					<p class="text-sm">Paid with : TNBC</p>
+				</span>
 				<p class="text-sm">Cashier : {{ getMeta.cashier }}</p>
 			</div>
 			<InvoiceTable :invoice="invoice" :cart="cart" />
