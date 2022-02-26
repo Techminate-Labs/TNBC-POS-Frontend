@@ -23,7 +23,7 @@
 								class="text-4xl self-center font-mono bg-blue-900 hover:bg-blue-500 text-white rounded-full mr-2">
 								<MinusIcon class="w-6 h-6" />
 							</button>
-							<span class="text-lg">{{ item.qty }}</span>
+							<span class="text-lg mt-2">{{ item.qty }}</span>
 							<button 
 								@click="augmentItemQuantity(item.qty, item.id)" 
 								class="text-4xl self-center font-mono bg-blue-900 hover:bg-blue-500 text-white rounded-full ml-2">
