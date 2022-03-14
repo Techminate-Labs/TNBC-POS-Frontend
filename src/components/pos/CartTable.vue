@@ -70,7 +70,7 @@
 		</div>
 		<div class="bg-red-800 text-white flex flex-nowrap justify-between px-6 py-4 rounded-b-md shadow-md">
 			<p>Total Payment</p>
-			<p>{{ cart.total }} {{ $store.getters.cartCurrency(cart.payment_method) }}</p>
+			<p>{{ cart.total }} {{ $store.getters.cartCurrency('tnbc') }}</p>
 		</div>
 	</div>
 </template>
