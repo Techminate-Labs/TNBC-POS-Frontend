@@ -30,7 +30,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     const isAuthenticated = store.state.user.isAuthenticated
-    const hasToken = store.state.session.bearerToken.length
+    const hasToken = store.state.session.bearerToken
     const userId = store.state.user.userId
 
     if (to.meta.auth && !isAuthenticated) {
