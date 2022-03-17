@@ -30,7 +30,7 @@
             </div>
             <div class="grid grid-cols-3 lg:grid-cols-1 xl:grid-cols-3 rounded-xl gap-3 p-4">
                 <div v-for="(item, index) in popularItems" :key="index">
-                    <ItemCard :item="item" @click="addPopularItemToCart(item.item_id)" />
+                    <ItemCard :item="item" @click="addPopularItemToCart(item)" />
                 </div>
             </div>
         </div>
@@ -208,25 +208,31 @@ export default defineComponent({
             this.$store.dispatch('setCoupon', discount.toString())
             console.log('addCoupon')
         },
+        
         setActive(tabItem: string): void {
             this.activeItem = tabItem
         },
+        
         isActive(tabItem: string): boolean {
             return this.activeItem === tabItem
         },
+        
         async addCustomerToCart(): Promise<void>{
             let customer = this.customerId as string
             console.log('addCustomerToCart')
         },
+        
         async addItemToCart(): Promise<void>{
             this.$store.dispatch('setIsProcessingPayment', false)
 
             console.log('addItemToCart')
         },
-        async addPopularItemToCart(id: number): Promise<void>{
+        
+        async addPopularItemToCart(item: Object): Promise<void>{
             
-            console.log('addPopularItemToCart')
+            console.log('addPopularItemToCart', item)
         },
+        
         generateQrCode(): void {
             console.log('generateQrCode')
             this.$store.dispatch('setIsProcessingPayment', true)
