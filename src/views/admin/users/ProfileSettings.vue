@@ -46,7 +46,7 @@
 				<div class="flex flex-cols flex-nowrap justify-between py-2 mb-2">
 					<label class="label" for="last_name">Email Verification</label>
 					<p 
-						v-if="this.$store.state.user.isEmailVerified" 
+						v-if="this.$store.state.isEmailVerified" 
 						class="text-md text-gray-600">
 						Your email has already been verified
 					</p>

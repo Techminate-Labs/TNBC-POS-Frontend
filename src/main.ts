@@ -54,7 +54,7 @@ Highcharts.setOptions({
 })
 
 createApp(App)
-  .use(store)
+  .use(store as any)
   .use(router)
   .use(VueToast, toastOptions)
   .use(HighchartsVue as any)

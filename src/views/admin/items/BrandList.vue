@@ -4,7 +4,7 @@
 			<h1 class="display-h1">Brand List</h1>
 			<button
 				@click="showBrandCreateModal"
-				v-show="$store.getters.userCan('create', 'Items')"
+				v-show="$store.state.user.permissions['Items']['create']"
 				class="base-btn mb-2">
 				Create Brand
 			</button>
@@ -29,7 +29,7 @@
 			<BrandModalCreate @handleSave="createBrand" @close-modal="isCreating = false" />
 		</div>
 		<div class="hidden" :class="isEditing ? 'active' : ''">
-			<BrandModalUpdate :id="selectedBrand.name" @handleSave="editBrand" @close-modal="isEditing = false" />
+			<BrandModalUpdate :name="selectedBrand.name" @handleSave="editBrand" @close-modal="isEditing = false" />
 		</div>
 		<div class="hidden" :class="isDeleting ? 'active' : ''">
 			<DeleteModal @handleConfirmDelete="deleteBrand" @close-modal="isDeleting = false" />

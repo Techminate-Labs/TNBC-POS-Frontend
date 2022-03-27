@@ -4,7 +4,7 @@
 			<h1 class="display-h1">Customer List</h1>
 			<router-link :to="{ name: 'CustomerCreate' }">
 				<button 
-					v-show="$store.getters.userCan('create', 'POS')"
+					v-show="$store.state.user.permissions['POS']['create']"
 					class="base-btn">
 					Create Customer
 				</button>

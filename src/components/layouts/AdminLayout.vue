@@ -179,7 +179,7 @@ export default defineComponent({
     },
     computed: {
         isEmailVerified(): boolean {
-            return this.$store.state.user.isEmailVerified
+            return this.$store.state.isEmailVerified
         }
     }
 });

@@ -33,8 +33,9 @@
     "tests/**/*.ts",
     "tests/**/*.tsx",
     "src/store/index.js"
-, "src/mixins/EmptyCheck.js"  ],
+, "src/mixins/EmptyCheck.js", "src/store/modules/user.js", "src/store/modules/settings.js", "src/store/modules/posjts", "src/store/modules/session.js"  ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "src/store",
   ]
 }

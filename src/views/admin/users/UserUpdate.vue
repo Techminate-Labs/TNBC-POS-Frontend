@@ -41,7 +41,7 @@
 					</label>
 				<button
 					class="base-btn float-right" 
-					v-show="$store.getters.userCan('edit', 'Users')"
+					v-show="$store.state.user.permissions['Users']['edit']"
 					@click="updateUser">
 					save and exit
 				</button>

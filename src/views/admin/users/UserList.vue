@@ -6,7 +6,7 @@
         v-show="canUserCreate"
         :to="{ name: 'UserCreate' }">
         <button 
-			v-show="$store.getters.userCan('create', 'Users')"
+			v-show="$store.state.user.permissions['Users']['create']"
 			class="base-btn">
 			Create User
 		</button>

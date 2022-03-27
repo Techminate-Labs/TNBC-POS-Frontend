@@ -27,6 +27,7 @@ export default defineComponent({
     methods: {
         async logOutUser(): Promise<void> {
             let token = this.$store.state.session.bearerToken
+            console.log(token)
             await UserService.logout(token)
                 .then((response) => {
                     this.$toast.open({

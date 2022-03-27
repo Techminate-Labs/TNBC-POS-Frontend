@@ -78,7 +78,7 @@ export default defineComponent({
 				data = this.invoice
 			}
 			if (data && !EmptyCheck(data as Cart)){
-				return this.$store.getters.cartCurrency(data.payment_method)
+				return 'TO DEFINE'
 			}
 		},
 		getMeta(): Object {

@@ -3,7 +3,7 @@
     <div class="flex flex-nowrap justify-between">
       <h1 class="display-h1">User Roles</h1>
       <router-link
-        v-show="$store.getters.userCan('create', 'Roles')"
+        v-show="$store.state.user.permissions['Roles']['create']"
         :to="{ name: 'RoleCreate' }">
         <button class="base-btn">
           Create Role

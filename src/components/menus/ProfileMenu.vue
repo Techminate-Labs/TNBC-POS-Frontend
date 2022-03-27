@@ -15,6 +15,7 @@ export default defineComponent({
 	name: 'ProfileMenu',
 	computed: {
 		getUserId(): number {
+			console.log(this.$store.state.user.userId)
 			return this.$store.state.user.userId
 		} 
 	}

@@ -1,9 +1,11 @@
+// @ts-nocheck
+
 import { RouteRecordRaw } from 'vue-router'
 import store from '@/store'
 import ActivityLog from '@/views/admin/ActivityLog.vue'
 
 function safeGuard(to: any, from: any, next: any) {
-    if (!store.getters.userCan(to.meta.action, to.meta.type)) next('/403')
+    if (!store.state.user.permissions[to.meta.type][to.meta.action]) next('/403')
     else next()
 }
 

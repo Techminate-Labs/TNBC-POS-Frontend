@@ -4,7 +4,7 @@
 			<h1 class="display-h1">Unit List</h1>
 			<button 
 				@click="showUnitCreateModal"
-				v-show="$store.getters.userCan('create', 'Items')" 
+				v-show="$store.state.user.permissions['Items']['create']" 
 				class="base-btn mb-2">
 				Create Unit
 			</button>
@@ -29,7 +29,7 @@
 			<UnitModalCreate @handleSave="createUnit" @close-modal="isCreating = false" />
 		</div>
 		<div class="hidden" :class="isEditing ? 'active' : ''">
-			<UnitModalUpdate :id="selectedUnit.name" @handleSave="editUnit" @close-modal="isEditing = false" />
+			<UnitModalUpdate :name="selectedUnit.name" @handleSave="editUnit" @close-modal="isEditing = false" />
 		</div>
 		<div class="hidden" :class="isDeleting ? 'active' : ''">
 			<DeleteModal :id="selectedUnit.name" @handleConfirmDelete="deleteUnit" @close-modal="isDeleting = false" />

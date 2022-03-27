@@ -54,7 +54,7 @@
 					</label>
 				<button 
 					class="base-btn float-right"
-					v-show="$store.getters.userCan('edit', 'Items')" 
+					v-show="$store.state.user.permissions['Items']['edit']" 
 					@click="updateSupplier">
 					Save and exit
 				</button>

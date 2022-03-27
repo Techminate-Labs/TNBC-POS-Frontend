@@ -205,7 +205,7 @@ export default defineComponent({
         },
         async addCoupon(discount: any): Promise<void> {
             this.discountCode = discount.toString()
-            this.$store.dispatch('setCoupon', discount.toString())
+            this.$store.dispatch('pos/setCoupon', discount.toString())
             console.log('addCoupon')
         },
         
@@ -223,7 +223,7 @@ export default defineComponent({
         },
         
         async addItemToCart(): Promise<void>{
-            this.$store.dispatch('setIsProcessingPayment', false)
+            this.$store.dispatch('pos/setIsProcessingPayment', false)
 
             console.log('addItemToCart')
         },
@@ -235,14 +235,14 @@ export default defineComponent({
         
         generateQrCode(): void {
             console.log('generateQrCode')
-            this.$store.dispatch('setIsProcessingPayment', true)
+            this.$store.dispatch('pos/setIsProcessingPayment', true)
             const routeData = this.$router.resolve({ name: 'GeneratedQrCode' })
             window.open(routeData.href, '_blank')
         }
     },
     created() {
         this.fetchPopularItems()
-        if (this.$store.getters.isProcessingPayment) this.cart = this.$store.state.pos.cart
+        if (this.$store.getters['cart/isProcessingPayment']) this.cart = this.$store.state.pos.cart
     }
 });
 </script>

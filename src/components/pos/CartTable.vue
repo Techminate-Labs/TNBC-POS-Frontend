@@ -42,35 +42,35 @@
 						<td></td>
 						<td></td>
 						<td></td>
-						<td colspan="2" class="px-6 text-right">{{ cart.subTotal }} {{ $store.getters.cartCurrency(cart.payment_method) }}</td>
+						<td colspan="2" class="px-6 text-right">{{ cart.subTotal }} TO DEFINE</td>
 					</tr>
 					<tr>
 						<th class="px-6 py-2">Discount</th>
 						<td></td>
 						<td></td>
 						<td></td>
-						<td colspan="2" class="px-6 text-right">{{ cart.discount }} {{ $store.getters.cartCurrency(cart.payment_method) }}</td>
+						<td colspan="2" class="px-6 text-right">{{ cart.discount }} TO DEFINE</td>
 					</tr>
 					<tr>
 						<th class="px-6 py-2">Tax</th>
 						<td></td>
 						<td></td>
 						<td></td>
-						<td colspan="2" class="px-6 text-right">{{ cart.tax }} {{ $store.getters.cartCurrency(cart.payment_method) }}</td>
+						<td colspan="2" class="px-6 text-right">{{ cart.tax }} TO DEFINE</td>
 					</tr>
 					<tr>
 						<th class="px-6 py-2">Total</th>
 						<td></td>
 						<td></td>
 						<td></td>
-						<td colspan="2" class="px-6 text-right">{{ cart.total }} {{ $store.getters.cartCurrency(cart.payment_method) }}</td>
+						<td colspan="2" class="px-6 text-right">{{ cart.total }} TO DEFINE</td>
 					</tr>
 				</tfoot>
 			</table>
 		</div>
 		<div class="bg-red-800 text-white flex flex-nowrap justify-between px-6 py-4 rounded-b-md shadow-md">
 			<p>Total Payment</p>
-			<p>{{ cart.total }} {{ $store.getters.cartCurrency('tnbc') }}</p>
+			<p>{{ cart.total }} TO DEFINE</p>
 		</div>
 	</div>
 </template>

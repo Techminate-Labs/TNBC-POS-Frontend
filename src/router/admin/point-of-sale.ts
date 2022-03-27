@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { NavigationGuardNext, RouteRecordRaw } from 'vue-router'
 import store from '@/store'
 import POSIndex from '@/views/admin/pos/index.vue'
@@ -23,7 +25,7 @@ function selectLayout(to: any, from: any, next: any) {
 }
 
 function safeGuard(to: any, from: any, next: any) {
-    if (!store.getters.userCan(to.meta.action, to.meta.type)) next('/403')
+    if (!store.state.user.permissions[to.meta.type][to.meta.action]) next('/403')
     else next()
 }
 
