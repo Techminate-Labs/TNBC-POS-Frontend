@@ -30,28 +30,28 @@
                         <td></td>
                         <td></td>
                         <th class="px-6 py-2">Subtotal</th>
-                        <td colspan="2" class="px-6 text-right">{{ invoice.subTotal }} {{ $store.getters.cartCurrency(invoice.payment_method) }}</td>
+                        <td colspan="2" class="px-6 text-right">{{ invoice.subTotal }} TO DEFINE</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td></td>
                         <td></td>
                         <th class="px-6 py-2">Discount</th>
-                        <td colspan="2" class="px-6 text-right">{{ invoice.discount }} {{ $store.getters.cartCurrency(invoice.payment_method) }}</td>
+                        <td colspan="2" class="px-6 text-right">{{ invoice.discount }} TO DEFINE</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td></td>
                         <td></td>
                         <th class="px-6 py-2">Tax</th>
-                        <td colspan="2" class="px-6 text-right">{{ invoice.tax }} {{ $store.getters.cartCurrency(invoice.payment_method) }}</td>
+                        <td colspan="2" class="px-6 text-right">{{ invoice.tax }} TO DEFINE</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td></td>
                         <td></td>
                         <th class="px-6 py-2">Total</th>
-                        <td colspan="2" class="px-6 text-right">{{ invoice.total }} {{ $store.getters.cartCurrency(invoice.payment_method) }}</td>
+                        <td colspan="2" class="px-6 text-right">{{ invoice.total }} TO DEFINE</td>
                     </tr>
                 </tfoot>
             </table>

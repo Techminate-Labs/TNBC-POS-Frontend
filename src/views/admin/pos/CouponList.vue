@@ -4,7 +4,7 @@
 			<h1 class="display-h1">Coupon List</h1>
 			<router-link :to="{ name: 'CouponCreate' }">
 				<button 
-					v-show="$store.getters.userCan('create', 'Coupon')"
+					v-show="$store.state.user.permissions['Coupon']['create']"
 					class="base-btn">
 					Create Coupon
 				</button>

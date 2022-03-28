@@ -32,10 +32,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+
+// components
+import LogoIcon from '@/components/icons/LogoIcon.vue'
+
+// services
 import UserService from "@/services/users/UserService"
 import RoleService from "@/services/users/RoleService"
 import ConfigurationService from "@/services/ConfigurationService"
-import LogoIcon from '@/components/icons/LogoIcon.vue'
 
 export default defineComponent({
     name: 'GuestLogin',
@@ -58,10 +62,10 @@ export default defineComponent({
                     this.user = response.data.user
                     const res = response.data
 
-                    this.$store.dispatch('setBearerToken', res.token)
-                    this.$store.dispatch('setAuthentication', true)
-                    this.$store.dispatch('setUserEmail', this.email)
-                    this.$store.dispatch('setUserId', res.user.id)
+                    this.$store.dispatch('session/setBearerToken', res.token)
+                    this.$store.dispatch('user/setAuthentication', true)
+                    this.$store.dispatch('user/setUserEmail', this.email)
+                    this.$store.dispatch('user/setUserId', res.user.id)
 
                     this.checkPermissions(res.token, res.user.role_id)
                     this.getConfiguration(res.token)
@@ -85,8 +89,8 @@ export default defineComponent({
             RoleService.getById(userId, token)
                 .then(response => {
                     const res = response.data
-                    this.$store.dispatch('setRoleId', res.id)
-                    this.$store.dispatch('setPermissions', res.permissions)
+                    this.$store.dispatch('user/setRoleId', res.id)
+                    this.$store.dispatch('user/setPermissions', res.permissions)
                 })
         },
         async getConfiguration(token: string): Promise<void> {

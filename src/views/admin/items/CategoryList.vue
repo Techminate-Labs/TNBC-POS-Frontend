@@ -4,7 +4,7 @@
 			<h1 class="display-h1">Category List</h1>
 			<button
 				@click="showCategoryCreateModal"
-				v-show="$store.getters.userCan('create', 'Items')"
+				v-show="$store.state.user.permissions['Items']['create']"
 				class="base-btn mb-2">
 				Create Category
 			</button>
@@ -29,7 +29,7 @@
 			<CategoryModalCreate @handleSave="createCategory" @close-modal="isCreating = false" />
 		</div>
 		<div class="hidden" :class="isEditing ? 'active' : ''">
-			<CategoryModalUpdate :id="selectedCategory.name" @handleSave="editCategory" @close-modal="isEditing = false" />
+			<CategoryModalUpdate :name="selectedCategory.name" @handleSave="editCategory" @close-modal="isEditing = false" />
 		</div>
 		<div class="hidden" :class="isDeleting ? 'active' : ''">
 			<DeleteModal @handleConfirmDelete="deleteCategory" @close-modal="isDeleting = false" />

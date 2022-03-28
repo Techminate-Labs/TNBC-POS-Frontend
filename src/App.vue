@@ -17,7 +17,7 @@ export default {
     MinimalLayout
   },
   beforeCreate () {
-    this.$store.commit('initializeStore')
+    // this.$store.commit('initializeStore')
   },
   data() {
     return {

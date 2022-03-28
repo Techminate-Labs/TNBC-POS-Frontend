@@ -1,7 +1,7 @@
 import http from "@/http-common";
 import store from '@/store'
 
-let _token = store.state.session.bearerToken;
+// let _token = store.state.session.bearerToken;
 class DataService {
 
     requestEmailVerification(data: any, token: any): Promise<any> {
@@ -9,7 +9,9 @@ class DataService {
     }
 
     verifyEmail(path: any): Promise<any> {
-        return http.get(`${path}`, { headers: { "Authorization": `Bearer ${_token}` } });
+        // return http.get(`${path}`, { headers: { "Authorization": `Bearer ${_token}` } });
+        // console.log(store)
+        return http.get(`${path}`);
     }
 
 }

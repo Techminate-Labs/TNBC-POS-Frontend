@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { createRouter, createWebHistory } from 'vue-router'
 import store from '@/store'
 import GuestRoutes from './guest/guest'
@@ -9,6 +11,7 @@ import ErrorsRoutes from './errors'
 import ConfigurationRoutes from './admin/configuration'
 import SalesRoutes from './admin/sales'
 import ActivityLogRoutes from './admin/activity-log'
+
 
 const routes = [
     ...GuestRoutes, 
@@ -32,6 +35,7 @@ router.beforeEach((to, from, next) => {
     const isAuthenticated = store.state.user.isAuthenticated
     const hasToken = store.state.session.bearerToken
     const userId = store.state.user.userId
+    console.log({isAuthenticated}, {hasToken}, {userId} )
 
     if (to.meta.auth && !isAuthenticated) {
   	  next('/')
