@@ -87,7 +87,7 @@
                         @discountChange="addCoupon"
                         @printInvoice="printInvoice"
                         @loadExplorer="$router.push({name: 'TransactionExplorer'})"
-                        @changePaymentMethod="updateCartMethod"
+                        @changePaymentMethod="updatePaymentMethod"
                         @generateQrCode="generateQrCode"/>
                 </div>
                 <div :class="isActive('invoice') ? 'block' : 'hidden'">
@@ -147,8 +147,9 @@ export default defineComponent({
 					})
                 });
         },
-        async updateCartMethod(method: string): Promise<void> {
-            console.log('updateCartMethod')
+        async updatePaymentMethod(method: string): Promise<void> {
+            console.log('updatePaymentMethod')
+            this.$store.dispatch('pos/setPaymentMethod', method)
         },
         async fetchItems(query: any): Promise<void> {
             if (query){
@@ -200,13 +201,11 @@ export default defineComponent({
             }
             
             console.log('printInvoice')
-
                        
         },
         async addCoupon(discount: any): Promise<void> {
             this.discountCode = discount.toString()
             this.$store.dispatch('pos/setCoupon', discount.toString())
-            console.log('addCoupon')
         },
         
         setActive(tabItem: string): void {
@@ -219,7 +218,7 @@ export default defineComponent({
         
         async addCustomerToCart(): Promise<void>{
             let customer = this.customerId as string
-            console.log('addCustomerToCart')
+            this.$store.dispatch('pos/addCustomerToCart', { customerId: customer })
         },
         
         async addItemToCart(): Promise<void>{
