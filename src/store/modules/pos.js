@@ -19,6 +19,10 @@ const mutations = {
     },
     UPDATE_IS_PROCESSING_PAYMENT(state, payload){
         state.isProcessingPayment = payload
+    },
+    ADD_CUSTOMER_TO_CART(state, payload){
+        state.cart = {...state.cart, ...payload}
+        console.log(`added customer with id ${payload.customerId} to cart`)
     }
 }
 const actions = {
@@ -36,6 +40,9 @@ const actions = {
     },
     setIsProcessingPayment(context, payload){
         context.commit('UPDATE_IS_PROCESSING_PAYMENT', payload)
+    },
+    addCustomerToCart(context, payload){
+        context.commit('ADD_CUSTOMER_TO_CART', payload)
     }
 }
 const getters = {

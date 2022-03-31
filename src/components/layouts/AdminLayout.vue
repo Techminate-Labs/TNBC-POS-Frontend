@@ -17,8 +17,8 @@
                 :class="openAdditionalSideBar ? 'active' : ''" 
             />
             <div class="lg:w-9/12 flex-grow p-12" @click="handleCloseMenus">
-                <div class="bg-red-300 text-wite w-full py-2 px-8 text-lg" v-if="!isEmailVerified">
-                    <p>Your account has not been verified ! Please <button @click="requestEmailVerification" class="underline">send a verification email to your inbox.</button></p>
+                <div class="bg-red-300 w-full py-2 px-8 mb-2 text-lg" v-if="!isEmailVerified">
+                    <p>Your account has not been verified ! Please <a @click="requestEmailVerification" class="underline">send a verification email to your inbox.</a></p>
                 </div>
                 <Breadcrumb :key="$route.path" />
                 <router-view />

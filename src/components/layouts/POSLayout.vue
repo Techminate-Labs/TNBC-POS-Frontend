@@ -9,8 +9,8 @@
                 :class="toogleSideBar ? 'active' : ''" 
                 />
             <div class="w-9/12 flex-grow m-4" @click="openAdditionalSideBar = false">
-                <div class="bg-red-300 text-wite w-full py-2 px-8 text-lg" v-if="!isEmailVerified">
-                    <p>Your account has not been verified ! Please <button @click="requestEmailVerification" class="underline">send a verification email to your inbox.</button></p>
+                <div class="bg-red-300 w-full py-2 px-8 mb-2 text-lg" v-if="!isEmailVerified">
+                                        <p>Your account has not been verified ! Please <a @click="requestEmailVerification" class="underline">send a verification email to your inbox.</a></p>
                 </div>
                 <router-view />
             </div>
