@@ -15,6 +15,7 @@ const mutations = {
     },
     ADD_ITEM_TO_CART(state, payload) {
         const cart = state.cart
+        console.log(payload)
 
         if (cart.items.length) {
             const exists = cart.items.filter(i => i.item_id === payload.item_id)
