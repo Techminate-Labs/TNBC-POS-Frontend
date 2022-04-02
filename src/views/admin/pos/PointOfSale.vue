@@ -37,7 +37,7 @@
         <div class="bg-white rounded-md col-span-1 lg:col-span-4 lg:col-start-3 xl:col-span-3 xl:col-start-4">
             <div class="flex flex-col flex-nowrap w-full mb-4 p-4">
                 <Multiselect
-                    v-model="customerId"
+                    v-model="customerID"
                     @select="addCustomerToCart()"
                     :delay="0"
                     :filterResults="true"
@@ -123,9 +123,9 @@ export default defineComponent({
             popularItems: [] as Array<ItemObject>,
             activeItem: 'cart',
             itemId: '',
-            cart: {} as Cart,
+            cart: this.$store.getters['pos/cart'],
             invoice: this.$store.state.pos.cart,
-            customerId: '',
+            customerID: '',
             discountCode: '',
             paymentMethod: this.$store.state.pos.cart.payment_method ? this.$store.state.pos.cart.payment_method : 'fiat',
             isGeneratingInvoice: false
@@ -217,8 +217,8 @@ export default defineComponent({
         },
         
         async addCustomerToCart(): Promise<void>{
-            let customer = this.customerId as string
-            this.$store.dispatch('pos/addCustomerToCart', { customerId: customer })
+            let customer = this.customerID as string
+            this.$store.dispatch('pos/addCustomerToCart', customer)
         },
         
         async addItemToCart(): Promise<void>{
@@ -228,8 +228,9 @@ export default defineComponent({
         },
         
         async addPopularItemToCart(item: Object): Promise<void>{
-            
-            console.log('addPopularItemToCart', item)
+            this.$store.dispatch('pos/setIsProcessingPayment', false)
+
+            this.$store.dispatch('pos/addItemToCart', item)
         },
         
         generateQrCode(): void {
@@ -241,7 +242,10 @@ export default defineComponent({
     },
     created() {
         this.fetchPopularItems()
-        if (this.$store.getters['cart/isProcessingPayment']) this.cart = this.$store.state.pos.cart
+
+        if (this.$store.getters['cart/isProcessingPayment']) {
+            this.cart = this.$store.state.pos.cart
+        }
     }
 });
 </script>
