@@ -13,26 +13,26 @@
 					</tr>
 				</thead>
 				<tbody class="divide-y divide-gray-200">
-					<tr v-for="(item) in cart.cartItems" :key="item.id">
-						<td class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">{{ item.item_name }}</td>
+					<tr v-for="(item) in cart.items" :key="item.item_id">
+						<td class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">{{ item.name }}</td>
 						<td class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">{{ item.unit }}</td>
-						<td class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">{{ item.unit_price }}</td>
+						<td class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">{{ item.price }}</td>
 						<td class="w-full lg:w-auto px-6 py-4 whitespace-nowrap flex justify-around">
 							<button 
-								@click="reduceItemQuantity(item.qty, item.id)" 
+								@click="reduceItemQuantity(item.item_id, item.quantity)" 
 								class="text-4xl self-center font-mono bg-blue-900 hover:bg-blue-500 text-white rounded-full mr-2">
 								<MinusIcon class="w-6 h-6" />
 							</button>
-							<span class="text-lg mt-2">{{ item.qty }}</span>
+							<span class="text-lg mt-2">{{ item.quantity }}</span>
 							<button 
-								@click="augmentItemQuantity(item.qty, item.id)" 
+								@click="augmentItemQuantity(item.item_id)" 
 								class="text-4xl self-center font-mono bg-blue-900 hover:bg-blue-500 text-white rounded-full ml-2">
 								<PlusIcon class="w-6 h-6" />
 							</button>
 						</td>
-						<td class="w-full lg:w-auto px-6  whitespace-nowrap">{{ item.total }}</td>
+						<td class="w-full lg:w-auto px-6  whitespace-nowrap">{{ null }}</td>
 						<td class="w-full lg:w-auto p-3 whitespace-nowrap bg-red-800 text-center">
-							<DeleteIcon @click="deleteItem(item.id)" class="cursor-pointer text-white hover:text-blue-700 w-5 h-5" />
+							<DeleteIcon @click="deleteItem(item.item_id)" class="cursor-pointer text-white hover:text-blue-700 w-5 h-5" />
 						</td>
 					</tr>
 				</tbody>
@@ -42,35 +42,35 @@
 						<td></td>
 						<td></td>
 						<td></td>
-						<td colspan="2" class="px-6 text-right">{{ cart.subTotal }} TO DEFINE</td>
+						<td colspan="2" class="px-6 text-right">{{ null }} TO DEFINE</td>
 					</tr>
 					<tr>
 						<th class="px-6 py-2">Discount</th>
 						<td></td>
 						<td></td>
 						<td></td>
-						<td colspan="2" class="px-6 text-right">{{ cart.discount }} TO DEFINE</td>
+						<td colspan="2" class="px-6 text-right">{{ null }} TO DEFINE</td>
 					</tr>
 					<tr>
 						<th class="px-6 py-2">Tax</th>
 						<td></td>
 						<td></td>
 						<td></td>
-						<td colspan="2" class="px-6 text-right">{{ cart.tax }} TO DEFINE</td>
+						<td colspan="2" class="px-6 text-right">{{ null }} TO DEFINE</td>
 					</tr>
 					<tr>
 						<th class="px-6 py-2">Total</th>
 						<td></td>
 						<td></td>
 						<td></td>
-						<td colspan="2" class="px-6 text-right">{{ cart.total }} TO DEFINE</td>
+						<td colspan="2" class="px-6 text-right">{{ null }} TO DEFINE</td>
 					</tr>
 				</tfoot>
 			</table>
 		</div>
 		<div class="bg-red-800 text-white flex flex-nowrap justify-between px-6 py-4 rounded-b-md shadow-md">
 			<p>Total Payment</p>
-			<p>{{ cart.total }} TO DEFINE</p>
+			<p>{{ null }} TO DEFINE</p>
 		</div>
 	</div>
 </template>
@@ -92,52 +92,15 @@ export default defineComponent({
 	},
 	methods: {
 		async deleteItem(id: number): Promise<any> {
-			let token = this.$store.state.session.bearerToken
-			await CartService.deleteItem(id, token)
-				.then((res) => {
-					this.$emit('fetchCart')
-				})
-				.catch((e: Error) => {
-                    console.log(e);
-                });
+			this.$store.dispatch('pos/deleteCartItem', id)
+
 		},
-		async reduceItemQuantity(qty: number, id: number): Promise<any> {
-			let token = this.$store.state.session.bearerToken
-			if (qty > 1) {
-				qty -= 1
-				let body = {
-					qty: qty,
-					'_method': 'PUT'
-				}
-				await CartService.updateItem(body, id, token)
-					.then((res) => {
-						this.$emit('fetchCart')
-					})
-					.catch((e: Error) => {
-						console.log(e);
-					});
+		async augmentItemQuantity(id: number): Promise<any> {
+			this.$store.dispatch('pos/addQuantityToItem', id)
 			
-			} else if (qty = 1) {
-				this.deleteItem(id)
-			}
-		},
-		async augmentItemQuantity(qty: number, id: number): Promise<any> {
-			let token = this.$store.state.session.bearerToken
-			if (qty > 0) {
-				qty += 1
-				let body = {
-					qty: qty,
-					'_method': 'PUT'
-				}
-				await CartService.updateItem(body, id, token)
-					.then((res) => {
-						this.$emit('fetchCart')
-					})
-					.catch((e: Error) => {
-						console.log(e);
-					});
-			
-			}
+		},		
+		async reduceItemQuantity(id: number, quantity: number): Promise<any> {
+			this.$store.dispatch('pos/removeQuantityToItem', { id: id, quantity: quantity })
 			
 		}
 	}
