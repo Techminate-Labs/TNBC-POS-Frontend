@@ -3,7 +3,7 @@ const state = () => ({
             customerID: null,
             items: []
         },
-		coupon: '',
+		coupon: {},
         paymentType: 'tnbc',
 		isProcessingPayment: false
 	})
@@ -126,12 +126,23 @@ const getters = {
 
     },
     subtotal: (state) => {
-        return state.cart.items
-            .map(item => {
-                return item.price * item.quantity
-            
-            })
-            .reduce((item1, item2) => item1 + item2 )
+        if (state.cart.items.length) {
+            return state.cart.items
+                .map(item => {
+                    return item.price * item.quantity
+                
+                })
+                .reduce((item1, item2) => item1 + item2 )
+        }
+
+        return 0
+    },
+    discount: (state) => {
+        if (state.coupon) {
+            return state.coupon.discount
+        }
+
+        return null
     }
 }
 

@@ -42,21 +42,21 @@
 						<td></td>
 						<td></td>
 						<td></td>
-						<td colspan="2" class="px-6 text-right">{{ $store.getters['pos/subtotal'] }} {{ getCurrency }}</td>
+						<td colspan="2" class="px-6 text-right">{{ getSubtotal }} {{ getCurrency }}</td>
 					</tr>
 					<tr>
 						<th class="px-6 py-2">Discount</th>
 						<td></td>
 						<td></td>
 						<td></td>
-						<td colspan="2" class="px-6 text-right">{{ null }} {{ getCurrency }}</td>
+						<td colspan="2" class="px-6 text-right">{{ getDiscount }} {{ getCurrency }}</td>
 					</tr>
 					<tr>
 						<th class="px-6 py-2">Tax</th>
 						<td></td>
 						<td></td>
 						<td></td>
-						<td colspan="2" class="px-6 text-right">{{ null }} {{ getCurrency }}</td>
+						<td colspan="2" class="px-6 text-right">{{ getTax }} %</td>
 					</tr>
 					<tr>
 						<th class="px-6 py-2">Total</th>
@@ -107,6 +107,15 @@ export default defineComponent({
 	computed: {
 		getCurrency(): string {
 			return this.$store.getters['settings/currency']
+		},
+		getSubtotal(): number {
+			return this.$store.getters['pos/subtotal']
+		},
+		getDiscount(): number {
+			return this.$store.getters['pos/discount']
+		},
+		getTax(): number {
+			return this.$store.state.settings.taxRate
 		}
 	}
 })

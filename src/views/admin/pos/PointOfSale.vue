@@ -111,6 +111,7 @@ import CustomerForm from "@/components/pos/CustomerForm.vue"
 import ItemService from "@/services/items/ItemService";
 import CartService from "@/services/pos/CartService";
 import CustomerService from "@/services/pos/CustomerService";
+import CouponService from "@/services/items/CouponService";
 import { ItemObject } from '@/types/items/Items'
 import { Cart } from '@/types/pos/Cart'
 import Multiselect from '@vueform/multiselect'
@@ -205,7 +206,21 @@ export default defineComponent({
         },
         async addCoupon(discount: any): Promise<void> {
             this.discountCode = discount.toString()
-            this.$store.dispatch('pos/setCoupon', discount.toString())
+
+            // checking if discount code exists
+            const token = this.$store.state.session.bearerToken
+
+            await CouponService.list(`/couponList/?q=${this.discountCode}`, token)
+				.then((res: any) => {
+					if (res.data.data.length) {
+                        const coupon = res.data.data[0]
+                        this.$store.dispatch('pos/setCoupon', coupon)
+                    } else {
+                        console.log(`There's no such coupon!`)
+                    }
+				})
+				.catch(err => console.log(err))
+
         },
         
         setActive(tabItem: string): void {
