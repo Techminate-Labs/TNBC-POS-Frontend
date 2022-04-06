@@ -124,6 +124,14 @@ const getters = {
     cart: (state) => {
         return state.cart
 
+    },
+    subtotal: (state) => {
+        return state.cart.items
+            .map(item => {
+                return item.price * item.quantity
+            
+            })
+            .reduce((item1, item2) => item1 + item2 )
     }
 }
 

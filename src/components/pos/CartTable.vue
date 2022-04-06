@@ -42,35 +42,35 @@
 						<td></td>
 						<td></td>
 						<td></td>
-						<td colspan="2" class="px-6 text-right">{{ null }} TO DEFINE</td>
+						<td colspan="2" class="px-6 text-right">{{ $store.getters['pos/subtotal'] }} {{ getCurrency }}</td>
 					</tr>
 					<tr>
 						<th class="px-6 py-2">Discount</th>
 						<td></td>
 						<td></td>
 						<td></td>
-						<td colspan="2" class="px-6 text-right">{{ null }} TO DEFINE</td>
+						<td colspan="2" class="px-6 text-right">{{ null }} {{ getCurrency }}</td>
 					</tr>
 					<tr>
 						<th class="px-6 py-2">Tax</th>
 						<td></td>
 						<td></td>
 						<td></td>
-						<td colspan="2" class="px-6 text-right">{{ null }} TO DEFINE</td>
+						<td colspan="2" class="px-6 text-right">{{ null }} {{ getCurrency }}</td>
 					</tr>
 					<tr>
 						<th class="px-6 py-2">Total</th>
 						<td></td>
 						<td></td>
 						<td></td>
-						<td colspan="2" class="px-6 text-right">{{ null }} TO DEFINE</td>
+						<td colspan="2" class="px-6 text-right">{{ null }} {{ getCurrency }}</td>
 					</tr>
 				</tfoot>
 			</table>
 		</div>
 		<div class="bg-red-800 text-white flex flex-nowrap justify-between px-6 py-4 rounded-b-md shadow-md">
 			<p>Total Payment</p>
-			<p>{{ null }} TO DEFINE</p>
+			<p>{{ null }} {{ getCurrency }}</p>
 		</div>
 	</div>
 </template>
@@ -102,6 +102,11 @@ export default defineComponent({
 		async reduceItemQuantity(id: number, quantity: number): Promise<any> {
 			this.$store.dispatch('pos/removeQuantityToItem', { id: id, quantity: quantity })
 			
+		}
+	},
+	computed: {
+		getCurrency(): string {
+			return this.$store.getters['settings/currency']
 		}
 	}
 })
