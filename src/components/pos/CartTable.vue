@@ -49,28 +49,28 @@
 						<td></td>
 						<td></td>
 						<td></td>
-						<td colspan="2" class="px-6 text-right">{{ getDiscount }} {{ getCurrency }}</td>
+						<td colspan="2" class="px-6 text-right">- {{ getDiscount }} {{ getCurrency }}</td>
 					</tr>
 					<tr>
 						<th class="px-6 py-2">Tax</th>
 						<td></td>
 						<td></td>
 						<td></td>
-						<td colspan="2" class="px-6 text-right">{{ getTax }} %</td>
+						<td colspan="2" class="px-6 text-right">{{ getTax }} {{ getCurrency }}</td>
 					</tr>
 					<tr>
 						<th class="px-6 py-2">Total</th>
 						<td></td>
 						<td></td>
 						<td></td>
-						<td colspan="2" class="px-6 text-right">{{ null }} {{ getCurrency }}</td>
+						<td colspan="2" class="px-6 text-right">{{ getTotal }} {{ getCurrency }}</td>
 					</tr>
 				</tfoot>
 			</table>
 		</div>
 		<div class="bg-red-800 text-white flex flex-nowrap justify-between px-6 py-4 rounded-b-md shadow-md">
 			<p>Total Payment</p>
-			<p>{{ null }} {{ getCurrency }}</p>
+			<p>{{ getTotal }} {{ getCurrency }}</p>
 		</div>
 	</div>
 </template>
@@ -115,7 +115,20 @@ export default defineComponent({
 			return this.$store.getters['pos/discount']
 		},
 		getTax(): number {
-			return this.$store.state.settings.taxRate
+			const taxRate = this.$store.state.settings.taxRate
+			const subtotal = this.$store.getters['pos/subtotal']
+			const discount = this.$store.getters['pos/discount']
+		
+			return Math.ceil((subtotal - discount) * (taxRate / 100))
+		},
+		getTotal(): any {
+			const subtotal = this.$store.getters['pos/subtotal']
+			const taxRate = this.$store.state.settings.taxRate
+			const discount = this.$store.getters['pos/discount']
+
+			const tax = Math.ceil((subtotal - discount) * (taxRate / 100))
+
+			return subtotal - discount + tax
 		}
 	}
 })

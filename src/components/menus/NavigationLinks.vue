@@ -27,7 +27,6 @@ export default defineComponent({
     methods: {
         async logOutUser(): Promise<void> {
             let token = this.$store.state.session.bearerToken
-            console.log(token)
             await UserService.logout(token)
                 .then((response) => {
                     this.$toast.open({
@@ -35,12 +34,12 @@ export default defineComponent({
                         type: "info"
                     })
                     this.$router.push('/')
-                    this.$store.dispatch('setAuthentication', false)
+                    this.$store.dispatch('user/setAuthentication', false)
                 })
                 .catch(({response}) => {
                     if (response.status === 401){
                         this.$router.push('/')
-                        this.$store.dispatch('setAuthentication', false)
+                        this.$store.dispatch('user/setAuthentication', false)
                         return
                     }
                     this.$toast.open({

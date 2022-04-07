@@ -142,7 +142,7 @@ const getters = {
             return state.coupon.discount
         }
 
-        return null
+        return 0
     }
 }
 
