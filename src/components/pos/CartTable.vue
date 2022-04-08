@@ -127,24 +127,22 @@ export default defineComponent({
 			return this.$store.getters['settings/currency']
 		},
 		getSubtotal(): number {
-			return this.$store.getters['pos/subtotal']
+			return this.$store.getters['pos/subtotal'] ? this.$store.getters['pos/subtotal'] : 0
 		},
 		getDiscount(): number {
-			return this.$store.getters['pos/discount']
+			return this.$store.getters['pos/discount'] ? this.$store.getters['pos/discount'] : 0
 		},
 		getTax(): number {
-			const taxRate = this.$store.state.settings.taxRate
-			const subtotal = this.$store.getters['pos/subtotal']
-			const discount = this.$store.getters['pos/discount']
-		
+			const taxRate = this.$store.state.settings.taxRate ? this.$store.state.settings.taxRate : 0
+			const subtotal = this.getSubtotal
+			const discount = this.getDiscount
+
 			return Math.ceil((subtotal - discount) * (taxRate / 100))
 		},
 		getTotal(): any {
-			const subtotal = this.$store.getters['pos/subtotal']
-			const taxRate = this.$store.state.settings.taxRate
-			const discount = this.$store.getters['pos/discount']
-
-			const tax = Math.ceil((subtotal - discount) * (taxRate / 100))
+			const subtotal = this.getSubtotal
+			const discount = this.getDiscount
+			const tax = this.getTax
 
 			return subtotal - discount + tax
 		}
