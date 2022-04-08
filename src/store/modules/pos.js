@@ -39,6 +39,11 @@ const mutations = {
         item.quantity += 1
 
     },
+    UPDATE_QUANTITY_OF_ITEM(state, payload) {
+        let item = state.cart.items.filter(item => item.item_id === payload.id)[0]
+        item.quantity = payload.quantity
+
+    },
     REMOVE_QUANTITY_TO_ITEM(state, payload) {
         let item = state.cart.items.filter(item => item.item_id === payload)[0]
         item.quantity -= 1
@@ -80,6 +85,10 @@ const actions = {
     },
     addQuantityToItem(context, payload){
         context.commit('ADD_QUANTITY_TO_ITEM', payload)
+
+    },
+    updateQuantityOfItem(context, payload){
+        context.commit('UPDATE_QUANTITY_OF_ITEM', payload)
 
     },
     removeQuantityToItem(context, payload){

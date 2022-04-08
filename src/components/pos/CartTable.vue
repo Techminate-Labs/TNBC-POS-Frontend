@@ -23,7 +23,7 @@
 								class="text-4xl self-center font-mono bg-blue-800 hover:bg-blue-900 text-white rounded m-0 mr-4">
 								<MinusIcon class="w-8 h-8 m-2" />
 							</button>
-							<span class="text-lg mt-2">{{ item.quantity }}</span>
+							<input v-model.lazy="item.quantity" @input="changeItemQuantity($event, item.item_id)" type="number" class="text-lg mt-2 w-20 text-right" />
 							<button 
 								@click="augmentItemQuantity(item.item_id)" 
 								class="text-4xl self-center font-mono bg-blue-800 hover:bg-blue-900 text-white rounded m-0 ml-4">
@@ -91,17 +91,35 @@ export default defineComponent({
         },
 	},
 	methods: {
-		async deleteItem(id: number): Promise<any> {
+		deleteItem(id: number): void {
 			this.$store.dispatch('pos/deleteCartItem', id)
 
 		},
-		async augmentItemQuantity(id: number): Promise<any> {
+		augmentItemQuantity(id: number): void {
 			this.$store.dispatch('pos/addQuantityToItem', id)
 			
 		},		
-		async reduceItemQuantity(id: number, quantity: number): Promise<any> {
+		reduceItemQuantity(id: number, quantity: number): void {
 			this.$store.dispatch('pos/removeQuantityToItem', { id: id, quantity: quantity })
-			
+
+		},
+		changeItemQuantity(event: any, id: number): void {
+			let quantity = parseInt(event.target.value) as number | null
+
+			// check if input is empty
+			// in the case that's it's empty, assign null
+			// otherwise assign the same quantity
+			quantity = quantity == NaN ? null : quantity
+			if (quantity !== 0) {
+				this.$store.dispatch('pos/updateQuantityOfItem', { id: id, quantity: quantity })
+
+			// if the quantity is EXACTLY 0, then delete the product
+			} else if (quantity === 0) {
+				console.log('eq 0')
+				this.$store.dispatch('pos/deleteCartItem', id )
+
+			}
+
 		}
 	},
 	computed: {
