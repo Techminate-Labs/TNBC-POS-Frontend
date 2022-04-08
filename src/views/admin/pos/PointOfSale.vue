@@ -102,19 +102,22 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
+import Multiselect from '@vueform/multiselect'
+
+// components
 import ItemCard from "@/components/pos/ItemCard.vue"
 import CartTable from "@/components/pos/CartTable.vue"
 import Payments from "@/components/pos/Payments.vue"
 import Invoice from "@/components/pos/Invoice.vue"
 import CustomerForm from "@/components/pos/CustomerForm.vue"
 
+// types and services
 import ItemService from "@/services/items/ItemService";
-import CartService from "@/services/pos/CartService";
 import CustomerService from "@/services/pos/CustomerService";
+import CartService from "@/services/pos/CartService";
 import CouponService from "@/services/items/CouponService";
 import { ItemObject } from '@/types/items/Items'
-import { Cart } from '@/types/pos/Cart'
-import Multiselect from '@vueform/multiselect'
+
 
 export default defineComponent({
     name: 'PointOfSale',
@@ -149,8 +152,36 @@ export default defineComponent({
                 });
         },
         async updatePaymentMethod(method: string): Promise<void> {
-            console.log('updatePaymentMethod')
+            const currency = this.$store.state.settings.currency
+
+            if (currency === 'USD'){
+
+            } else {
+                await CartService.fetchExchangeRate(currency)
+                    .then((response) => {
+                        // get the USD rate
+                        const USDRate = response.rates.USD
+
+                        // convert all items' prices to USD
+                        this.convertPricesToUSD(USDRate)
+
+                        // convert USD Prices to TNBC
+                        this.convertPricesToTNBC()
+
+                    })
+            }
+
             this.$store.dispatch('pos/setPaymentMethod', method)
+
+        },
+        convertPricesToUSD(rate: number): void {
+            this.$store.dispatch('pos/convertPricesToUSD', rate)
+
+        },
+        convertPricesToTNBC(): void {
+            const TNBCRate = this.$store.state.settings.TNBCRate
+            this.$store.dispatch('pos/convertPricesToTNBC', TNBCRate)
+
         },
         async fetchItems(query: any): Promise<void> {
             if (query){

@@ -72,6 +72,21 @@ const mutations = {
     ADD_CUSTOMER_TO_CART(state, payload){
         state.cart.customerID = payload
 
+    },
+    CONVERT_PRICES_TO_USD(state, payload){
+        let items = state.cart.items
+
+        items.map((item) => {
+            console.log(item.price, payload)
+            item.price = Math.ceil(item.price * payload)
+        })
+    },
+    CONVERT_PRICES_TO_TNBC(state, payload){
+        let items = state.cart.items
+
+        items.map((item) => {
+            item.price = Math.ceil(item.price / payload)
+        })
     }
 }
 const actions = {
@@ -123,6 +138,13 @@ const actions = {
     addCustomerToCart(context, payload){
         context.commit('ADD_CUSTOMER_TO_CART', payload)
 
+    },
+    convertPricesToUSD(context, payload){
+        context.commit('CONVERT_PRICES_TO_USD', payload)
+
+    },
+    convertPricesToTNBC(context, payload){
+        context.commit('CONVERT_PRICES_TO_TNBC', payload)
     }
 }
 const getters = {
