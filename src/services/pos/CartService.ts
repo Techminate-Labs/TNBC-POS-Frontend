@@ -26,4 +26,10 @@ export default {
         return http.get(`/invoice/${params}`, { headers: { "Authorization": `Bearer ${token}` } });
     },
 
+    async fetchExchangeRate(currency: string): Promise<any> {
+        const response = fetch(`https://open.er-api.com/v6/latest/${currency}`, { mode: 'cors' })
+            .then(res => res.json())
+        return response
+    },
+
 }

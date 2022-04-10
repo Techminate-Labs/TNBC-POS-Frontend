@@ -249,6 +249,14 @@ export default defineComponent({
 			fd.append('store_logo', this.newStoreLogo)
 			fd.append('_method', 'PUT')
 
+			this.$store.dispatch('settings/setTaxRate', this.configuration.tax_rate)
+			this.$store.dispatch('settings/setTNBCRate', this.configuration.tnbc_rate)
+			this.$store.dispatch('settings/setCurrency', { 
+				currency: this.configuration.currency, 
+				currencySign: this.configuration.currency_symble  
+			})
+			this.$store.dispatch('settings/setTNBCRate', this.configuration.tnbc_rate)
+
 			let token = this.$store.state.session.bearerToken
 			await ConfigurationService.update(fd, token)
 				.then((json) => {

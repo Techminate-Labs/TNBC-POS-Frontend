@@ -23,7 +23,7 @@
 								class="text-4xl self-center font-mono bg-blue-800 hover:bg-blue-900 text-white rounded m-0 mr-4">
 								<MinusIcon class="w-8 h-8 m-2" />
 							</button>
-							<span class="text-lg mt-2">{{ item.quantity }}</span>
+							<input v-model.lazy="item.quantity" @input="changeItemQuantity($event, item.item_id)" type="number" class="text-lg mt-2 w-20 text-right" />
 							<button 
 								@click="augmentItemQuantity(item.item_id)" 
 								class="text-4xl self-center font-mono bg-blue-800 hover:bg-blue-900 text-white rounded m-0 ml-4">
@@ -42,35 +42,35 @@
 						<td></td>
 						<td></td>
 						<td></td>
-						<td colspan="2" class="px-6 text-right">{{ null }} TO DEFINE</td>
+						<td colspan="2" class="px-6 text-right">{{ getSubtotal }} {{ getCurrency }}</td>
 					</tr>
 					<tr>
 						<th class="px-6 py-2">Discount</th>
 						<td></td>
 						<td></td>
 						<td></td>
-						<td colspan="2" class="px-6 text-right">{{ null }} TO DEFINE</td>
+						<td colspan="2" class="px-6 text-right">- {{ getDiscount }} {{ getCurrency }}</td>
 					</tr>
 					<tr>
 						<th class="px-6 py-2">Tax</th>
 						<td></td>
 						<td></td>
 						<td></td>
-						<td colspan="2" class="px-6 text-right">{{ null }} TO DEFINE</td>
+						<td colspan="2" class="px-6 text-right">{{ getTax }} {{ getCurrency }}</td>
 					</tr>
 					<tr>
 						<th class="px-6 py-2">Total</th>
 						<td></td>
 						<td></td>
 						<td></td>
-						<td colspan="2" class="px-6 text-right">{{ null }} TO DEFINE</td>
+						<td colspan="2" class="px-6 text-right">{{ getTotal }} {{ getCurrency }}</td>
 					</tr>
 				</tfoot>
 			</table>
 		</div>
 		<div class="bg-red-800 text-white flex flex-nowrap justify-between px-6 py-4 rounded-b-md shadow-md">
 			<p>Total Payment</p>
-			<p>{{ null }} TO DEFINE</p>
+			<p>{{ getTotal }} {{ getCurrency }}</p>
 		</div>
 	</div>
 </template>
@@ -91,17 +91,60 @@ export default defineComponent({
         },
 	},
 	methods: {
-		async deleteItem(id: number): Promise<any> {
+		deleteItem(id: number): void {
 			this.$store.dispatch('pos/deleteCartItem', id)
 
 		},
-		async augmentItemQuantity(id: number): Promise<any> {
+		augmentItemQuantity(id: number): void {
 			this.$store.dispatch('pos/addQuantityToItem', id)
 			
 		},		
-		async reduceItemQuantity(id: number, quantity: number): Promise<any> {
+		reduceItemQuantity(id: number, quantity: number): void {
 			this.$store.dispatch('pos/removeQuantityToItem', { id: id, quantity: quantity })
-			
+
+		},
+		changeItemQuantity(event: any, id: number): void {
+			let quantity = parseInt(event.target.value) as number | null
+
+			// check if input is empty
+			// in the case that's it's empty, assign null
+			// otherwise assign the same quantity
+			quantity = quantity == NaN ? null : quantity
+			if (quantity !== 0) {
+				this.$store.dispatch('pos/updateQuantityOfItem', { id: id, quantity: quantity })
+
+			// if the quantity is EXACTLY 0, then delete the product
+			} else if (quantity === 0) {
+				console.log('eq 0')
+				this.$store.dispatch('pos/deleteCartItem', id )
+
+			}
+
+		}
+	},
+	computed: {
+		getCurrency(): string {
+			return this.$store.getters['settings/currency']
+		},
+		getSubtotal(): number {
+			return this.$store.getters['pos/subtotal'] ? this.$store.getters['pos/subtotal'] : 0
+		},
+		getDiscount(): number {
+			return this.$store.getters['pos/discount'] ? this.$store.getters['pos/discount'] : 0
+		},
+		getTax(): number {
+			const taxRate = this.$store.state.settings.taxRate ? this.$store.state.settings.taxRate : 0
+			const subtotal = this.getSubtotal
+			const discount = this.getDiscount
+
+			return Math.ceil((subtotal - discount) * (taxRate / 100))
+		},
+		getTotal(): any {
+			const subtotal = this.getSubtotal
+			const discount = this.getDiscount
+			const tax = this.getTax
+
+			return subtotal - discount + tax
 		}
 	}
 })

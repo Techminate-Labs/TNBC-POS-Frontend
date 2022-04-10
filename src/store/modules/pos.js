@@ -3,7 +3,7 @@ const state = () => ({
             customerID: null,
             items: []
         },
-		coupon: '',
+		coupon: {},
         paymentType: 'tnbc',
 		isProcessingPayment: false
 	})
@@ -39,6 +39,11 @@ const mutations = {
         item.quantity += 1
 
     },
+    UPDATE_QUANTITY_OF_ITEM(state, payload) {
+        let item = state.cart.items.filter(item => item.item_id === payload.id)[0]
+        item.quantity = payload.quantity
+
+    },
     REMOVE_QUANTITY_TO_ITEM(state, payload) {
         let item = state.cart.items.filter(item => item.item_id === payload)[0]
         item.quantity -= 1
@@ -67,6 +72,21 @@ const mutations = {
     ADD_CUSTOMER_TO_CART(state, payload){
         state.cart.customerID = payload
 
+    },
+    CONVERT_PRICES_TO_USD(state, payload){
+        let items = state.cart.items
+
+        items.map((item) => {
+            console.log(item.price, payload)
+            item.price = Math.ceil(item.price * payload)
+        })
+    },
+    CONVERT_PRICES_TO_TNBC(state, payload){
+        let items = state.cart.items
+
+        items.map((item) => {
+            item.price = Math.ceil(item.price / payload)
+        })
     }
 }
 const actions = {
@@ -80,6 +100,10 @@ const actions = {
     },
     addQuantityToItem(context, payload){
         context.commit('ADD_QUANTITY_TO_ITEM', payload)
+
+    },
+    updateQuantityOfItem(context, payload){
+        context.commit('UPDATE_QUANTITY_OF_ITEM', payload)
 
     },
     removeQuantityToItem(context, payload){
@@ -114,6 +138,13 @@ const actions = {
     addCustomerToCart(context, payload){
         context.commit('ADD_CUSTOMER_TO_CART', payload)
 
+    },
+    convertPricesToUSD(context, payload){
+        context.commit('CONVERT_PRICES_TO_USD', payload)
+
+    },
+    convertPricesToTNBC(context, payload){
+        context.commit('CONVERT_PRICES_TO_TNBC', payload)
     }
 }
 const getters = {
@@ -124,6 +155,25 @@ const getters = {
     cart: (state) => {
         return state.cart
 
+    },
+    subtotal: (state) => {
+        if (state.cart.items.length) {
+            return state.cart.items
+                .map(item => {
+                    return item.price * item.quantity
+                
+                })
+                .reduce((item1, item2) => item1 + item2 )
+        }
+
+        return 0
+    },
+    discount: (state) => {
+        if (state.coupon) {
+            return state.coupon.discount
+        }
+
+        return 0
     }
 }
 

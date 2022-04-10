@@ -5,7 +5,7 @@
 		<div class="py-2 text-blue-900">
 			<p class="mb-2 font-semibold">{{ item.name }}</p>
 			<p>
-				<span>{{ $store.getters.currency }}</span>
+				<span>{{ $store.getters['settings/currency'] }}</span>
 				{{ item.price }}</p>
 		</div>
 	</div>
