@@ -4,7 +4,7 @@ const state = () => ({
             items: []
         },
 		coupon: {},
-        paymentType: 'tnbc',
+        paymentType: null,
 		isProcessingPayment: false
 	})
 
@@ -15,7 +15,6 @@ const mutations = {
     },
     ADD_ITEM_TO_CART(state, payload) {
         const cart = state.cart
-        console.log(payload)
 
         if (cart.items.length) {
             const exists = cart.items.filter(i => i.item_id === payload.item_id)
@@ -83,9 +82,22 @@ const mutations = {
     },
     CONVERT_PRICES_TO_TNBC(state, payload){
         let items = state.cart.items
+        // console.log(items)
 
         items.map((item) => {
             item.price = Math.ceil(item.price / payload)
+        })
+    },
+    CONVERT_PRICES_TO_FIAT(state, payload){
+        let cartItems = state.cart.items
+        let items = payload
+        
+        cartItems.map((cartItem) => {
+            items.map((item) => {
+                if (cartItem.item_id === item.item_id){
+                    cartItem.price = item.price
+                }
+            })
         })
     }
 }
@@ -145,6 +157,9 @@ const actions = {
     },
     convertPricesToTNBC(context, payload){
         context.commit('CONVERT_PRICES_TO_TNBC', payload)
+    },
+    convertPricesToFIAT(context, payload){
+        context.commit('CONVERT_PRICES_TO_FIAT', payload)
     }
 }
 const getters = {

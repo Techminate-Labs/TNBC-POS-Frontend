@@ -70,7 +70,8 @@ export default defineComponent({
 	},
 	computed: {
 		isTNBCSelected(): boolean {
-			const method = this.$store.state.pos.cart.payment_method
+			const method = this.$store.state.pos.paymentType
+			console.log('method', method)
 			if (method === 'tnbc'){
 				return true
 			}
