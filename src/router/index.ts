@@ -35,7 +35,6 @@ router.beforeEach((to, from, next) => {
     const isAuthenticated = store.state.user.isAuthenticated
     const hasToken = store.state.session.bearerToken
     const userId = store.state.user.userId
-    console.log({isAuthenticated}, {hasToken}, {userId} )
 
     if (to.meta.auth && !isAuthenticated) {
   	  next('/')

@@ -171,7 +171,7 @@ export default defineComponent({
                 .catch((e: Error) => {
                     this.$toast.open({
                         message: `There was an iossue sending that email.`,
-                        type: "success"
+                        type: "error"
                     })
                     console.log(e)
                 });

@@ -151,28 +151,75 @@ export default defineComponent({
 					})
                 });
         },
-        async updatePaymentMethod(method: string): Promise<void> {
-            const currency = this.$store.state.settings.currency
+        updatePaymentMethod(method: string): void {
+            
+            console.log('updatePaymentMethod', method)
 
-            if (currency === 'USD'){
+            switch (method) {
+                case 'tnbc':
 
-            } else {
-                await CartService.fetchExchangeRate(currency)
-                    .then((response) => {
-                        // get the USD rate
-                        const USDRate = response.rates.USD
-
-                        // convert all items' prices to USD
-                        this.convertPricesToUSD(USDRate)
-
-                        // convert USD Prices to TNBC
-                        this.convertPricesToTNBC()
-
-                    })
+                    this.updateMethodToTNBC()
+                    break;
+                case 'fiat':
+                    this.updateMethodToFIAT()
+                    break;
+            
+                default:
+                    break;
             }
 
             this.$store.dispatch('pos/setPaymentMethod', method)
 
+        },
+        async updateMethodToFIAT(): Promise<void> {
+            const cartItems = this.$store.state.pos.cart.items
+            let token = this.$store.state.session.bearerToken
+            
+            const itemsArray: Array<any> = []
+
+            const items = cartItems.map((cartItem: any, index: number) => {
+                const item_id = cartItem.item_id
+
+                return ItemService.getById(item_id, token)
+                    .then((res: any) => {
+                        itemsArray.push(res.data)
+                    })
+                    .catch((err: any) => console.log(err))
+            })
+
+            return Promise.all(items).then(() => {
+                this.$store.dispatch('pos/convertPricesToFIAT', itemsArray)
+            });
+        },
+        async getItemById(id: number): Promise<void> {
+        },
+        async updateMethodToTNBC(): Promise<void> {
+            const currency = this.$store.state.settings.currency
+            if (currency === 'USD'){
+
+                this.convertPricesToTNBC()
+            } else {
+                try {
+                    const exchange = await CartService.fetchExchangeRate(currency)
+
+                    // get the USD rate
+                    const USDRate = exchange.rates.USD
+                    // convert all items' prices to USD
+                    this.convertPricesToUSD(USDRate)
+                    // convert USD Prices to TNBC
+                    this.convertPricesToTNBC()
+
+                } catch (error){
+
+                    this.$toast.open({
+                        message: `There was an error feching the exchange rate.`,
+                        type: "error"
+                    })
+
+                    console.log(error)
+
+                }
+            }
         },
         convertPricesToUSD(rate: number): void {
             this.$store.dispatch('pos/convertPricesToUSD', rate)
