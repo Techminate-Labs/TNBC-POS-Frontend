@@ -18,11 +18,6 @@ export default createStore({
         },
         session: {
             bearerToken: '',
-        },
-        pos: {
-            cart: {},
-            coupon: '',
-            isProcessingPayment: false
         }
     },
     mutations: {

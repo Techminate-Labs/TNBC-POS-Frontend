@@ -1,13 +1,18 @@
+import { Cart, CartItems } from '@/types/pos/Cart'
+
 export const PosModule = {
-	namespaced: false,
+	namespaced: true,
 	state: () => ({
-		cart: {},
-		coupon: '',
-		isProcessingPayment: false
+		cart: {} as Cart,
+		coupon: '' as string,
+		isProcessingPayment: false as boolean
 	}),
 	mutations: {
 		UPDATE_CART(state: any, payload: any){
-            state.cart = payload
+            state.cart = {...state.cart, payload}
+        },
+		ADD_ITEM_TO_CART(state: any, payload: CartItems){
+            state.cart.cartItems.push(payload)
         },
         UPDATE_INVOICE_NUMBER(state: any, payload: any){
             state.cart = {...state.cart, ...payload}
@@ -25,6 +30,9 @@ export const PosModule = {
 	action: {
 		setCart(context: any, payload: any){
             context.commit('UPDATE_CART', payload)
+        },
+        addItemToCart(context: any, payload: any){
+            context.commit('ADD_ITEM_TO_CART', payload)
         },
         setInvoiceNumber(context: any, payload: any){
             context.commit('UPDATE_INVOICE_NUMBER', payload)

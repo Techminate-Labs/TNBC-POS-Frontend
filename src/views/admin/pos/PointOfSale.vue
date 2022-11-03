@@ -4,7 +4,7 @@
             <div class="flex flex-col flex-nowrap w-full mb-4 p-4">
                 <Multiselect
                     v-model="itemId"
-                    @select="addItemToCart()"
+                    @select="handleAddItemToCart()"
                     :delay="0"
                     :filterResults="true"
                     :resolveOnLoad="true"
@@ -102,17 +102,21 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { mapActions } from 'vuex';
+
+/* Components */
 import ItemCard from "@/components/pos/ItemCard.vue"
 import CartTable from "@/components/pos/CartTable.vue"
 import Payments from "@/components/pos/Payments.vue"
 import Invoice from "@/components/pos/Invoice.vue"
 import CustomerForm from "@/components/pos/CustomerForm.vue"
 
+/* Types and Services */
 import ItemService from "@/services/items/ItemService";
 import CartService from "@/services/pos/CartService";
 import CustomerService from "@/services/pos/CustomerService";
 import { ItemObject } from '@/types/items/Items'
-import { Cart } from '@/types/pos/Cart'
+import { Cart, CartItems } from '@/types/pos/Cart'
 import Multiselect from '@vueform/multiselect'
 
 export default defineComponent({
@@ -123,7 +127,7 @@ export default defineComponent({
             popularItems: [] as Array<ItemObject>,
             activeItem: 'cart',
             itemId: '',
-            cart: {} as Cart,
+            cart: this.$store.state.pos.cart as Cart,
             invoice: this.$store.state.pos.cart,
             customerId: '',
             discountCode: '',
@@ -132,6 +136,13 @@ export default defineComponent({
         }
     },
     methods: {
+        ...mapActions([
+            'pos/ADD_ITEM_TO_CART',
+            'pos/setInvoiceNumber',
+            'pos/setPaymentMethod',
+            'pos/setCoupon',
+            'pos/setIsProcessingPayment'
+        ]), 
         async fetchPopularItems(): Promise<void> {
             let token = this.$store.state.session.bearerToken
             let url = `/itemList?limit=0`
@@ -199,9 +210,7 @@ export default defineComponent({
                 return
             }
             
-            console.log('printInvoice')
-
-                       
+            console.log('printInvoice')                       
         },
         async addCoupon(discount: any): Promise<void> {
             this.discountCode = discount.toString()
@@ -222,15 +231,17 @@ export default defineComponent({
             console.log('addCustomerToCart')
         },
         
-        async addItemToCart(): Promise<void>{
+        async handleAddItemToCart(): Promise<void>{
             this.$store.dispatch('setIsProcessingPayment', false)
 
             console.log('addItemToCart')
         },
         
-        async addPopularItemToCart(item: Object): Promise<void>{
-            
+        async addPopularItemToCart(item: CartItems): Promise<void>{
             console.log('addPopularItemToCart', item)
+
+            // this.$store.dispatch('pos/setIsProcessingPayment', false)
+            this.$store.commit('pos/ADD_ITEM_TO_CART', item)
         },
         
         generateQrCode(): void {
