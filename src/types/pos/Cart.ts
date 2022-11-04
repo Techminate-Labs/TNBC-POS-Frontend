@@ -1,12 +1,9 @@
 export interface CartItems {
-	id: number,
-	cart_id: number,
 	item_id: number,
 	item_name: string,
 	unit: string,
 	unit_price: number,
-	qty: number,
-	total: number
+	qty: number
 } 
 
 export interface Cart {

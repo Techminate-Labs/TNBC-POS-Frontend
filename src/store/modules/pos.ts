@@ -14,6 +14,20 @@ export const PosModule = {
 		ADD_ITEM_TO_CART(state: any, payload: CartItems){
             state.cart.cartItems.push(payload)
         },
+		REMOVE_ITEM_FROM_CART(state: any, item_id: number){
+            const filteredCartItems = state.cart.cartItems.filter((item: CartItems) => {
+                return item.item_id !== item_id
+            })
+            
+            state.cart.cartItems = filteredCartItems
+
+        },
+		ADD_QUANTITY_TO_CART_ITEM(state: any, payload: CartItems){
+            // state.cart.cartItems.push(payload)
+        },
+		REMOVE_QUANTITY_TO_CART_ITEM(state: any, payload: CartItems){
+            // state.cart.cartItems.push(payload)
+        },
         UPDATE_INVOICE_NUMBER(state: any, payload: any){
             state.cart = {...state.cart, ...payload}
         },

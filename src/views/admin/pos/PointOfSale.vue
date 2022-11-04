@@ -115,7 +115,7 @@ import CustomerForm from "@/components/pos/CustomerForm.vue"
 import ItemService from "@/services/items/ItemService";
 import CartService from "@/services/pos/CartService";
 import CustomerService from "@/services/pos/CustomerService";
-import { ItemObject } from '@/types/items/Items'
+import { ItemObject, SingleItem } from '@/types/items/Items'
 import { Cart, CartItems } from '@/types/pos/Cart'
 import Multiselect from '@vueform/multiselect'
 
@@ -137,7 +137,7 @@ export default defineComponent({
     },
     methods: {
         ...mapActions([
-            'pos/ADD_ITEM_TO_CART',
+            // 'pos/ADD_ITEM_TO_CART',
             'pos/setInvoiceNumber',
             'pos/setPaymentMethod',
             'pos/setCoupon',
@@ -237,11 +237,18 @@ export default defineComponent({
             console.log('addItemToCart')
         },
         
-        async addPopularItemToCart(item: CartItems): Promise<void>{
+        async addPopularItemToCart(item: SingleItem): Promise<void>{
             console.log('addPopularItemToCart', item)
 
-            // this.$store.dispatch('pos/setIsProcessingPayment', false)
-            this.$store.commit('pos/ADD_ITEM_TO_CART', item)
+            this.$store.dispatch('pos/setIsProcessingPayment', false)
+            const cartItem = {
+                item_id: item.item_id,
+                item_name: item.name,
+                unit: item.unit,
+                unit_price: item.price,
+                qty: 1
+            }
+            this.$store.commit('pos/ADD_ITEM_TO_CART', cartItem)
         },
         
         generateQrCode(): void {

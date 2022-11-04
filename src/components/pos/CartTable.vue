@@ -32,7 +32,7 @@
 						</td>
 						<td class="w-full lg:w-auto px-6  whitespace-nowrap">{{ item.total }}</td>
 						<td class="w-full lg:w-auto p-3 whitespace-nowrap bg-red-800 text-center">
-							<DeleteIcon @click="deleteItem(item.id)" class="cursor-pointer text-white hover:text-blue-700 w-5 h-5" />
+							<DeleteIcon @click="deleteItem(item.item_id)" class="cursor-pointer text-white hover:text-blue-700 w-5 h-5" />
 						</td>
 					</tr>
 				</tbody>
@@ -91,15 +91,8 @@ export default defineComponent({
         },
 	},
 	methods: {
-		async deleteItem(id: number): Promise<any> {
-			let token = this.$store.state.session.bearerToken
-			await CartService.deleteItem(id, token)
-				.then((res) => {
-					this.$emit('fetchCart')
-				})
-				.catch((e: Error) => {
-                    console.log(e);
-                });
+		async deleteItem(item_id: number): Promise<any> {
+			this.$store.commit('pos/REMOVE_ITEM_FROM_CART', item_id)
 		},
 		async reduceItemQuantity(qty: number, id: number): Promise<any> {
 			let token = this.$store.state.session.bearerToken
