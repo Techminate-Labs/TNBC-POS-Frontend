@@ -13,19 +13,19 @@
 					</tr>
 				</thead>
 				<tbody class="divide-y divide-gray-200">
-					<tr v-for="(item) in cart.cartItems" :key="item.id">
+					<tr v-for="(item) in cart.cartItems" :key="item.item_id">
 						<td class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">{{ item.item_name }}</td>
 						<td class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">{{ item.unit }}</td>
 						<td class="w-full lg:w-auto px-6 py-4 whitespace-nowrap">{{ item.unit_price }}</td>
 						<td class="w-full lg:w-auto px-6 py-4 whitespace-nowrap flex justify-around">
 							<button 
-								@click="reduceItemQuantity(item.qty, item.id)" 
+								@click="reduceItemQuantity(item.qty, item.item_id)" 
 								class="text-4xl self-center font-mono bg-blue-900 hover:bg-blue-500 text-white rounded-full mr-2">
 								<MinusIcon class="w-6 h-6" />
 							</button>
 							<span class="text-lg mt-2">{{ item.qty }}</span>
 							<button 
-								@click="augmentItemQuantity(item.qty, item.id)" 
+								@click="augmentItemQuantity(item.qty, item.item_id)" 
 								class="text-4xl self-center font-mono bg-blue-900 hover:bg-blue-500 text-white rounded-full ml-2">
 								<PlusIcon class="w-6 h-6" />
 							</button>
@@ -92,44 +92,19 @@ export default defineComponent({
 	},
 	methods: {
 		async deleteItem(item_id: number): Promise<any> {
-			this.$store.commit('pos/REMOVE_ITEM_FROM_CART', item_id)
+			this.$store.dispatch('pos/removeItemFromCart', item_id)
 		},
 		async reduceItemQuantity(qty: number, id: number): Promise<any> {
-			let token = this.$store.state.session.bearerToken
-			if (qty > 1) {
-				qty -= 1
-				let body = {
-					qty: qty,
-					'_method': 'PUT'
-				}
-				await CartService.updateItem(body, id, token)
-					.then((res) => {
-						this.$emit('fetchCart')
-					})
-					.catch((e: Error) => {
-						console.log(e);
-					});
 			
+			if (qty > 1) {
+				this.$store.dispatch('pos/removeQuantityFromCartItem', id)
 			} else if (qty = 1) {
 				this.deleteItem(id)
 			}
 		},
 		async augmentItemQuantity(qty: number, id: number): Promise<any> {
-			let token = this.$store.state.session.bearerToken
 			if (qty > 0) {
-				qty += 1
-				let body = {
-					qty: qty,
-					'_method': 'PUT'
-				}
-				await CartService.updateItem(body, id, token)
-					.then((res) => {
-						this.$emit('fetchCart')
-					})
-					.catch((e: Error) => {
-						console.log(e);
-					});
-			
+				this.$store.dispatch('pos/addQuantityToCartItem', id)
 			}
 			
 		}

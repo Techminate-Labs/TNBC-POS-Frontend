@@ -241,14 +241,8 @@ export default defineComponent({
             console.log('addPopularItemToCart', item)
 
             this.$store.dispatch('pos/setIsProcessingPayment', false)
-            const cartItem = {
-                item_id: item.item_id,
-                item_name: item.name,
-                unit: item.unit,
-                unit_price: item.price,
-                qty: 1
-            }
-            this.$store.commit('pos/ADD_ITEM_TO_CART', cartItem)
+
+            this.$store.dispatch('pos/addItemToCart', item)
         },
         
         generateQrCode(): void {

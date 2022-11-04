@@ -1,4 +1,5 @@
 import { Cart, CartItems } from '@/types/pos/Cart'
+import { SingleItem } from '@/types/items/Items'
 
 export const PosModule = {
 	namespaced: true,
@@ -22,11 +23,22 @@ export const PosModule = {
             state.cart.cartItems = filteredCartItems
 
         },
-		ADD_QUANTITY_TO_CART_ITEM(state: any, payload: CartItems){
-            // state.cart.cartItems.push(payload)
+		ADD_QUANTITY_TO_CART_ITEM(state: any, item_id: number){
+            state.cart.cartItems.map((item: CartItems) => {
+                if (item.item_id === item_id){
+                    item.qty += 1
+                }
+            })
         },
-		REMOVE_QUANTITY_TO_CART_ITEM(state: any, payload: CartItems){
-            // state.cart.cartItems.push(payload)
+		REMOVE_QUANTITY_FROM_CART_ITEM(state: any, item_id: number){
+            state.cart.cartItems.map((item: CartItems) => {
+                if (item.item_id === item_id){
+                    if (item.qty <= 0)
+                        return
+
+                    item.qty -= 1
+                }
+            })
         },
         UPDATE_INVOICE_NUMBER(state: any, payload: any){
             state.cart = {...state.cart, ...payload}
@@ -45,8 +57,32 @@ export const PosModule = {
 		setCart(context: any, payload: any){
             context.commit('UPDATE_CART', payload)
         },
-        addItemToCart(context: any, payload: any){
-            context.commit('ADD_ITEM_TO_CART', payload)
+        addItemToCart(context: any, payload: SingleItem){
+            let stateCart = context.state.cart
+            const cartItem: CartItems = {
+                item_id: payload.item_id,
+                item_name: payload.name,
+                unit: payload.unit,
+                unit_price: payload.price,
+                qty: 1
+            }
+            if (stateCart.cartItems.length) {
+                const exists = stateCart.cartItems.filter((i: { item_id: Number }) => i.item_id === cartItem.item_id)
+                if (exists.length) {
+                    context.commit('ADD_QUANTITY_TO_CART_ITEM', cartItem.item_id)
+                }
+            }
+            console.log(stateCart.cartItems)
+            context.commit('ADD_ITEM_TO_CART', cartItem)
+        },
+        removeItemFromCart(context: any, payload: any){
+            context.commit('REMOVE_ITEM_FROM_CART', payload)
+        },
+        addQuantityToCartItem(context: any, item_id: any){
+            context.commit('ADD_QUANTITY_TO_CART_ITEM', item_id)
+        },
+        removeQuantityFromCartItem(context: any, payload: any){
+            context.commit('REMOVE_QUANTITY_FROM_CART_ITEM', payload)
         },
         setInvoiceNumber(context: any, payload: any){
             context.commit('UPDATE_INVOICE_NUMBER', payload)
