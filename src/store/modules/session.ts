@@ -6,5 +6,5 @@ export const SessionModule = {
 		plum: true
 	}),
 	mutations: {},
-	action: {}
+	actions: {}
 }

@@ -6,5 +6,5 @@ export const UserModule = {
       plum: true
     }),
     mutations: {},
-    action: {}
+    actions: {}
 }

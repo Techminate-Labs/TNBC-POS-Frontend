@@ -11,8 +11,8 @@ export const PosModule = {
 		UPDATE_CART(state: any, payload: any){
             state.cart = {...state.cart, payload}
         },
-		ADD_ITEM_TO_CART(state: any, payload: CartItems){
-            state.cart.cartItems.push(payload)
+		ADD_ITEM_TO_CART(state: any, cartItem: CartItems){
+            state.cart.cartItems.push(cartItem)
         },
 		REMOVE_ITEM_FROM_CART(state: any, item_id: number){
             const filteredCartItems = state.cart.cartItems.filter((item: CartItems) => {
@@ -41,7 +41,7 @@ export const PosModule = {
             state.isProcessingPayment = payload
         }
 	},
-	action: {
+	actions: {
 		setCart(context: any, payload: any){
             context.commit('UPDATE_CART', payload)
         },

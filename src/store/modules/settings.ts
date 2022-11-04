@@ -12,7 +12,7 @@ export const SettingsModule = {
 			state.currencySign = payload
 		}
 	},
-	action: {
+	actions: {
 		setCurrency(context: any, payload: any){
 			context.commit('UPDATE_CURRENCY', payload.currency)
 			context.commit('UPDATE_CURRENCY_SIGN', payload.currencySign)
