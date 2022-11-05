@@ -82,7 +82,7 @@
             </div>
             <div class="w-full rounded-xl shadow-md px-2 pt-1">
                 <div :class="isActive('cart') ? 'block' : 'hidden'">
-                    <CartTable :cart="cart" />
+                    <CartTable />
                     <Payments 
                         @discountChange="addCoupon"
                         @printInvoice="printInvoice"

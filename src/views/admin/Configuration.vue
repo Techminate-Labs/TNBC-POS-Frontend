@@ -251,12 +251,13 @@ export default defineComponent({
 
 			let token = this.$store.state.session.bearerToken
 			await ConfigurationService.update(fd, token)
-				.then((json) => {
-					console.log('json', json)
+				.then((response) => {
+					let res =  response.data
 					this.$toast.open({
 						message: `Your configuration has been updated.`,
 						type: "success"
 					})
+					this.$store.dispatch('setConfiguration', res)
 				})
 				.catch(({ response }) => {
 					this.$toast.open({

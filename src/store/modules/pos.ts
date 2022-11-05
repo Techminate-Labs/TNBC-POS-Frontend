@@ -106,5 +106,13 @@ export const PosModule = {
 		isProcessingPayment: (state: any): boolean => {
             return state.isProcessingPayment
         },
+        cartTotal: (state: any): number => {
+            const total = state.cart.cartItems.map((item: CartItems) => {
+                item.unit_price * item.qty
+            })
+
+            console.log(total)
+            return 0
+        }
 	}
 }

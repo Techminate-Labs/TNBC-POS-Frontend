@@ -89,12 +89,6 @@ import { Cart } from '@/types/pos/Cart'
 export default defineComponent({
 	name: 'CartTable',
 	components: { DeleteIcon, PlusIcon, MinusIcon },
-	props: {
-		cart: {
-			required: false,
-			type: Object
-        },
-	},
 	data(){
         return {
             cart: this.$store.state.pos.cart as Cart
@@ -118,6 +112,12 @@ export default defineComponent({
 			}
 			
 		}
+	},
+	computed: {
+		getCartTotal () {
+			return this.$store.getters.cartTotal()
+		}
+		
 	}
 })
 </script>
