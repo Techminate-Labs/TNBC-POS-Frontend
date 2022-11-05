@@ -76,10 +76,15 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
+
+/** Components */
 import DeleteIcon from "@/components/icons/DeleteIcon.vue"
 import CartService from '@/services/pos/CartService';
 import PlusIcon from "@/components/icons/PlusIcon.vue"
 import MinusIcon from "@/components/icons/MinusIcon.vue"
+
+/** Types */
+import { Cart } from '@/types/pos/Cart'
 
 export default defineComponent({
 	name: 'CartTable',
@@ -90,6 +95,11 @@ export default defineComponent({
 			type: Object
         },
 	},
+	data(){
+        return {
+            cart: this.$store.state.pos.cart as Cart
+        }
+    },
 	methods: {
 		async deleteItem(item_id: number): Promise<any> {
 			this.$store.dispatch('pos/removeItemFromCart', item_id)

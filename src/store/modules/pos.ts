@@ -66,14 +66,19 @@ export const PosModule = {
                 unit_price: payload.price,
                 qty: 1
             }
+            console.log('cartItems length', stateCart.cartItems.length);
+            
             if (stateCart.cartItems.length) {
                 const exists = stateCart.cartItems.filter((i: { item_id: Number }) => i.item_id === cartItem.item_id)
+                console.log('exists length', exists.length);
                 if (exists.length) {
                     context.commit('ADD_QUANTITY_TO_CART_ITEM', cartItem.item_id)
+                } else {
+                    context.commit('ADD_ITEM_TO_CART', cartItem)
                 }
+            } else {
+                context.commit('ADD_ITEM_TO_CART', cartItem)
             }
-            console.log(stateCart.cartItems)
-            context.commit('ADD_ITEM_TO_CART', cartItem)
         },
         removeItemFromCart(context: any, payload: any){
             context.commit('REMOVE_ITEM_FROM_CART', payload)
