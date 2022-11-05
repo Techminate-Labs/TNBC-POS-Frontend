@@ -106,13 +106,27 @@ export const PosModule = {
 		isProcessingPayment: (state: any): boolean => {
             return state.isProcessingPayment
         },
-        cartTotal: (state: any): number => {
-            const total = state.cart.cartItems.map((item: CartItems) => {
-                item.unit_price * item.qty
-            })
+        cartSubtotal: (state: any): number => {
+            const cartHasItems = state.cart.cartItems.length;
+            let total = 0;
+            if (cartHasItems) {
+                state.cart.cartItems.map((item: CartItems) => {
+                    total += item.unit_price * item.qty
+                })
+            }
 
-            console.log(total)
-            return 0
-        }
+            return total
+        },
+        cartTax: (state: any, getters: any, rootState: any): number => {
+            const subTotal = getters.cartSubtotal
+            const taxRate = rootState.settings.taxRate / 100
+            console.log(subTotal, taxRate)
+            return subTotal * taxRate
+        },
+        cartTotal: (state: any, getters: any, rootState: any): number => {
+            const subTotal = getters.cartSubtotal
+            const taxTotal = getters.cartTax
+            return subTotal + taxTotal
+        },
 	}
 }

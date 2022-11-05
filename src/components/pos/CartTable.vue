@@ -30,7 +30,7 @@
 								<PlusIcon class="w-6 h-6" />
 							</button>
 						</td>
-						<td class="w-full lg:w-auto px-6  whitespace-nowrap">{{ item.total }}</td>
+						<td class="w-full lg:w-auto px-6  whitespace-nowrap">{{ item.unit_price * item.qty }}</td>
 						<td class="w-full lg:w-auto p-3 whitespace-nowrap bg-red-800 text-center">
 							<DeleteIcon @click="deleteItem(item.item_id)" class="cursor-pointer text-white hover:text-blue-700 w-5 h-5" />
 						</td>
@@ -42,7 +42,7 @@
 						<td></td>
 						<td></td>
 						<td></td>
-						<td colspan="2" class="px-6 text-right">{{ cart.subTotal }} {{ $store.getters.cartCurrency(cart.payment_method) }}</td>
+						<td colspan="2" class="px-6 text-right">{{ getCartSubtotal }} {{ $store.getters.cartCurrency(cart.payment_method) }}</td>
 					</tr>
 					<tr>
 						<th class="px-6 py-2">Discount</th>
@@ -56,21 +56,21 @@
 						<td></td>
 						<td></td>
 						<td></td>
-						<td colspan="2" class="px-6 text-right">{{ cart.tax }} {{ $store.getters.cartCurrency(cart.payment_method) }}</td>
+						<td colspan="2" class="px-6 text-right">{{ getCartTax }} {{ $store.getters.cartCurrency(cart.payment_method) }}</td>
 					</tr>
 					<tr>
 						<th class="px-6 py-2">Total</th>
 						<td></td>
 						<td></td>
 						<td></td>
-						<td colspan="2" class="px-6 text-right">{{ cart.total }} {{ $store.getters.cartCurrency(cart.payment_method) }}</td>
+						<td colspan="2" class="px-6 text-right">{{ getCartTotal }} {{ $store.getters.cartCurrency(cart.payment_method) }}</td>
 					</tr>
 				</tfoot>
 			</table>
 		</div>
 		<div class="bg-red-800 text-white flex flex-nowrap justify-between px-6 py-4 rounded-b-md shadow-md">
 			<p>Total Payment</p>
-			<p>{{ cart.total }} {{ $store.getters.cartCurrency('tnbc') }}</p>
+			<p>{{ getCartTotal }} {{ $store.getters.cartCurrency('tnbc') }}</p>
 		</div>
 	</div>
 </template>
@@ -114,9 +114,18 @@ export default defineComponent({
 		}
 	},
 	computed: {
-		getCartTotal () {
-			return this.$store.getters.cartTotal()
-		}
+		getCartSubtotal() {
+			console.log('getCartTotal', this.$store.getters['pos/cartTotal'])
+			return this.$store.getters['pos/cartSubtotal']
+		},
+		getCartTax() {
+			console.log('getCartTotal', this.$store.getters['pos/cartTax'])
+			return this.$store.getters['pos/cartTax']
+		},
+		getCartTotal() {
+			console.log('getCartTotal', this.$store.getters['pos/cartTotal'])
+			return this.$store.getters['pos/cartTotal']
+		},
 		
 	}
 })
