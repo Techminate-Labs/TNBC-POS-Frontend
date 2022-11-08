@@ -42,6 +42,9 @@ export const PosModule = {
                 }
             })
         },
+		REMOVE_QUANTITY_TO_CART_ITEM(state: any, payload: CartItems){
+            // state.cart.cartItems.push(payload)
+        },
         UPDATE_INVOICE_NUMBER(state: any, payload: any){
             state.cart = {...state.cart, ...payload}
         },
