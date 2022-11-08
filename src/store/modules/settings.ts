@@ -35,8 +35,6 @@ export const SettingsModule = {
 	},
 	getters: {
         currency: (state: any): string => {
-			console.log('called currency getters')
-			console.log(`${state.currencySign}${state.currency}`)
             return `${state.currencySign}${state.currency}`
         },
 		cartCurrency: (state: any) => (payment_method: string): string => {

@@ -13,13 +13,13 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { ItemObject } from '@/types/items/Items'
+import { SingleItem } from '@/types/items/Items'
 
 export default defineComponent({
 	name: 'ProductCard',
 	props: {
 		item: {
-			type: Object as PropType<ItemObject>,
+			type: Object as PropType<SingleItem>,
 			required: true
 		}
 	},
