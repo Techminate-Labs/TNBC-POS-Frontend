@@ -1,10 +1,10 @@
 <template>
     <div class="grid grid-cols-1 lg:grid-cols-6 gap-3">
-        <div class="bg-white rounded-md shadow-md col-span-1 lg:col-span-2 xl:col-span-2">
+        <div class="bg-white rounded-md shadow-md col-span-1 lg:col-span-2 xl:col-span-3">
             <div class="flex flex-col flex-nowrap w-full mb-4 p-4">
                 <Multiselect
                     v-model="itemId"
-                    @select="addItemToCart()"
+                    @select="handleAddItemToCart()"
                     :delay="0"
                     :filterResults="true"
                     :resolveOnLoad="true"
@@ -28,16 +28,16 @@
                         </template>
                 </Multiselect>
             </div>
-            <div class="grid grid-cols-3 lg:grid-cols-1 xl:grid-cols-2 rounded-xl gap-3 p-4">
+            <div class="grid grid-cols-3 lg:grid-cols-1 xl:grid-cols-3 rounded-xl gap-3 p-4">
                 <div v-for="(item, index) in popularItems" :key="index">
                     <ItemCard :item="item" @click="addPopularItemToCart(item)" />
                 </div>
             </div>
         </div>
-        <div class="bg-white rounded-md col-span-1 lg:col-span-4 lg:col-start-3 xl:col-span-4 xl:col-start-3">
+        <div class="bg-white rounded-md col-span-1 lg:col-span-4 lg:col-start-3 xl:col-span-3 xl:col-start-4">
             <div class="flex flex-col flex-nowrap w-full mb-4 p-4">
                 <Multiselect
-                    v-model="customerID"
+                    v-model="customerId"
                     @select="addCustomerToCart()"
                     :delay="0"
                     :filterResults="true"
@@ -82,7 +82,7 @@
             </div>
             <div class="w-full rounded-xl shadow-md px-2 pt-1">
                 <div :class="isActive('cart') ? 'block' : 'hidden'">
-                    <CartTable :cart="cart" />
+                    <CartTable />
                     <Payments 
                         @discountChange="addCoupon"
                         @printInvoice="printInvoice"
@@ -102,23 +102,22 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import Multiselect from '@vueform/multiselect'
+import { mapActions } from 'vuex';
 
-// components
+/* Components */
 import ItemCard from "@/components/pos/ItemCard.vue"
 import CartTable from "@/components/pos/CartTable.vue"
 import Payments from "@/components/pos/Payments.vue"
 import Invoice from "@/components/pos/Invoice.vue"
 import CustomerForm from "@/components/pos/CustomerForm.vue"
 
-// types and services
+/* Types and Services */
 import ItemService from "@/services/items/ItemService";
-import CustomerService from "@/services/pos/CustomerService";
 import CartService from "@/services/pos/CartService";
-import CouponService from "@/services/items/CouponService";
-import { ItemObject } from '@/types/items/Items'
-
-
+import CustomerService from "@/services/pos/CustomerService";
+import { ItemObject, SingleItem } from '@/types/items/Items'
+import { Cart, CartItems } from '@/types/pos/Cart'
+import Multiselect from '@vueform/multiselect'
 export default defineComponent({
     name: 'PointOfSale',
     components: { ItemCard, CartTable, Payments, Invoice, CustomerForm, Multiselect },
@@ -127,15 +126,23 @@ export default defineComponent({
             popularItems: [] as Array<ItemObject>,
             activeItem: 'cart',
             itemId: '',
-            cart: this.$store.getters['pos/cart'],
+            cart: this.$store.state.pos.cart as Cart,
             invoice: this.$store.state.pos.cart,
-            customerID: '',
+            customerId: '',
             discountCode: '',
             paymentMethod: this.$store.state.pos.cart.payment_method ? this.$store.state.pos.cart.payment_method : 'fiat',
             isGeneratingInvoice: false
         }
     },
     methods: {
+        ...mapActions([
+            'pos/setInvoiceNumber',
+            'pos/setPaymentMethod',
+            'pos/setCoupon',
+            'pos/setIsProcessingPayment',
+            'pos/convertPricesToUSD',
+            'pos/convertPricesToTNBC',
+        ]),
         async fetchPopularItems(): Promise<void> {
             let token = this.$store.state.session.bearerToken
             let url = `/itemList?limit=0`
@@ -151,84 +158,70 @@ export default defineComponent({
 					})
                 });
         },
-        updatePaymentMethod(method: string): void {
-            
+        async updatePaymentMethod(method: string): Promise<void> {
             console.log('updatePaymentMethod', method)
-
             switch (method) {
                 case 'tnbc':
-
+                    console.log('calling updateMethodToTNBC')
                     this.updateMethodToTNBC()
                     break;
                 case 'fiat':
+                    console.log('calling updateMethodToFIAT')
                     this.updateMethodToFIAT()
                     break;
             
                 default:
                     break;
             }
-
             this.$store.dispatch('pos/setPaymentMethod', method)
-
-        },
-        async updateMethodToFIAT(): Promise<void> {
-            const cartItems = this.$store.state.pos.cart.items
-            let token = this.$store.state.session.bearerToken
-            
-            const itemsArray: Array<any> = []
-
-            const items = cartItems.map((cartItem: any, index: number) => {
-                const item_id = cartItem.item_id
-
-                return ItemService.getById(item_id, token)
-                    .then((res: any) => {
-                        itemsArray.push(res.data)
-                    })
-                    .catch((err: any) => console.log(err))
-            })
-
-            return Promise.all(items).then(() => {
-                this.$store.dispatch('pos/convertPricesToFIAT', itemsArray)
-            });
-        },
-        async getItemById(id: number): Promise<void> {
         },
         async updateMethodToTNBC(): Promise<void> {
             const currency = this.$store.state.settings.currency
+            console.log('currency', currency)
             if (currency === 'USD'){
-
                 this.convertPricesToTNBC()
             } else {
                 try {
                     const exchange = await CartService.fetchExchangeRate(currency)
-
                     // get the USD rate
                     const USDRate = exchange.rates.USD
                     // convert all items' prices to USD
                     this.convertPricesToUSD(USDRate)
                     // convert USD Prices to TNBC
                     this.convertPricesToTNBC()
-
                 } catch (error){
-
                     this.$toast.open({
                         message: `There was an error feching the exchange rate.`,
                         type: "error"
                     })
-
                     console.log(error)
-
                 }
             }
         },
         convertPricesToUSD(rate: number): void {
             this.$store.dispatch('pos/convertPricesToUSD', rate)
-
         },
         convertPricesToTNBC(): void {
             const TNBCRate = this.$store.state.settings.TNBCRate
             this.$store.dispatch('pos/convertPricesToTNBC', TNBCRate)
-
+        },
+        async updateMethodToFIAT(): Promise<void> {
+            const cartItems = this.$store.state.pos.cart.cartItems
+            let token = this.$store.state.session.bearerToken
+            
+            const itemsArray: Array<any> = []
+            const items = cartItems.map((item: any) => {
+                const item_id = item.item_id
+                return ItemService.getById(item_id, token)
+                    .then((res: any) => {
+                        itemsArray.push(res.data)
+                    })
+                    .catch((err: any) => console.log(err))
+            })
+            return Promise.all(items).then(() => {
+                console.log('calling pos/convertPricesToFIAT')
+                this.$store.dispatch('pos/convertPricesToFIAT', itemsArray)
+            });
         },
         async fetchItems(query: any): Promise<void> {
             if (query){
@@ -279,26 +272,12 @@ export default defineComponent({
                 return
             }
             
-            console.log('printInvoice')
-                       
+            console.log('printInvoice')                       
         },
         async addCoupon(discount: any): Promise<void> {
             this.discountCode = discount.toString()
-
-            // checking if discount code exists
-            const token = this.$store.state.session.bearerToken
-
-            await CouponService.list(`/couponList/?q=${this.discountCode}`, token)
-				.then((res: any) => {
-					if (res.data.data.length) {
-                        const coupon = res.data.data[0]
-                        this.$store.dispatch('pos/setCoupon', coupon)
-                    } else {
-                        console.log(`There's no such coupon!`)
-                    }
-				})
-				.catch(err => console.log(err))
-
+            this.$store.dispatch('setCoupon', discount.toString())
+            console.log('addCoupon')
         },
         
         setActive(tabItem: string): void {
@@ -310,40 +289,35 @@ export default defineComponent({
         },
         
         async addCustomerToCart(): Promise<void>{
-            let customer = this.customerID as string
-            this.$store.dispatch('pos/addCustomerToCart', customer)
+            let customer = this.customerId as string
+            console.log('addCustomerToCart')
         },
         
-        async addItemToCart(): Promise<void>{
-            this.$store.dispatch('pos/setIsProcessingPayment', false)
-
+        async handleAddItemToCart(): Promise<void>{
+            this.$store.dispatch('setIsProcessingPayment', false)
             console.log('addItemToCart')
         },
         
-        async addPopularItemToCart(item: Object): Promise<void>{
+        async addPopularItemToCart(item: SingleItem): Promise<void>{
+            console.log('addPopularItemToCart', item)
             this.$store.dispatch('pos/setIsProcessingPayment', false)
-
             this.$store.dispatch('pos/addItemToCart', item)
         },
         
         generateQrCode(): void {
             console.log('generateQrCode')
-            this.$store.dispatch('pos/setIsProcessingPayment', true)
+            this.$store.dispatch('setIsProcessingPayment', true)
             const routeData = this.$router.resolve({ name: 'GeneratedQrCode' })
             window.open(routeData.href, '_blank')
         }
     },
     created() {
         this.fetchPopularItems()
-
-        if (this.$store.getters['cart/isProcessingPayment']) {
-            this.cart = this.$store.state.pos.cart
-        }
+        if (this.$store.getters.isProcessingPayment) this.cart = this.$store.state.pos.cart
     }
 });
 </script>
 <style scoped>
-
 li.flex-grow {
   position: relative;
   display: block;

@@ -5,8 +5,9 @@
 		<div class="py-2 text-blue-900">
 			<p class="mb-2 font-semibold">{{ item.name }}</p>
 			<p>
-				<span>{{ $store.getters['settings/currency'] }}</span>
-				{{ item.price }}</p>
+				<span>{{ getCurrency }}</span>
+				{{ item.price }}
+			</p>
 		</div>
 	</div>
 </template>
@@ -21,6 +22,12 @@ export default defineComponent({
 			type: Object as PropType<ItemObject>,
 			required: true
 		}
+	},
+	computed: {
+		getCurrency() {
+			return this.$store.getters.currency
+		},
 	}
+
 })
 </script>
