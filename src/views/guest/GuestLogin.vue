@@ -105,13 +105,8 @@ export default defineComponent({
             ConfigurationService.list(token)
                 .then(response => {
                     const res = response.data
-                    this.$store.dispatch(
-                        'setCurrency', 
-                        {
-                            currency: res.currency,
-                            currencySign: res.currency_symble
-                        }
-                    )
+                    console.log(res)
+                    this.$store.dispatch('setConfiguration', res)
                 })
         },
         checkIfUserhasVerifiedEmail(): void {
