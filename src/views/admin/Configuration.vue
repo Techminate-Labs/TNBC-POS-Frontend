@@ -197,14 +197,11 @@
 import { defineComponent } from 'vue'
 import { currencies } from 'currencies.json'
 import Multiselect from '@vueform/multiselect'
-
 // components
 import CancelIcon from '@/components/icons/CancelIcon.vue'
-
 // types and services
 import { Configuration } from '@/types/Configuration'
 import ConfigurationService from '@/services/ConfigurationService'
-
 export default defineComponent({
 	name: 'Configuration',
 	components: { CancelIcon, Multiselect },
@@ -248,23 +245,15 @@ export default defineComponent({
 			fd.append('app_logo', this.newAppLogo)
 			fd.append('store_logo', this.newStoreLogo)
 			fd.append('_method', 'PUT')
-
-			this.$store.dispatch('settings/setTaxRate', this.configuration.tax_rate)
-			this.$store.dispatch('settings/setTNBCRate', this.configuration.tnbc_rate)
-			this.$store.dispatch('settings/setCurrency', { 
-				currency: this.configuration.currency, 
-				currencySign: this.configuration.currency_symble  
-			})
-			this.$store.dispatch('settings/setTNBCRate', this.configuration.tnbc_rate)
-
 			let token = this.$store.state.session.bearerToken
 			await ConfigurationService.update(fd, token)
-				.then((json) => {
-					console.log('json', json)
+				.then((response) => {
+					let res =  response.data
 					this.$toast.open({
 						message: `Your configuration has been updated.`,
 						type: "success"
 					})
+					this.$store.dispatch('setConfiguration', res)
 				})
 				.catch(({ response }) => {
 					this.$toast.open({

@@ -32,6 +32,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { mapActions } from 'vuex';
 
 // components
 import LogoIcon from '@/components/icons/LogoIcon.vue'
@@ -52,6 +53,12 @@ export default defineComponent({
         }
     },
     methods: {
+        ...mapActions([
+            // 'session/setBearerToken',
+            // 'user/setAuthentication',
+            // 'user/setUserEmail',
+            // 'user/setUserId'
+        ]),
         async logInUser(): Promise<void> {
             let data = {
                 email: this.email,
@@ -62,6 +69,7 @@ export default defineComponent({
                     this.user = response.data.user
                     const res = response.data
 
+                    console.log('test')
                     this.$store.dispatch('session/setBearerToken', res.token)
                     this.$store.dispatch('user/setAuthentication', true)
                     this.$store.dispatch('user/setUserEmail', this.email)
@@ -97,13 +105,8 @@ export default defineComponent({
             ConfigurationService.list(token)
                 .then(response => {
                     const res = response.data
-                    this.$store.dispatch(
-                        'setCurrency', 
-                        {
-                            currency: res.currency,
-                            currencySign: res.currency_symble
-                        }
-                    )
+                    console.log(res)
+                    this.$store.dispatch('setConfiguration', res)
                 })
         },
         checkIfUserhasVerifiedEmail(): void {

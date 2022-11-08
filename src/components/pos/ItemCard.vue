@@ -5,22 +5,29 @@
 		<div class="py-2 text-blue-900">
 			<p class="mb-2 font-semibold">{{ item.name }}</p>
 			<p>
-				<span>{{ $store.getters['settings/currency'] }}</span>
-				{{ item.price }}</p>
+				<span>{{ getCurrency }}</span>
+				{{ item.price }}
+			</p>
 		</div>
 	</div>
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { ItemObject } from '@/types/items/Items'
+import { SingleItem } from '@/types/items/Items'
 
 export default defineComponent({
 	name: 'ProductCard',
 	props: {
 		item: {
-			type: Object as PropType<ItemObject>,
+			type: Object as PropType<SingleItem>,
 			required: true
 		}
+	},
+	computed: {
+		getCurrency() {
+			return this.$store.getters.currency
+		},
 	}
+
 })
 </script>

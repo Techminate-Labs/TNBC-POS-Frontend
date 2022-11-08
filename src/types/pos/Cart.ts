@@ -1,3 +1,11 @@
+export interface CartItems {
+	item_id: number,
+	item_name: string,
+	unit: string,
+	unit_price: number,
+	qty: number
+} 
+
 export interface Cart {
 	cashier: string,
     payment_method: string,
@@ -10,16 +18,5 @@ export interface Cart {
     cart_id: number,
     user_id: number,
     customer_id: number | null,
-    cartItems: []
+    cartItems: CartItems[]
 }
-
-export interface CartItems {
-	id: number,
-	cart_id: number,
-	item_id: number,
-	item_name: string,
-	unit: string,
-	unit_price: number,
-	qty: number,
-	total: number
-} 

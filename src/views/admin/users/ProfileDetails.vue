@@ -84,7 +84,6 @@
 import { defineComponent } from 'vue';
 import ProfileService from "@/services/users/ProfileService";
 
-
 export default defineComponent({
 	name: 'ProfileDetails',
 	data() {
@@ -97,6 +96,7 @@ export default defineComponent({
 			let params = this.$route.params
 			let user_id = parseInt(params.user_id as string)
 			let token = this.$store.state.session.bearerToken
+			console.log(this.$store)
 			await ProfileService.list(user_id, token)
 				.then((response) => {
 					this.profile  = response.data
