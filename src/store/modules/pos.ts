@@ -42,8 +42,15 @@ export const PosModule = {
                 }
             })
         },
-		REMOVE_QUANTITY_TO_CART_ITEM(state: any, payload: CartItems){
-            // state.cart.cartItems.push(payload)
+		REMOVE_QUANTITY_FROM_CART_ITEM(state: any, item_id: number){
+            state.cart.cartItems.map((item: CartItems) => {
+                if (item.item_id === item_id){
+                    if (item.qty <= 0)
+                        return
+
+                    item.qty -= 1
+                }
+            })
         },
         UPDATE_INVOICE_NUMBER(state: any, payload: any){
             state.cart = {...state.cart, ...payload}
@@ -97,7 +104,6 @@ export const PosModule = {
                 unit_price: payload.price,
                 qty: 1
             }
-            
             if (stateCart.cartItems.length) {
                 const exists = stateCart.cartItems.filter((i: { item_id: Number }) => i.item_id === cartItem.item_id)
                 if (exists.length) {
