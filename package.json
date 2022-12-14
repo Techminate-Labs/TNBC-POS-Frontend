@@ -12,7 +12,7 @@
         "axios": "^0.21.1",
         "core-js": "^3.6.5",
         "currencies.json": "^1.0.2",
-        "express": "^4.17.1",
+        "express": "^4.17.3",
         "highcharts": "^9.3.2",
         "highcharts-vue": "^1.4.0",
         "jsbarcode": "^3.11.5",
